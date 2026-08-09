@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SwMacroFlow — Batch-run SOLIDWORKS macros, automatically</title>
+<meta name="description" content="SwMacroFlow runs a chain of SOLIDWORKS VBA macros across hundreds of files — no add-in install required. One-time license, ₹349.">
+<link rel="icon" href="assets/logo.png" type="image/png">
+<style>
+  :root {
+    --bg: #0b0d12;
+    --bg-alt: #12151d;
+    --panel: #161a24;
+    --panel-border: #262c3a;
+    --text: #eef1f7;
+    --text-dim: #a3acc2;
+    --text-faint: #6b7488;
+    --accent: #e2231a;
+    --accent-2: #ff5b45;
+    --accent-soft: rgba(226, 35, 26, 0.14);
+    --blue: #4f8cff;
+    --success: #34c77b;
+    --radius: 14px;
+    --max-w: 1120px;
+    color-scheme: dark;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f7f7fa;
+      --bg-alt: #ffffff;
+      --panel: #ffffff;
+      --panel-border: #e4e6ee;
+      --text: #16181f;
+      --text-dim: #4b5266;
+      --text-faint: #8890a3;
+      --accent-soft: rgba(226, 35, 26, 0.08);
+      color-scheme: light;
+    }
+  }
+
+  :root[data-theme="light"] {
+    --bg: #f7f7fa;
+    --bg-alt: #ffffff;
+    --panel: #ffffff;
+    --panel-border: #e4e6ee;
+    --text: #16181f;
+    --text-dim: #4b5266;
+    --text-faint: #8890a3;
+    --accent-soft: rgba(226, 35, 26, 0.08);
+    color-scheme: light;
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0b0d12;
+    --bg-alt: #12151d;
+    --panel: #161a24;
+    --panel-border: #262c3a;
+    --text: #eef1f7;
+    --text-dim: #a3acc2;
+    --text-faint: #6b7488;
+    --accent-soft: rgba(226, 35, 26, 0.14);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- Nav ---------- */
+  header.nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(10px);
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    border-bottom: 1px solid var(--panel-border);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    max-width: var(--max-w);
+    margin: 0 auto;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 17px;
+    text-decoration: none;
+    color: var(--text);
+  }
+  .brand img { width: 28px; height: 28px; border-radius: 7px; }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    font-size: 14px;
+    color: var(--text-dim);
+  }
+  .nav-links a { text-decoration: none; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #fff;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav-cta:hover { background: var(--accent-2); }
+  @media (max-width: 760px) {
+    .nav-links { display: none; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 96px 24px 72px;
+    text-align: center;
+    background:
+      radial-gradient(650px circle at 50% -10%, var(--accent-soft), transparent 60%);
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .02em;
+    color: var(--accent-2);
+    background: var(--accent-soft);
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+  }
+  h1 {
+    font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+    line-height: 1.12;
+    margin: 0 0 20px;
+    letter-spacing: -0.02em;
+    max-width: 780px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  h1 .hl { color: var(--accent); }
+  .hero-sub {
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    color: var(--text-dim);
+    max-width: 620px;
+    margin: 0 auto 36px;
+  }
+  .hero-ctas {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 26px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform .12s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--accent-2); }
+  .btn-secondary {
+    background: var(--panel);
+    color: var(--text);
+    border-color: var(--panel-border);
+  }
+  .btn-secondary:hover { border-color: var(--text-faint); }
+  .hero-note {
+    font-size: 13px;
+    color: var(--text-faint);
+  }
+
+  /* ---------- Screenshot ---------- */
+  .screenshot-wrap {
+    max-width: 960px;
+    margin: 56px auto 0;
+    padding: 0 24px;
+  }
+  .screenshot-frame {
+    border-radius: 16px;
+    border: 1px solid var(--panel-border);
+    background: var(--panel);
+    box-shadow: 0 30px 80px -30px rgba(0,0,0,0.5);
+    overflow: hidden;
+  }
+  .screenshot-titlebar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--panel-border);
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.r { background: #ff5f57; }
+  .dot.y { background: #febc2e; }
+  .dot.g { background: #28c840; }
+  .screenshot-titlebar span {
+    margin-left: 10px;
+    font-size: 12px;
+    color: var(--text-faint);
+  }
+  .screenshot-placeholder {
+    aspect-ratio: 16 / 9.4;
+    display: flex;
+  }
+  .ph-setup {
+    flex: 1.6;
+    background: var(--panel);
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    border-right: 1px solid var(--panel-border);
+    font-size: 11.5px;
+    overflow: hidden;
+  }
+  .ph-section-title {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .ph-add-btn {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--accent-2);
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+    background: var(--accent-soft);
+    border-radius: 6px;
+    padding: 3px 8px;
+  }
+  .ph-macro-list { display: flex; flex-direction: column; gap: 6px; }
+  .ph-macro-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-alt);
+    border: 1px solid var(--panel-border);
+    border-radius: 8px;
+    padding: 7px 10px;
+  }
+  .ph-check {
+    width: 13px; height: 13px;
+    border-radius: 4px;
+    border: 1.5px solid var(--text-faint);
+    flex-shrink: 0;
+  }
+  .ph-check.on { background: var(--success); border-color: var(--success); }
+  .ph-macro-name { font-weight: 600; color: var(--text); flex: 1; }
+  .ph-macro-tag {
+    font-size: 9.5px;
+    color: var(--text-faint);
+    background: color-mix(in srgb, var(--text-faint) 14%, transparent);
+    padding: 2px 6px;
+    border-radius: 5px;
+  }
+  .ph-scope-row {
+    display: flex;
+    gap: 8px;
+  }
+  .ph-scope-pill {
+    flex: 1;
+    background: var(--bg-alt);
+    border: 1px solid var(--panel-border);
+    border-radius: 8px;
+    padding: 8px 10px;
+    text-align: center;
+  }
+  .ph-scope-pill b { display: block; font-size: 14px; color: var(--text); }
+  .ph-scope-pill span { color: var(--text-faint); font-size: 9.5px; }
+  .ph-results { display: flex; flex-direction: column; gap: 5px; flex: 1; overflow: hidden; }
+  .ph-result-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 9px;
+    border-radius: 6px;
+    background: var(--bg-alt);
+  }
+  .ph-result-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .ph-result-dot.ok { background: var(--success); }
+  .ph-result-dot.warn { background: #e8a53d; }
+  .ph-result-row span { color: var(--text-dim); }
+  .ph-run-btn {
+    margin-top: auto;
+    background: var(--accent);
+    color: #fff;
+    text-align: center;
+    font-weight: 700;
+    font-size: 11.5px;
+    padding: 9px;
+    border-radius: 8px;
+  }
+  .ph-copilot {
+    flex: 1;
+    background: var(--bg-alt);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+  }
+  .ph-copilot-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--accent-2);
+    letter-spacing: .02em;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--panel-border);
+  }
+  .ph-tool-row {
+    font-size: 10.5px;
+    color: var(--text-faint);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-left: 2px;
+  }
+  .ph-tool-row::before { content: "⚙"; opacity: .7; }
+  .ph-bubble {
+    border-radius: 10px;
+    padding: 9px 11px;
+    font-size: 11.5px;
+    color: var(--text-dim);
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    max-width: 88%;
+  }
+  .ph-bubble.user {
+    align-self: flex-end;
+    background: color-mix(in srgb, var(--blue) 20%, transparent);
+    border-color: color-mix(in srgb, var(--blue) 32%, transparent);
+    color: var(--text);
+  }
+  .ph-approval {
+    background: var(--panel);
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 11px;
+  }
+  .ph-approval-title { font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .ph-approval-actions { display: flex; gap: 8px; margin-top: 8px; }
+  .ph-approval-btn {
+    flex: 1;
+    text-align: center;
+    font-weight: 700;
+    font-size: 10.5px;
+    padding: 6px;
+    border-radius: 6px;
+  }
+  .ph-approval-btn.run { background: var(--accent); color: #fff; }
+  .ph-approval-btn.no { background: color-mix(in srgb, var(--text-faint) 16%, transparent); color: var(--text-dim); }
+  .ph-chat-input {
+    margin-top: auto;
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 11px;
+    color: var(--text-faint);
+  }
+  .ph-caption {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-faint);
+    margin-top: 12px;
+  }
+
+  /* ---------- Sections ---------- */
+  section { padding: 88px 24px; }
+  .section-head {
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto 52px;
+  }
+  .section-tag {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin-bottom: 12px;
+  }
+  .section-head h2 {
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+  .section-head p { color: var(--text-dim); margin: 0; }
+
+  /* ---------- Features ---------- */
+  .features-grid {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 900px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .features-grid { grid-template-columns: 1fr; } }
+  .feature-card {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius);
+    padding: 26px 24px;
+  }
+  .feature-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    font-size: 19px;
+  }
+  .feature-card h3 { font-size: 16px; margin: 0 0 8px; }
+  .feature-card p { font-size: 14px; color: var(--text-dim); margin: 0; }
+
+  /* ---------- How it works ---------- */
+  .steps {
+    max-width: 880px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 900px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+  .step {
+    position: relative;
+    padding: 24px 18px 18px;
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius);
+    background: var(--panel);
+  }
+  .step-num {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+  .step h3 { font-size: 15px; margin: 0 0 6px; }
+  .step p { font-size: 13px; color: var(--text-dim); margin: 0; }
+
+  /* ---------- Pricing ---------- */
+  .pricing-card {
+    max-width: 420px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, var(--panel), var(--bg-alt));
+    border: 1px solid var(--panel-border);
+    border-radius: 20px;
+    padding: 40px 34px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .pricing-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(400px circle at 50% 0%, var(--accent-soft), transparent 70%);
+    pointer-events: none;
+  }
+  .pricing-badge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    background: var(--accent-soft);
+    padding: 5px 12px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+  }
+  .price {
+    font-size: 3.2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .price small { font-size: 1rem; font-weight: 600; color: var(--text-dim); }
+  .price-note { color: var(--text-dim); font-size: 14px; margin: 6px 0 28px; }
+  .pricing-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .pricing-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .pricing-list li::before {
+    content: "✓";
+    color: var(--success);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .btn-block { width: 100%; justify-content: center; }
+
+  /* ---------- FAQ ---------- */
+  .faq-list {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  details {
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    background: var(--panel);
+    padding: 4px 20px;
+  }
+  summary {
+    cursor: pointer;
+    padding: 18px 0;
+    font-weight: 600;
+    font-size: 15px;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after {
+    content: "+";
+    font-size: 20px;
+    color: var(--text-faint);
+    transition: transform .15s ease;
+    flex-shrink: 0;
+  }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p {
+    margin: 0 0 18px;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  /* ---------- Final CTA ---------- */
+  .final-cta {
+    text-align: center;
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 24px;
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 64px 24px;
+  }
+  .final-cta h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 0 0 14px; }
+  .final-cta p { color: var(--text-dim); margin: 0 0 30px; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    border-top: 1px solid var(--panel-border);
+    padding: 40px 24px 32px;
+  }
+  .footer-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .footer-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+  .footer-brand img { width: 24px; height: 24px; border-radius: 6px; }
+  .footer-links { display: flex; gap: 22px; flex-wrap: wrap; font-size: 13px; color: var(--text-dim); }
+  .footer-links a { text-decoration: none; }
+  .footer-links a:hover { color: var(--text); }
+  .footer-copy { font-size: 12px; color: var(--text-faint); width: 100%; margin-top: 24px; }
+
+  /* ---------- Modal ---------- */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(6,7,10,0.6);
+    backdrop-filter: blur(3px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 100;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--bg-alt);
+    border: 1px solid var(--panel-border);
+    border-radius: 18px;
+    max-width: 420px;
+    width: 100%;
+    padding: 32px;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: none;
+    border: none;
+    color: var(--text-faint);
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 6px;
+  }
+  .modal h3 { margin: 0 0 8px; font-size: 19px; }
+  .modal p { color: var(--text-dim); font-size: 14px; margin: 0 0 22px; }
+  .modal label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .modal input[type="email"] {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--panel-border);
+    background: var(--panel);
+    color: var(--text);
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+  .modal input[type="email"]:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .modal-success {
+    display: none;
+    text-align: center;
+    padding: 12px 0;
+  }
+  .modal-success .check {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: color-mix(in srgb, var(--success) 18%, transparent);
+    color: var(--success);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin: 0 auto 16px;
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">
+      <img src="assets/logo.png" alt="SwMacroFlow logo">
+      SwMacroFlow
+    </a>
+    <nav class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="#pricing" class="nav-cta">Buy Now — ₹349</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="eyebrow">⚙️ Works with your SOLIDWORKS install · Windows x64</div>
+    <h1>Batch-run your SOLIDWORKS macros<br>across <span class="hl">hundreds of files</span>, automatically</h1>
+    <p class="hero-sub">
+      One file open, many macros, zero add-in installs. Chain your VBA macros, point them at a
+      folder, and let SwMacroFlow run every one against every file — with an AI Copilot that can
+      build the run for you.
+    </p>
+    <div class="hero-ctas">
+      <a href="#pricing" class="btn btn-primary">Buy Now — ₹349 (one-time)</a>
+      <button class="btn btn-secondary" onclick="openModal()">Download Free Trial</button>
+    </div>
+    <div class="hero-note">One-time license · No subscription · Works with your existing SOLIDWORKS install</div>
+
+    <div class="screenshot-wrap">
+      <div class="screenshot-frame">
+        <div class="screenshot-titlebar">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span>SwMacroFlow — Copilot panel open</span>
+        </div>
+        <div class="screenshot-placeholder">
+          <div class="ph-setup">
+            <div class="ph-section-title">Macro chain <span class="ph-add-btn">+ Add Macro…</span></div>
+            <div class="ph-macro-list">
+              <div class="ph-macro-row">
+                <div class="ph-check on"></div>
+                <div class="ph-macro-name">cleanup.swp</div>
+                <div class="ph-macro-tag">2 inputs</div>
+              </div>
+              <div class="ph-macro-row">
+                <div class="ph-check on"></div>
+                <div class="ph-macro-name">export-pdf.swp</div>
+                <div class="ph-macro-tag">1 input</div>
+              </div>
+              <div class="ph-macro-row">
+                <div class="ph-check"></div>
+                <div class="ph-macro-name">rename-sheet.swp</div>
+                <div class="ph-macro-tag">3 inputs</div>
+              </div>
+            </div>
+            <div class="ph-scope-row">
+              <div class="ph-scope-pill"><b>28</b><span>Parts</span></div>
+              <div class="ph-scope-pill"><b>11</b><span>Assemblies</span></div>
+              <div class="ph-scope-pill"><b>3</b><span>Drawings</span></div>
+            </div>
+            <div class="ph-section-title">Results</div>
+            <div class="ph-results">
+              <div class="ph-result-row"><span class="ph-result-dot ok"></span><span>bracket.sldprt — Success</span></div>
+              <div class="ph-result-row"><span class="ph-result-dot ok"></span><span>housing.sldprt — Success</span></div>
+              <div class="ph-result-row"><span class="ph-result-dot warn"></span><span>plate-04.sldprt — Prompted</span></div>
+              <div class="ph-result-row"><span class="ph-result-dot ok"></span><span>bracket-rev2.sldprt — Success</span></div>
+            </div>
+            <div class="ph-run-btn">▶ Run Batch</div>
+          </div>
+          <div class="ph-copilot">
+            <div class="ph-copilot-header">✨ Copilot</div>
+            <div class="ph-bubble user">Run cleanup + export PDF on this folder</div>
+            <div class="ph-tool-row">Read the macro library — 15 macros found</div>
+            <div class="ph-tool-row">Scanned folder — 42 files added to scope</div>
+            <div class="ph-bubble">Built a 2-macro chain over 42 files. Ready to run this batch — approve?</div>
+            <div class="ph-approval">
+              <div class="ph-approval-title">Run batch on 42 files?</div>
+              <div>2 macros · cleanup.swp, export-pdf.swp</div>
+              <div class="ph-approval-actions">
+                <div class="ph-approval-btn run">Run</div>
+                <div class="ph-approval-btn no">No</div>
+              </div>
+            </div>
+            <div class="ph-chat-input">Ask Copilot anything…</div>
+          </div>
+        </div>
+      </div>
+      <p class="ph-caption">In-app preview, recreated for the web — Setup panel on the left, Copilot panel on the right.</p>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="section-head">
+      <div class="section-tag">Features</div>
+      <h2>Everything you need to automate SOLIDWORKS busywork</h2>
+      <p>No add-in to register. No menu item to unregister. Just a tool that drives SOLIDWORKS from outside.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🔗</div>
+        <h3>Chain multiple macros</h3>
+        <p>Queue up as many macros as you like, in the order they should run — each file opens once, every ticked macro runs against it, then it closes.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📂</div>
+        <h3>Batch across folders</h3>
+        <p>Browse a folder (recursively, if you like), drag & drop, or add files one by one. Parts, assemblies and drawings are sorted automatically.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">✨</div>
+        <h3>AI Copilot side panel</h3>
+        <p>Ask Copilot to build your macro chain, scan a folder, or write a new macro for you — every destructive action needs your approval first.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧩</div>
+        <h3>Zero add-in installs</h3>
+        <p>SwMacroFlow joins a SOLIDWORKS session you already have open, or starts one — nothing is ever installed into SOLIDWORKS itself.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📚</div>
+        <h3>Bundled macro library</h3>
+        <p>Ships with a library of ready-to-use macros for common jobs — export, cleanup, and more — plus your own macros alongside them.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <h3>Built-in auto-update</h3>
+        <p>SwMacroFlow checks for new releases on startup and updates itself in one click — you're always on the latest version.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section id="how-it-works" style="background:var(--bg-alt);">
+    <div class="section-head">
+      <div class="section-tag">How it works</div>
+      <h2>From download to first batch in minutes</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Get your setup link</h3>
+        <p>Enter your email and we'll send the installer link straight to your inbox.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Run the installer</h3>
+        <p>A per-user install, no admin rights and no elevation prompt required.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Enter your license key</h3>
+        <p>Paste the key you received after purchase to unlock the full app.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Start automating</h3>
+        <p>Add your macros, point at a folder, hit Run Batch — or just ask Copilot to do it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing">
+    <div class="section-head">
+      <div class="section-tag">Pricing</div>
+      <h2>One price. Yours forever.</h2>
+      <p>No subscriptions, no per-seat fees — pay once and keep every future update.</p>
+    </div>
+    <div class="pricing-card">
+      <span class="pricing-badge">Most affordable</span>
+      <p class="price">₹349 <small>/ one-time</small></p>
+      <p class="price-note">Single-user license · Free updates</p>
+      <ul class="pricing-list">
+        <li>Full access to batch macro chaining</li>
+        <li>AI Copilot panel included</li>
+        <li>Full bundled macro library</li>
+        <li>Free lifetime updates via auto-updater</li>
+        <li>Email support</li>
+      </ul>
+      <button class="btn btn-primary btn-block" onclick="openModal()">Buy Now — ₹349</button>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" style="background:var(--bg-alt);">
+    <div class="section-head">
+      <div class="section-tag">FAQ</div>
+      <h2>Good to know before you buy</h2>
+    </div>
+    <div class="faq-list">
+      <details>
+        <summary>Which SOLIDWORKS versions does this support?</summary>
+        <p>SwMacroFlow isn't locked to one release — it works with any SOLIDWORKS version you already have installed and licensed (x64). It joins the SOLIDWORKS session on your machine rather than shipping its own.</p>
+      </details>
+      <details>
+        <summary>Is there a free trial?</summary>
+        <p>Yes — enter your email above to get a trial download link. Trial terms are shown inside the app on first run.</p>
+      </details>
+      <details>
+        <summary>What happens after I pay?</summary>
+        <p>You'll receive your setup link and license key by email. Run the installer, paste in your key, and you're set.</p>
+      </details>
+      <details>
+        <summary>Do I get future updates for free?</summary>
+        <p>Yes. The ₹349 license is one-time and includes all future updates through the app's built-in auto-updater.</p>
+      </details>
+      <details>
+        <summary>What's your refund policy?</summary>
+        <p>Refund policy details will be published here before launch — reach out to support if you have questions in the meantime.</p>
+      </details>
+      <details>
+        <summary>Does SwMacroFlow install anything into SOLIDWORKS?</summary>
+        <p>No. It runs as a separate application and drives SOLIDWORKS from outside — there's no add-in to register or unregister.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section>
+    <div class="final-cta">
+      <h2>Stop clicking through the same macro, file after file.</h2>
+      <p>Get SwMacroFlow for a one-time ₹349 and automate your next batch job today.</p>
+      <div class="hero-ctas" style="margin-bottom:0;">
+        <a href="#pricing" class="btn btn-primary">Buy Now — ₹349</a>
+        <button class="btn btn-secondary" onclick="openModal()">Download Free Trial</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="assets/logo.png" alt="SwMacroFlow logo">
+      SwMacroFlow
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/Urjitpatel28/SwMacroFlow" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/Urjitpatel28/SwMacroFlow/tree/master/docs" target="_blank" rel="noopener">Docs</a>
+      <a href="mailto:urjitpatel28@gmail.com">Contact / Support</a>
+      <a href="#">Terms</a>
+      <a href="#">Privacy</a>
+    </div>
+    <div class="footer-copy">© 2026 SwMacroFlow. All rights reserved.</div>
+  </div>
+</footer>
+
+<!-- Email capture modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this) closeModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+
+    <div id="modalForm">
+      <h3>Get your setup link</h3>
+      <p>Enter your email and we'll send you the SwMacroFlow installer link.</p>
+      <!--
+        TODO before going live: replace YOUR_FORM_ID below with your own
+        Formspree (https://formspree.io) form ID, or swap this <form> for
+        whatever form-to-email service you choose. Submissions currently
+        require a real endpoint to actually deliver anywhere.
+      -->
+      <form id="emailForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" onsubmit="return handleSubmit(event)">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+        <button type="submit" class="btn btn-primary btn-block">Send me the setup link</button>
+      </form>
+    </div>
+
+    <div class="modal-success" id="modalSuccess">
+      <div class="check">✓</div>
+      <h3>Thanks!</h3>
+      <p>We'll email your setup link shortly. Keep an eye on your inbox.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openModal() {
+    document.getElementById('modalOverlay').classList.add('open');
+    document.getElementById('modalForm').style.display = 'block';
+    document.getElementById('modalSuccess').style.display = 'none';
+  }
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+  }
+  function handleSubmit(e) {
+    // Formspree accepts a normal POST; we intercept only to show inline
+    // success state instead of navigating away. Falls back to letting the
+    // browser submit normally if fetch fails.
+    e.preventDefault();
+    const form = e.target;
+    const data = new FormData(form);
+    fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    }).then(() => {
+      document.getElementById('modalForm').style.display = 'none';
+      document.getElementById('modalSuccess').style.display = 'block';
+      form.reset();
+    }).catch(() => {
+      document.getElementById('modalForm').style.display = 'none';
+      document.getElementById('modalSuccess').style.display = 'block';
+      form.reset();
+    });
+    return false;
+  }
+</script>
+
+</body>
+</html>
