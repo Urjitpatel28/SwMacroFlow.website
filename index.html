@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SwMacroFlow — Batch-run SOLIDWORKS macros, automatically</title>
-<meta name="description" content="SwMacroFlow runs a chain of SOLIDWORKS VBA macros across hundreds of files — no add-in install required. One-time license, ₹349."> 
+<meta name="description" content="SwMacroFlow runs a chain of SOLIDWORKS VBA macros across hundreds of files — no add-in install required, with AI-assisted batch automation."> 
 <link rel="icon" href="assets/logo.png" type="image/png">
 <style>
   :root {
@@ -499,7 +499,7 @@
   .step h3 { font-size: 15px; margin: 0 0 6px; }
   .step p { font-size: 13px; color: var(--text-dim); margin: 0; }
 
-  /* ---------- Pricing ---------- */
+  /* ---------- Launch ---------- */
   .pricing-card {
     max-width: 420px;
     margin: 0 auto;
@@ -714,10 +714,8 @@
     <nav class="nav-links">
       <a href="#features">Features</a>
       <a href="#how-it-works">How it works</a>
-      <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <a href="#pricing" class="nav-cta">Buy Now — ₹349</a>
   </div>
 </header>
 
@@ -725,81 +723,34 @@
 
   <!-- Hero -->
   <section class="hero">
-    <div class="eyebrow">⚙️ Works with your SOLIDWORKS install · Windows x64</div>
+    <div class="eyebrow">⚙️ Works with your installed SOLIDWORKS· Windows x64</div>
     <h1>Batch-run your SOLIDWORKS macros<br>across <span class="hl">hundreds of files</span>, automatically</h1>
     <p class="hero-sub">
       One file open, many macros, zero add-in installs. Chain your VBA macros, point them at a
       folder, and let SwMacroFlow run every one against every file — with an AI Copilot that can
       build the run for you.
     </p>
-    <div class="hero-ctas">
-      <a href="#pricing" class="btn btn-primary">Buy Now — ₹349 (one-time)</a>
-      <button class="btn btn-secondary"
-              onclick="window.location.href='https://github.com/Urjitpatel28/SwMacroFlow/releases/latest/download/SwMacroFlowSetup.exe'">
-          Download Free Trial
-      </button>
+	  <section>
+    <div class="final-cta">
+      <h2>Stop clicking through the same macro, file after file.</h2>
+      <p>Build the workflow once, run it across your files, and keep repetitive SOLIDWORKS work moving.</p>
+	  <div class="hero-ctas">
+      <span class="btn btn-primary" aria-disabled="true">Launching Soon</span>
+      <button class="btn btn-secondary" onclick="openModal()">Join Beta Trial</button>
     </div>
-    <div class="hero-note">One-time license · No subscription · Works with your existing SOLIDWORKS install</div>
+    <div class="hero-note">Works with your existing SOLIDWORKS install · Windows x64</div>
+    </div>
+  </section>
+    
 
     <div class="screenshot-wrap">
-      <div class="screenshot-frame">
-        <div class="screenshot-titlebar">
-          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-          <span>SwMacroFlow — Copilot panel open</span>
-        </div>
-        <div class="screenshot-placeholder">
-          <div class="ph-setup">
-            <div class="ph-section-title">Macro chain <span class="ph-add-btn">+ Add Macro…</span></div>
-            <div class="ph-macro-list">
-              <div class="ph-macro-row">
-                <div class="ph-check on"></div>
-                <div class="ph-macro-name">cleanup.swp</div>
-                <div class="ph-macro-tag">2 inputs</div>
-              </div>
-              <div class="ph-macro-row">
-                <div class="ph-check on"></div>
-                <div class="ph-macro-name">export-pdf.swp</div>
-                <div class="ph-macro-tag">1 input</div>
-              </div>
-              <div class="ph-macro-row">
-                <div class="ph-check"></div>
-                <div class="ph-macro-name">rename-sheet.swp</div>
-                <div class="ph-macro-tag">3 inputs</div>
-              </div>
-            </div>
-            <div class="ph-scope-row">
-              <div class="ph-scope-pill"><b>28</b><span>Parts</span></div>
-              <div class="ph-scope-pill"><b>11</b><span>Assemblies</span></div>
-              <div class="ph-scope-pill"><b>3</b><span>Drawings</span></div>
-            </div>
-            <div class="ph-section-title">Results</div>
-            <div class="ph-results">
-              <div class="ph-result-row"><span class="ph-result-dot ok"></span><span>bracket.sldprt — Success</span></div>
-              <div class="ph-result-row"><span class="ph-result-dot ok"></span><span>housing.sldprt — Success</span></div>
-              <div class="ph-result-row"><span class="ph-result-dot warn"></span><span>plate-04.sldprt — Prompted</span></div>
-              <div class="ph-result-row"><span class="ph-result-dot ok"></span><span>bracket-rev2.sldprt — Success</span></div>
-            </div>
-            <div class="ph-run-btn">▶ Run Batch</div>
-          </div>
-          <div class="ph-copilot">
-            <div class="ph-copilot-header">✨ Copilot</div>
-            <div class="ph-bubble user">Run cleanup + export PDF on this folder</div>
-            <div class="ph-tool-row">Read the macro library — 15 macros found</div>
-            <div class="ph-tool-row">Scanned folder — 42 files added to scope</div>
-            <div class="ph-bubble">Built a 2-macro chain over 42 files. Ready to run this batch — approve?</div>
-            <div class="ph-approval">
-              <div class="ph-approval-title">Run batch on 42 files?</div>
-              <div>2 macros · cleanup.swp, export-pdf.swp</div>
-              <div class="ph-approval-actions">
-                <div class="ph-approval-btn run">Run</div>
-                <div class="ph-approval-btn no">No</div>
-              </div>
-            </div>
-            <div class="ph-chat-input">Ask Copilot anything…</div>
-          </div>
-        </div>
-      </div>
-      <p class="ph-caption">In-app preview, recreated for the web — Setup panel on the left, Copilot panel on the right.</p>
+		<div class="screenshot-frame">
+			<img
+				src="assets/SwMacroFlow.png"
+				alt="SwMacroFlow application screenshot"
+				style="width:100%; display:block;"
+			>
+		</div>
     </div>
   </section>
 
@@ -848,13 +799,13 @@
   <section id="how-it-works" style="background:var(--bg-alt);">
     <div class="section-head">
       <div class="section-tag">How it works</div>
-      <h2>From download to first batch in minutes</h2>
+      <h2>From install to first batch in minutes</h2>
     </div>
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
-        <h3>Get your setup link</h3>
-        <p>Enter your email and we'll send the installer link straight to your inbox.</p>
+        <h3>Get the installer</h3>
+        <p>Request access and receive the installer details straight to your inbox.</p>
       </div>
       <div class="step">
         <div class="step-num">2</div>
@@ -863,8 +814,8 @@
       </div>
       <div class="step">
         <div class="step-num">3</div>
-        <h3>Enter your license key</h3>
-        <p>Paste the key you received after purchase to unlock the full app.</p>
+        <h3>Open SwMacroFlow</h3>
+        <p>Launch the app and connect it to your existing SOLIDWORKS installation.</p>
       </div>
       <div class="step">
         <div class="step-num">4</div>
@@ -874,33 +825,11 @@
     </div>
   </section>
 
-  <!-- Pricing -->
-  <section id="pricing">
-    <div class="section-head">
-      <div class="section-tag">Pricing</div>
-      <h2>One price. Yours forever.</h2>
-      <p>No subscriptions, no per-seat fees — pay once and keep every future update.</p>
-    </div>
-    <div class="pricing-card">
-      <span class="pricing-badge">Most affordable</span>
-      <p class="price">₹349 <small>/ one-time</small></p>
-      <p class="price-note">Single-user license · Free updates</p>
-      <ul class="pricing-list">
-        <li>Full access to batch macro chaining</li>
-        <li>AI Copilot panel included</li>
-        <li>Full bundled macro library</li>
-        <li>Free lifetime updates via auto-updater</li>
-        <li>Email support</li>
-      </ul>
-      <button class="btn btn-primary btn-block" onclick="openModal()">Buy Now — ₹349</button>
-    </div>
-  </section>
-
   <!-- FAQ -->
   <section id="faq" style="background:var(--bg-alt);">
     <div class="section-head">
       <div class="section-tag">FAQ</div>
-      <h2>Good to know before you buy</h2>
+      <h2>Good to know before you get started</h2>
     </div>
     <div class="faq-list">
       <details>
@@ -908,20 +837,16 @@
         <p>SwMacroFlow isn't locked to one release — it works with any SOLIDWORKS version you already have installed and licensed (x64). It joins the SOLIDWORKS session on your machine rather than shipping its own.</p>
       </details>
       <details>
-        <summary>Is there a free trial?</summary>
-        <p>Yes — enter your email above to get a trial download link. Trial terms are shown inside the app on first run.</p>
+        <summary>How do I get access?</summary>
+        <p>Use the access button at the top of the page and enter your email. We'll send the installer details to your inbox.</p>
       </details>
       <details>
-        <summary>What happens after I pay?</summary>
-        <p>You'll receive your setup link and license key by email. Run the installer, paste in your key, and you're set.</p>
+        <summary>Does SwMacroFlow update itself?</summary>
+        <p>Yes. New builds can be delivered through the app's built-in auto-updater when updates are available.</p>
       </details>
       <details>
-        <summary>Do I get future updates for free?</summary>
-        <p>Yes. The ₹349 license is one-time and includes all future updates through the app's built-in auto-updater.</p>
-      </details>
-      <details>
-        <summary>What's your refund policy?</summary>
-        <p>Refund policy details will be published here before launch — reach out to support if you have questions in the meantime.</p>
+        <summary>Do I need administrator rights?</summary>
+        <p>No. SwMacroFlow uses a per-user installation and is designed to run without an administrator elevation prompt.</p>
       </details>
       <details>
         <summary>Does SwMacroFlow install anything into SOLIDWORKS?</summary>
@@ -929,19 +854,7 @@
       </details>
     </div>
   </section>
-
-  <!-- Final CTA -->
-  <section>
-    <div class="final-cta">
-      <h2>Stop clicking through the same macro, file after file.</h2>
-      <p>Get SwMacroFlow for a one-time ₹349 and automate your next batch job today.</p>
-      <div class="hero-ctas" style="margin-bottom:0;">
-        <a href="#pricing" class="btn btn-primary">Buy Now — ₹349</a>
-        <button class="btn btn-secondary" onclick="openModal()">Download Free Trial</button>
-      </div>
-    </div>
-  </section>
-
+  
 </main>
 
 <footer>
@@ -950,8 +863,7 @@
       <img src="assets/logo.png" alt="SwMacroFlow logo">
       SwMacroFlow
     </div>
-    <div class="footer-links">
-      <a href="https://github.com/Urjitpatel28/SwMacroFlow" target="_blank" rel="noopener">GitHub</a>
+    <div class="footer-links">     
       <a href="https://github.com/Urjitpatel28/SwMacroFlow/tree/master/docs" target="_blank" rel="noopener">Docs</a>
       <a href="mailto:urjitpatel28@gmail.com">Contact / Support</a>
       <a href="#">Terms</a>
@@ -967,8 +879,8 @@
     <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
 
     <div id="modalForm">
-      <h3>Get your setup link</h3>
-      <p>Enter your email and we'll send you the SwMacroFlow installer link.</p>
+      <h3>Request early access</h3>
+      <p>Enter your email and we'll send you the SwMacroFlow installer details.</p>
       <!--
         TODO before going live: replace YOUR_FORM_ID below with your own
         Formspree (https://formspree.io) form ID, or swap this <form> for
@@ -978,14 +890,14 @@
       <form id="emailForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" onsubmit="return handleSubmit(event)">
         <label for="email">Email address</label>
         <input type="email" id="email" name="email" placeholder="you@example.com" required>
-        <button type="submit" class="btn btn-primary btn-block">Send me the setup link</button>
+        <button type="submit" class="btn btn-primary btn-block">Request Access</button>
       </form>
     </div>
 
     <div class="modal-success" id="modalSuccess">
       <div class="check">✓</div>
       <h3>Thanks!</h3>
-      <p>We'll email your setup link shortly. Keep an eye on your inbox.</p>
+      <p>We'll email your access details and setup link shortly. Keep an eye on your inbox.</p>
     </div>
   </div>
 </div>
