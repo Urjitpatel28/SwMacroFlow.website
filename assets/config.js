@@ -7,8 +7,11 @@
 // that only the service-role key can call. That key, and the Google and Microsoft client secrets,
 // never leave Supabase.
 
-export const SUPABASE_URL = "https://REPLACE-ME.supabase.co";
-export const SUPABASE_ANON_KEY = "REPLACE-ME";
+export const SUPABASE_URL = "https://egqgwkrxinmlfmcuadlp.supabase.co";
+
+// Supabase's newer publishable key format, replacing the legacy JWT-shaped anon key. Same role, and
+// the same reasoning above about why it belongs in a file served to every visitor.
+export const SUPABASE_ANON_KEY = "sb_publishable_leOadXmb5UMAcW9tw1g-qQ_S1jUr1P9";
 
 export const SITE_URL = "https://swmacroflow.in";
 export const SUPPORT_EMAIL = "support@swmacroflow.in";
