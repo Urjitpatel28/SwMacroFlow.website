@@ -18,6 +18,9 @@
 <meta name="twitter:description" content="Run chains of SOLIDWORKS VBA macros across hundreds of files without installing a SOLIDWORKS add-in.">
 <meta name="twitter:image" content="https://swmacroflow.in/assets/SwMacroFlow.png">
 <link rel="icon" href="assets/logo.png" type="image/png">
+<!-- Tokens, nav, footer and buttons, shared with the account pages so the two cannot drift apart.
+     Page-specific rules stay in the <style> block below. -->
+<link rel="stylesheet" href="assets/site.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -43,7 +46,10 @@
       },
       "offers": {
         "@type": "Offer",
-        "availability": "https://schema.org/PreOrder",
+        "availability": "https://schema.org/InStock",
+        "price": "0",
+        "priceCurrency": "INR",
+        "priceValidUntil": "2027-08-01",
         "url": "https://swmacroflow.in/"
       }
     },
@@ -70,7 +76,23 @@
           "name": "How do I get access to SwMacroFlow?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Use the access button on the page and enter your email. The installer details will be sent to your inbox."
+            "text": "Create a free account, then download the installer. SwMacroFlow is free for everyone until 1 August 2027; after that it becomes a yearly subscription."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need an account to use SwMacroFlow?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. SwMacroFlow asks you to sign in the first time you open it, so your licence can be tied to your account. After that it keeps working offline for a fortnight at a time."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use SwMacroFlow on more than one computer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Your licence is active on one computer at a time. To move it, release the old computer from your account page or from Settings > Account in the app, which costs nothing. Moving between different computers is limited to three changes; after that, contact support."
           }
         },
         {
@@ -103,134 +125,8 @@
 }
 </script>
 <style>
-  :root {
-    --bg: #0b0d12;
-    --bg-alt: #12151d;
-    --panel: #161a24;
-    --panel-border: #262c3a;
-    --text: #eef1f7;
-    --text-dim: #a3acc2;
-    --text-faint: #6b7488;
-    --accent: #e2231a;
-    --accent-2: #ff5b45;
-    --accent-soft: rgba(226, 35, 26, 0.14);
-    --danger: #ff5b45;
-    --blue: #4f8cff;
-    --success: #34c77b;
-    --radius: 14px;
-    --max-w: 1120px;
-    color-scheme: dark;
-  }
-
-  @media (prefers-color-scheme: light) {
-    :root {
-      --bg: #f7f7fa;
-      --bg-alt: #ffffff;
-      --panel: #ffffff;
-      --panel-border: #e4e6ee;
-      --text: #16181f;
-      --text-dim: #4b5266;
-      --text-faint: #8890a3;
-      --accent-soft: rgba(226, 35, 26, 0.08);
-      color-scheme: light;
-    }
-  }
-
-  :root[data-theme="light"] {
-    --bg: #f7f7fa;
-    --bg-alt: #ffffff;
-    --panel: #ffffff;
-    --panel-border: #e4e6ee;
-    --text: #16181f;
-    --text-dim: #4b5266;
-    --text-faint: #8890a3;
-    --accent-soft: rgba(226, 35, 26, 0.08);
-    color-scheme: light;
-  }
-
-  :root[data-theme="dark"] {
-    --bg: #0b0d12;
-    --bg-alt: #12151d;
-    --panel: #161a24;
-    --panel-border: #262c3a;
-    --text: #eef1f7;
-    --text-dim: #a3acc2;
-    --text-faint: #6b7488;
-    --accent-soft: rgba(226, 35, 26, 0.14);
-    color-scheme: dark;
-  }
-
-  * { box-sizing: border-box; }
-
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  a { color: inherit; }
-
-  .wrap {
-    max-width: var(--max-w);
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-
-  /* ---------- Nav ---------- */
-  header.nav {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    backdrop-filter: blur(10px);
-    background: color-mix(in srgb, var(--bg) 82%, transparent);
-    border-bottom: 1px solid var(--panel-border);
-  }
-  .nav-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 24px;
-    max-width: var(--max-w);
-    margin: 0 auto;
-  }
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 700;
-    font-size: 17px;
-    text-decoration: none;
-    color: var(--text);
-  }
-  .brand img { width: 28px; height: 28px; border-radius: 7px; }
-  .nav-links {
-    display: flex;
-    gap: 28px;
-    font-size: 14px;
-    color: var(--text-dim);
-  }
-  .nav-links a { text-decoration: none; }
-  .nav-links a:hover { color: var(--text); }
-  .nav-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--accent);
-    color: #fff;
-    padding: 9px 18px;
-    border-radius: 999px;
-    font-weight: 600;
-    font-size: 14px;
-    text-decoration: none;
-    white-space: nowrap;
-  }
-  .nav-cta:hover { background: var(--accent-2); }
-  @media (max-width: 760px) {
-    .nav-links { display: none; }
-  }
+  /* Tokens, base type, .wrap, the nav, the buttons and the footer now live in assets/site.css,
+     because the account pages need them too. What remains here is only used by this page. */
 
   /* ---------- Hero ---------- */
   .hero {
@@ -276,31 +172,6 @@
     flex-wrap: wrap;
     margin-bottom: 18px;
   }
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 26px;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 15px;
-    text-decoration: none;
-    border: 1px solid transparent;
-    cursor: pointer;
-    transition: transform .12s ease, background .15s ease, border-color .15s ease;
-  }
-  .btn:active { transform: scale(0.98); }
-  .btn-primary {
-    background: var(--accent);
-    color: #fff;
-  }
-  .btn-primary:hover { background: var(--accent-2); }
-  .btn-secondary {
-    background: var(--panel);
-    color: var(--text);
-    border-color: var(--panel-border);
-  }
-  .btn-secondary:hover { border-color: var(--text-faint); }
   .hero-note {
     font-size: 13px;
     color: var(--text-faint);
@@ -657,7 +528,6 @@
     font-weight: 700;
     flex-shrink: 0;
   }
-  .btn-block { width: 100%; justify-content: center; }
 
   /* ---------- FAQ ---------- */
   .faq-list {
@@ -711,27 +581,6 @@
   }
   .final-cta h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 0 0 14px; }
   .final-cta p { color: var(--text-dim); margin: 0 0 30px; }
-
-  /* ---------- Footer ---------- */
-  footer {
-    border-top: 1px solid var(--panel-border);
-    padding: 40px 24px 32px;
-  }
-  .footer-inner {
-    max-width: var(--max-w);
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-  .footer-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; }
-  .footer-brand img { width: 24px; height: 24px; border-radius: 6px; }
-  .footer-links { display: flex; gap: 22px; flex-wrap: wrap; font-size: 13px; color: var(--text-dim); }
-  .footer-links a { text-decoration: none; }
-  .footer-links a:hover { color: var(--text); }
-  .footer-copy { font-size: 12px; color: var(--text-faint); width: 100%; margin-top: 24px; }
 
   /* ---------- Modal ---------- */
   .modal-overlay {
@@ -826,7 +675,13 @@
       <a href="#features">Features</a>
       <a href="#how-it-works">How it works</a>
       <a href="#faq">FAQ</a>
+      <!-- Rendered signed-out, then upgraded by assets/session.js once Supabase answers. The other
+           way round - render nothing, fill it in - makes the nav pop in on every single page load,
+           including for the majority who are signed out and would never see it change. -->
+      <a href="login.html" data-account="signed-out">Sign in</a>
+      <a href="account.html" data-account="signed-in" hidden>Account</a>
     </nav>
+    <a class="nav-cta" href="signup.html" data-account="signed-out">Create free account</a>
   </div>
 </header>
 
@@ -846,10 +701,13 @@
       <h2>Stop clicking through the same macro, file after file.</h2>
       <p>Build the workflow once, run it across your files, and keep repetitive SOLIDWORKS work moving.</p>
 	  <div class="hero-ctas">
-      <span class="btn btn-primary" aria-disabled="true">Launching Soon</span>
-      <button class="btn btn-secondary" onclick="openModal()">Join Beta Trial</button>
+      <a class="btn btn-primary" href="signup.html">Create free account</a>
+      <a class="btn btn-secondary" href="https://github.com/Urjitpatel28/SwMacroFlow.Releases/releases/latest" target="_blank" rel="noopener">Download for Windows</a>
     </div>
-    <div class="hero-note">Works with your existing SOLIDWORKS install · Windows x64</div>
+    <!-- The licence terms, before the sign-up button rather than after it. This is the only place
+         someone finds out what they are agreeing to before they hand over an email address, and
+         burying it in Terms would be a choice, not an oversight. -->
+    <div class="hero-note">Free for everyone until 1 August 2027 · One computer at a time · Windows x64</div>
     </div>
   </section>
     
@@ -949,7 +807,15 @@
       </details>
       <details>
         <summary>How do I get access?</summary>
-        <p>Use the access button at the top of the page and enter your email. We'll send the installer details to your inbox.</p>
+        <p>Create a free account, then download the installer. SwMacroFlow is free for everyone until 1 August 2027; after that it becomes a yearly subscription.</p>
+      </details>
+      <details>
+        <summary>Do I need an account?</summary>
+        <p>Yes. SwMacroFlow asks you to sign in the first time you open it, so your licence can be tied to your account. After that it keeps working offline for a fortnight at a time.</p>
+      </details>
+      <details>
+        <summary>Can I use it on more than one computer?</summary>
+        <p>Your licence is active on one computer at a time. To move it, release the old computer from <a href="account.html">your account page</a> or from Settings &rsaquo; Account in the app — that costs nothing, and so does going back to a computer you left. Moving between different computers is limited to three changes; after that, email us and we'll sort it out.</p>
       </details>
       <details>
         <summary>Does SwMacroFlow update itself?</summary>
@@ -977,85 +843,26 @@
     <div class="footer-links">     
       <a href="https://github.com/Urjitpatel28/SwMacroFlow/tree/master/docs" target="_blank" rel="noopener">Docs</a>
       <a href="mailto:urjitpatel28@gmail.com">Contact / Support</a>
-      <a href="#">Terms</a>
-      <a href="#">Privacy</a>
+      <a href="account.html">Your account</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
     </div>
     <div class="footer-copy">© 2026 SwMacroFlow. All rights reserved.</div>
   </div>
 </footer>
 
-<!-- Email capture modal -->
-<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this) closeModal()">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+<!--
+  The "Join Beta Trial" modal that used to sit here posted an email address to formsubmit.co so it
+  could be mailed installer details by hand. Real sign-up replaces it: keeping both would mean two
+  ways to register that know nothing about each other, and an address collected by the old one would
+  never become an account.
 
-    <div id="modalForm">
-      <h3>Request early access</h3>
-      <p>Enter your email and we'll send you the SwMacroFlow installer details.</p>
-      <form id="emailForm" action="https://formsubmit.co/ajax/urjitpatel28@gmail.com" method="POST" onsubmit="return handleSubmit(event)">
-        <input type="hidden" name="_subject" value="New SwMacroFlow beta access request">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="text" name="_honey" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <label for="email">Email address</label>
-        <input type="email" id="email" name="email" placeholder="you@example.com" required>
-        <button type="submit" class="btn btn-primary btn-block">Request Access</button>
-        <div class="modal-status" id="modalStatus" aria-live="polite"></div>
-      </form>
-    </div>
+  The .modal-* rules are left in the stylesheet above - they are small, and stripping them is churn
+  on a live page unrelated to signing in.
+-->
 
-    <div class="modal-success" id="modalSuccess">
-      <div class="check">✓</div>
-      <h3>Thanks!</h3>
-      <p>We'll email your access details and setup link shortly. Keep an eye on your inbox.</p>
-    </div>
-  </div>
-</div>
-
-<script>
-  function openModal() {
-    document.getElementById('modalOverlay').classList.add('open');
-    document.getElementById('modalForm').style.display = 'block';
-    document.getElementById('modalSuccess').style.display = 'none';
-    const status = document.getElementById('modalStatus');
-    status.textContent = '';
-    status.classList.remove('error');
-  }
-  function closeModal() {
-    document.getElementById('modalOverlay').classList.remove('open');
-  }
-  function handleSubmit(e) {
-    e.preventDefault();
-    const form = e.target;
-    const button = form.querySelector('button[type="submit"]');
-    const status = document.getElementById('modalStatus');
-    const data = new FormData(form);
-    data.set('_replyto', data.get('email'));
-
-    button.disabled = true;
-    status.textContent = 'Sending request...';
-    status.classList.remove('error');
-
-    fetch(form.action, {
-      method: 'POST',
-      body: data,
-      headers: { 'Accept': 'application/json' }
-    }).then((response) => {
-      if (!response.ok) {
-        throw new Error('Submission failed');
-      }
-      document.getElementById('modalForm').style.display = 'none';
-      document.getElementById('modalSuccess').style.display = 'block';
-      form.reset();
-    }).catch(() => {
-      status.textContent = 'Could not send right now. Please email urjitpatel28@gmail.com.';
-      status.classList.add('error');
-    }).finally(() => {
-      button.disabled = false;
-    });
-    return false;
-  }
-</script>
+<!-- Swaps the nav's Sign in / Create free account pair for Account when there is a session. -->
+<script type="module" src="assets/session.js"></script>
 
 </body>
 </html>

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>Privacy Policy — SwMacroFlow</title>
+<meta name="description" content="What SwMacroFlow collects, why, and how to have it deleted.">
+<link rel="canonical" href="https://swmacroflow.in/privacy.html">
+<link rel="icon" href="assets/logo.png" type="image/png">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/auth.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <img src="assets/logo.png" alt="SwMacroFlow logo">
+      SwMacroFlow
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="terms.html">Terms</a>
+      <a href="login.html" data-account="signed-out">Sign in</a>
+      <a href="account.html" data-account="signed-in" hidden>Account</a>
+    </nav>
+  </div>
+</header>
+
+<main class="legal">
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated 11 August 2026</p>
+
+  <p>
+    SwMacroFlow is a Windows desktop application that runs SOLIDWORKS macros on your own computer,
+    plus a small account system that decides whether your licence is valid. This policy covers both.
+    It is written to be read, not to be survived.
+  </p>
+
+  <h2>The short version</h2>
+  <p>
+    We collect your email address so you can have an account, and a one-way fingerprint of your
+    computer so a licence can only be active on one machine at a time. We do not see your CAD files,
+    your macros, or anything you do inside SOLIDWORKS. We do not sell anything to anyone.
+  </p>
+
+  <h2>What we collect</h2>
+
+  <table>
+    <thead>
+      <tr><th>What</th><th>Why</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Your email address</strong></td>
+        <td>It identifies your account, confirms sign-up, resets your password, and is how we reach
+            you about your licence.</td>
+      </tr>
+      <tr>
+        <td><strong>Your Google or Microsoft identity</strong>, if you sign in that way</td>
+        <td>We receive your email address and a user identifier from them so we can recognise you on
+            the next sign-in. We do not receive your password, and we do not ask either provider for
+            access to your files, contacts, or mail.</td>
+      </tr>
+      <tr>
+        <td><strong>A one-way fingerprint of your computer</strong></td>
+        <td>A salted SHA-256 hash of the identifier Windows generates when it is installed. It cannot
+            be reversed back into that identifier, and it is used for exactly one thing: knowing
+            whether the computer asking to run SwMacroFlow is the one your licence is on.</td>
+      </tr>
+      <tr>
+        <td><strong>Your computer's name</strong> (for example <em>OFFICE-PC</em>)</td>
+        <td>Stored as you see it, so that when your licence is in use elsewhere we can say
+            <em>"active on OFFICE-PC"</em> instead of showing you a hash you could not act on.</td>
+      </tr>
+      <tr>
+        <td><strong>A record of activations and releases</strong></td>
+        <td>Which computer was activated or released, and when. It is what lets us answer honestly
+            when someone asks why their licence will not move, and it is the only way to notice a
+            licence being shared across an office.</td>
+      </tr>
+      <tr>
+        <td><strong>Ordinary server logs</strong></td>
+        <td>Our hosting provider records IP addresses and timestamps for requests, as any web service
+            does, to keep the service running and to limit abuse.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>What we do not collect</h2>
+  <ul>
+    <li><strong>Nothing about your work.</strong> No CAD files, no file names, no folder paths, no
+        macro code, no batch results. All of that stays on your computer; the licence check sends
+        only your account token and the fingerprint above.</li>
+    <li><strong>No usage analytics or telemetry.</strong> The application does not report what you
+        do with it. The website carries no analytics, no tracking pixels, and no advertising
+        cookies.</li>
+    <li><strong>No payment card details.</strong> Payments are not implemented yet. When they are,
+        card details will go to the payment processor and never to us.</li>
+    <li><strong>Your AI Copilot API key never reaches us.</strong> If you use the Copilot panel, the
+        key you enter is encrypted on your own machine with Windows data protection and is sent only
+        to the AI provider you chose.</li>
+  </ul>
+
+  <h2>Who processes it</h2>
+  <p>
+    Accounts and licence records are hosted on <strong>Supabase</strong>, which acts as our data
+    processor and stores the data on its cloud infrastructure. Confirmation and password-reset emails
+    are sent through a third-party email provider. This website is served by <strong>GitHub
+    Pages</strong>. If you sign in with Google or Microsoft, that sign-in happens on their systems
+    under their own privacy policies.
+  </p>
+
+  <h2>How long we keep it</h2>
+  <p>
+    Your account and licence record last as long as your account does. Activation history is kept
+    while the account exists, because it is what a support conversation about a blocked licence
+    depends on. Server logs are kept for a short period by our host and then discarded.
+  </p>
+
+  <h2>Your choices</h2>
+  <ul>
+    <li><strong>See what we hold.</strong> Your account page shows your email, your plan, the
+        computer your licence is on, and how many device changes you have used.</li>
+    <li><strong>Release a computer</strong> at any time from your account page or from within the
+        application, which clears the fingerprint currently marked active.</li>
+    <li><strong>Ask for a copy, a correction, or deletion</strong> by emailing us. Deleting your
+        account removes your email address, your licence, and its activation history, and releases
+        any computer it was on. It cannot be undone.</li>
+  </ul>
+
+  <h2>Children</h2>
+  <p>SwMacroFlow is a professional engineering tool and is not directed at children.</p>
+
+  <h2>Changes</h2>
+  <p>
+    If this policy changes in a way that affects what we collect or why, we will update the date at
+    the top and, for anything significant, email account holders.
+  </p>
+
+  <h2>Contact</h2>
+  <p>
+    Email <a href="mailto:urjitpatel28@gmail.com">urjitpatel28@gmail.com</a> for anything in this
+    policy, including deletion requests.
+  </p>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="assets/logo.png" alt="SwMacroFlow logo">
+      SwMacroFlow
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="mailto:urjitpatel28@gmail.com">Contact / Support</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+    <div class="footer-copy">© 2026 SwMacroFlow. All rights reserved.</div>
+  </div>
+</footer>
+
+<script type="module" src="assets/session.js"></script>
+
+</body>
+</html>

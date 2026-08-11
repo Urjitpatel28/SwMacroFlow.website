@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Email confirmed — SwMacroFlow</title>
+<link rel="icon" href="assets/logo.png" type="image/png">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/auth.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <img src="assets/logo.png" alt="SwMacroFlow logo">
+      SwMacroFlow
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Where the confirmation link in the sign-up email lands. -->
+<main class="auth-main">
+  <div class="auth-card">
+    <h1 id="heading">Confirming your email…</h1>
+    <p id="detail">One moment.</p>
+
+    <div class="auth-panel">
+      <a class="btn btn-primary btn-block" href="login.html">Go to sign in</a>
+      <a class="btn btn-secondary btn-block"
+         href="https://github.com/Urjitpatel28/SwMacroFlow.Releases/releases/latest"
+         target="_blank" rel="noopener">Download SwMacroFlow</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="assets/logo.png" alt="SwMacroFlow logo">
+      SwMacroFlow
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="mailto:urjitpatel28@gmail.com">Contact / Support</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+    <div class="footer-copy">© 2026 SwMacroFlow. All rights reserved.</div>
+  </div>
+</footer>
+
+<script type="module">
+import { supabase } from "./assets/auth.js";
+
+const heading = document.getElementById("heading");
+const detail = document.getElementById("detail");
+
+// Supabase reports a refused or expired link in the URL fragment rather than by failing the
+// redirect - most often because the link was already used, or has aged out.
+const fragment = new URLSearchParams(location.hash.replace(/^#/, ""));
+const failure = fragment.get("error_description") || fragment.get("error");
+
+if (failure) {
+  heading.textContent = "That link did not work";
+  detail.textContent =
+    "It may have already been used, or expired. Try signing in — if that does not work, sign up again to get a fresh link.";
+} else {
+  const { data } = await supabase.auth.getSession();
+
+  heading.textContent = "Email confirmed";
+  detail.textContent = data?.session
+    ? "You are signed in here. Open SwMacroFlow and sign in there to activate this computer."
+    : "Open SwMacroFlow and sign in to activate this computer.";
+}
+</script>
+
+</body>
+</html>

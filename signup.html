@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Create your account — SwMacroFlow</title>
+<link rel="icon" href="assets/logo.png" type="image/png">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/auth.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <img src="assets/logo.png" alt="SwMacroFlow logo">
+      SwMacroFlow
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="login.html" data-account="signed-out">Sign in</a>
+      <a href="account.html" data-account="signed-in" hidden>Account</a>
+    </nav>
+  </div>
+</header>
+
+<main class="auth-main">
+  <div class="auth-card">
+    <h1>Create your account</h1>
+    <p>
+      SwMacroFlow is free for everyone until 1 August 2027, then a yearly subscription. Your licence
+      is active on one computer at a time — you can move it, three times.
+    </p>
+
+    <div class="auth-panel">
+      <form id="form" novalidate>
+        <label for="email">Email</label>
+        <input id="email" type="email" autocomplete="username" placeholder="you@example.com" required>
+
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="new-password" minlength="6" required>
+
+        <button id="submit" class="btn btn-primary btn-block" type="submit">Create account</button>
+      </form>
+
+      <p id="message" class="message"></p>
+
+      <div class="divider">or</div>
+      <button id="google" class="btn btn-secondary btn-block" type="button">Continue with Google</button>
+      <button id="microsoft" class="btn btn-secondary btn-block" type="button">Continue with Microsoft</button>
+    </div>
+
+    <p class="auth-links">
+      By creating an account you agree to our <a href="terms.html">Terms</a>
+      and <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <p class="auth-links">Already have an account? <a href="login.html">Sign in</a></p>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="assets/logo.png" alt="SwMacroFlow logo">
+      SwMacroFlow
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="mailto:urjitpatel28@gmail.com">Contact / Support</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+    <div class="footer-copy">© 2026 SwMacroFlow. All rights reserved.</div>
+  </div>
+</footer>
+
+<script type="module" src="assets/session.js"></script>
+<script type="module">
+import { supabase, say, busy, readable, signInWithProvider, SITE_URL } from "./assets/auth.js";
+
+const form = document.getElementById("form");
+const submit = document.getElementById("submit");
+const google = document.getElementById("google");
+const microsoft = document.getElementById("microsoft");
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if (!email || password.length < 6) {
+    say("Enter an email address and a password of at least six characters.", "error");
+    return;
+  }
+
+  busy(true, submit, google, microsoft);
+  say("Creating your account…");
+
+  const { error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: { emailRedirectTo: `${SITE_URL}/verify.html` },
+  });
+
+  busy(false, submit, google, microsoft);
+
+  if (error) {
+    say(readable(error), "error");
+    return;
+  }
+
+  // Supabase answers the same way whether or not the address was already registered, and this
+  // wording is true either way. It deliberately does not confirm that an account now exists, which
+  // would turn the form into a way to test whether an address is registered.
+  say("Check your inbox for a confirmation link, then sign in.", "ok");
+  form.reset();
+});
+
+google.addEventListener("click", () => signInWithProvider("google", `${SITE_URL}/account.html`));
+microsoft.addEventListener("click", () => signInWithProvider("azure", `${SITE_URL}/account.html`));
+</script>
+
+</body>
+</html>

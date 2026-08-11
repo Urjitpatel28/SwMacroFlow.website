@@ -1,0 +1,202 @@
+/* SwMacroFlow — shared design tokens and page chrome.
+ *
+ * Extracted from index.html's inline <style> so the account pages can look like the site instead of
+ * restating its palette. Everything here is what *every* page needs: the tokens, the base type, the
+ * nav, the footer, and the buttons. Anything used by only one page stays inline in that page.
+ *
+ * The four :root blocks below are not redundant. The first is the dark default; the second follows
+ * the operating system; the last two exist so a theme can be pinned with data-theme on <html>.
+ * Nothing sets that attribute today, but dropping the blocks would quietly remove the hook. All
+ * four have to stay in step - a token added to one and forgotten in another shows up as a colour
+ * that only goes wrong for people whose OS is set the other way, which is the sort of bug nobody
+ * reports because nobody sees it on their own machine.
+ */
+
+:root {
+  --bg: #0b0d12;
+  --bg-alt: #12151d;
+  --panel: #161a24;
+  --panel-border: #262c3a;
+  --text: #eef1f7;
+  --text-dim: #a3acc2;
+  --text-faint: #6b7488;
+  --accent: #e2231a;
+  --accent-2: #ff5b45;
+  --accent-soft: rgba(226, 35, 26, 0.14);
+  --danger: #ff5b45;
+  --blue: #4f8cff;
+  --success: #34c77b;
+  --radius: 14px;
+  --max-w: 1120px;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f7f7fa;
+    --bg-alt: #ffffff;
+    --panel: #ffffff;
+    --panel-border: #e4e6ee;
+    --text: #16181f;
+    --text-dim: #4b5266;
+    --text-faint: #8890a3;
+    --accent-soft: rgba(226, 35, 26, 0.08);
+    color-scheme: light;
+  }
+}
+
+:root[data-theme="light"] {
+  --bg: #f7f7fa;
+  --bg-alt: #ffffff;
+  --panel: #ffffff;
+  --panel-border: #e4e6ee;
+  --text: #16181f;
+  --text-dim: #4b5266;
+  --text-faint: #8890a3;
+  --accent-soft: rgba(226, 35, 26, 0.08);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0b0d12;
+  --bg-alt: #12151d;
+  --panel: #161a24;
+  --panel-border: #262c3a;
+  --text: #eef1f7;
+  --text-dim: #a3acc2;
+  --text-faint: #6b7488;
+  --accent-soft: rgba(226, 35, 26, 0.14);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+
+.wrap {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---------- Nav ---------- */
+header.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(10px);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  border-bottom: 1px solid var(--panel-border);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 17px;
+  text-decoration: none;
+  color: var(--text);
+}
+.brand img { width: 28px; height: 28px; border-radius: 7px; }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  font-size: 14px;
+  color: var(--text-dim);
+}
+.nav-links a { text-decoration: none; }
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent);
+  color: #fff;
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.nav-cta:hover { background: var(--accent-2); }
+
+/* Below this width .nav-links is hidden, so the account links inside it would go with it. They are
+   the one thing on the page a signed-in person came for, so they move out to sit beside the brand
+   instead of disappearing. */
+@media (max-width: 760px) {
+  .nav-links { display: none; }
+  .nav-account { display: flex; align-items: center; gap: 16px; font-size: 14px; }
+}
+
+.nav-account { display: flex; align-items: center; gap: 16px; }
+.nav-account a { text-decoration: none; color: var(--text-dim); font-size: 14px; }
+.nav-account a:hover { color: var(--text); }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 26px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform .12s ease, background .15s ease, border-color .15s ease;
+}
+.btn:active { transform: scale(0.98); }
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--accent-2); }
+.btn-secondary {
+  background: var(--panel);
+  color: var(--text);
+  border-color: var(--panel-border);
+}
+.btn-secondary:hover { border-color: var(--text-faint); }
+.btn-block { width: 100%; justify-content: center; }
+.btn:disabled { opacity: .55; cursor: default; transform: none; }
+
+/* ---------- Footer ---------- */
+footer {
+  border-top: 1px solid var(--panel-border);
+  padding: 40px 24px 32px;
+}
+.footer-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.footer-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+.footer-brand img { width: 24px; height: 24px; border-radius: 6px; }
+.footer-links { display: flex; gap: 22px; flex-wrap: wrap; font-size: 13px; color: var(--text-dim); }
+.footer-links a { text-decoration: none; }
+.footer-links a:hover { color: var(--text); }
+.footer-copy { font-size: 12px; color: var(--text-faint); width: 100%; margin-top: 24px; }
