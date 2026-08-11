@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>Documentation - SwMacroFlow</title>
+<meta name="description" content="SwMacroFlow documentation: how the batch runner works, writing SOLIDWORKS VBA macros for it, adding inputs, reading results, and troubleshooting.">
+<link rel="canonical" href="https://swmacroflow.in/docs.html">
+<link rel="icon" href="assets/logo.png" type="image/png">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <img src="assets/logo.png" alt="SwMacroFlow logo">
+      SwMacroFlow
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="docs.html" aria-current="page">Docs</a>
+      <a href="macros.html">Macros</a>
+      <a href="index.html#how-it-works">How it works</a>
+      <a href="index.html#faq">FAQ</a>
+    </nav>
+    <a class="nav-cta" href="https://github.com/Urjitpatel28/SwMacroFlow.Releases/releases/latest/download/SwMacroFlowSetup.exe" target="_blank" rel="noopener">Download</a>
+  </div>
+</header>
+
+<main class="docs-page">
+  <div class="docs-layout">
+
+    <aside class="docs-sidebar">
+      <label class="docs-search">
+        <span>Search docs</span>
+        <input id="docSearch" type="search" placeholder="Search every guide" autocomplete="off">
+      </label>
+      <nav id="docNav" class="docs-nav" aria-label="Documentation">
+        <p class="docs-nav-status">Loading guides...</p>
+      </nav>
+    </aside>
+
+    <article class="docs-content">
+      <p class="page-eyebrow">Documentation</p>
+      <h1 id="docTitle">SwMacroFlow docs</h1>
+      <div id="docBody" class="docs-markdown">
+        <p>Loading the guides...</p>
+      </div>
+    </article>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="assets/logo.png" alt="SwMacroFlow logo">
+      SwMacroFlow
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="docs.html">Docs</a>
+      <a href="macros.html">Macros</a>
+      <a href="mailto:urjitpatel28@gmail.com">Contact / Support</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 SwMacroFlow. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="assets/markdown.js"></script>
+<script>
+  // The guides are a copy of SwMacroFlow.Ui/Resources/Help/*.md from the application repository,
+  // which is private, so they are served from this repo rather than fetched from GitHub.
+  const DOCS_PATH = "docs";
+
+  const nav = document.getElementById("docNav");
+  const search = document.getElementById("docSearch");
+  const titleEl = document.getElementById("docTitle");
+  const bodyEl = document.getElementById("docBody");
+
+  const state = { groups: [], docs: new Map(), current: "" };
+
+  function titleFromSlug(slug) {
+    return slug.replace(/^\d+-/, "").replace(/-/g, " ");
+  }
+
+  async function fetchText(url) {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`Request failed with ${response.status}`);
+    return response.text();
+  }
+
+  function renderNav() {
+    const query = search.value.trim().toLowerCase();
+    const parts = [];
+
+    state.groups.forEach(group => {
+      const matches = group.docs.filter(slug => {
+        const doc = state.docs.get(slug);
+        return doc && (!query || doc.search.includes(query));
+      });
+      if (!matches.length) return;
+
+      parts.push(`<p class="docs-nav-group">${SwMarkdown.escapeHtml(group.title)}</p><ul>`);
+      matches.forEach(slug => {
+        const doc = state.docs.get(slug);
+        const active = slug === state.current ? ' class="is-active" aria-current="page"' : "";
+        parts.push(`<li><a href="#${SwMarkdown.escapeHtml(slug)}"${active}>${SwMarkdown.escapeHtml(doc.title)}</a></li>`);
+      });
+      parts.push("</ul>");
+    });
+
+    nav.innerHTML = parts.length
+      ? parts.join("")
+      : `<p class="docs-nav-status">No guide matched your search.</p>`;
+  }
+
+  function showDoc(slug) {
+    const doc = state.docs.get(slug);
+    if (!doc) return;
+
+    state.current = slug;
+    titleEl.textContent = doc.title;
+    bodyEl.innerHTML = SwMarkdown.toHtml(doc.markdown, { stripFirstHeading: true });
+    document.title = `${doc.title} - SwMacroFlow docs`;
+    renderNav();
+  }
+
+  function showFailure() {
+    nav.innerHTML = `<p class="docs-nav-status">Guides unavailable.</p>`;
+    titleEl.textContent = "Documentation unavailable";
+    bodyEl.innerHTML =
+      `<p>The guides could not be loaded. Reload the page, and if it keeps failing please contact ` +
+      `<a href="mailto:urjitpatel28@gmail.com">urjitpatel28@gmail.com</a>.</p>` +
+      `<p>The same documentation ships inside the application: open SwMacroFlow and click ` +
+      `<strong>Help</strong>.</p>`;
+  }
+
+  function selectedSlug() {
+    const slug = decodeURIComponent(window.location.hash.replace(/^#/, ""));
+    return state.docs.has(slug) ? slug : "";
+  }
+
+  async function loadDocs() {
+    let manifest;
+    try {
+      manifest = JSON.parse(await fetchText(`${DOCS_PATH}/manifest.json`));
+    } catch (error) {
+      showFailure();
+      return;
+    }
+
+    const groups = Array.isArray(manifest.groups) ? manifest.groups : [];
+    const slugs = groups.reduce((all, group) => all.concat(group.docs || []), []);
+
+    // Every guide is fetched upfront: they are small static files, switching between them is then
+    // instant, and the search box can look inside bodies as well as titles.
+    await Promise.all(slugs.map(async slug => {
+      try {
+        const markdown = await fetchText(`${DOCS_PATH}/${slug}.md`);
+        const title = SwMarkdown.firstHeading(markdown) || titleFromSlug(slug);
+        state.docs.set(slug, { title, markdown, search: `${title}\n${markdown}`.toLowerCase() });
+      } catch (error) {
+        // A guide that will not load is dropped from the list rather than shown broken.
+      }
+    }));
+
+    // Drop guides that failed, then groups left with nothing in them.
+    state.groups = groups
+      .map(group => ({ title: group.title, docs: (group.docs || []).filter(slug => state.docs.has(slug)) }))
+      .filter(group => group.docs.length);
+
+    if (!state.groups.length) {
+      showFailure();
+      return;
+    }
+
+    showDoc(selectedSlug() || state.groups[0].docs[0]);
+  }
+
+  window.addEventListener("hashchange", () => {
+    const slug = selectedSlug();
+    if (slug && slug !== state.current) showDoc(slug);
+  });
+
+  search.addEventListener("input", renderNav);
+
+  loadDocs();
+</script>
+
+</body>
+</html>

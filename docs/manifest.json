@@ -1,0 +1,22 @@
+{
+  "_comment": "Mirrors HelpLibrary.Groups in the application repo (SwMacroFlow.Ui/Services/HelpLibrary.cs). Listed explicitly rather than enumerated so the order is the authored one. Sidebar labels come from each document's first H1, not from this file.",
+  "groups": [
+    {
+      "title": "Using the app",
+      "docs": ["01-overview", "02-using-the-app"]
+    },
+    {
+      "title": "Writing macros",
+      "docs": [
+        "03-writing-a-macro",
+        "04-adding-inputs",
+        "05-reporting-results",
+        "06-macro-authoring-spec"
+      ]
+    },
+    {
+      "title": "Reference",
+      "docs": ["07-troubleshooting"]
+    }
+  ]
+}

@@ -12,15 +12,30 @@ production**: `.github/workflows/static.yml` uploads the repository root to GitH
 | File | Indexed | Purpose |
 |---|---|---|
 | `index.html` | yes | Landing page with direct download links |
+| `docs.html` | yes | Documentation reader: guide list beside a Markdown viewer |
 | `macros.html` | yes | Public macro browser with docs and `.swp` downloads from GitHub |
 | `terms.html` | yes | Terms for free public use |
 | `privacy.html` | yes | What is collected and why |
 
 ```
-assets/site.css         tokens, nav, footer, buttons, legal-page styles
+assets/site.css         tokens, nav, footer, buttons, legal-page and docs styles
+assets/markdown.js      minimal Markdown renderer shared by docs.html and macros.html
 assets/logo.png         site icon and brand mark
 assets/SwMacroFlow.png  application screenshot
+docs/manifest.json      guide groups and order
+docs/*.md               the seven guides, rendered by docs.html
 ```
+
+## Updating the docs
+
+`docs/*.md` are a **manual one-way copy** of `SwMacroFlow.Ui\Resources\Help\*.md` from the application
+repository. That repository is private, so the guides cannot be fetched from GitHub at runtime the way
+`macros.html` fetches the public macro library — they have to live here.
+
+When the application's help guides change, copy the files across again and commit them. If a guide is
+added, removed, or reordered, also edit `docs/manifest.json` so its groups and order still match
+`HelpLibrary.Groups` in `SwMacroFlow.Ui\Services\HelpLibrary.cs`. Sidebar labels are not stored in the
+manifest: they come from each document's first `#` heading, the same rule the application uses.
 
 ## Access model
 
@@ -34,8 +49,9 @@ installer on GitHub Releases.
 python -m http.server 8000
 ```
 
-Then open `http://localhost:8000`. Because this is a static site, checking the three public pages and
-their links is enough for local verification.
+Then open `http://localhost:8000`. Because this is a static site, checking the public pages and their
+links is enough for local verification. `docs.html` must be checked over `http://`, not by opening the
+file directly: it `fetch`es `docs/manifest.json` and the guides, which browsers block on `file://`.
 
 ## Related
 

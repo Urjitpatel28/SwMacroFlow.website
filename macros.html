@@ -20,6 +20,7 @@
     </a>
     <nav class="nav-links">
       <a href="index.html#features">Features</a>
+      <a href="docs.html">Docs</a>
       <a href="macros.html" aria-current="page">Macros</a>
       <a href="index.html#how-it-works">How it works</a>
       <a href="index.html#faq">FAQ</a>
@@ -64,7 +65,7 @@
     </div>
     <div class="footer-links">
       <a href="index.html">Home</a>
-      <a href="file:///C:/Users/urjit/source/repos/SwMacroFlow/SwMacroFlow/docs">Docs</a>
+      <a href="docs.html">Docs</a>
       <a href="macros.html">Macros</a>
       <a href="mailto:urjitpatel28@gmail.com">Contact / Support</a>
       <a href="terms.html">Terms</a>
@@ -74,6 +75,7 @@
   </div>
 </footer>
 
+<script src="assets/markdown.js"></script>
 <script>
   const DEFAULT_MACRO_LIBRARY = {
     owner: "Urjitpatel28",
@@ -115,144 +117,12 @@
     return extensionless(name).toLowerCase();
   }
 
-  function escapeHtml(value) {
-    return value
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
+  const escapeHtml = SwMarkdown.escapeHtml;
+  const inlineMarkdown = SwMarkdown.inlineMarkdown;
 
-  function inlineMarkdown(value) {
-    return escapeHtml(value)
-      .replace(/`([^`]+)`/g, "<code>$1</code>")
-      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
-      .replace(/\*([^*]+)\*/g, "<em>$1</em>");
-  }
-
+  // Headings are demoted one level: a macro document's "#" sits under the card's own heading.
   function markdownToHtml(markdown) {
-    const lines = markdown.replace(/\r\n/g, "\n").split("\n");
-    const html = [];
-    let paragraph = [];
-    let list = [];
-    let table = [];
-    let code = [];
-    let inCode = false;
-
-    function flushParagraph() {
-      if (paragraph.length) {
-        html.push(`<p>${inlineMarkdown(paragraph.join(" "))}</p>`);
-        paragraph = [];
-      }
-    }
-
-    function flushList() {
-      if (list.length) {
-        html.push(`<ul>${list.map(item => `<li>${inlineMarkdown(item)}</li>`).join("")}</ul>`);
-        list = [];
-      }
-    }
-
-    function flushTable() {
-      if (table.length) {
-        const rows = table.filter(row => !isTableDivider(row));
-        html.push("<table>");
-        rows.forEach((row, index) => {
-          const cells = row.replace(/^\||\|$/g, "").split("|").map(cell => cell.trim());
-          const tag = index === 0 ? "th" : "td";
-          html.push(`<tr>${cells.map(cell => `<${tag}>${inlineMarkdown(cell)}</${tag}>`).join("")}</tr>`);
-        });
-        html.push("</table>");
-        table = [];
-      }
-    }
-
-    function flushCode() {
-      if (code.length) {
-        html.push(`<pre><code>${escapeHtml(code.join("\n"))}</code></pre>`);
-        code = [];
-      }
-    }
-
-    lines.forEach(line => {
-      const trimmed = line.trim();
-      if (trimmed === "```" || trimmed === "'''") {
-        if (inCode) {
-          flushCode();
-          inCode = false;
-        } else {
-          flushParagraph();
-          flushList();
-          flushTable();
-          inCode = true;
-        }
-        return;
-      }
-
-      if (inCode) {
-        code.push(line);
-        return;
-      }
-
-      if (!trimmed) {
-        flushParagraph();
-        flushList();
-        flushTable();
-        return;
-      }
-
-      if (trimmed.startsWith("|") && trimmed.includes("|")) {
-        flushParagraph();
-        flushList();
-        table.push(trimmed);
-        return;
-      }
-
-      flushTable();
-
-      if (trimmed.startsWith("# ")) {
-        flushParagraph();
-        flushList();
-        html.push(`<h2>${inlineMarkdown(trimmed.slice(2))}</h2>`);
-        return;
-      }
-
-      if (trimmed.startsWith("## ")) {
-        flushParagraph();
-        flushList();
-        html.push(`<h3>${inlineMarkdown(trimmed.slice(3))}</h3>`);
-        return;
-      }
-
-      if (trimmed.startsWith("### ")) {
-        flushParagraph();
-        flushList();
-        html.push(`<h4>${inlineMarkdown(trimmed.slice(4))}</h4>`);
-        return;
-      }
-
-      if (/^[-*]\s+/.test(trimmed)) {
-        flushParagraph();
-        list.push(trimmed.replace(/^[-*]\s+/, ""));
-        return;
-      }
-
-      paragraph.push(trimmed);
-    });
-
-    flushParagraph();
-    flushList();
-    flushTable();
-    flushCode();
-    return html.join("");
-  }
-
-  function isTableDivider(row) {
-    return row
-      .replace(/^\||\|$/g, "")
-      .split("|")
-      .every(cell => /^:?-{3,}:?$/.test(cell.trim()));
+    return SwMarkdown.toHtml(markdown, { headingOffset: 1 });
   }
 
   function firstDescription(markdown, title) {
