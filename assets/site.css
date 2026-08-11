@@ -481,6 +481,15 @@ footer {
   font-size: 14px;
 }
 
+.macro-markdown pre {
+  overflow: auto;
+  margin: 12px 0;
+  padding: 12px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+
 .macro-markdown table {
   width: 100%;
   border-collapse: collapse;
@@ -498,6 +507,79 @@ footer {
 
 .macro-install {
   margin: 14px 0 0;
+}
+
+.macro-install p {
+  margin: 0 0 10px;
+}
+
+.install-code-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 42px;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.install-code-row pre {
+  min-width: 0;
+  overflow: auto;
+  margin: 0;
+  padding: 11px 12px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+
+.install-code-row code {
+  color: var(--text);
+  font-size: 13px;
+}
+
+.copy-path-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  min-height: 42px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--panel) 70%, var(--bg));
+  color: var(--text);
+  cursor: pointer;
+}
+
+.copy-path-button:hover,
+.copy-path-button.is-copied {
+  border-color: var(--accent);
+}
+
+.copy-icon {
+  position: relative;
+  width: 16px;
+  height: 16px;
+}
+
+.copy-icon::before,
+.copy-icon::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 12px;
+  border: 1.5px solid currentColor;
+  border-radius: 2px;
+}
+
+.copy-icon::before {
+  left: 1px;
+  top: 3px;
+  opacity: .55;
+}
+
+.copy-icon::after {
+  left: 5px;
+  top: 0;
+  background: color-mix(in srgb, var(--panel) 70%, var(--bg));
 }
 
 .macro-missing {

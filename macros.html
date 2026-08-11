@@ -91,6 +91,7 @@
     docsPath: params.get("docsPath") || DEFAULT_MACRO_LIBRARY.docsPath,
     macrosPath: params.get("macrosPath") || DEFAULT_MACRO_LIBRARY.macrosPath
   };
+  const INSTALL_PATH = String.raw`%LOCALAPPDATA%\SwMacroFlow\macros`;
 
   const state = { macros: [], query: "" };
   const grid = document.getElementById("macroGrid");
@@ -126,7 +127,8 @@
   function inlineMarkdown(value) {
     return escapeHtml(value)
       .replace(/`([^`]+)`/g, "<code>$1</code>")
-      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+      .replace(/\*([^*]+)\*/g, "<em>$1</em>");
   }
 
   function markdownToHtml(markdown) {
@@ -135,6 +137,8 @@
     let paragraph = [];
     let list = [];
     let table = [];
+    let code = [];
+    let inCode = false;
 
     function flushParagraph() {
       if (paragraph.length) {
@@ -164,8 +168,33 @@
       }
     }
 
+    function flushCode() {
+      if (code.length) {
+        html.push(`<pre><code>${escapeHtml(code.join("\n"))}</code></pre>`);
+        code = [];
+      }
+    }
+
     lines.forEach(line => {
       const trimmed = line.trim();
+      if (trimmed === "```" || trimmed === "'''") {
+        if (inCode) {
+          flushCode();
+          inCode = false;
+        } else {
+          flushParagraph();
+          flushList();
+          flushTable();
+          inCode = true;
+        }
+        return;
+      }
+
+      if (inCode) {
+        code.push(line);
+        return;
+      }
+
       if (!trimmed) {
         flushParagraph();
         flushList();
@@ -215,6 +244,7 @@
     flushParagraph();
     flushList();
     flushTable();
+    flushCode();
     return html.join("");
   }
 
@@ -225,14 +255,25 @@
       .every(cell => /^:?-{3,}:?$/.test(cell.trim()));
   }
 
-  function firstDescription(markdown) {
+  function firstDescription(markdown, title) {
+    const normalizedTitle = title.trim().toLowerCase();
     return markdown
       .replace(/\r\n/g, "\n")
       .split("\n")
       .map(line => line.trim())
-      .find(line => line && !line.startsWith("#") && !line.startsWith("|") && !/^[-:| ]+$/.test(line))
-      ?.replace(/\*\*/g, "")
-      .replace(/`/g, "") || "Read the macro notes, then download the matching .swp file.";
+      .find(line => {
+        const plainLine = line
+          .replace(/^#+\s*/, "")
+          .replace(/[*`]/g, "")
+          .trim()
+          .toLowerCase();
+        return line &&
+          plainLine !== normalizedTitle &&
+          !line.startsWith("|") &&
+          !/^[-:| ]+$/.test(line) &&
+          line !== "```" &&
+          line !== "'''";
+      }) || "Read the macro notes, then download the matching .swp file.";
   }
 
   async function fetchJson(url) {
@@ -268,11 +309,19 @@
             ? `<a class="btn btn-primary" href="${macro.downloadUrl}" download>Download</a>`
             : `<span class="macro-missing">Missing .swp</span>`}
         </div>
-        <p class="macro-description">${escapeHtml(macro.description)}</p>
+        <p class="macro-description">${inlineMarkdown(macro.description)}</p>
         <details>
           <summary>Read macro notes</summary>
           <div class="macro-markdown">${markdownToHtml(macro.markdown)}</div>
-          <p class="macro-install">Install tip: put the downloaded file in <code>%LOCALAPPDATA%\\SwMacroFlow\\macros</code>, then open SwMacroFlow and choose it from the library.</p>
+          <div class="macro-install">
+            <p>Install tip: put the downloaded file in this folder, then open SwMacroFlow and choose it from the library.</p>
+            <div class="install-code-row">
+              <pre><code>${escapeHtml(INSTALL_PATH)}</code></pre>
+              <button class="copy-path-button" type="button" data-copy-value="${escapeHtml(INSTALL_PATH)}" aria-label="Copy macro folder path" title="Copy macro folder path">
+                <span class="copy-icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
         </details>
       </article>
     `).join("");
@@ -304,7 +353,7 @@
         return {
           title,
           markdown,
-          description: firstDescription(markdown),
+          description: firstDescription(markdown, title),
           downloadUrl: swpByName.get(normalizeName(doc.name))
         };
       }));
@@ -321,6 +370,42 @@
     state.query = event.target.value;
     renderMacros();
   });
+
+  grid.addEventListener("click", async event => {
+    const button = event.target.closest("[data-copy-value]");
+    if (!button) return;
+
+    try {
+      await copyText(button.dataset.copyValue);
+      button.classList.add("is-copied");
+      button.setAttribute("aria-label", "Macro folder path copied");
+      button.title = "Copied";
+      setTimeout(() => {
+        button.classList.remove("is-copied");
+        button.setAttribute("aria-label", "Copy macro folder path");
+        button.title = "Copy macro folder path";
+      }, 1800);
+    } catch (error) {
+      button.title = "Copy failed";
+    }
+  });
+
+  async function copyText(value) {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(value);
+      return;
+    }
+
+    const textarea = document.createElement("textarea");
+    textarea.value = value;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    textarea.remove();
+  }
 
   loadMacros();
 </script>
