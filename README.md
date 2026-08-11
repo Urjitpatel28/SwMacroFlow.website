@@ -24,11 +24,8 @@ assets/SwMacroFlow.png  application screenshot
 ## Access model
 
 SwMacroFlow is free for everyone. The website does not include user registration, user management,
-backend user services, or access checks. Download buttons point directly to the latest public GitHub
-release.
-
-An optional donation step may be added to the download flow later. Donation must stay voluntary and
-must not block downloading, installing, or using SwMacroFlow.
+backend user services, or access checks. Download buttons point directly to the latest public Windows
+installer on GitHub Releases.
 
 ## Testing locally
 
