@@ -61,6 +61,8 @@ body {
 
 a { color: inherit; }
 
+code { overflow-wrap: anywhere; }
+
 .wrap {
   max-width: var(--max-w);
   margin: 0 auto;
@@ -117,6 +119,7 @@ header.nav {
 }
 
 .nav-links a:hover { color: var(--text); }
+.nav-links a[aria-current="page"] { color: var(--text); }
 
 .nav-cta {
   display: inline-flex;
@@ -206,6 +209,7 @@ footer {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  min-width: 0;
   gap: 20px;
 }
 
@@ -226,11 +230,13 @@ footer {
   display: flex;
   gap: 22px;
   flex-wrap: wrap;
+  min-width: 0;
   font-size: 13px;
   color: var(--text-dim);
 }
 
 .footer-links a {
+  min-width: 0;
   text-decoration: none;
   transition: color .15s ease;
 }
@@ -298,4 +304,243 @@ footer {
 .legal th {
   color: var(--text);
   font-weight: 700;
+}
+
+/* Macro browser */
+.macros-page {
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 62px 24px 96px;
+}
+
+.macros-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 28px;
+  align-items: end;
+  padding: 0 0 38px;
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.macros-hero > *,
+.macro-browser,
+.macro-toolbar,
+.macro-grid,
+.macro-card,
+.macro-card-head {
+  min-width: 0;
+}
+
+.page-eyebrow {
+  margin: 0 0 12px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.macros-hero h1 {
+  max-width: 760px;
+  margin: 0 0 14px;
+  font-size: clamp(2.2rem, 5vw, 4.4rem);
+  line-height: 1;
+}
+
+.macros-hero p {
+  max-width: 760px;
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 16px;
+}
+
+.macro-browser {
+  padding-top: 30px;
+}
+
+.macro-toolbar {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.macro-search {
+  display: grid;
+  gap: 8px;
+  min-width: min(100%, 420px);
+  color: var(--text-dim);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.macro-search input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--panel) 72%, var(--bg));
+  color: var(--text);
+  font: inherit;
+}
+
+.macro-search input:focus {
+  outline: 2px solid color-mix(in srgb, var(--accent) 64%, transparent);
+  outline-offset: 2px;
+}
+
+.macro-count,
+.macro-status,
+.macro-file,
+.macro-missing {
+  color: var(--text-faint);
+  font-size: 13px;
+}
+
+.macro-status {
+  padding: 22px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--panel) 50%, var(--bg));
+}
+
+.macro-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.macro-card {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--panel) 56%, var(--bg));
+}
+
+.macro-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--panel-border));
+}
+
+.macro-card-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: start;
+  margin-bottom: 12px;
+}
+
+.macro-card h2 {
+  margin: 4px 0 0;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.macro-description {
+  margin: 0 0 14px;
+  color: var(--text-dim);
+}
+
+.macro-card details {
+  border: 0;
+  border-top: 1px solid var(--panel-border);
+}
+
+.macro-card summary {
+  padding: 14px 0 0;
+}
+
+.macro-markdown {
+  max-height: 460px;
+  overflow: auto;
+  margin-top: 14px;
+  padding: 16px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--bg) 68%, transparent);
+}
+
+.macro-markdown h2,
+.macro-markdown h3,
+.macro-markdown h4 {
+  margin: 18px 0 8px;
+}
+
+.macro-markdown h2:first-child,
+.macro-markdown h3:first-child,
+.macro-markdown h4:first-child {
+  margin-top: 0;
+}
+
+.macro-markdown p,
+.macro-markdown li,
+.macro-install {
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+.macro-markdown table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 13px;
+}
+
+.macro-markdown th,
+.macro-markdown td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--panel-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.macro-install {
+  margin: 14px 0 0;
+}
+
+.macro-missing {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .macros-hero,
+  .macro-toolbar,
+  .macro-card-head {
+    grid-template-columns: 1fr;
+  }
+
+  .macro-toolbar {
+    display: grid;
+    align-items: stretch;
+  }
+
+  .macro-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  footer,
+  .macros-page {
+    padding-inline: 18px;
+  }
+
+  .footer-links {
+    width: 100%;
+    gap: 12px 18px;
+  }
+
+  .macros-hero h1 {
+    font-size: 2rem;
+    line-height: 1.08;
+  }
+
+  .macros-hero .btn,
+  .macro-card .btn {
+    width: 100%;
+  }
 }

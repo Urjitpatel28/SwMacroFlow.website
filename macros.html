@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>Macros - SwMacroFlow</title>
+<meta name="description" content="Browse SwMacroFlow macro descriptions and download matching SOLIDWORKS .swp macro files.">
+<link rel="canonical" href="https://swmacroflow.in/macros.html">
+<link rel="icon" href="assets/logo.png" type="image/png">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <img src="assets/logo.png" alt="SwMacroFlow logo">
+      SwMacroFlow
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="macros.html" aria-current="page">Macros</a>
+      <a href="index.html#how-it-works">How it works</a>
+      <a href="index.html#faq">FAQ</a>
+    </nav>
+    <a class="nav-cta" href="https://github.com/Urjitpatel28/SwMacroFlow.Releases/releases/latest/download/SwMacroFlowSetup.exe" target="_blank" rel="noopener">Download</a>
+  </div>
+</header>
+
+<main class="macros-page">
+  <section class="macros-hero" aria-labelledby="macros-title">
+    <div>
+      <p class="page-eyebrow">Macro library</p>
+      <h1 id="macros-title">Browse ready-to-use SOLIDWORKS macros.</h1>
+      <p>
+        Descriptions are pulled from Markdown files and each download points to the matching `.swp`
+        macro in the public GitHub repository. After downloading, put the macro in
+        <code>%LOCALAPPDATA%\SwMacroFlow\macros</code> and choose it from the app's library.
+      </p>
+    </div>
+    <a id="sourceRepoLink" class="btn btn-secondary" href="https://github.com/Urjitpatel28/SwMacroFlow.MacroLibrary" target="_blank" rel="noopener">View source repo</a>
+  </section>
+
+  <section class="macro-browser" aria-live="polite">
+    <div class="macro-toolbar">
+      <label class="macro-search">
+        <span>Search macros</span>
+        <input id="macroSearch" type="search" placeholder="Search by name or description">
+      </label>
+      <div id="macroCount" class="macro-count">Loading macros...</div>
+    </div>
+
+    <div id="macroStatus" class="macro-status">Loading macro library from GitHub...</div>
+    <div id="macroGrid" class="macro-grid" hidden></div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="assets/logo.png" alt="SwMacroFlow logo">
+      SwMacroFlow
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="file:///C:/Users/urjit/source/repos/SwMacroFlow/SwMacroFlow/docs">Docs</a>
+      <a href="macros.html">Macros</a>
+      <a href="mailto:urjitpatel28@gmail.com">Contact / Support</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 SwMacroFlow. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  const DEFAULT_MACRO_LIBRARY = {
+    owner: "Urjitpatel28",
+    repo: "SwMacroFlow.MacroLibrary",
+    branch: "main",
+    docsPath: "Docs",
+    macrosPath: "Macros"
+  };
+
+  const params = new URLSearchParams(window.location.search);
+  const MACRO_LIBRARY = {
+    owner: params.get("owner") || DEFAULT_MACRO_LIBRARY.owner,
+    repo: params.get("repo") || DEFAULT_MACRO_LIBRARY.repo,
+    branch: params.get("branch") || DEFAULT_MACRO_LIBRARY.branch,
+    docsPath: params.get("docsPath") || DEFAULT_MACRO_LIBRARY.docsPath,
+    macrosPath: params.get("macrosPath") || DEFAULT_MACRO_LIBRARY.macrosPath
+  };
+
+  const state = { macros: [], query: "" };
+  const grid = document.getElementById("macroGrid");
+  const status = document.getElementById("macroStatus");
+  const count = document.getElementById("macroCount");
+  const search = document.getElementById("macroSearch");
+  const sourceRepoLink = document.getElementById("sourceRepoLink");
+
+  sourceRepoLink.href = `https://github.com/${MACRO_LIBRARY.owner}/${MACRO_LIBRARY.repo}`;
+
+  function githubContentsUrl(path) {
+    const encodedPath = path.split("/").map(encodeURIComponent).join("/");
+    return `https://api.github.com/repos/${MACRO_LIBRARY.owner}/${MACRO_LIBRARY.repo}/contents/${encodedPath}?ref=${MACRO_LIBRARY.branch}`;
+  }
+
+  function extensionless(name) {
+    return name.replace(/\.[^.]+$/, "");
+  }
+
+  function normalizeName(name) {
+    return extensionless(name).toLowerCase();
+  }
+
+  function escapeHtml(value) {
+    return value
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  function inlineMarkdown(value) {
+    return escapeHtml(value)
+      .replace(/`([^`]+)`/g, "<code>$1</code>")
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  }
+
+  function markdownToHtml(markdown) {
+    const lines = markdown.replace(/\r\n/g, "\n").split("\n");
+    const html = [];
+    let paragraph = [];
+    let list = [];
+    let table = [];
+
+    function flushParagraph() {
+      if (paragraph.length) {
+        html.push(`<p>${inlineMarkdown(paragraph.join(" "))}</p>`);
+        paragraph = [];
+      }
+    }
+
+    function flushList() {
+      if (list.length) {
+        html.push(`<ul>${list.map(item => `<li>${inlineMarkdown(item)}</li>`).join("")}</ul>`);
+        list = [];
+      }
+    }
+
+    function flushTable() {
+      if (table.length) {
+        const rows = table.filter(row => !isTableDivider(row));
+        html.push("<table>");
+        rows.forEach((row, index) => {
+          const cells = row.replace(/^\||\|$/g, "").split("|").map(cell => cell.trim());
+          const tag = index === 0 ? "th" : "td";
+          html.push(`<tr>${cells.map(cell => `<${tag}>${inlineMarkdown(cell)}</${tag}>`).join("")}</tr>`);
+        });
+        html.push("</table>");
+        table = [];
+      }
+    }
+
+    lines.forEach(line => {
+      const trimmed = line.trim();
+      if (!trimmed) {
+        flushParagraph();
+        flushList();
+        flushTable();
+        return;
+      }
+
+      if (trimmed.startsWith("|") && trimmed.includes("|")) {
+        flushParagraph();
+        flushList();
+        table.push(trimmed);
+        return;
+      }
+
+      flushTable();
+
+      if (trimmed.startsWith("# ")) {
+        flushParagraph();
+        flushList();
+        html.push(`<h2>${inlineMarkdown(trimmed.slice(2))}</h2>`);
+        return;
+      }
+
+      if (trimmed.startsWith("## ")) {
+        flushParagraph();
+        flushList();
+        html.push(`<h3>${inlineMarkdown(trimmed.slice(3))}</h3>`);
+        return;
+      }
+
+      if (trimmed.startsWith("### ")) {
+        flushParagraph();
+        flushList();
+        html.push(`<h4>${inlineMarkdown(trimmed.slice(4))}</h4>`);
+        return;
+      }
+
+      if (/^[-*]\s+/.test(trimmed)) {
+        flushParagraph();
+        list.push(trimmed.replace(/^[-*]\s+/, ""));
+        return;
+      }
+
+      paragraph.push(trimmed);
+    });
+
+    flushParagraph();
+    flushList();
+    flushTable();
+    return html.join("");
+  }
+
+  function isTableDivider(row) {
+    return row
+      .replace(/^\||\|$/g, "")
+      .split("|")
+      .every(cell => /^:?-{3,}:?$/.test(cell.trim()));
+  }
+
+  function firstDescription(markdown) {
+    return markdown
+      .replace(/\r\n/g, "\n")
+      .split("\n")
+      .map(line => line.trim())
+      .find(line => line && !line.startsWith("#") && !line.startsWith("|") && !/^[-:| ]+$/.test(line))
+      ?.replace(/\*\*/g, "")
+      .replace(/`/g, "") || "Read the macro notes, then download the matching .swp file.";
+  }
+
+  async function fetchJson(url) {
+    const response = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
+    if (!response.ok) throw new Error(`GitHub returned ${response.status}`);
+    return response.json();
+  }
+
+  async function fetchText(url) {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`GitHub returned ${response.status}`);
+    return response.text();
+  }
+
+  function renderMacros() {
+    const query = state.query.trim().toLowerCase();
+    const filtered = state.macros.filter(macro =>
+      !query ||
+      macro.title.toLowerCase().includes(query) ||
+      macro.description.toLowerCase().includes(query) ||
+      macro.markdown.toLowerCase().includes(query)
+    );
+
+    count.textContent = `${filtered.length} of ${state.macros.length} macros`;
+    grid.innerHTML = filtered.map(macro => `
+      <article class="macro-card">
+        <div class="macro-card-head">
+          <div>
+            <span class="macro-file">.swp macro</span>
+            <h2>${escapeHtml(macro.title)}</h2>
+          </div>
+          ${macro.downloadUrl
+            ? `<a class="btn btn-primary" href="${macro.downloadUrl}" download>Download</a>`
+            : `<span class="macro-missing">Missing .swp</span>`}
+        </div>
+        <p class="macro-description">${escapeHtml(macro.description)}</p>
+        <details>
+          <summary>Read macro notes</summary>
+          <div class="macro-markdown">${markdownToHtml(macro.markdown)}</div>
+          <p class="macro-install">Install tip: put the downloaded file in <code>%LOCALAPPDATA%\\SwMacroFlow\\macros</code>, then open SwMacroFlow and choose it from the library.</p>
+        </details>
+      </article>
+    `).join("");
+
+    status.hidden = filtered.length > 0;
+    status.textContent = filtered.length ? "" : "No macros matched your search.";
+  }
+
+  async function loadMacros() {
+    try {
+      const [docs, macroFiles] = await Promise.all([
+        fetchJson(githubContentsUrl(MACRO_LIBRARY.docsPath)),
+        fetchJson(githubContentsUrl(MACRO_LIBRARY.macrosPath))
+      ]);
+
+      const swpByName = new Map(
+        macroFiles
+          .filter(file => file.type === "file" && file.name.toLowerCase().endsWith(".swp"))
+          .map(file => [normalizeName(file.name), file.download_url])
+      );
+
+      const docFiles = docs
+        .filter(file => file.type === "file" && file.name.toLowerCase().endsWith(".md"))
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+      state.macros = await Promise.all(docFiles.map(async doc => {
+        const title = extensionless(doc.name);
+        const markdown = await fetchText(doc.download_url);
+        return {
+          title,
+          markdown,
+          description: firstDescription(markdown),
+          downloadUrl: swpByName.get(normalizeName(doc.name))
+        };
+      }));
+
+      grid.hidden = false;
+      renderMacros();
+    } catch (error) {
+      count.textContent = "Macro library unavailable";
+      status.innerHTML = `Could not load <code>${escapeHtml(MACRO_LIBRARY.owner)}/${escapeHtml(MACRO_LIBRARY.repo)}</code> from GitHub. Make sure the repository is public and has matching Markdown files in <code>${escapeHtml(MACRO_LIBRARY.docsPath)}</code> plus matching <code>.swp</code> files in <code>${escapeHtml(MACRO_LIBRARY.macrosPath)}</code>.`;
+    }
+  }
+
+  search.addEventListener("input", event => {
+    state.query = event.target.value;
+    renderMacros();
+  });
+
+  loadMacros();
+</script>
+
+</body>
+</html>

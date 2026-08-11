@@ -12,6 +12,7 @@ production**: `.github/workflows/static.yml` uploads the repository root to GitH
 | File | Indexed | Purpose |
 |---|---|---|
 | `index.html` | yes | Landing page with direct download links |
+| `macros.html` | yes | Public macro browser with docs and `.swp` downloads from GitHub |
 | `terms.html` | yes | Terms for free public use |
 | `privacy.html` | yes | What is collected and why |
 
