@@ -18,7 +18,7 @@
 <meta name="twitter:description" content="Run chains of SOLIDWORKS VBA macros across hundreds of files without installing a SOLIDWORKS add-in.">
 <meta name="twitter:image" content="https://swmacroflow.in/assets/SwMacroFlow.png">
 <link rel="icon" href="assets/logo.png" type="image/png">
-<!-- Tokens, nav, footer and buttons, shared with the account pages so the two cannot drift apart.
+<!-- Tokens, nav, footer and buttons, shared with the legal pages so the site chrome cannot drift apart.
      Page-specific rules stay in the <style> block below. -->
 <link rel="stylesheet" href="assets/site.css">
 <script type="application/ld+json">
@@ -49,7 +49,6 @@
         "availability": "https://schema.org/InStock",
         "price": "0",
         "priceCurrency": "INR",
-        "priceValidUntil": "2027-08-01",
         "url": "https://swmacroflow.in/"
       }
     },
@@ -73,18 +72,18 @@
         },
         {
           "@type": "Question",
-          "name": "How do I get access to SwMacroFlow?",
+          "name": "How do I get SwMacroFlow?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Create a free account, then download the installer. SwMacroFlow is free for everyone until 1 August 2027; after that it becomes a yearly subscription."
+            "text": "Download the Windows installer directly from the website. SwMacroFlow is free for everyone, and no registration or access key is required."
           }
         },
         {
           "@type": "Question",
-          "name": "Do I need an account to use SwMacroFlow?",
+          "name": "Do I need to register to use SwMacroFlow?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. SwMacroFlow asks you to sign in the first time you open it, so your licence can be tied to your account. After that it keeps working offline for a fortnight at a time."
+            "text": "No. SwMacroFlow does not require sign-in, registration, or an access key."
           }
         },
         {
@@ -92,7 +91,7 @@
           "name": "Can I use SwMacroFlow on more than one computer?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Your licence is active on one computer at a time. To move it, release the old computer from your account page or from Settings > Account in the app, which costs nothing. Moving between different computers is limited to three changes; after that, contact support."
+            "text": "Yes. SwMacroFlow has no seat limit. Install it on the Windows machines where you need it, while using your own licensed SOLIDWORKS installation."
           }
         },
         {
@@ -126,7 +125,7 @@
 </script>
 <style>
   /* Tokens, base type, .wrap, the nav, the buttons and the footer now live in assets/site.css,
-     because the account pages need them too. What remains here is only used by this page. */
+     because the legal pages need them too. What remains here is only used by this page. */
 
   /* ---------- Hero ---------- */
   .hero {
@@ -582,85 +581,6 @@
   .final-cta h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 0 0 14px; }
   .final-cta p { color: var(--text-dim); margin: 0 0 30px; }
 
-  /* ---------- Modal ---------- */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(6,7,10,0.6);
-    backdrop-filter: blur(3px);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    z-index: 100;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal {
-    background: var(--bg-alt);
-    border: 1px solid var(--panel-border);
-    border-radius: 18px;
-    max-width: 420px;
-    width: 100%;
-    padding: 32px;
-    position: relative;
-  }
-  .modal-close {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    background: none;
-    border: none;
-    color: var(--text-faint);
-    font-size: 20px;
-    cursor: pointer;
-    line-height: 1;
-    padding: 6px;
-  }
-  .modal h3 { margin: 0 0 8px; font-size: 19px; }
-  .modal p { color: var(--text-dim); font-size: 14px; margin: 0 0 22px; }
-  .modal label {
-    display: block;
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-  .modal input[type="email"] {
-    width: 100%;
-    padding: 12px 14px;
-    border-radius: 10px;
-    border: 1px solid var(--panel-border);
-    background: var(--panel);
-    color: var(--text);
-    font-size: 14px;
-    margin-bottom: 16px;
-  }
-  .modal input[type="email"]:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
-  .modal .honeypot {
-    position: absolute;
-    left: -9999px;
-    width: 1px;
-    height: 1px;
-    opacity: 0;
-  }
-  .modal-status {
-    min-height: 18px;
-    color: var(--text-dim);
-    font-size: 12px;
-    margin-top: 10px;
-  }
-  .modal-status.error { color: var(--danger); }
-  .modal-success {
-    display: none;
-    text-align: center;
-    padding: 12px 0;
-  }
-  .modal-success .check {
-    width: 48px; height: 48px; border-radius: 50%;
-    background: color-mix(in srgb, var(--success) 18%, transparent);
-    color: var(--success);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px; margin: 0 auto 16px;
-  }
 </style>
 </head>
 <body>
@@ -675,13 +595,8 @@
       <a href="#features">Features</a>
       <a href="#how-it-works">How it works</a>
       <a href="#faq">FAQ</a>
-      <!-- Rendered signed-out, then upgraded by assets/session.js once Supabase answers. The other
-           way round - render nothing, fill it in - makes the nav pop in on every single page load,
-           including for the majority who are signed out and would never see it change. -->
-      <a href="login.html" data-account="signed-out">Sign in</a>
-      <a href="account.html" data-account="signed-in" hidden>Account</a>
     </nav>
-    <a class="nav-cta" href="signup.html" data-account="signed-out">Create free account</a>
+    <a class="nav-cta" href="https://github.com/Urjitpatel28/SwMacroFlow.Releases/releases/latest" target="_blank" rel="noopener">Download</a>
   </div>
 </header>
 
@@ -701,13 +616,10 @@
       <h2>Stop clicking through the same macro, file after file.</h2>
       <p>Build the workflow once, run it across your files, and keep repetitive SOLIDWORKS work moving.</p>
 	  <div class="hero-ctas">
-      <a class="btn btn-primary" href="signup.html">Create free account</a>
-      <a class="btn btn-secondary" href="https://github.com/Urjitpatel28/SwMacroFlow.Releases/releases/latest" target="_blank" rel="noopener">Download for Windows</a>
+      <a class="btn btn-primary" href="https://github.com/Urjitpatel28/SwMacroFlow.Releases/releases/latest" target="_blank" rel="noopener">Download for Windows</a>
+      <a class="btn btn-secondary" href="https://github.com/Urjitpatel28/SwMacroFlow/tree/master/docs" target="_blank" rel="noopener">Read the docs</a>
     </div>
-    <!-- The licence terms, before the sign-up button rather than after it. This is the only place
-         someone finds out what they are agreeing to before they hand over an email address, and
-         burying it in Terms would be a choice, not an oversight. -->
-    <div class="hero-note">Free for everyone until 1 August 2027 · One computer at a time · Windows x64</div>
+    <div class="hero-note">Free for everyone &middot; Optional donation coming later &middot; Windows x64</div>
     </div>
   </section>
     
@@ -773,8 +685,8 @@
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
-        <h3>Get the installer</h3>
-        <p>Request access and receive the installer details straight to your inbox.</p>
+        <h3>Download the installer</h3>
+        <p>Get the latest Windows installer directly from the public release page.</p>
       </div>
       <div class="step">
         <div class="step-num">2</div>
@@ -806,16 +718,16 @@
         <p>SwMacroFlow isn't locked to one release — it works with any SOLIDWORKS version you already have installed and licensed (x64). It joins the SOLIDWORKS session on your machine rather than shipping its own.</p>
       </details>
       <details>
-        <summary>How do I get access?</summary>
-        <p>Create a free account, then download the installer. SwMacroFlow is free for everyone until 1 August 2027; after that it becomes a yearly subscription.</p>
+        <summary>How do I get SwMacroFlow?</summary>
+        <p>Download the Windows installer directly from the release page. SwMacroFlow is free for everyone, with no registration or access request needed.</p>
       </details>
       <details>
-        <summary>Do I need an account?</summary>
-        <p>Yes. SwMacroFlow asks you to sign in the first time you open it, so your licence can be tied to your account. After that it keeps working offline for a fortnight at a time.</p>
+        <summary>Do I need to register?</summary>
+        <p>No. SwMacroFlow does not require sign-in, registration, or an access key.</p>
       </details>
       <details>
         <summary>Can I use it on more than one computer?</summary>
-        <p>Your licence is active on one computer at a time. To move it, release the old computer from <a href="account.html">your account page</a> or from Settings &rsaquo; Account in the app — that costs nothing, and so does going back to a computer you left. Moving between different computers is limited to three changes; after that, email us and we'll sort it out.</p>
+        <p>Yes. There is no SwMacroFlow seat limit. Install it on the Windows machines where you need it, while using your own licensed SOLIDWORKS installation.</p>
       </details>
       <details>
         <summary>Does SwMacroFlow update itself?</summary>
@@ -843,26 +755,12 @@
     <div class="footer-links">     
       <a href="https://github.com/Urjitpatel28/SwMacroFlow/tree/master/docs" target="_blank" rel="noopener">Docs</a>
       <a href="mailto:urjitpatel28@gmail.com">Contact / Support</a>
-      <a href="account.html">Your account</a>
       <a href="terms.html">Terms</a>
       <a href="privacy.html">Privacy</a>
     </div>
     <div class="footer-copy">© 2026 SwMacroFlow. All rights reserved.</div>
   </div>
 </footer>
-
-<!--
-  The "Join Beta Trial" modal that used to sit here posted an email address to formsubmit.co so it
-  could be mailed installer details by hand. Real sign-up replaces it: keeping both would mean two
-  ways to register that know nothing about each other, and an address collected by the old one would
-  never become an account.
-
-  The .modal-* rules are left in the stylesheet above - they are small, and stripping them is churn
-  on a live page unrelated to signing in.
--->
-
-<!-- Swaps the nav's Sign in / Create free account pair for Account when there is a session. -->
-<script type="module" src="assets/session.js"></script>
 
 </body>
 </html>

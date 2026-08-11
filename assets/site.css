@@ -1,6 +1,6 @@
 /* SwMacroFlow — shared design tokens and page chrome.
  *
- * Extracted from index.html's inline <style> so the account pages can look like the site instead of
+ * Extracted from index.html's inline <style> so legal pages can look like the site instead of
  * restating its palette. Everything here is what *every* page needs: the tokens, the base type, the
  * nav, the footer, and the buttons. Anything used by only one page stays inline in that page.
  *
@@ -139,17 +139,9 @@ header.nav {
 }
 .nav-cta:hover { background: var(--accent-2); }
 
-/* Below this width .nav-links is hidden, so the account links inside it would go with it. They are
-   the one thing on the page a signed-in person came for, so they move out to sit beside the brand
-   instead of disappearing. */
 @media (max-width: 760px) {
   .nav-links { display: none; }
-  .nav-account { display: flex; align-items: center; gap: 16px; font-size: 14px; }
 }
-
-.nav-account { display: flex; align-items: center; gap: 16px; }
-.nav-account a { text-decoration: none; color: var(--text-dim); font-size: 14px; }
-.nav-account a:hover { color: var(--text); }
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -200,3 +192,35 @@ footer {
 .footer-links a { text-decoration: none; }
 .footer-links a:hover { color: var(--text); }
 .footer-copy { font-size: 12px; color: var(--text-faint); width: 100%; margin-top: 24px; }
+
+/* ---------- Legal pages ---------- */
+.legal {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 56px 24px 96px;
+}
+
+.legal h1 { font-size: 30px; margin: 0 0 6px; letter-spacing: -0.02em; }
+.legal .updated { color: var(--text-faint); font-size: 13px; margin: 0 0 36px; }
+.legal h2 { font-size: 19px; margin: 40px 0 10px; }
+.legal p, .legal li { color: var(--text-dim); font-size: 15px; }
+.legal li { margin-bottom: 8px; }
+.legal strong { color: var(--text); }
+.legal a { color: var(--accent); }
+
+.legal table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 18px 0;
+  font-size: 14px;
+}
+
+.legal th, .legal td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--panel-border);
+  vertical-align: top;
+  color: var(--text-dim);
+}
+
+.legal th { color: var(--text); font-weight: 600; }

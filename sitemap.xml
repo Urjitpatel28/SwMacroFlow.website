@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Public pages only. The account pages (login, signup, verify, reset-password, account, app-auth)
-  are deliberately absent and each carries its own noindex - a sign-in form in search results is
-  noise at best, and app-auth.html in an index would be actively unhelpful.
--->
+<!-- Public pages only. SwMacroFlow no longer has registration or access-gated routes. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://swmacroflow.in/</loc>
