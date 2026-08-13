@@ -14,11 +14,13 @@ production**: `.github/workflows/static.yml` uploads the repository root to GitH
 | `index.html` | yes | Landing page with direct download links |
 | `docs.html` | yes | Documentation reader: guide list beside a Markdown viewer |
 | `macros.html` | yes | Public macro browser with docs and `.swp` downloads from GitHub |
-| `terms.html` | yes | Terms for free public use |
+| `terms.html` | yes | Terms for public download and account use |
 | `privacy.html` | yes | What is collected and why |
 
 ```
-assets/site.css         tokens, nav, footer, buttons, legal-page and docs styles
+assets/site.css         tokens, nav, footer, buttons, auth, legal-page and docs styles
+assets/auth-config.js   public Supabase project URL and publishable key placeholders
+assets/auth.js          Supabase Auth client wiring for login, account, reset, and nav state
 assets/markdown.js      minimal Markdown renderer shared by docs.html and macros.html
 assets/logo.png         site icon and brand mark
 assets/SwMacroFlow.png  application screenshot
@@ -39,9 +41,21 @@ manifest: they come from each document's first `#` heading, the same rule the ap
 
 ## Access model
 
-SwMacroFlow is free for everyone. The website does not include user registration, user management,
-backend user services, or access checks. Download buttons point directly to the latest public Windows
-installer on GitHub Releases.
+The website now includes Supabase Auth for email/password and Google sign-in. The
+Windows installer remains publicly downloadable in this release; payments, subscriptions, license
+enforcement, and custom account tables are deferred. Browser code uses only the public Supabase URL
+and publishable/anon key from `assets/auth-config.js`; never put a service-role key in this repo.
+
+## Supabase setup
+
+1. Create a Supabase project for SwMacroFlow.
+2. Copy the project URL and publishable/anon key into `assets/auth-config.js`.
+3. In Supabase Auth URL Configuration, set Site URL to `https://swmacroflow.in`.
+4. Add redirect URLs for `https://swmacroflow.in/account.html`,
+   `https://swmacroflow.in/reset-password.html`, and `http://localhost:8000/**`.
+5. Enable email/password auth with email confirmation and Supabase default email delivery.
+6. Enable the Google provider. The OAuth app must use
+   `https://<project-ref>.supabase.co/auth/v1/callback` as the web redirect URI.
 
 ## Testing locally
 
@@ -49,12 +63,12 @@ installer on GitHub Releases.
 python -m http.server 8000
 ```
 
-Then open `http://localhost:8000`. Because this is a static site, checking the public pages and their
-links is enough for local verification. `docs.html` must be checked over `http://`, not by opening the
-file directly: it `fetch`es `docs/manifest.json` and the guides, which browsers block on `file://`.
+Then open `http://localhost:8000`. Because this is a static site, check pages over `http://`, not by opening files directly. `docs.html`
+fetches `docs/manifest.json`, and the auth pages load ES modules, which browsers block or limit on
+`file://`.
 
 ## Related
 
 Application code, docs, and releases live in the SwMacroFlow application repositories. Keep this site
-copy aligned with the application behavior: no registration wall, no access-key requirement, and no paid
-download gate.
+copy aligned with the current access model: public installer download for v1, Supabase Auth accounts
+for account management, and no payment or license enforcement until those systems are implemented.

@@ -42,11 +42,11 @@
 
 <main class="legal">
   <h1>Privacy Policy</h1>
-  <p class="updated">Last updated 11 August 2026</p>
+  <p class="updated">Last updated 13 August 2026</p>
 
   <p>
     SwMacroFlow is a Windows desktop application that runs SOLIDWORKS macros on your own computer.
-    The website now offers a public download without registration or access checks.
+    The website offers a public download in this release and now supports accounts for account, license, and future billing management.
   </p>
 
   <h2>The short version</h2>
@@ -68,6 +68,10 @@
             to serve the website and keep it reliable.</td>
       </tr>
       <tr>
+        <td><strong>Account email and sign-in data</strong></td>
+        <td>Supabase Auth stores the email address and sign-in provider details needed to create, secure, and manage your account.</td>
+      </tr>
+      <tr>
         <td><strong>Email you send us</strong></td>
         <td>If you contact support, we use your email address and message content to reply.</td>
       </tr>
@@ -82,29 +86,30 @@
         how you use SOLIDWORKS.</li>
     <li><strong>No website analytics or advertising tracking.</strong> This website does not use
         tracking pixels or advertising cookies.</li>
-    <li><strong>No registration data.</strong> The website no longer provides user-registration or
-        user-management pages.</li>
+    <li><strong>No payment data in this release.</strong> Paid plans, subscriptions, and license enforcement
+        are not active yet.</li>
     <li><strong>Your AI Copilot API key never reaches us.</strong> If you use the Copilot panel, the
         key you enter is stored on your own machine and sent only to the AI provider you chose.</li>
   </ul>
 
   <h2>Who processes it</h2>
   <p>
-    This website is served by <strong>GitHub Pages</strong>. Email support may be handled by the mail
-    provider you use to contact us.
+    This website is served by <strong>GitHub Pages</strong>. Account sign-in is handled by
+    <strong>Supabase Auth</strong>. Google processes sign-in data when you choose Google sign-in.
+    Email support may be handled by the mail provider you use to contact us.
   </p>
 
   <h2>How long we keep it</h2>
   <p>
     Website logs are retained by the hosting provider according to its own operational policies.
-    Support emails are kept only as long as they are useful for the support conversation and ordinary
-    record keeping.
+    Account records are kept while your account is active or as needed for security, legal, and operational reasons.
+    Support emails are kept only as long as they are useful for the support conversation and ordinary record keeping.
   </p>
 
   <h2>Your choices</h2>
   <ul>
-    <li>You can use SwMacroFlow without registering.</li>
-    <li>You can ask us to delete support emails you sent us, unless we need to keep them for a legal
+    <li>You can download the current Windows installer without signing in.</li>
+    <li>You can ask us to delete your account or support emails, unless we need to keep them for a legal
         or security reason.</li>
   </ul>
 
@@ -143,5 +148,6 @@
 </footer>
 
 <script src="assets/nav.js" defer></script>
+<script type="module" src="assets/auth.js"></script>
 </body>
 </html>

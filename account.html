@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, follow">
+<title>Account - SwMacroFlow</title>
+<meta name="description" content="Manage your SwMacroFlow account.">
+<link rel="canonical" href="https://swmacroflow.in/account.html">
+<link rel="icon" href="assets/logo.png" type="image/png">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <img src="assets/logo.png" alt="SwMacroFlow logo">
+      SwMacroFlow
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="docs.html">Docs</a>
+      <a href="macros.html">Macros</a>
+      <a href="index.html#faq">FAQ</a>
+    </nav>
+    <a class="nav-cta" href="https://github.com/Urjitpatel28/SwMacroFlow.Releases/releases/latest/download/SwMacroFlowSetup.exe" target="_blank" rel="noopener">Download</a>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav id="mobileNav" class="nav-mobile" aria-label="Site">
+    <a href="index.html#features">Features</a>
+    <a href="docs.html">Docs</a>
+    <a href="macros.html">Macros</a>
+    <a href="index.html#faq">FAQ</a>
+    <a class="nav-cta" href="https://github.com/Urjitpatel28/SwMacroFlow.Releases/releases/latest/download/SwMacroFlowSetup.exe" target="_blank" rel="noopener">Download</a>
+  </nav>
+</header>
+
+<main class="auth-page" data-auth-account-page>
+  <section class="auth-hero">
+    <p class="page-eyebrow">Account</p>
+    <h1>Manage your SwMacroFlow account.</h1>
+    <p>This page is the starting point for future license and billing management. Paid plans and license enforcement are not active in this release.</p>
+  </section>
+
+  <div class="auth-status" data-auth-status hidden></div>
+
+  <section class="auth-card auth-card-wide" data-auth-signed-in hidden>
+    <h2>Signed in</h2>
+    <dl class="account-list">
+      <div>
+        <dt>Email</dt>
+        <dd data-auth-email></dd>
+      </div>
+      <div>
+        <dt>Access</dt>
+        <dd>Installer download is public for v1. Billing and licenses will be added later.</dd>
+      </div>
+    </dl>
+    <div class="auth-actions auth-actions-inline">
+      <a class="btn btn-primary" href="https://github.com/Urjitpatel28/SwMacroFlow.Releases/releases/latest/download/SwMacroFlowSetup.exe" target="_blank" rel="noopener">Download for Windows</a>
+      <button class="btn btn-secondary" type="button" data-auth-signout>Sign out</button>
+    </div>
+  </section>
+
+  <section class="auth-card auth-card-wide" data-auth-signed-out hidden>
+    <h2>Sign in required</h2>
+    <p>Sign in to view your SwMacroFlow account.</p>
+    <a class="btn btn-primary" href="login.html">Go to login</a>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="assets/logo.png" alt="SwMacroFlow logo">
+      SwMacroFlow
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="docs.html">Docs</a>
+      <a href="macros.html">Macros</a>
+      <a href="mailto:urjitpatel28@gmail.com">Contact / Support</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 SwMacroFlow. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="assets/nav.js" defer></script>
+<script type="module" src="assets/auth.js"></script>
+</body>
+</html>
