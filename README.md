@@ -1,6 +1,6 @@
 # swmacroflow.in
 
-The SwMacroFlow website: a static marketing page, public download links, and the legal pages for the
+The SwMacroFlow website: a static marketing page, trial sign-up, and the legal pages for the
 Windows desktop application.
 
 Plain static HTML. No build step, no framework, no package manager. **Pushing to `main` deploys to
@@ -11,10 +11,10 @@ production**: `.github/workflows/static.yml` uploads the repository root to GitH
 
 | File | Indexed | Purpose |
 |---|---|---|
-| `index.html` | yes | Landing page with direct download links |
+| `index.html` | yes | Landing page; every CTA goes to `login.html#signup` for the 6 month trial |
 | `docs.html` | yes | Documentation reader: guide list beside a Markdown viewer |
 | `macros.html` | yes | Public macro browser with docs and `.swp` downloads from GitHub |
-| `terms.html` | yes | Terms for public download and account use |
+| `terms.html` | yes | Terms for the 6 month trial and account use |
 | `privacy.html` | yes | What is collected and why |
 
 ```
@@ -41,9 +41,11 @@ manifest: they come from each document's first `#` heading, the same rule the ap
 
 ## Access model
 
-The website now includes Supabase Auth for email/password and Google sign-in. The
-Windows installer remains publicly downloadable in this release; payments, subscriptions, license
-enforcement, and custom account tables are deferred. Browser code uses only the public Supabase URL
+The website now includes Supabase Auth for email/password and Google sign-in. There is no public
+installer link anywhere on the site: every call to action sends visitors to `login.html#signup` to
+create an account for the free 6 month trial. Payments, subscriptions, license enforcement, trial
+expiry tracking, and custom account tables are still deferred, so the trial is currently a marketing
+promise rather than something the site enforces. Browser code uses only the public Supabase URL
 and publishable/anon key from `assets/auth-config.js`; never put a service-role key in this repo.
 
 ## Supabase setup
@@ -70,5 +72,5 @@ fetches `docs/manifest.json`, and the auth pages load ES modules, which browsers
 ## Related
 
 Application code, docs, and releases live in the SwMacroFlow application repositories. Keep this site
-copy aligned with the current access model: public installer download for v1, Supabase Auth accounts
+copy aligned with the current access model: sign-up for a free 6 month trial, Supabase Auth accounts
 for account management, and no payment or license enforcement until those systems are implemented.

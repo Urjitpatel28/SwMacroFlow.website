@@ -1,7 +1,6 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.111.0/+esm";
 import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from "./auth-config.js";
 
-const DOWNLOAD_URL = "https://github.com/Urjitpatel28/SwMacroFlow.Releases/releases/latest/download/SwMacroFlowSetup.exe";
 const CONFIGURED =
   /^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(SUPABASE_URL) &&
   SUPABASE_PUBLISHABLE_KEY &&
@@ -63,9 +62,9 @@ function authLink(href, text, attrs) {
   return a;
 }
 
-function insertBeforeDownload(container, element) {
-  const download = container.querySelector(`a[href="${DOWNLOAD_URL}"]`);
-  container.insertBefore(element, download || null);
+function insertBeforeCta(container, element) {
+  const cta = container.querySelector("a.nav-cta");
+  container.insertBefore(element, cta || null);
 }
 
 function renderAuthNav(session) {
@@ -77,17 +76,21 @@ function renderAuthNav(session) {
   navs.forEach((nav) => {
     nav.querySelectorAll("[data-auth-nav]").forEach((el) => el.remove());
 
+    // A signed-in visitor has already taken the trial, so the sign-up CTA goes away.
+    const cta = nav.querySelector("a.nav-cta");
+    if (cta) cta.hidden = !!session;
+
     if (session) {
-      insertBeforeDownload(nav, authLink("account.html", "Account", { "data-auth-nav": "account" }));
+      insertBeforeCta(nav, authLink("account.html", "Account", { "data-auth-nav": "account" }));
       const signOut = authLink("#", "Sign out", { "data-auth-nav": "signout" });
       signOut.addEventListener("click", async (event) => {
         event.preventDefault();
         if (supabase) await supabase.auth.signOut();
         window.location.href = "index.html";
       });
-      insertBeforeDownload(nav, signOut);
+      insertBeforeCta(nav, signOut);
     } else {
-      insertBeforeDownload(nav, authLink("login.html", "Login", { "data-auth-nav": "login" }));
+      insertBeforeCta(nav, authLink("login.html", "Login", { "data-auth-nav": "login" }));
     }
   });
 }
@@ -168,9 +171,18 @@ function bindLoginPage() {
     });
   });
 
-  if (window.location.hash.replace("#", "") === "signup") {
-    setLoginMode("signup");
+  function applyHashMode() {
+    if (window.location.hash.replace("#", "") === "signup") {
+      setLoginMode("signup");
+    }
   }
+
+  // The trial CTA points at login.html#signup, so it also fires while already on this page.
+  applyHashMode();
+  window.addEventListener("hashchange", () => {
+    setStatus(status, "", "neutral");
+    applyHashMode();
+  });
 
   if (!supabase) {
     setStatus(status, authMissingMessage(), "error");

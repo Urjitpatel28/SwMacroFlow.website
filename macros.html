@@ -25,7 +25,6 @@
       <a href="index.html#how-it-works">How it works</a>
       <a href="index.html#faq">FAQ</a>
     </nav>
-    <a class="nav-cta" href="https://github.com/Urjitpatel28/SwMacroFlow.Releases/releases/latest/download/SwMacroFlowSetup.exe" target="_blank" rel="noopener">Download</a>
     <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
       <span></span><span></span><span></span>
     </button>
@@ -36,7 +35,7 @@
     <a href="macros.html" aria-current="page">Macros</a>
     <a href="index.html#how-it-works">How it works</a>
     <a href="index.html#faq">FAQ</a>
-    <a class="nav-cta" href="https://github.com/Urjitpatel28/SwMacroFlow.Releases/releases/latest/download/SwMacroFlowSetup.exe" target="_blank" rel="noopener">Download</a>
+    <a class="nav-cta" href="login.html#signup">Start 6-month trial</a>
   </nav>
 </header>
 
@@ -46,8 +45,8 @@
       <p class="page-eyebrow">Macro library</p>
       <h1 id="macros-title">Browse ready-to-use SOLIDWORKS macros.</h1>
       <p>
-        Descriptions are pulled from Markdown files and each download points to the matching `.swp`
-        macro in the public GitHub repository. After downloading, put the macro in
+        Click a macro to read its documentation and download the matching <code>.swp</code> file from
+        the public GitHub repository. After downloading, put the macro in
         <code>%LOCALAPPDATA%\SwMacroFlow\macros</code> and choose it from the app's library.
       </p>
     </div>
@@ -60,13 +59,56 @@
         <span>Search macros</span>
         <input id="macroSearch" type="search" placeholder="Search by name or description">
       </label>
-      <div id="macroCount" class="macro-count">Loading macros...</div>
+      <div class="macro-toolbar-end">
+        <div id="macroCount" class="macro-count">Loading macros...</div>
+        <a id="downloadAllLink" class="btn btn-secondary btn-compact"
+           href="https://github.com/Urjitpatel28/SwMacroFlow.MacroLibrary/archive/refs/heads/main.zip"
+           title="Downloads the whole repository as a zip. Extract the Macros folder into your macro folder.">
+          Download all (.zip)
+        </a>
+      </div>
     </div>
 
     <div id="macroStatus" class="macro-status">Loading macro library from GitHub...</div>
     <div id="macroGrid" class="macro-grid" hidden></div>
   </section>
 </main>
+
+<!--
+  The macro document opens here rather than expanding inside its card, so the page matches what the
+  desktop app does: the list is names and descriptions, and one macro's notes fill a panel above it.
+-->
+<div id="macroModal" class="macro-modal" hidden>
+  <div class="macro-modal-scrim" data-close-modal></div>
+  <div class="macro-modal-card" role="dialog" aria-modal="true" aria-labelledby="macroModalTitle">
+    <header class="macro-modal-head">
+      <div>
+        <span class="macro-file">.swp macro</span>
+        <h2 id="macroModalTitle"></h2>
+      </div>
+      <button class="macro-modal-close" type="button" data-close-modal aria-label="Close">&#215;</button>
+    </header>
+
+    <div id="macroModalBody" class="macro-modal-body macro-markdown"></div>
+
+    <footer class="macro-modal-foot">
+      <div class="macro-install">
+        <p>Put the downloaded file in this folder, then open SwMacroFlow and choose it from the library.</p>
+        <div class="install-code-row">
+          <pre><code id="macroInstallPath"></code></pre>
+          <button class="copy-path-button" type="button" id="copyInstallPath" aria-label="Copy macro folder path" title="Copy macro folder path">
+            <span class="copy-icon" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+      <div class="macro-modal-actions">
+        <button class="btn btn-secondary" type="button" data-close-modal>Close</button>
+        <a id="macroModalDownload" class="btn btn-primary" href="#" download>Download</a>
+        <span id="macroModalMissing" class="macro-missing" hidden>Missing .swp</span>
+      </div>
+    </footer>
+  </div>
+</div>
 
 <footer>
   <div class="footer-inner">
@@ -106,14 +148,32 @@
   };
   const INSTALL_PATH = String.raw`%LOCALAPPDATA%\SwMacroFlow\macros`;
 
-  const state = { macros: [], query: "" };
+  const state = { macros: [], query: "", open: null, lastTrigger: null };
   const grid = document.getElementById("macroGrid");
   const status = document.getElementById("macroStatus");
   const count = document.getElementById("macroCount");
   const search = document.getElementById("macroSearch");
   const sourceRepoLink = document.getElementById("sourceRepoLink");
+  const downloadAllLink = document.getElementById("downloadAllLink");
+
+  const modal = document.getElementById("macroModal");
+  const modalCard = modal.querySelector(".macro-modal-card");
+  const modalTitle = document.getElementById("macroModalTitle");
+  const modalBody = document.getElementById("macroModalBody");
+  const modalDownload = document.getElementById("macroModalDownload");
+  const modalMissing = document.getElementById("macroModalMissing");
+
+  const escapeHtml = SwMarkdown.escapeHtml;
+  const inlineMarkdown = SwMarkdown.inlineMarkdown;
 
   sourceRepoLink.href = `https://github.com/${MACRO_LIBRARY.owner}/${MACRO_LIBRARY.repo}`;
+  downloadAllLink.href = `https://github.com/${MACRO_LIBRARY.owner}/${MACRO_LIBRARY.repo}/archive/refs/heads/${encodeURIComponent(MACRO_LIBRARY.branch)}.zip`;
+  document.getElementById("macroInstallPath").textContent = INSTALL_PATH;
+
+  function rawUrl(path) {
+    const encoded = path.split("/").map(encodeURIComponent).join("/");
+    return `https://raw.githubusercontent.com/${MACRO_LIBRARY.owner}/${MACRO_LIBRARY.repo}/${MACRO_LIBRARY.branch}/${encoded}`;
+  }
 
   function githubContentsUrl(path) {
     const encodedPath = path.split("/").map(encodeURIComponent).join("/");
@@ -128,12 +188,10 @@
     return extensionless(name).toLowerCase();
   }
 
-  const escapeHtml = SwMarkdown.escapeHtml;
-  const inlineMarkdown = SwMarkdown.inlineMarkdown;
-
-  // Headings are demoted one level: a macro document's "#" sits under the card's own heading.
+  // The modal header already shows the title, so the document's own "# Title" is dropped - the same
+  // rule the desktop app applies through OnlineMacroLibraryText.BodyWithoutTitle.
   function markdownToHtml(markdown) {
-    return SwMarkdown.toHtml(markdown, { headingOffset: 1 });
+    return SwMarkdown.toHtml(markdown, { stripFirstHeading: true });
   }
 
   function firstDescription(markdown, title) {
@@ -169,75 +227,72 @@
     return response.text();
   }
 
-  function renderMacros() {
-    const query = state.query.trim().toLowerCase();
-    const filtered = state.macros.filter(macro =>
-      !query ||
-      macro.title.toLowerCase().includes(query) ||
-      macro.description.toLowerCase().includes(query) ||
-      macro.markdown.toLowerCase().includes(query)
+  // ---------- loading ----------
+
+  // library-index.json is the same file the desktop app reads, and the reason to prefer it here is
+  // not speed: it is that "title" and "summary" are computed once, at publish time, so the name and
+  // description on this page are character for character what the app shows. Deriving them again in
+  // the browser is how the two drifted apart.
+  async function loadFromIndex() {
+    // The index is generated on Windows and older published copies carry a BOM, which JSON.parse
+    // rejects outright. The desktop client strips the same character for the same reason.
+    const raw = (await fetchText(rawUrl("library-index.json"))).replace(/^\uFEFF/, "");
+    const index = JSON.parse(raw);
+    const entries = Array.isArray(index.entries) ? index.entries : [];
+    if (!entries.length) throw new Error("The library index listed no macros.");
+
+    return entries
+      .filter(entry => entry && entry.name && entry.macroPath)
+      .map(entry => ({
+        name: entry.name,
+        title: entry.title || entry.name,
+        description: entry.summary || "Open this macro to read its notes.",
+        downloadUrl: rawUrl(entry.macroPath),
+        docUrl: entry.docPath ? rawUrl(entry.docPath) : null,
+        markdown: null
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  // The original listing path, kept as the fallback: it needs no index file, so a library whose
+  // index is missing or not yet regenerated still renders.
+  async function loadFromRepoListing() {
+    const [docs, macroFiles] = await Promise.all([
+      fetchJson(githubContentsUrl(MACRO_LIBRARY.docsPath)),
+      fetchJson(githubContentsUrl(MACRO_LIBRARY.macrosPath))
+    ]);
+
+    const swpByName = new Map(
+      macroFiles
+        .filter(file => file.type === "file" && file.name.toLowerCase().endsWith(".swp"))
+        .map(file => [normalizeName(file.name), file.download_url])
     );
 
-    count.textContent = `${filtered.length} of ${state.macros.length} macros`;
-    grid.innerHTML = filtered.map(macro => `
-      <article class="macro-card">
-        <div class="macro-card-head">
-          <div>
-            <span class="macro-file">.swp macro</span>
-            <h2>${escapeHtml(macro.title)}</h2>
-          </div>
-          ${macro.downloadUrl
-            ? `<a class="btn btn-primary" href="${macro.downloadUrl}" download>Download</a>`
-            : `<span class="macro-missing">Missing .swp</span>`}
-        </div>
-        <p class="macro-description">${inlineMarkdown(macro.description)}</p>
-        <details>
-          <summary>Read macro notes</summary>
-          <div class="macro-markdown">${markdownToHtml(macro.markdown)}</div>
-          <div class="macro-install">
-            <p>Install tip: put the downloaded file in this folder, then open SwMacroFlow and choose it from the library.</p>
-            <div class="install-code-row">
-              <pre><code>${escapeHtml(INSTALL_PATH)}</code></pre>
-              <button class="copy-path-button" type="button" data-copy-value="${escapeHtml(INSTALL_PATH)}" aria-label="Copy macro folder path" title="Copy macro folder path">
-                <span class="copy-icon" aria-hidden="true"></span>
-              </button>
-            </div>
-          </div>
-        </details>
-      </article>
-    `).join("");
+    const docFiles = docs
+      .filter(file => file.type === "file" && file.name.toLowerCase().endsWith(".md"))
+      .sort((a, b) => a.name.localeCompare(b.name));
 
-    status.hidden = filtered.length > 0;
-    status.textContent = filtered.length ? "" : "No macros matched your search.";
+    return Promise.all(docFiles.map(async doc => {
+      const title = extensionless(doc.name);
+      const markdown = await fetchText(doc.download_url);
+      return {
+        name: title,
+        title,
+        markdown,
+        description: firstDescription(markdown, title),
+        downloadUrl: swpByName.get(normalizeName(doc.name)),
+        docUrl: doc.download_url
+      };
+    }));
   }
 
   async function loadMacros() {
     try {
-      const [docs, macroFiles] = await Promise.all([
-        fetchJson(githubContentsUrl(MACRO_LIBRARY.docsPath)),
-        fetchJson(githubContentsUrl(MACRO_LIBRARY.macrosPath))
-      ]);
-
-      const swpByName = new Map(
-        macroFiles
-          .filter(file => file.type === "file" && file.name.toLowerCase().endsWith(".swp"))
-          .map(file => [normalizeName(file.name), file.download_url])
-      );
-
-      const docFiles = docs
-        .filter(file => file.type === "file" && file.name.toLowerCase().endsWith(".md"))
-        .sort((a, b) => a.name.localeCompare(b.name));
-
-      state.macros = await Promise.all(docFiles.map(async doc => {
-        const title = extensionless(doc.name);
-        const markdown = await fetchText(doc.download_url);
-        return {
-          title,
-          markdown,
-          description: firstDescription(markdown, title),
-          downloadUrl: swpByName.get(normalizeName(doc.name))
-        };
-      }));
+      try {
+        state.macros = await loadFromIndex();
+      } catch (indexError) {
+        state.macros = await loadFromRepoListing();
+      }
 
       grid.hidden = false;
       renderMacros();
@@ -247,17 +302,148 @@
     }
   }
 
+  // ---------- the grid ----------
+
+  function renderMacros() {
+    const query = state.query.trim().toLowerCase();
+    // Name and description only. Document bodies are no longer loaded up front, and the app's own
+    // search covers exactly these two fields.
+    const filtered = state.macros.filter(macro =>
+      !query ||
+      macro.title.toLowerCase().includes(query) ||
+      macro.description.toLowerCase().includes(query)
+    );
+
+    count.textContent = `${filtered.length} of ${state.macros.length} macros`;
+    // The button sits inside the h2 rather than wrapping it: a <button> may only contain phrasing
+    // content, and these headings are the page's outline. Its ::after is stretched over the whole
+    // card in the stylesheet, so the entire card is still one click target.
+    grid.innerHTML = filtered.map(macro => `
+      <article class="macro-card">
+        <span class="macro-file">.swp macro</span>
+        <h2><button class="macro-card-trigger" type="button" data-macro="${escapeHtml(macro.name)}">${escapeHtml(macro.title)}</button></h2>
+        <p class="macro-description">${inlineMarkdown(macro.description)}</p>
+      </article>
+    `).join("");
+
+    status.hidden = filtered.length > 0;
+    status.textContent = filtered.length ? "" : "No macros matched your search.";
+  }
+
+  // ---------- the document modal ----------
+
+  async function openMacro(macro, trigger) {
+    state.open = macro;
+    state.lastTrigger = trigger || null;
+
+    modalTitle.textContent = macro.title;
+
+    if (macro.downloadUrl) {
+      modalDownload.href = macro.downloadUrl;
+      modalDownload.hidden = false;
+      modalMissing.hidden = true;
+    } else {
+      modalDownload.hidden = true;
+      modalMissing.hidden = false;
+    }
+
+    modal.hidden = false;
+    document.body.classList.add("has-modal");
+    modalCard.querySelector("[data-close-modal]").focus();
+
+    if (!macro.docUrl) {
+      modalBody.innerHTML = "<p>No documentation is available for this macro.</p>";
+      return;
+    }
+
+    if (macro.markdown === null || macro.markdown === undefined) {
+      modalBody.innerHTML = "<p>Loading the macro notes...</p>";
+      try {
+        macro.markdown = await fetchText(macro.docUrl);
+      } catch (error) {
+        // A macro whose notes will not load is still worth downloading.
+        if (state.open === macro) {
+          modalBody.innerHTML = "<p>Could not load the macro notes. The download above still works.</p>";
+        }
+        return;
+      }
+    }
+
+    // A slow fetch must not paint over a macro the reader has since switched to.
+    if (state.open === macro) {
+      modalBody.innerHTML = markdownToHtml(macro.markdown);
+      modalBody.scrollTop = 0;
+    }
+  }
+
+  function closeMacro() {
+    if (modal.hidden) return;
+
+    modal.hidden = true;
+    state.open = null;
+    document.body.classList.remove("has-modal");
+
+    if (state.lastTrigger && document.body.contains(state.lastTrigger)) {
+      state.lastTrigger.focus();
+    }
+    state.lastTrigger = null;
+  }
+
+  grid.addEventListener("click", event => {
+    // A click anywhere on the card lands on the trigger's stretched ::after, so this one lookup
+    // covers both the title itself and the empty space around it.
+    const trigger = event.target.closest(".macro-card-trigger");
+    if (!trigger) return;
+
+    const macro = state.macros.find(item => item.name === trigger.dataset.macro);
+    if (macro) openMacro(macro, trigger);
+  });
+
+  modal.addEventListener("click", event => {
+    if (event.target.closest("[data-close-modal]")) closeMacro();
+  });
+
+  // Esc closes, and Tab is kept inside the card - the same shape as the mobile nav in assets/nav.js,
+  // which is this site's only other dismissible surface.
+  document.addEventListener("keydown", event => {
+    if (modal.hidden) return;
+
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeMacro();
+      return;
+    }
+
+    if (event.key !== "Tab") return;
+
+    const focusable = Array.from(modalCard.querySelectorAll(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter(element => !element.hidden && element.offsetParent !== null);
+
+    if (!focusable.length) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+
   search.addEventListener("input", event => {
     state.query = event.target.value;
     renderMacros();
   });
 
-  grid.addEventListener("click", async event => {
-    const button = event.target.closest("[data-copy-value]");
-    if (!button) return;
+  document.getElementById("copyInstallPath").addEventListener("click", async event => {
+    const button = event.currentTarget;
 
     try {
-      await copyText(button.dataset.copyValue);
+      await copyText(INSTALL_PATH);
       button.classList.add("is-copied");
       button.setAttribute("aria-label", "Macro folder path copied");
       button.title = "Copied";
