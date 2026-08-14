@@ -11,10 +11,10 @@ production**: `.github/workflows/static.yml` uploads the repository root to GitH
 
 | File | Indexed | Purpose |
 |---|---|---|
-| `index.html` | yes | Landing page; every CTA goes to `login.html#signup` for the 6 month trial |
+| `index.html` | yes | Landing page; every CTA goes to `login.html#signup` for the free trial |
 | `docs.html` | yes | Documentation reader: guide list beside a Markdown viewer |
 | `macros.html` | yes | Public macro browser with docs and `.swp` downloads from GitHub |
-| `terms.html` | yes | Terms for the 6 month trial and account use |
+| `terms.html` | yes | Terms for the trial, the licence, and account use |
 | `privacy.html` | yes | What is collected and why |
 
 ```
@@ -41,12 +41,28 @@ manifest: they come from each document's first `#` heading, the same rule the ap
 
 ## Access model
 
-The website now includes Supabase Auth for email/password and Google sign-in. There is no public
-installer link anywhere on the site: every call to action sends visitors to `login.html#signup` to
-create an account for the free 6 month trial. Payments, subscriptions, license enforcement, trial
-expiry tracking, and custom account tables are still deferred, so the trial is currently a marketing
-promise rather than something the site enforces. Browser code uses only the public Supabase URL
-and publishable/anon key from `assets/auth-config.js`; never put a service-role key in this repo.
+The website includes Supabase Auth for email and password. There are no social sign-in providers -
+email/password is the only way in, so account confirmation and password reset mail are on the
+critical path and need a real SMTP provider rather than Supabase's rate-limited default sender.
+
+There is no public installer link anywhere on the site: every call to action sends visitors to
+`login.html#signup` to create an account for the free 1 month trial. Payments, licence enforcement,
+trial expiry tracking, and custom account tables are still deferred, so the trial is currently a
+marketing promise rather than something the site enforces. Browser code uses only the public
+Supabase URL and publishable/anon key from `assets/auth-config.js`; never put a service-role key in
+this repo.
+
+The site sells two editions, and the copy across `index.html`, `terms.html`, and `refund.html` has to
+keep agreeing on them:
+
+- **Free trial** — 1 month, no card. Macro chaining, batch runs across folders, and the bundled
+  macro library. **No AI Copilot and no Task Scheduler.**
+- **Full licence** — ₹2,499 once, permanent, every future update included. Everything in the trial
+  plus AI Copilot and Task Scheduler, unlocked from the day of purchase.
+
+AI Copilot is **bring your own key**: the user supplies an API key from a provider they choose, that
+provider bills them directly, and the key never leaves their machine. There is no ₹999 update
+renewal any more — updates are included with the licence forever.
 
 ## Supabase setup
 
@@ -55,9 +71,10 @@ and publishable/anon key from `assets/auth-config.js`; never put a service-role 
 3. In Supabase Auth URL Configuration, set Site URL to `https://swmacroflow.in`.
 4. Add redirect URLs for `https://swmacroflow.in/account.html`,
    `https://swmacroflow.in/reset-password.html`, and `http://localhost:8000/**`.
-5. Enable email/password auth with email confirmation and Supabase default email delivery.
-6. Enable the Google provider. The OAuth app must use
-   `https://<project-ref>.supabase.co/auth/v1/callback` as the web redirect URI.
+5. Enable email/password auth with email confirmation.
+6. Configure a real SMTP provider. Supabase's default sender is rate-limited to a handful of
+   messages an hour, and with no social sign-in every signup and every forgotten password depends
+   on that mail arriving.
 
 ## Testing locally
 
@@ -72,5 +89,5 @@ fetches `docs/manifest.json`, and the auth pages load ES modules, which browsers
 ## Related
 
 Application code, docs, and releases live in the SwMacroFlow application repositories. Keep this site
-copy aligned with the current access model: sign-up for a free 6 month trial, Supabase Auth accounts
+copy aligned with the current access model: sign-up for a free 1 month trial, Supabase Auth accounts
 for account management, and no payment or license enforcement until those systems are implemented.

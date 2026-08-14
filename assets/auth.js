@@ -32,7 +32,10 @@ function getAuthFields(form) {
   const data = new FormData(form);
   return {
     email: String(data.get("email") || "").trim(),
-    password: String(data.get("password") || "")
+    password: String(data.get("password") || ""),
+    // Only the sign-up form carries these; sign-in simply gets empty strings.
+    displayName: String(data.get("displayName") || "").trim(),
+    confirm: String(data.get("confirm") || "")
   };
 }
 
@@ -40,6 +43,30 @@ function validateCredentials(fields) {
   if (!fields.email) return "Enter your email address.";
   if (!fields.password) return "Enter your password.";
   return "";
+}
+
+function validateSignup(fields) {
+  if (!fields.displayName) return "Enter a display name.";
+  const credentialError = validateCredentials(fields);
+  if (credentialError) return credentialError;
+  if (fields.password !== fields.confirm) return "Passwords do not match.";
+  return "";
+}
+
+// Accounts created before display names existed have no name stored, so fall back through
+// the other metadata keys and finally to the email's local part.
+function displayNameOf(user) {
+  const meta = user?.user_metadata || {};
+  const name = String(meta.display_name || meta.full_name || meta.name || "").trim();
+  if (name) return name;
+  return String(user?.email || "").split("@")[0] || "Account";
+}
+
+// Where to land after signing in. Anything that is not a plain same-directory page is
+// discarded: taking the parameter at face value would make this an open redirect.
+function getNextUrl() {
+  const next = new URLSearchParams(window.location.search).get("next") || "";
+  return /^[a-z0-9_-]+\.html(#[\w-]*)?$/i.test(next) ? next : "account.html";
 }
 
 function getErrorFromUrl() {
@@ -62,38 +89,104 @@ function authLink(href, text, attrs) {
   return a;
 }
 
-function insertBeforeCta(container, element) {
-  const cta = container.querySelector("a.nav-cta");
-  container.insertBefore(element, cta || null);
+async function signOut() {
+  if (supabase) await supabase.auth.signOut();
+  window.location.href = "index.html";
+}
+
+function closeAccountMenus(except) {
+  document.querySelectorAll(".nav-account-toggle[aria-expanded='true']").forEach((toggle) => {
+    if (toggle === except) return;
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.nextElementSibling.hidden = true;
+  });
+}
+
+// Desktop: the account link becomes a name button with an Account / Sign out dropdown.
+function buildAccountMenu(name) {
+  const wrap = document.createElement("div");
+  wrap.className = "nav-account";
+  wrap.setAttribute("data-auth-nav", "menu");
+
+  const toggle = document.createElement("button");
+  toggle.className = "nav-account-toggle";
+  toggle.type = "button";
+  toggle.setAttribute("aria-expanded", "false");
+  toggle.setAttribute("aria-haspopup", "true");
+  toggle.innerHTML = '<span class="nav-account-name"></span><span class="nav-account-caret"></span>';
+  toggle.querySelector(".nav-account-name").textContent = name;
+
+  const menu = document.createElement("div");
+  menu.className = "nav-account-menu";
+  menu.hidden = true;
+  menu.appendChild(authLink("account.html", "Account"));
+
+  const out = document.createElement("button");
+  out.type = "button";
+  out.textContent = "Sign out";
+  out.addEventListener("click", signOut);
+  menu.appendChild(out);
+
+  toggle.addEventListener("click", () => {
+    const open = toggle.getAttribute("aria-expanded") === "true";
+    closeAccountMenus(toggle);
+    toggle.setAttribute("aria-expanded", open ? "false" : "true");
+    menu.hidden = open;
+  });
+
+  wrap.append(toggle, menu);
+  return wrap;
 }
 
 function renderAuthNav(session) {
-  const navs = [
-    document.querySelector(".nav-links"),
-    document.getElementById("mobileNav")
-  ].filter(Boolean);
+  const desktop = document.querySelector(".nav-links");
+  const mobile = document.getElementById("mobileNav");
+  const name = session ? displayNameOf(session.user) : "";
 
-  navs.forEach((nav) => {
+  // Runs again on every auth state change, so reset to the signed-out shape each pass
+  // before re-applying: the Account link is markup, everything else is injected.
+  [desktop, mobile].filter(Boolean).forEach((nav) => {
     nav.querySelectorAll("[data-auth-nav]").forEach((el) => el.remove());
-
-    // A signed-in visitor has already taken the trial, so the sign-up CTA goes away.
-    const cta = nav.querySelector("a.nav-cta");
-    if (cta) cta.hidden = !!session;
-
-    if (session) {
-      insertBeforeCta(nav, authLink("account.html", "Account", { "data-auth-nav": "account" }));
-      const signOut = authLink("#", "Sign out", { "data-auth-nav": "signout" });
-      signOut.addEventListener("click", async (event) => {
-        event.preventDefault();
-        if (supabase) await supabase.auth.signOut();
-        window.location.href = "index.html";
-      });
-      insertBeforeCta(nav, signOut);
-    } else {
-      insertBeforeCta(nav, authLink("login.html", "Login", { "data-auth-nav": "login" }));
-    }
+    const account = nav.querySelector("[data-auth-account]");
+    if (!account) return;
+    account.hidden = false;
+    account.href = session ? "account.html" : "login.html";
   });
+
+  if (!session) return;
+
+  const desktopAccount = desktop?.querySelector("[data-auth-account]");
+  if (desktopAccount) {
+    desktopAccount.hidden = true;
+    desktop.insertBefore(buildAccountMenu(name), desktopAccount);
+  }
+
+  // Mobile stays a flat list: the name is a heading above the existing Account row.
+  const mobileAccount = mobile?.querySelector("[data-auth-account]");
+  if (mobileAccount) {
+    const heading = document.createElement("p");
+    heading.className = "nav-mobile-user";
+    heading.textContent = name;
+    heading.setAttribute("data-auth-nav", "user");
+    mobile.insertBefore(heading, mobileAccount);
+
+    const out = document.createElement("button");
+    out.className = "nav-mobile-signout";
+    out.type = "button";
+    out.textContent = "Sign out";
+    out.setAttribute("data-auth-nav", "signout");
+    out.addEventListener("click", signOut);
+    mobile.appendChild(out);
+  }
 }
+
+document.addEventListener("click", (event) => {
+  if (!event.target.closest(".nav-account")) closeAccountMenus();
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") closeAccountMenus();
+});
 
 async function refreshAuthNav() {
   if (!supabase) {
@@ -103,33 +196,6 @@ async function refreshAuthNav() {
 
   const { data } = await supabase.auth.getSession();
   renderAuthNav(data.session);
-}
-
-async function signInWithProvider(provider) {
-  if (!supabase) throw new Error(authMissingMessage());
-
-  const { error } = await supabase.auth.signInWithOAuth({
-    provider,
-    options: {
-      redirectTo: getRedirectUrl("account.html")
-    }
-  });
-  if (error) throw error;
-}
-
-function bindProviderButtons(status) {
-  document.querySelectorAll("[data-auth-provider]").forEach((button) => {
-    button.addEventListener("click", async () => {
-      setStatus(status, "", "neutral");
-      button.disabled = true;
-      try {
-        await signInWithProvider(button.dataset.authProvider);
-      } catch (error) {
-        setStatus(status, error.message, "error");
-        button.disabled = false;
-      }
-    });
-  });
 }
 
 function bindPasswordToggles() {
@@ -160,8 +226,9 @@ function bindLoginPage() {
     root.querySelector("[data-auth-signup-form]").hidden = !isSignup;
     root.querySelector("[data-auth-copy-signin]").hidden = isSignup;
     root.querySelector("[data-auth-copy-signup]").hidden = !isSignup;
-    root.querySelector("[data-auth-switch-signin]").hidden = isSignup;
-    root.querySelector("[data-auth-switch-signup]").hidden = !isSignup;
+    root.querySelectorAll("[data-auth-show]").forEach((tab) => {
+      tab.setAttribute("aria-selected", String(tab.dataset.authShow === mode));
+    });
   }
 
   root.querySelectorAll("[data-auth-show]").forEach((button) => {
@@ -186,13 +253,11 @@ function bindLoginPage() {
 
   if (!supabase) {
     setStatus(status, authMissingMessage(), "error");
-    root.querySelectorAll("form button, [data-auth-provider]").forEach((el) => {
+    root.querySelectorAll("form button").forEach((el) => {
       el.disabled = true;
     });
     return;
   }
-
-  bindProviderButtons(status);
 
   const signin = root.querySelector("[data-auth-signin-form]");
   signin?.addEventListener("submit", async (event) => {
@@ -218,7 +283,7 @@ function bindLoginPage() {
       return;
     }
 
-    window.location.href = "account.html";
+    window.location.href = getNextUrl();
   });
 
   const signup = root.querySelector("[data-auth-signup-form]");
@@ -227,7 +292,7 @@ function bindLoginPage() {
     setStatus(status, "", "neutral");
 
     const fields = getAuthFields(signup);
-    const validationError = validateCredentials(fields);
+    const validationError = validateSignup(fields);
     if (validationError) {
       setStatus(status, validationError, "error");
       return;
@@ -238,7 +303,8 @@ function bindLoginPage() {
       email: fields.email,
       password: fields.password,
       options: {
-        emailRedirectTo: getRedirectUrl("account.html")
+        emailRedirectTo: getRedirectUrl("account.html"),
+        data: { display_name: fields.displayName }
       }
     });
 
@@ -281,15 +347,14 @@ async function bindAccountPage() {
 
   const status = root.querySelector("[data-auth-status]");
   const email = root.querySelector("[data-auth-email]");
+  const name = root.querySelector("[data-auth-name]");
   const signedIn = root.querySelector("[data-auth-signed-in]");
-  const signedOut = root.querySelector("[data-auth-signed-out]");
   const urlError = getErrorFromUrl();
   if (urlError) setStatus(status, urlError, "error");
 
   if (!supabase) {
     setStatus(status, authMissingMessage(), "error");
     signedIn.hidden = true;
-    signedOut.hidden = false;
     return;
   }
 
@@ -299,9 +364,46 @@ async function bindAccountPage() {
   }
 
   const session = data?.session;
-  signedIn.hidden = !session;
-  signedOut.hidden = !!session;
-  if (session && email) email.textContent = session.user.email || "Signed in";
+  if (!session) {
+    // replace(), not assign(): going Back from the login page should not bounce here again.
+    window.location.replace("login.html?next=account.html");
+    return;
+  }
+
+  signedIn.hidden = false;
+  if (email) email.textContent = session.user.email || "Signed in";
+  if (name) name.textContent = displayNameOf(session.user);
+
+  const profile = root.querySelector("[data-auth-profile-form]");
+  const profileInput = profile?.querySelector("[name='displayName']");
+  if (profileInput) profileInput.value = displayNameOf(session.user);
+
+  profile?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    setStatus(status, "", "neutral");
+
+    const nextName = String(new FormData(profile).get("displayName") || "").trim();
+    if (!nextName) {
+      setStatus(status, "Enter a display name.", "error");
+      return;
+    }
+
+    setBusy(profile, true);
+    const { data: updated, error: updateError } = await supabase.auth.updateUser({
+      data: { display_name: nextName }
+    });
+
+    setBusy(profile, false);
+    if (updateError) {
+      setStatus(status, updateError.message, "error");
+      return;
+    }
+
+    setStatus(status, "Display name updated.", "success");
+    if (name) name.textContent = displayNameOf(updated.user);
+    // Refresh the nav tab so the new name shows without a reload.
+    renderAuthNav({ user: updated.user });
+  });
 
   root.querySelector("[data-auth-signout]")?.addEventListener("click", async () => {
     const { error: signOutError } = await supabase.auth.signOut();
