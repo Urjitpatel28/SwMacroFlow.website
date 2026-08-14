@@ -180,6 +180,27 @@ function renderAuthNav(session) {
   }
 }
 
+// Trial and purchase CTAs point at sign-up, which is a dead end for someone already signed
+// in. Retarget them, remembering the signed-out original so this stays reversible.
+function renderAuthCtas(session) {
+  document.querySelectorAll("[data-auth-cta]").forEach((cta) => {
+    if (cta.dataset.authCtaHref === undefined) {
+      cta.dataset.authCtaHref = cta.getAttribute("href");
+      cta.dataset.authCtaText = cta.textContent;
+    }
+
+    cta.setAttribute("href", session ? cta.dataset.authCta : cta.dataset.authCtaHref);
+    if (cta.dataset.authCtaLabel) {
+      cta.textContent = session ? cta.dataset.authCtaLabel : cta.dataset.authCtaText;
+    }
+  });
+}
+
+function applyAuthState(session) {
+  renderAuthNav(session);
+  renderAuthCtas(session);
+}
+
 document.addEventListener("click", (event) => {
   if (!event.target.closest(".nav-account")) closeAccountMenus();
 });
@@ -190,12 +211,12 @@ document.addEventListener("keydown", (event) => {
 
 async function refreshAuthNav() {
   if (!supabase) {
-    renderAuthNav(null);
+    applyAuthState(null);
     return;
   }
 
   const { data } = await supabase.auth.getSession();
-  renderAuthNav(data.session);
+  applyAuthState(data.session);
 }
 
 function bindPasswordToggles() {
@@ -212,7 +233,7 @@ function bindPasswordToggles() {
   });
 }
 
-function bindLoginPage() {
+async function bindLoginPage() {
   const root = document.querySelector("[data-auth-login-page]");
   if (!root) return;
 
@@ -256,6 +277,13 @@ function bindLoginPage() {
     root.querySelectorAll("form button").forEach((el) => {
       el.disabled = true;
     });
+    return;
+  }
+
+  // Someone already signed in has nothing to do here, however they arrived.
+  const { data: current } = await supabase.auth.getSession();
+  if (current?.session) {
+    window.location.replace(getNextUrl());
     return;
   }
 
@@ -375,8 +403,29 @@ async function bindAccountPage() {
   if (name) name.textContent = displayNameOf(session.user);
 
   const profile = root.querySelector("[data-auth-profile-form]");
+  const nameView = root.querySelector("[data-auth-name-view]");
   const profileInput = profile?.querySelector("[name='displayName']");
-  if (profileInput) profileInput.value = displayNameOf(session.user);
+
+  function setEditing(editing) {
+    if (!profile || !nameView) return;
+    nameView.hidden = editing;
+    profile.hidden = !editing;
+    if (editing) {
+      profileInput.value = name ? name.textContent : "";
+      profileInput.focus();
+      profileInput.select();
+    }
+  }
+
+  root.querySelector("[data-auth-name-edit]")?.addEventListener("click", () => setEditing(true));
+  root.querySelector("[data-auth-name-cancel]")?.addEventListener("click", () => {
+    setStatus(status, "", "neutral");
+    setEditing(false);
+  });
+
+  profile?.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setEditing(false);
+  });
 
   profile?.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -401,8 +450,9 @@ async function bindAccountPage() {
 
     setStatus(status, "Display name updated.", "success");
     if (name) name.textContent = displayNameOf(updated.user);
+    setEditing(false);
     // Refresh the nav tab so the new name shows without a reload.
-    renderAuthNav({ user: updated.user });
+    applyAuthState({ user: updated.user });
   });
 
   root.querySelector("[data-auth-signout]")?.addEventListener("click", async () => {
@@ -501,13 +551,13 @@ async function bindResetPage() {
 document.addEventListener("DOMContentLoaded", async () => {
   bindPasswordToggles();
   await refreshAuthNav();
-  bindLoginPage();
+  await bindLoginPage();
   await bindAccountPage();
   await bindResetPage();
 
   if (supabase) {
     supabase.auth.onAuthStateChange((_event, session) => {
-      renderAuthNav(session);
+      applyAuthState(session);
     });
   }
 });

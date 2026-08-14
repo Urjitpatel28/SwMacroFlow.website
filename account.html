@@ -52,7 +52,21 @@
     <dl class="account-list">
       <div>
         <dt>Name</dt>
-        <dd data-auth-name></dd>
+        <dd>
+          <span class="account-name" data-auth-name-view>
+            <span data-auth-name></span>
+            <button class="icon-btn" type="button" aria-label="Edit display name" title="Edit display name" data-auth-name-edit>
+              <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                <path d="M11.2 1.8l3 3L5.2 13.8H2.2v-3l9-9z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"></path>
+              </svg>
+            </button>
+          </span>
+          <form class="account-name-form" data-auth-profile-form hidden>
+            <input name="displayName" type="text" autocomplete="name" maxlength="60" placeholder="What should we call you?" required>
+            <button class="btn btn-primary btn-compact" type="submit">Save</button>
+            <button class="btn btn-ghost btn-compact" type="button" data-auth-name-cancel>Cancel</button>
+          </form>
+        </dd>
       </div>
       <div>
         <dt>Email</dt>
@@ -64,16 +78,9 @@
       </div>
     </dl>
 
-    <form class="auth-form" data-auth-profile-form>
-      <label>
-        <span>Display name</span>
-        <input name="displayName" type="text" autocomplete="name" maxlength="60" placeholder="What should we call you?" required>
-      </label>
-      <div class="auth-actions auth-actions-inline">
-        <button class="btn btn-secondary" type="submit">Save name</button>
-        <button class="btn btn-ghost" type="button" data-auth-signout>Sign out</button>
-      </div>
-    </form>
+    <div class="auth-actions auth-actions-inline">
+      <button class="btn btn-secondary" type="button" data-auth-signout>Sign out</button>
+    </div>
   </section>
 </main>
 
