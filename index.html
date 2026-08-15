@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SwMacroFlow - Batch-run SOLIDWORKS macros automatically</title>
-<meta name="description" content="SwMacroFlow is a standalone Windows app that runs chains of SOLIDWORKS VBA macros across hundreds of files. Works with any installed SOLIDWORKS. Free 1 month trial.">
+<meta name="description" content="SwMacroFlow is a free standalone Windows app that runs chains of SOLIDWORKS VBA macros across hundreds of files. Works with any installed SOLIDWORKS. Free download, no account needed.">
 <link rel="canonical" href="https://swmacroflow.in/">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="SwMacroFlow - Batch-run SOLIDWORKS macros automatically">
@@ -41,12 +41,12 @@
       "image": "https://swmacroflow.in/assets/SwMacroFlow.png",
       "offers": {
         "@type": "Offer",
-        "name": "Perpetual licence",
-        "description": "One-time purchase. Permanent licence with every future update included.",
-        "price": "2499",
+        "name": "Free download",
+        "description": "Free to download and use. Every feature included, with no account and no licence.",
+        "price": "0",
         "priceCurrency": "INR",
         "availability": "https://schema.org/InStock",
-        "url": "https://swmacroflow.in/#pricing",
+        "url": "https://swmacroflow.in/#download",
         "seller": {
           "@id": "https://swmacroflow.in/#organization"
         }
@@ -75,10 +75,10 @@
         },
         {
           "@type": "Question",
-          "name": "What is the difference between the trial and the full version?",
+          "name": "Is SwMacroFlow really free?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The free 1 month trial gives you macro chaining, batch runs across folders, and the bundled macro library. AI Copilot and Task Scheduler are in the full version only. When you buy a licence you get both from day one."
+            "text": "Yes. SwMacroFlow is free to download and use, with every feature included: macro chaining, batch runs across folders, the bundled macro library, AI Copilot, and Task Scheduler. There is no trial, no licence, no account, and nothing to buy."
           }
         },
         {
@@ -86,23 +86,15 @@
           "name": "How do I get SwMacroFlow?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Create a SwMacroFlow account to start the free 1 month trial, then download the Windows installer from your account page. No card is required to start. The same account holds your licence and your activated computer."
+            "text": "Download the Windows installer straight from the home page. There is no sign-up and no account, so nothing stands between you and the installer."
           }
         },
         {
           "@type": "Question",
-          "name": "What does it cost after the trial?",
+          "name": "Do I get updates?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "2,499 rupees, paid once. There is no subscription and nothing renews automatically. The licence is permanent and every future update is included."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Do I get updates after I buy?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. Every future version is included with your licence at no extra cost, and new builds arrive through the app's built-in auto-updater."
+            "text": "Yes. Every future version is free, and new builds arrive through the app's built-in auto-updater."
           }
         },
         {
@@ -118,7 +110,7 @@
           "name": "Can I schedule batches?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes, in the full version. SwMacroFlow can register saved setups with Windows Task Scheduler for one-time, daily, weekly, monthly, or every-N-minute runs."
+            "text": "Yes. SwMacroFlow can register saved setups with Windows Task Scheduler for one-time, daily, weekly, monthly, or every-N-minute runs."
           }
         },
         {
@@ -126,7 +118,7 @@
           "name": "Can I install it on more than one computer?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "You can install SwMacroFlow anywhere, but one licence activates one computer at a time. If you change machines or your PC is reimaged, move the activation from your account page. You can do this yourself, up to twice a month."
+            "text": "Yes, on as many computers as you like. There is no licence and no activation, so nothing limits where you install it."
           }
         },
         {
@@ -293,18 +285,6 @@
     font-size: 18px;
   }
 
-  /* Marks a feature as full-version-only, in the capability list and plan cards alike. */
-  .tag-paid {
-    padding: 2px 7px;
-    border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
-    border-radius: 999px;
-    color: var(--accent);
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: .04em;
-    text-transform: uppercase;
-  }
-
   .capability p {
     margin: 0;
     color: var(--text-dim);
@@ -386,120 +366,65 @@
     color: var(--text-dim);
   }
 
-  .pricing-grid {
+  .download-card {
     max-width: 820px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    border-top: 1px solid var(--panel-border);
-    border-left: 1px solid var(--panel-border);
-  }
-
-  .plan {
-    display: flex;
-    flex-direction: column;
     padding: 28px 24px;
-    border-right: 1px solid var(--panel-border);
-    border-bottom: 1px solid var(--panel-border);
+    border: 1px solid var(--panel-border);
     background: color-mix(in srgb, var(--panel) 48%, var(--bg));
   }
 
-  .plan-featured {
-    background: var(--accent-soft);
-    box-shadow: inset 0 2px 0 var(--accent);
-  }
-
-  .plan-name {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 0 0 14px;
-    font-size: 18px;
-  }
-
-  .plan-badge {
-    padding: 3px 8px;
-    border-radius: 999px;
-    background: var(--accent);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: .04em;
-    text-transform: uppercase;
-  }
-
-  .plan-price {
-    display: flex;
-    align-items: baseline;
-    gap: 6px;
+  .download-version {
     margin: 0 0 6px;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text);
   }
 
-  .plan-price b {
-    font-size: clamp(2rem, 4vw, 2.6rem);
-    line-height: 1;
-    letter-spacing: -.02em;
-  }
-
-  .plan-price span {
-    color: var(--text-faint);
-    font-size: 15px;
-  }
-
-  .plan-note {
+  .download-meta {
     margin: 0 0 20px;
-    min-height: 21px;
     color: var(--text-dim);
     font-size: 14px;
   }
 
-  .plan ul {
-    margin: 0 0 24px;
-    padding: 0;
-    list-style: none;
-    color: var(--text-dim);
-    font-size: 15px;
-  }
-
-  .plan li {
-    padding-left: 22px;
-    margin-bottom: 9px;
-    position: relative;
-  }
-
-  .plan li::before {
-    content: "";
-    position: absolute;
-    left: 2px;
-    top: 7px;
-    width: 9px;
-    height: 5px;
-    border-left: 2px solid var(--accent);
-    border-bottom: 2px solid var(--accent);
-    transform: rotate(-45deg);
-  }
-
-  /* Excluded from this edition: a muted dash replaces the accent tick, so the row still
-     scans as part of the same list rather than reading as a second kind of feature. */
-  .plan li.off {
-    color: var(--text-faint);
-  }
-
-  .plan li.off::before {
-    top: 11px;
-    width: 10px;
-    height: 0;
-    border-left: 0;
-    border-bottom: 2px solid var(--text-faint);
-    transform: none;
-  }
-
-  .plan .btn {
-    margin-top: auto;
+  .download-card .btn {
     text-align: center;
   }
 
-  .pricing-fine {
+  .download-includes {
+    margin: 22px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 8px;
+  }
+
+  .download-includes li {
+    position: relative;
+    padding-left: 22px;
+    color: var(--text-dim);
+  }
+
+  .download-includes li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: .62em;
+    width: 10px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .download-sha {
+    margin: 20px 0 0;
+    color: var(--text-faint);
+    font-size: 13px;
+    word-break: break-all;
+  }
+
+  .download-sha code { color: var(--text-dim); }
+
+  .download-fine {
     max-width: 820px;
     margin: 20px auto 0;
     color: var(--text-faint);
@@ -507,7 +432,7 @@
     line-height: 1.6;
   }
 
-  .pricing-fine a { color: var(--text-dim); }
+  .download-fine a { color: var(--text-dim); }
 
   @media (max-width: 1000px) {
     .hero-grid,
@@ -556,11 +481,6 @@
       line-height: 1.08;
     }
 
-    .pricing-grid {
-      grid-template-columns: 1fr;
-      max-width: 420px;
-    }
-
     .capability,
     .step {
       grid-template-columns: 1fr;
@@ -596,9 +516,8 @@
       <a href="docs.html">Docs</a>
       <a href="macros.html">Macros</a>
       <a href="#how-it-works">How it works</a>
-      <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
-      <a href="account.html" data-auth-account>Account</a>
+      <a href="#download">Download</a>
     </nav>
     <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
       <span></span><span></span><span></span>
@@ -609,9 +528,8 @@
     <a href="docs.html">Docs</a>
     <a href="macros.html">Macros</a>
     <a href="#how-it-works">How it works</a>
-    <a href="#pricing">Pricing</a>
     <a href="#faq">FAQ</a>
-    <a href="account.html" data-auth-account>Account</a>
+    <a href="#download">Download</a>
   </nav>
 </header>
 
@@ -627,11 +545,10 @@
           installed &mdash; nothing is installed inside SOLIDWORKS itself.
         </p>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href="login.html#signup"
-             data-auth-cta="account.html" data-auth-cta-label="Go to your account">Start free trial</a>
+          <a class="btn btn-primary" href="#download">Download for Windows</a>
           <a class="btn btn-secondary" href="docs.html">Read the docs</a>
         </div>
-        <p class="hero-note">1 month free, no card required. Then &#8377;2,499 once &mdash; permanent, no subscription. <a href="#pricing">See pricing</a>.</p>
+        <p class="hero-note">Free, with every feature included. No account, no licence, no payment. <a href="#download">Get the installer</a>.</p>
       </div>
       <figure class="hero-shot">
         <img src="assets/SwMacroFlow.png" alt="SwMacroFlow desktop application showing macro chain controls, file selection, and AI Copilot panel">
@@ -674,12 +591,12 @@
       </article>
       <article class="capability">
         <small>05</small>
-        <h3>AI Copilot side panel <span class="tag-paid">Full version</span></h3>
+        <h3>AI Copilot side panel</h3>
         <p>Ask Copilot to build a macro chain, scan a folder, or write a new macro. Destructive actions require your approval first. Bring your own API key &mdash; we do not supply one.</p>
       </article>
       <article class="capability">
         <small>06</small>
-        <h3>Task Scheduler batches <span class="tag-paid">Full version</span></h3>
+        <h3>Task Scheduler batches</h3>
         <p>Save a setup and run it later through Windows Task Scheduler: once, daily, weekly, monthly, or every N minutes.</p>
       </article>
     </div>
@@ -691,8 +608,8 @@
       <div>
         <h2 id="workflow-title">Install it per user. Point it at your files. Run the batch.</h2>
         <p>
-          Build the workflow once, run it across your files, and keep moving. Free for a month, then
-          &#8377;2,499 once.
+          Build the workflow once, run it across your files, and keep moving. Free, from the first
+          run onwards.
         </p>
       </div>
     </div>
@@ -701,8 +618,8 @@
       <article class="step">
         <div class="step-num">01</div>
         <div>
-          <h3>Sign up for the trial</h3>
-          <p>Create your SwMacroFlow account to start the free 1 month trial and get the latest Windows installer. No card required.</p>
+          <h3>Download the installer</h3>
+          <p>Grab the latest Windows installer from this page. No account, no sign-up, and nothing to pay.</p>
         </div>
       </article>
       <article class="step">
@@ -723,67 +640,60 @@
         <div class="step-num">04</div>
         <div>
           <h3>Run the batch</h3>
-          <p>Add your macros, point at a folder, and hit Run Batch. In the full version you can hand the setup to Copilot or schedule it to run later.</p>
+          <p>Add your macros, point at a folder, and hit Run Batch. Hand the setup to Copilot, or schedule it to run later.</p>
         </div>
       </article>
     </div>
   </section>
 
-  <section id="pricing" aria-labelledby="pricing-title">
+  <section id="download" aria-labelledby="download-title">
     <div class="section-head">
-      <div class="section-tag">Pricing</div>
+      <div class="section-tag">Download</div>
       <div>
-        <h2 id="pricing-title">Buy it once. Own it forever.</h2>
+        <h2 id="download-title">Free, and every feature is included.</h2>
         <p>
-          Start on the free 1 month trial, then pay once and SwMacroFlow is yours permanently, with
-          every future update included. No subscription, and no card required to begin.
+          There is no trial, no licence key, and no account. Download the installer and run your
+          first batch.
         </p>
       </div>
     </div>
 
-    <div class="pricing-grid">
-      <article class="plan">
-        <h3 class="plan-name">Free trial <span class="plan-badge">1 month</span></h3>
-        <p class="plan-price"><b>&#8377;0</b> <span>for 1 month</span></p>
-        <p class="plan-note">No card required to start.</p>
-        <ul>
-          <li>Chain and batch-run your macros</li>
-          <li>Recursive folder selection</li>
-          <li>Bundled macro library</li>
-          <li>Works with your installed SOLIDWORKS</li>
-          <li class="off">No AI Copilot</li>
-          <li class="off">No Task Scheduler</li>
-        </ul>
-        <a class="btn btn-secondary" href="login.html#signup"
-           data-auth-cta="account.html" data-auth-cta-label="Go to your account">Start free trial</a>
-      </article>
+    <!-- Filled from release.json by assets/release.js, which is also what the app's auto-updater
+         reads. Leave the fields in release.json empty and this stays in its pending state rather
+         than offering a link that 404s. -->
+    <div class="download-card">
+      <div data-download-pending>
+        <p class="download-version">Coming shortly</p>
+        <p class="download-meta">
+          The first public build is not posted yet. Check back soon, or
+          <a href="contact.html">get in touch</a> and we will tell you when it lands.
+        </p>
+      </div>
 
-      <article class="plan plan-featured">
-        <h3 class="plan-name">Full licence <span class="plan-badge">Pay once</span></h3>
-        <p class="plan-price"><b>&#8377;2,499</b> <span>one time</span></p>
-        <p class="plan-note">Everything, from day one. Yours permanently.</p>
-        <ul>
-          <li>Everything in the trial, with no time limit</li>
-          <li>AI Copilot, with your own API key</li>
-          <li>Task Scheduler batches</li>
-          <li>Every future update included, free</li>
-          <li>One activated computer, movable</li>
-          <li>Email support</li>
-        </ul>
-        <a class="btn btn-primary" href="login.html#signup" data-auth-cta="account.html">Buy a licence</a>
-      </article>
+      <div data-download-ready hidden>
+        <p class="download-version" data-download-version></p>
+        <p class="download-meta" data-download-meta></p>
+        <a class="btn btn-primary" href="#" data-download-link>Download for Windows</a>
+        <p class="download-sha">
+          SHA-256: <code data-download-sha></code>
+        </p>
+      </div>
+
+      <ul class="download-includes">
+        <li>Chain and batch-run your macros across whole folders</li>
+        <li>Bundled macro library, alongside your own VBA</li>
+        <li>AI Copilot, with your own API key</li>
+        <li>Task Scheduler batches</li>
+        <li>Works with any installed, licensed x64 SOLIDWORKS</li>
+        <li>Per-user install, no administrator rights needed</li>
+      </ul>
     </div>
 
-    <!-- Prices are the total payable: not GST-registered yet, so no tax is added or collected.
-         TODO(when GST registration happens): decide absorb-vs-add, update this line, the terms
-         page, and the Razorpay order amounts together. See plan D7/D11. -->
-    <p class="pricing-fine">
-      Prices are in Indian Rupees and are the total amount payable. <strong>Nothing renews
-      automatically</strong> &mdash; there is no mandate and no recurring charge. Payments are
-      non-refundable, which is what the free trial is for &mdash; see our
-      <a href="refund.html">refund and cancellation policy</a>. AI Copilot needs an API key from a
-      provider you choose, who bills you separately; we do not supply keys. SwMacroFlow runs macros
-      you supply against files you choose, so keep backups before large batches.
+    <p class="download-fine">
+      SwMacroFlow is free to download and use. AI Copilot needs an API key from a provider you
+      choose, who bills you directly for your usage; we do not supply keys and never see yours.
+      SwMacroFlow runs macros you supply against files you choose, so keep backups before large
+      batches. See our <a href="terms.html">terms</a> and <a href="privacy.html">privacy policy</a>.
     </p>
   </section>
 
@@ -801,20 +711,16 @@
         <p>SwMacroFlow is a standalone Windows application that works with any installed and licensed x64 SOLIDWORKS version. It drives the SOLIDWORKS session on your machine from outside, so nothing is registered or installed inside SOLIDWORKS itself.</p>
       </details>
       <details>
-        <summary>What is the difference between the trial and the full version?</summary>
-        <p>The free 1 month trial gives you macro chaining, batch runs across folders, and the bundled macro library. AI Copilot and Task Scheduler are in the full version only. When you buy a licence you get both from day one.</p>
+        <summary>Is SwMacroFlow really free?</summary>
+        <p>Yes. SwMacroFlow is free to download and use, with every feature included: macro chaining, batch runs across folders, the bundled macro library, AI Copilot, and Task Scheduler. There is no trial, no licence, no account, and nothing to buy.</p>
       </details>
       <details>
         <summary>How do I get SwMacroFlow?</summary>
-        <p>Create a SwMacroFlow account to start the free 1 month trial, then download the Windows installer from your account page. No card is required to start. The same account holds your licence and your activated computer.</p>
+        <p>Download the Windows installer straight from <a href="#download">this page</a>. There is no sign-up and no account, so nothing stands between you and the installer.</p>
       </details>
       <details>
-        <summary>What does it cost after the trial?</summary>
-        <p>&#8377;2,499, paid once. There is no subscription and nothing renews automatically. The licence is permanent and every future update is included.</p>
-      </details>
-      <details>
-        <summary>Do I get updates after I buy?</summary>
-        <p>Yes. Every future version is included with your licence at no extra cost, and new builds arrive through the app's built-in auto-updater.</p>
+        <summary>Do I get updates?</summary>
+        <p>Yes. Every future version is free, and new builds arrive through the app's built-in auto-updater.</p>
       </details>
       <details>
         <summary>Do you provide the AI API key?</summary>
@@ -822,11 +728,11 @@
       </details>
       <details>
         <summary>Can I schedule batches?</summary>
-        <p>Yes, in the full version. SwMacroFlow can register saved setups with Windows Task Scheduler for one-time, daily, weekly, monthly, or every-N-minute runs.</p>
+        <p>Yes. SwMacroFlow can register saved setups with Windows Task Scheduler for one-time, daily, weekly, monthly, or every-N-minute runs.</p>
       </details>
       <details>
         <summary>Can I install it on more than one computer?</summary>
-        <p>You can install SwMacroFlow anywhere, but one licence activates one computer at a time. If you change machines or your PC is reimaged, move the activation from your account page. You can do this yourself, up to twice a month.</p>
+        <p>Yes, on as many computers as you like. There is no licence and no activation, so nothing limits where you install it.</p>
       </details>
       <details>
         <summary>Do I need administrator rights?</summary>
@@ -845,17 +751,16 @@
     <div class="footer-links">
       <a href="docs.html">Docs</a>
       <a href="macros.html">Macros</a>
-      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#download">Download</a>
       <a href="contact.html">Contact</a>
       <a href="terms.html">Terms</a>
       <a href="privacy.html">Privacy</a>
-      <a href="refund.html">Refunds</a>
     </div>
     <div class="footer-copy">&copy; 2026 SwMacroFlow. All rights reserved.</div>
   </div>
 </footer>
 
 <script src="assets/nav.js" defer></script>
-<script type="module" src="assets/auth.js"></script>
+<script src="assets/release.js" defer></script>
 </body>
 </html>

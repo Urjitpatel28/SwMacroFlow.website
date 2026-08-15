@@ -24,7 +24,7 @@
       <a href="macros.html">Macros</a>
       <a href="index.html#faq">FAQ</a>
       <a href="terms.html">Terms</a>
-      <a href="account.html" data-auth-account>Account</a>
+      <a href="index.html#download">Download</a>
     </nav>
     <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
       <span></span><span></span><span></span>
@@ -36,7 +36,7 @@
     <a href="macros.html">Macros</a>
     <a href="index.html#faq">FAQ</a>
     <a href="terms.html">Terms</a>
-    <a href="account.html" data-auth-account>Account</a>
+    <a href="index.html#download">Download</a>
   </nav>
 </header>
 
@@ -46,14 +46,14 @@
 
   <p>
     SwMacroFlow is a Windows desktop application that runs SOLIDWORKS macros on your own computer.
-    The website offers a free 1 month trial, one-time licence purchases, and accounts for licence
-    management.
+    It is free to download and use. <strong>There is no account, no licence, and no payment</strong>,
+    so there is very little for this policy to describe.
   </p>
 
   <h2>The short version</h2>
   <p>
     We do not collect your CAD files, macro code, batch results, folders, file names, or SOLIDWORKS
-    activity. The application is designed to do its work locally on your machine.
+    activity. The application does its work locally on your machine and does not report back to us.
   </p>
 
   <h2>What we collect</h2>
@@ -69,53 +69,30 @@
             to serve the website and keep it reliable.</td>
       </tr>
       <tr>
-        <td><strong>Account email and sign-in data</strong></td>
-        <td>Supabase Auth stores the email address and the details needed to create, secure, and manage your account. Your password is stored only as a salted hash, never as text.</td>
-      </tr>
-      <tr>
         <td><strong>Email you send us</strong></td>
         <td>If you contact support, we use your email address and message content to reply.</td>
-      </tr>
-      <tr>
-        <td><strong>A device identifier</strong></td>
-        <td>So a licence activates one computer at a time, the application creates a
-            <strong>one-way hash</strong> of two Windows values and sends only that hash. We cannot
-            reverse it, and it does not tell us your hardware, your computer name, or who you are.
-            See <a href="#device-id">how the device identifier works</a> below.</td>
-      </tr>
-      <tr>
-        <td><strong>Licence and payment records</strong></td>
-        <td>If you buy a licence, we keep the fact that you own one and payment references from
-            Razorpay, so we can provide the licence and issue receipts.</td>
       </tr>
     </tbody>
   </table>
 
-  <h2 id="device-id">How the device identifier works</h2>
-  <p>
-    The application combines your Windows machine GUID and your system drive's volume serial number
-    with a fixed SwMacroFlow-specific value, then hashes the result. <strong>Only the resulting hash
-    leaves your computer.</strong> The original values are never transmitted or stored by us.
-  </p>
-  <p>
-    Because the hash is salted with a value unique to SwMacroFlow, it cannot be used to recognise
-    your computer across any other product or service. We use it for exactly one purpose: enforcing
-    one activation per licence, and making sure a free trial is offered once per computer.
-  </p>
+  <p>That is the complete list.</p>
 
   <h2>What we do not collect</h2>
   <ul>
+    <li><strong>No account.</strong> There is nothing to sign up for, so we hold no email address,
+        no password, and no profile unless you choose to write to us.</li>
+    <li><strong>No device identifier.</strong> Because there is no licence to enforce, the
+        application does not identify or fingerprint your computer in any way.</li>
+    <li><strong>No payment data.</strong> SwMacroFlow is free. We take no payments and hold no
+        card, UPI, or bank details of any kind.</li>
     <li><strong>No CAD content.</strong> Your models, drawings, assemblies, file names, folder paths,
         macro code, and batch results stay on your computer.</li>
     <li><strong>No application telemetry.</strong> The app does not report what macros you run or
         how you use SOLIDWORKS.</li>
     <li><strong>No website analytics or advertising tracking.</strong> This website does not use
         tracking pixels or advertising cookies.</li>
-    <li><strong>No card or bank details.</strong> Payments are handled entirely by Razorpay. Your
-        card number, UPI ID, and bank credentials are never sent to us and we never see them.</li>
     <li><strong>No hardware inventory.</strong> We do not collect your computer name, serial numbers,
-        MAC address, installed software, or SOLIDWORKS licence details. Only the one-way device hash
-        described above.</li>
+        MAC address, installed software, or SOLIDWORKS licence details.</li>
     <li><strong>Your AI Copilot API key never reaches us.</strong> Copilot is bring your own key: we
         do not supply keys, and the key you enter is stored on your own machine and sent only to the
         AI provider you chose. What you send to that provider is governed by their privacy policy,
@@ -124,24 +101,23 @@
 
   <h2>Who processes it</h2>
   <p>
-    This website is served by <strong>GitHub Pages</strong>. Account sign-in, licence records, and
-    licence status are handled by <strong>Supabase</strong>. One-time payments are processed by
-    <strong>Razorpay</strong> under its own privacy policy; we hold no payment mandate against your
-    card or bank account. Account and licence email is delivered by our transactional email
-    provider.
+    This website is served by <strong>GitHub Pages</strong>, which is the only third party involved
+    in running it. The application itself contacts us only to check for updates, which tells us
+    nothing beyond an ordinary web request.
   </p>
 
   <h2>How long we keep it</h2>
   <p>
     Website logs are retained by the hosting provider according to its own operational policies.
-    Account records are kept while your account is active or as needed for security, legal, and operational reasons.
-    Support emails are kept only as long as they are useful for the support conversation and ordinary record keeping.
+    Support emails are kept only as long as they are useful for the support conversation and
+    ordinary record keeping.
   </p>
 
   <h2>Your choices</h2>
   <ul>
-    <li>You can browse the site, docs, and macro library without signing in. An account is needed to start the free trial.</li>
-    <li>You can ask us to delete your account or support emails, unless we need to keep them for a legal
+    <li>You can browse the site, download the application, and use every feature without ever
+        identifying yourself to us.</li>
+    <li>You can ask us to delete your support emails, unless we need to keep them for a legal
         or security reason.</li>
   </ul>
 
@@ -171,17 +147,15 @@
       <a href="index.html">Home</a>
       <a href="docs.html">Docs</a>
       <a href="macros.html">Macros</a>
-      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#download">Download</a>
       <a href="contact.html">Contact</a>
       <a href="terms.html">Terms</a>
       <a href="privacy.html">Privacy</a>
-      <a href="refund.html">Refunds</a>
     </div>
     <div class="footer-copy">&copy; 2026 SwMacroFlow. All rights reserved.</div>
   </div>
 </footer>
 
 <script src="assets/nav.js" defer></script>
-<script type="module" src="assets/auth.js"></script>
 </body>
 </html>

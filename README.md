@@ -1,6 +1,6 @@
 # swmacroflow.in
 
-The SwMacroFlow website: a static marketing page, trial sign-up, and the legal pages for the
+The SwMacroFlow website: a static marketing page, the download block, and the legal pages for the
 Windows desktop application.
 
 Plain static HTML. No build step, no framework, no package manager. **Pushing to `main` deploys to
@@ -11,22 +11,39 @@ production**: `.github/workflows/static.yml` uploads the repository root to GitH
 
 | File | Indexed | Purpose |
 |---|---|---|
-| `index.html` | yes | Landing page; every CTA goes to `login.html#signup` for the free trial |
+| `index.html` | yes | Landing page; every CTA goes to the `#download` block |
 | `docs.html` | yes | Documentation reader: guide list beside a Markdown viewer |
 | `macros.html` | yes | Public macro browser with docs and `.swp` downloads from GitHub |
-| `terms.html` | yes | Terms for the trial, the licence, and account use |
+| `terms.html` | yes | Terms of use |
 | `privacy.html` | yes | What is collected and why |
+| `contact.html` | yes | Support routes and response times |
 
 ```
-assets/site.css         tokens, nav, footer, buttons, auth, legal-page and docs styles
-assets/auth-config.js   public Supabase project URL and publishable key placeholders
-assets/auth.js          Supabase Auth client wiring for login, account, reset, and nav state
+assets/site.css         tokens, nav, footer, buttons, legal-page and docs styles
+assets/release.js       fills the #download block on index.html from release.json
 assets/markdown.js      minimal Markdown renderer shared by docs.html and macros.html
+assets/nav.js           mobile nav toggle for the shared header
 assets/logo.png         site icon and brand mark
 assets/SwMacroFlow.png  application screenshot
 docs/manifest.json      guide groups and order
 docs/*.md               the seven guides, rendered by docs.html
+release.json            the single description of the current build
 ```
+
+## Access model
+
+**There isn't one.** SwMacroFlow is free, every feature is included, and the site has no accounts,
+no licence keys, no activation, and no payments. The installer is linked publicly from the home
+page and anyone can download it.
+
+This is deliberate and the copy depends on it: `index.html`, `terms.html`, and `privacy.html` all
+state plainly that there is nothing to buy and nothing to sign up for. If a paid tier is ever
+reintroduced, all three have to change together — and the privacy policy in particular, because it
+currently promises no device identifier and no account data of any kind.
+
+AI Copilot is **bring your own key**: the user supplies an API key from a provider they choose, that
+provider bills them directly, and the key never leaves their machine. That is the one cost the user
+may incur, and it is not ours to charge or refund.
 
 ## Updating the docs
 
@@ -39,42 +56,24 @@ added, removed, or reordered, also edit `docs/manifest.json` so its groups and o
 `HelpLibrary.Groups` in `SwMacroFlow.Ui\Services\HelpLibrary.cs`. Sidebar labels are not stored in the
 manifest: they come from each document's first `#` heading, the same rule the application uses.
 
-## Access model
+## Publishing a release
 
-The website includes Supabase Auth for email and password. There are no social sign-in providers -
-email/password is the only way in, so account confirmation and password reset mail are on the
-critical path and need a real SMTP provider rather than Supabase's rate-limited default sender.
+`release.json` at the repo root is the single description of the current build. The download block
+on `index.html` reads it through `assets/release.js`, and **the application's auto-updater should
+verify every download against the same `sha256`** before running it — that is the check that
+actually protects users, not an installer hashing itself.
 
-There is no public installer link anywhere on the site: every call to action sends visitors to
-`login.html#signup` to create an account for the free 1 month trial. Payments, licence enforcement,
-trial expiry tracking, and custom account tables are still deferred, so the trial is currently a
-marketing promise rather than something the site enforces. Browser code uses only the public
-Supabase URL and publishable/anon key from `assets/auth-config.js`; never put a service-role key in
-this repo.
+For each release:
 
-The site sells two editions, and the copy across `index.html`, `terms.html`, and `refund.html` has to
-keep agreeing on them:
+1. Build and upload the installer, then get its checksum:
+   `Get-FileHash .\SwMacroFlowSetup.exe -Algorithm SHA256`
+2. Fill in `release.json` — `version`, `url`, `sha256` (64 hex chars), `sizeBytes`, `releasedOn`
+   (`YYYY-MM-DD`).
+3. Push to `main`.
 
-- **Free trial** — 1 month, no card. Macro chaining, batch runs across folders, and the bundled
-  macro library. **No AI Copilot and no Task Scheduler.**
-- **Full licence** — ₹2,499 once, permanent, every future update included. Everything in the trial
-  plus AI Copilot and Task Scheduler, unlocked from the day of purchase.
-
-AI Copilot is **bring your own key**: the user supplies an API key from a provider they choose, that
-provider bills them directly, and the key never leaves their machine. There is no ₹999 update
-renewal any more — updates are included with the licence forever.
-
-## Supabase setup
-
-1. Create a Supabase project for SwMacroFlow.
-2. Copy the project URL and publishable/anon key into `assets/auth-config.js`.
-3. In Supabase Auth URL Configuration, set Site URL to `https://swmacroflow.in`.
-4. Add redirect URLs for `https://swmacroflow.in/account.html`,
-   `https://swmacroflow.in/reset-password.html`, and `http://localhost:8000/**`.
-5. Enable email/password auth with email confirmation.
-6. Configure a real SMTP provider. Supabase's default sender is rate-limited to a handful of
-   messages an hour, and with no social sign-in every signup and every forgotten password depends
-   on that mail arriving.
+The download block only goes live when `url` and `version` are non-empty **and** `sha256` is a
+valid 64-character hex string. Anything else shows a "coming shortly" message instead — a wrong
+checksum is worse than none, because it makes a good file look tampered with.
 
 ## Testing locally
 
@@ -82,12 +81,11 @@ renewal any more — updates are included with the licence forever.
 python -m http.server 8000
 ```
 
-Then open `http://localhost:8000`. Because this is a static site, check pages over `http://`, not by opening files directly. `docs.html`
-fetches `docs/manifest.json`, and the auth pages load ES modules, which browsers block or limit on
-`file://`.
+Then open `http://localhost:8000`. Because this is a static site, check pages over `http://`, not by
+opening files directly: `docs.html` fetches `docs/manifest.json` and `index.html` fetches
+`release.json`, and browsers block those on `file://`.
 
 ## Related
 
 Application code, docs, and releases live in the SwMacroFlow application repositories. Keep this site
-copy aligned with the current access model: sign-up for a free 1 month trial, Supabase Auth accounts
-for account management, and no payment or license enforcement until those systems are implemented.
+copy aligned with the current model: a free download, no account, no licence, and no payment.

@@ -1,0 +1,9 @@
+{
+  "_comment": "Edit this file for each release. The account page reads it for the download block, and the application's auto-updater should verify downloads against the same sha256. Leave fields empty and the download block shows a 'coming shortly' state instead of a broken link.",
+  "version": "",
+  "url": "",
+  "sha256": "",
+  "sizeBytes": 0,
+  "releasedOn": "",
+  "walkthroughVideo": ""
+}

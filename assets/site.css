@@ -838,6 +838,182 @@ footer {
   width: auto;
 }
 
+/* ============ Trial, download, and upgrade cards ============ */
+.auth-page > .auth-card + .auth-card {
+  margin-top: 18px;
+}
+
+.trial-count {
+  margin: 0 0 12px;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.trial-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--text) 12%, transparent);
+  overflow: hidden;
+}
+
+.trial-bar span {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: var(--accent);
+  transition: width .3s ease;
+}
+
+[data-trial-ended="true"] .trial-bar span {
+  background: var(--text-faint);
+}
+
+.trial-note {
+  margin: 12px 0 0;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+.download-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 0 0 18px;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+.download-verify {
+  margin-top: 22px;
+}
+
+.download-verify > p {
+  margin: 0 0 10px;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+/* Wrap the checksum rather than inheriting the scrolling <pre> behaviour: on a phone a
+   64-character hash means ~225px of sideways scrolling in a small box. Scoped to this block
+   so the copyable path on macros.html keeps scrolling on one line. */
+.download-verify .install-code-row pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.download-verify-hint {
+  margin: 10px 0 0;
+  color: var(--text-faint);
+  font-size: 13px;
+}
+
+.download-verify-hint code {
+  overflow-wrap: anywhere;
+}
+
+.download-verify-hint code {
+  color: var(--text-dim);
+}
+
+/* Pre-empting the SmartScreen prompt. Amber rather than red: it is a heads-up about something
+   expected, not an error the reader has to fix. */
+.notice {
+  margin-top: 22px;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, #e0a02a 46%, var(--panel-border));
+  border-left-width: 3px;
+  border-radius: var(--radius);
+  background: color-mix(in srgb, #e0a02a 9%, transparent);
+}
+
+.notice p {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.notice strong {
+  color: var(--text);
+}
+
+.install-video {
+  margin-top: 22px;
+}
+
+.install-video h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+}
+
+.install-video p {
+  margin: 0 0 12px;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+.install-video video {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+
+.plan-upgrade ul {
+  margin: 0 0 22px;
+  padding: 0;
+  list-style: none;
+  color: var(--text-dim);
+  font-size: 15px;
+}
+
+.plan-upgrade li {
+  position: relative;
+  margin-bottom: 9px;
+  padding-left: 22px;
+}
+
+.plan-upgrade li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 7px;
+  width: 9px;
+  height: 5px;
+  border-left: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+  transform: rotate(-45deg);
+}
+
+.plan-upgrade .plan-price {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 0 0 6px;
+}
+
+.plan-upgrade .plan-price b {
+  font-size: clamp(1.9rem, 4vw, 2.4rem);
+  line-height: 1;
+  letter-spacing: -.02em;
+}
+
+.plan-upgrade .plan-price span {
+  color: var(--text-faint);
+  font-size: 15px;
+}
+
+.plan-upgrade .plan-note {
+  margin: 0 0 18px;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
 .account-list dt {
   color: var(--text-faint);
   font-size: 13px;
