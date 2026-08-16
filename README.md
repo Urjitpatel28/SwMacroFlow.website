@@ -63,17 +63,34 @@ on `index.html` reads it through `assets/release.js`, and **the application's au
 verify every download against the same `sha256`** before running it — that is the check that
 actually protects users, not an installer hashing itself.
 
+Installers are published as GitHub releases on the **public** `Urjitpatel28/SwMacroFlow.Releases`
+repository. The application repository itself is private, and release assets on a private repo are
+not publicly downloadable — a link to one 404s for everybody.
+
+`url` in `release.json` is GitHub's stable latest-release permalink and **never needs changing**:
+
+```
+https://github.com/Urjitpatel28/SwMacroFlow.Releases/releases/latest/download/SwMacroFlowSetup.exe
+```
+
 For each release:
 
-1. Build and upload the installer, then get its checksum:
-   `Get-FileHash .\SwMacroFlowSetup.exe -Algorithm SHA256`
-2. Fill in `release.json` — `version`, `url`, `sha256` (64 hex chars), `sizeBytes`, `releasedOn`
+1. Publish a GitHub release on `SwMacroFlow.Releases` with the installer attached, named exactly
+   `SwMacroFlowSetup.exe` so the permalink resolves.
+2. Get its checksum: `Get-FileHash .\SwMacroFlowSetup.exe -Algorithm SHA256`
+3. Fill in `release.json` — `version`, `sha256` (64 hex chars), `sizeBytes`, `releasedOn`
    (`YYYY-MM-DD`).
-3. Push to `main`.
+4. Push to `main`.
 
-The download block only goes live when `url` and `version` are non-empty **and** `sha256` is a
-valid 64-character hex string. Anything else shows a "coming shortly" message instead — a wrong
-checksum is worse than none, because it makes a good file look tampered with.
+The download block goes live when `url` and `version` are both non-empty; until then it shows a
+"coming shortly" message. `sha256` is displayed only when it is a valid 64-character hex string —
+a wrong checksum is worse than none, because it makes a good file look tampered with, but a missing
+one is no reason to withhold the download.
+
+Clicking Download opens a thank-you dialog carrying the **SmartScreen warning**. The installer is
+unsigned, so Windows shows "Windows protected your PC" to anyone without an EV certificate's
+reputation behind them; a user who has not been warned reads that screen as "this is malware" and
+never runs it. If code signing is ever added, that dialog is the thing to revisit.
 
 ## Testing locally
 

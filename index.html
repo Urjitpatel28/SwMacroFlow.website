@@ -366,6 +366,218 @@
     color: var(--text-dim);
   }
 
+  /* Reviews. Sized off the same 820px column and panel tint as the download card below it, so the
+     two blocks read as one pair rather than two designs that happen to sit next to each other. */
+  .review-panel {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .review-summary {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 0 0 22px;
+    border-bottom: 1px solid var(--panel-border);
+  }
+
+  .review-average {
+    font-size: 44px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .review-count {
+    margin: 6px 0 0;
+    color: var(--text-faint);
+    font-size: 14px;
+  }
+
+  .stars {
+    display: inline-flex;
+    gap: 2px;
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .stars .star { color: var(--text-faint); }
+  .stars .star.is-on { color: var(--accent); }
+  .review-summary-stars .stars { font-size: 20px; }
+
+  .review-empty {
+    margin: 22px 0 0;
+    color: var(--text-dim);
+  }
+
+  .review-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin: 22px 0 0;
+  }
+
+  /* No reviews yet, so no gap above the form either. */
+  .review-grid:empty { margin: 0; }
+
+  .review-card {
+    padding: 18px 20px;
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--panel) 48%, var(--bg));
+  }
+
+  .review-body {
+    margin: 10px 0 0;
+    color: var(--text-dim);
+    white-space: pre-line;
+    overflow-wrap: break-word;
+  }
+
+  .review-who {
+    margin: 12px 0 0;
+    color: var(--text-faint);
+    font-size: 13px;
+    overflow-wrap: break-word;
+  }
+
+  .review-who strong { color: var(--text); }
+
+  .review-form {
+    margin: 30px 0 0;
+    padding: 24px;
+    border: 1px solid var(--panel-border);
+    background: color-mix(in srgb, var(--panel) 48%, var(--bg));
+  }
+
+  .review-form h3 {
+    margin: 0 0 18px;
+    font-size: 18px;
+  }
+
+  .review-rating {
+    margin: 0 0 16px;
+    padding: 0;
+    border: 0;
+  }
+
+  .review-rating legend {
+    margin: 0 0 8px;
+    padding: 0;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  /* Reversed so the radios can stay in 5-to-1 document order: that is what lets a checked or
+     hovered star fill everything to its left with a plain sibling selector. */
+  .review-stars-input {
+    position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 4px;
+  }
+
+  /* Clipped rather than hidden. display:none would take the radios out of the tab order and the
+     rating would stop being reachable from the keyboard. */
+  .review-stars-input input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .review-stars-input label {
+    cursor: pointer;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--text-faint);
+    transition: color .12s ease;
+  }
+
+  .review-stars-input label:hover,
+  .review-stars-input label:hover ~ label,
+  .review-stars-input input:checked ~ label {
+    color: var(--accent);
+  }
+
+  .review-stars-input input:focus-visible + label {
+    outline: 2px solid color-mix(in srgb, var(--accent) 64%, transparent);
+    outline-offset: 2px;
+  }
+
+  .review-field {
+    display: block;
+    margin: 0 0 14px;
+  }
+
+  .review-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin: 0 0 14px;
+  }
+
+  .review-fields .review-field { margin: 0; }
+
+  .review-field > span {
+    display: block;
+    margin: 0 0 6px;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  .review-field em {
+    font-style: normal;
+    color: var(--text-faint);
+  }
+
+  .review-field input,
+  .review-field textarea {
+    width: 100%;
+    padding: 10px 12px;
+    font: inherit;
+    color: var(--text);
+    background: color-mix(in srgb, var(--panel) 72%, var(--bg));
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius);
+  }
+
+  .review-field textarea {
+    min-height: 108px;
+    line-height: 1.6;
+    resize: vertical;
+  }
+
+  .review-field input:focus-visible,
+  .review-field textarea:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--accent) 64%, transparent);
+    outline-offset: 2px;
+  }
+
+  /* Off screen rather than display:none, because the bots worth catching skip fields they cannot
+     see at all but happily fill one that is merely parked somewhere odd. */
+  .review-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .review-status {
+    margin: 14px 0 0;
+    min-height: 1.4em;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  .review-status[data-tone="ok"] { color: var(--success); }
+  .review-status[data-tone="error"] { color: var(--danger); }
+
   .download-card {
     max-width: 820px;
     margin: 0 auto;
@@ -434,6 +646,48 @@
 
   .download-fine a { color: var(--text-dim); }
 
+  .thanks-dialog {
+    width: min(460px, calc(100vw - 36px));
+    padding: 26px 24px 24px;
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius);
+    background: var(--panel);
+    color: var(--text);
+  }
+
+  .thanks-dialog::backdrop {
+    background: rgba(0, 0, 0, .55);
+  }
+
+  .thanks-dialog h2 {
+    margin: 0 0 10px;
+    font-size: 22px;
+  }
+
+  .thanks-dialog p {
+    margin: 0 0 14px;
+    color: var(--text-dim);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .thanks-dialog a { color: var(--accent); }
+
+  /* The warning is the reason this dialog exists, so it does not read as body copy. */
+  .thanks-warn {
+    padding: 14px 16px;
+    border-left: 2px solid var(--accent);
+    background: var(--accent-soft);
+  }
+
+  .thanks-dialog form {
+    margin: 18px 0 0;
+  }
+
+  .thanks-dialog .btn {
+    width: 100%;
+  }
+
   @media (max-width: 1000px) {
     .hero-grid,
     .section-head {
@@ -450,6 +704,12 @@
 
     .capability p {
       grid-column: 2;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .review-grid {
+      grid-template-columns: 1fr;
     }
   }
 
@@ -470,6 +730,14 @@
     .step p,
     details p {
       overflow-wrap: break-word;
+    }
+
+    .review-fields {
+      grid-template-columns: 1fr;
+    }
+
+    .review-form {
+      padding: 20px 16px;
     }
 
     .hero-shot {
@@ -516,6 +784,7 @@
       <a href="docs.html">Docs</a>
       <a href="macros.html">Macros</a>
       <a href="#how-it-works">How it works</a>
+      <a href="#reviews">Reviews</a>
       <a href="#faq">FAQ</a>
       <a href="#download">Download</a>
     </nav>
@@ -528,6 +797,7 @@
     <a href="docs.html">Docs</a>
     <a href="macros.html">Macros</a>
     <a href="#how-it-works">How it works</a>
+    <a href="#reviews">Reviews</a>
     <a href="#faq">FAQ</a>
     <a href="#download">Download</a>
   </nav>
@@ -646,6 +916,88 @@
     </div>
   </section>
 
+  <!-- Filled from Supabase by assets/reviews.js. Ships hidden and is revealed only once the reviews
+       have actually loaded, for the same reason the download card stays pending until release.json
+       has something real in it: a review box that cannot reach its data is worse than none. -->
+  <section id="reviews" aria-labelledby="reviews-title" data-reviews hidden>
+    <div class="section-head">
+      <div class="section-tag">Reviews</div>
+      <div>
+        <h2 id="reviews-title">What engineers say after their first batch.</h2>
+        <p>
+          Used SwMacroFlow on real work? Leave a rating and tell the next person what to expect.
+          No account and no sign-up, same as everything else here.
+        </p>
+      </div>
+    </div>
+
+    <div class="review-panel">
+      <div class="review-summary" data-review-summary hidden>
+        <div class="review-average" data-review-average>0.0</div>
+        <div>
+          <div class="review-summary-stars" data-review-summary-stars></div>
+          <p class="review-count" data-review-count></p>
+        </div>
+      </div>
+
+      <p class="review-empty" data-review-empty hidden>
+        No reviews yet. Yours would be the first.
+      </p>
+
+      <div class="review-grid" data-review-list></div>
+
+      <!-- novalidate because the messages below the button say more than the browser bubbles do.
+           The required attributes stay for the semantics; assets/reviews.js does the checking. -->
+      <form class="review-form" data-review-form novalidate>
+        <h3>Leave a review</h3>
+
+        <fieldset class="review-rating">
+          <legend>Your rating</legend>
+          <!-- Five to one in document order, flipped back visually by the stylesheet. Each radio
+               carries its own label for assistive tech; the stars themselves are decoration. -->
+          <div class="review-stars-input">
+            <input type="radio" name="rating" id="rating-5" value="5" aria-label="5 stars" required>
+            <label for="rating-5" title="5 stars" aria-hidden="true">★</label>
+            <input type="radio" name="rating" id="rating-4" value="4" aria-label="4 stars">
+            <label for="rating-4" title="4 stars" aria-hidden="true">★</label>
+            <input type="radio" name="rating" id="rating-3" value="3" aria-label="3 stars">
+            <label for="rating-3" title="3 stars" aria-hidden="true">★</label>
+            <input type="radio" name="rating" id="rating-2" value="2" aria-label="2 stars">
+            <label for="rating-2" title="2 stars" aria-hidden="true">★</label>
+            <input type="radio" name="rating" id="rating-1" value="1" aria-label="1 star">
+            <label for="rating-1" title="1 star" aria-hidden="true">★</label>
+          </div>
+        </fieldset>
+
+        <div class="review-fields">
+          <label class="review-field">
+            <span>Your name</span>
+            <input type="text" name="name" maxlength="60" autocomplete="name" required>
+          </label>
+          <label class="review-field">
+            <span>Role or company <em>(optional)</em></span>
+            <input type="text" name="role" maxlength="80" autocomplete="organization-title">
+          </label>
+        </div>
+
+        <label class="review-field">
+          <span>Your review</span>
+          <textarea name="comment" rows="4" maxlength="1200" required
+                    placeholder="What did you batch, and how did it go?"></textarea>
+        </label>
+
+        <!-- Honeypot. Nobody sees this field, so anything in it came from something automated. -->
+        <div class="review-hp" aria-hidden="true">
+          <label for="review-website">Website</label>
+          <input type="text" id="review-website" name="website" tabindex="-1" autocomplete="off" data-review-hp>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Post review</button>
+        <p class="review-status" data-review-status role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
   <section id="download" aria-labelledby="download-title">
     <div class="section-head">
       <div class="section-tag">Download</div>
@@ -674,7 +1026,7 @@
         <p class="download-version" data-download-version></p>
         <p class="download-meta" data-download-meta></p>
         <a class="btn btn-primary" href="#" data-download-link>Download for Windows</a>
-        <p class="download-sha">
+        <p class="download-sha" data-download-sha-row hidden>
           SHA-256: <code data-download-sha></code>
         </p>
       </div>
@@ -684,7 +1036,7 @@
         <li>Bundled macro library, alongside your own VBA</li>
         <li>AI Copilot, with your own API key</li>
         <li>Task Scheduler batches</li>
-        <li>Works with any installed, licensed x64 SOLIDWORKS</li>
+        <li>Works with any installed SOLIDWORKS</li>
         <li>Per-user install, no administrator rights needed</li>
       </ul>
     </div>
@@ -742,6 +1094,24 @@
   </section>
 </main>
 
+<!-- Shown after the download starts, not instead of it. SmartScreen blocks unsigned installers from
+     unknown publishers by default, and someone who has not been warned reads that as "this is
+     malware" and never runs it. Opened by assets/release.js. -->
+<dialog class="thanks-dialog" data-thanks>
+  <h2>Thank you</h2>
+  <p>
+    Your download has started. If it did not, <a href="#" data-thanks-retry>click here to try again</a>.
+  </p>
+  <p class="thanks-warn">
+    <strong>Windows may show a &ldquo;Windows protected your PC&rdquo; warning.</strong>
+    SwMacroFlow is an app from an independent developer and has not yet built up Microsoft's
+    download reputation. Click <strong>More info</strong> &rarr; <strong>Run anyway</strong>.
+  </p>
+  <form method="dialog">
+    <button class="btn btn-primary" type="submit">Got it</button>
+  </form>
+</dialog>
+
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
@@ -762,5 +1132,7 @@
 
 <script src="assets/nav.js" defer></script>
 <script src="assets/release.js" defer></script>
+<script src="assets/review-config.js" defer></script>
+<script src="assets/reviews.js" defer></script>
 </body>
 </html>
