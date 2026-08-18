@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>How to write a SOLIDWORKS VBA macro for batch running | SwMacroFlow</title>
+<meta name="description" content="Any SOLIDWORKS VBA macro with an argument-less Sub main works in SwMacroFlow - no library to reference and no host-specific code. With a worked example.">
+<link rel="canonical" href="https://swmacroflow.in/docs/writing-a-macro/">
+<meta property="og:title" content="How to write a SOLIDWORKS VBA macro for batch running | SwMacroFlow">
+<meta property="og:description" content="Any SOLIDWORKS VBA macro with an argument-less Sub main works in SwMacroFlow - no library to reference and no host-specific code. With a worked example.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://swmacroflow.in/docs/writing-a-macro/">
+<meta property="og:site_name" content="SwMacroFlow">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to write a SOLIDWORKS VBA macro for batch running | SwMacroFlow">
+<meta name="twitter:description" content="Any SOLIDWORKS VBA macro with an argument-less Sub main works in SwMacroFlow - no library to reference and no host-specific code. With a worked example.">
+<meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta name="theme-color" content="#0d0d0f">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/assets/logo.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/assets/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://swmacroflow.in/docs/writing-a-macro/#article",
+      "headline": "Writing a macro",
+      "description": "Any SOLIDWORKS VBA macro with an argument-less Sub main works in SwMacroFlow - no library to reference and no host-specific code. With a worked example.",
+      "url": "https://swmacroflow.in/docs/writing-a-macro/",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://swmacroflow.in/#website"
+      },
+      "about": {
+        "@id": "https://swmacroflow.in/#software"
+      },
+      "publisher": {
+        "@id": "https://swmacroflow.in/#organization"
+      },
+      "dateModified": "2026-08-11"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://swmacroflow.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Docs",
+          "item": "https://swmacroflow.in/docs.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Writing a macro",
+          "item": "https://swmacroflow.in/docs/writing-a-macro/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="brand">
+      <img src="/assets/logo.png" alt="SwMacroFlow logo" width="28" height="28">
+      SwMacroFlow
+    </a>
+    <nav class="nav-links">
+      <a href="/index.html#features">Features</a>
+      <a href="/docs.html" aria-current="page">Docs</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#how-it-works">How it works</a>
+      <a href="/index.html#faq">FAQ</a>
+      <a href="/index.html#download">Download</a>
+    </nav>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav id="mobileNav" class="nav-mobile" aria-label="Site">
+    <a href="/index.html#features">Features</a>
+      <a href="/docs.html" aria-current="page">Docs</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#how-it-works">How it works</a>
+      <a href="/index.html#faq">FAQ</a>
+      <a href="/index.html#download">Download</a>
+  </nav>
+</header>
+
+<main class="docs-page">
+  <div class="docs-layout">
+
+    <aside class="docs-sidebar">
+      <nav class="docs-nav" aria-label="Documentation">
+        <p class="docs-nav-group">Using the app</p>
+        <ul>
+          <li><a href="/docs/overview/">Overview</a></li>
+          <li><a href="/docs/using-the-app/">Using the app</a></li>
+        </ul>
+        <p class="docs-nav-group">Writing macros</p>
+        <ul>
+          <li><a href="/docs/writing-a-macro/" class="is-active" aria-current="page">Writing a macro</a></li>
+          <li><a href="/docs/adding-inputs/">Adding inputs</a></li>
+          <li><a href="/docs/reporting-results/">Reporting a result</a></li>
+          <li><a href="/docs/macro-authoring-spec/">Macro authoring spec</a></li>
+        </ul>
+        <p class="docs-nav-group">Reference</p>
+        <ul>
+          <li><a href="/docs/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <article class="docs-content">
+      <nav class="crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/docs.html">Docs</a></li>
+        <li aria-current="page">Writing a macro</li>
+      </ol>
+    </nav>
+      <p class="page-eyebrow">Writing macros</p>
+      <h1>Writing a macro</h1>
+      <div class="docs-markdown"><p>Any SOLIDWORKS VBA macro with an argument-less <code>Sub main</code> works. There is no SwMacroFlow-specific code to add, no library to reference, and no result object to fill in. A macro written for SwMacroFlow still runs by hand in the VBA editor exactly as it always did.</p><pre><code class="lang-vb">Option Explicit
+
+Sub main()
+    Dim swApp As SldWorks.SldWorks
+    Dim model As SldWorks.ModelDoc2
+
+    Set swApp = Application.SldWorks
+    Set model = swApp.ActiveDoc      &#039; the file SwMacroFlow just opened
+
+    If model Is Nothing Then Exit Sub
+
+    &#039; Restrict to the document type this macro makes sense for, if needed:
+    &#039; If model.GetType &lt;&gt; swDocDRAWING Then
+    &#039;     MsgBox &quot;Not a drawing, skipped&quot;
+    &#039;     Exit Sub
+    &#039; End If
+
+    &#039; ---- your per-file work here ----
+    &#039; If you change the document, save it before returning.
+    &#039; Report with MsgBox - see Reporting a result.
+End Sub</code></pre><p>Inputs are declared as <code>Const</code> values with <code>&quot;@Name&quot;</code> tokens - see <em>Adding inputs</em>. For the complete contract in one place (including property placeholders), see <em>Macro authoring spec</em>.</p><h2>The entry point</h2><p>SwMacroFlow looks for a <code>Sub</code> that takes <strong>no arguments</strong>:</p><ul><li>A <code>Sub</code> named <code>main</code> is preferred, whatever <strong>standard module</strong> it is in. Case does not matter.</li><li>If there is no <code>main</code>, the <strong>first</strong> argument-less <code>Sub</code> is used - and which one that is depends on the order SOLIDWORKS happens to list them, which you do not control.</li></ul><p><strong>Always name your entry point <code>main</code>.</strong> It is the only way to be sure which procedure runs.</p><p>A macro with no argument-less <code>Sub</code> at all is rejected when you add it, with <em>&quot;This macro has no runnable procedure&quot;</em>.</p><h2>How your macro sees the file</h2><p>SwMacroFlow opens the file, makes it the active document, and calls your <code>Sub</code>. The file is never passed in as an argument - <code>swApp.ActiveDoc</code> is how you reach it.</p><p>Guard for <code>Nothing</code> and exit cleanly. It costs one line and it is the difference between a clear row and <code>Error 91: Object variable or With block variable not set</code>.</p><p><code>model.GetType</code> tells you what you were handed, if the macro only makes sense for one kind of document:</p><pre><code class="lang-vb">If model.GetType &lt;&gt; swDocDRAWING Then
+    MsgBox &quot;Not a drawing, skipped&quot;
+    Exit Sub
+End If</code></pre><h2>Your macro runs once per file</h2><p>The same <code>Sub</code> is called again for the next file, in the same VBA session. That has two consequences worth knowing:</p><ul><li><strong>Do not cache per-file state in a module-level variable</strong> unless you reset it at the top of <code>main</code>. Whatever the last file left behind is still there.</li><li><strong>Save what you change.</strong> SwMacroFlow closes the document when the chain is done with it, and closing discards unsaved changes.</li></ul><p>When several macros are in the chain, each file is opened <strong>once</strong>. Every ticked macro runs against that open document in list order, then the file closes. Do not open or close documents yourself in batch mode - the host does it.</p><h2>Running with no document</h2><p>A macro that does its own work needs no document at all. Leave out <code>ActiveDoc</code>, tick <strong>Run once without opening any files</strong> in the Scope panel, and the macro runs a single time with nothing opened or closed - useful for a report, a folder walk, or setting application options.</p><p>Inputs and <code>MsgBox</code> reporting work exactly the same. <code>ActiveDoc</code> returns <code>Nothing</code> in this mode, so a macro that needs a document will simply exit at its guard.</p><p>Do not use <code>{Property}</code> placeholders in input values in this mode - there is no document to resolve them against. See <em>Adding inputs</em>.</p><h2>Your <code>.swp</code> is never modified</h2><p>Each run works on a throwaway copy in <code>%TEMP%\SwMacroFlow\</code>. That copy is where SwMacroFlow puts your input values and the machinery that captures your results. Open your own macro in the VBA editor any time and it is exactly as you wrote it.</p><p>Two things follow from this:</p><ul><li><code>GetCurrentMacroPathName</code> inside your macro reports that temporary location, not where you saved it. Do not use it to find files next to your macro - use a <code>FilePath</code> or <code>FolderPath</code> input instead.</li><li>The copy is deleted at the end of the batch. Copies left behind by a crash are swept up an hour later, on the next run.</li></ul><h2>Checking it works</h2><ol><li>Run the macro once by hand from the VBA editor before batching it. It behaves identically there, with one difference: <code>MsgBox</code> shows a real dialog instead of writing to the results list.</li><li>Add it to a job with a single file in scope and run that. If it is going to fail, it should fail on one file, not on four hundred.</li><li>Use <code>Option Explicit</code> and compile with Debug → Compile in the VBA editor so load-time surprises are fewer.</li></ol><p>For how to expose typed inputs and <code>{Property}</code> patterns, see <em>Adding inputs</em>. For how results become green, amber or red rows, see <em>Reporting a result</em>.</p></div>
+
+      <nav class="pager" aria-label="Guide">
+      <a class="pager-link" href="/docs/using-the-app/" rel="prev">
+        <span class="pager-dir">Previous</span>
+        <span class="pager-title">Using the app</span>
+      </a>
+      <a class="pager-link pager-next" href="/docs/adding-inputs/" rel="next">
+        <span class="pager-dir">Next</span>
+        <span class="pager-title">Adding inputs</span>
+      </a>
+    </nav>
+
+      <aside class="doc-cta">
+        <p>
+          These guides describe <a href="/index.html">SwMacroFlow</a>, a free Windows app that
+          batch-runs SOLIDWORKS macros across folders of parts, assemblies and drawings.
+          <a href="/index.html#download">Download it</a>, or browse the
+          <a href="/macros.html">ready-made macro library</a>.
+        </p>
+      </aside>
+    </article>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="/assets/logo.png" alt="SwMacroFlow logo" width="24" height="24" loading="lazy">
+      SwMacroFlow
+    </div>
+    <div class="footer-links">
+      <a href="/index.html">Home</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#download">Download</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/privacy.html">Privacy</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 SwMacroFlow. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/assets/nav.js" defer></script>
+</body>
+</html>

@@ -364,8 +364,7 @@ footer {
 .macro-browser,
 .macro-toolbar,
 .macro-grid,
-.macro-card,
-.macro-modal-head {
+.macro-card {
   min-width: 0;
 }
 
@@ -430,8 +429,7 @@ footer {
 
 .macro-count,
 .macro-status,
-.macro-file,
-.macro-missing {
+.macro-file {
   color: var(--text-faint);
   font-size: 13px;
 }
@@ -470,27 +468,22 @@ footer {
   line-height: 1.2;
 }
 
-/* A real <button> so keyboard activation and focus order come for free, kept inside the heading so
-   the markup stays valid. Its ::after is stretched over the card, which makes the whole card the
-   hit area while the accessible name stays just the macro title. */
-.macro-card-trigger {
-  padding: 0;
-  border: 0;
-  background: none;
+/* A real link to the macro's own page, not a button opening a modal: the card has to be something
+   a crawler can follow. Its ::after is stretched over the card, which makes the whole card the hit
+   area while the accessible name stays just the macro title. */
+.macro-card-link {
   color: inherit;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
+  text-decoration: none;
 }
 
-.macro-card-trigger::after {
+.macro-card-link::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: var(--radius);
 }
 
-.macro-card-trigger:focus-visible::after {
+.macro-card-link:focus-visible::after {
   outline: 2px solid color-mix(in srgb, var(--accent) 64%, transparent);
   outline-offset: 2px;
 }
@@ -513,176 +506,10 @@ footer {
   white-space: nowrap;
 }
 
-/* ============ Macro document modal ============ */
-/* The site's only modal. The nav is the highest thing otherwise (z-index 50), so 100 clears it. */
-.macro-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-}
-
-.macro-modal[hidden] {
-  display: none;
-}
-
-body.has-modal {
-  overflow: hidden;
-}
-
-.macro-modal-scrim {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, .62);
-  backdrop-filter: blur(3px);
-}
-
-.macro-modal-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: min(760px, 100%);
-  max-height: min(85vh, 900px);
-  border: 1px solid var(--panel-border);
-  border-radius: var(--radius);
-  background: color-mix(in srgb, var(--panel) 92%, var(--bg));
-  box-shadow: 0 28px 70px rgba(0, 0, 0, .46);
-}
-
-.macro-modal-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 16px;
-  align-items: start;
-  padding: 20px 22px 14px;
-  border-bottom: 1px solid var(--panel-border);
-}
-
-.macro-modal-head h2 {
-  margin: 4px 0 0;
-  font-size: 21px;
-  line-height: 1.2;
-}
-
-.macro-modal-close {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border: 1px solid transparent;
-  border-radius: var(--radius);
-  background: transparent;
-  color: var(--text-dim);
-  font-size: 22px;
-  line-height: 1;
-  cursor: pointer;
-}
-
-.macro-modal-close:hover {
-  border-color: var(--panel-border);
-  color: var(--text);
-}
-
-.macro-modal-close:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--accent) 64%, transparent);
-  outline-offset: 2px;
-}
-
-.macro-modal-body {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow: auto;
-}
-
-.macro-modal-foot {
-  display: grid;
-  gap: 16px;
-  padding: 16px 22px 20px;
-  border-top: 1px solid var(--panel-border);
-}
-
-.macro-modal-actions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-/* Inside the modal the body is the scrolling region, so the standalone card treatment the notes
-   used to need in the grid is dropped here. */
-.macro-modal .macro-markdown {
-  max-height: none;
-  margin: 0;
-  border: 0;
-  border-radius: 0;
-  background: none;
-  padding: 18px 22px;
-}
-
-.macro-markdown {
-  max-height: 460px;
-  overflow: auto;
-  margin-top: 14px;
-  padding: 16px;
-  border: 1px solid var(--panel-border);
-  border-radius: var(--radius);
-  background: color-mix(in srgb, var(--bg) 68%, transparent);
-}
-
-.macro-markdown h2,
-.macro-markdown h3,
-.macro-markdown h4 {
-  margin: 18px 0 8px;
-}
-
-.macro-markdown h2:first-child,
-.macro-markdown h3:first-child,
-.macro-markdown h4:first-child {
-  margin-top: 0;
-}
-
-.macro-markdown p,
-.macro-markdown li,
-.macro-install {
-  color: var(--text-dim);
-  font-size: 14px;
-}
-
-.macro-markdown pre {
-  overflow: auto;
-  margin: 12px 0;
-  padding: 12px;
-  border: 1px solid var(--panel-border);
-  border-radius: var(--radius);
-  background: var(--bg);
-}
-
-.macro-markdown table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 12px 0;
-  font-size: 13px;
-}
-
-.macro-markdown th,
-.macro-markdown td {
-  padding: 8px 10px;
-  border-bottom: 1px solid var(--panel-border);
-  text-align: left;
-  vertical-align: top;
-}
-
 .macro-install {
   margin: 14px 0 0;
-}
-
-/* The modal footer supplies its own spacing. */
-.macro-modal .macro-install {
-  margin: 0;
+  color: var(--text-dim);
+  font-size: 14px;
 }
 
 .macro-install p {
@@ -758,15 +585,7 @@ body.has-modal {
   background: color-mix(in srgb, var(--panel) 70%, var(--bg));
 }
 
-.macro-missing {
-  display: inline-flex;
-  min-height: 38px;
-  align-items: center;
-}
-
 @media (max-width: 900px) {
-  /* The modal head deliberately stays two columns: the close button belongs beside the title at
-     every width, not stacked under it. */
   .macros-hero,
   .macro-toolbar {
     grid-template-columns: 1fr;
@@ -803,32 +622,6 @@ body.has-modal {
   }
 
   .macros-hero .btn {
-    width: 100%;
-  }
-
-  .macro-modal {
-    padding: 12px;
-  }
-
-  .macro-modal-card {
-    max-height: calc(100vh - 24px);
-  }
-
-  .macro-modal-head,
-  .macro-modal-foot {
-    padding-inline: 16px;
-  }
-
-  .macro-modal .macro-markdown {
-    padding-inline: 16px;
-  }
-
-  .macro-modal-actions {
-    flex-direction: column-reverse;
-    align-items: stretch;
-  }
-
-  .macro-modal-actions .btn {
     width: 100%;
   }
 }
@@ -1038,3 +831,187 @@ body.has-modal {
   .docs-page { padding-inline: 18px; }
 }
 
+
+/* ============ Generated pages ============ */
+/* Everything below styles output from tools/build-site.mjs: the per-guide and per-macro pages, and
+   the two indexes that link to them. They reuse .docs-* and .macro-* above wherever the shape is
+   the same; these rules only cover what the old client-rendered pages had no equivalent for. */
+
+.crumbs {
+  margin: 0 0 18px;
+  font-size: 13px;
+  color: var(--text-faint);
+}
+
+.crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.crumbs li + li::before {
+  content: "/";
+  margin-right: 8px;
+  color: var(--panel-border);
+}
+
+.crumbs a {
+  color: var(--text-dim);
+  text-decoration: none;
+}
+
+.crumbs a:hover { color: var(--text); }
+
+/* Prev/next. These exist for the links as much as the navigation: without them every generated
+   page hangs off one index and nothing else on the site points at it. */
+.pager {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 52px 0 0;
+  padding: 26px 0 0;
+  border-top: 1px solid var(--panel-border);
+}
+
+.pager-link {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 16px 18px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--panel) 44%, var(--bg));
+  text-decoration: none;
+  transition: border-color .15s ease, background .15s ease;
+}
+
+.pager-link:hover {
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--panel-border));
+  background: color-mix(in srgb, var(--panel) 68%, var(--bg));
+}
+
+.pager-next { text-align: right; }
+
+.pager-dir {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.pager-title {
+  color: var(--text);
+  font-weight: 700;
+  overflow-wrap: break-word;
+}
+
+/* The one place a guide or macro page sells the product. Kept to a single paragraph: these pages
+   earn their traffic by answering the question, not by pitching. */
+.doc-cta {
+  margin: 34px 0 0;
+  padding: 18px 20px;
+  border-left: 2px solid var(--accent);
+  background: var(--accent-soft);
+}
+
+.doc-cta p {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+.doc-cta a { color: var(--accent); }
+
+/* Docs index */
+.docs-index-head {
+  max-width: 760px;
+  margin: 0 0 42px;
+}
+
+.docs-index-head h1 {
+  margin: 0 0 14px;
+  font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+  line-height: 1.1;
+}
+
+.docs-index-lede {
+  margin: 0 0 26px;
+  color: var(--text-dim);
+}
+
+.doc-group + .doc-group { margin-top: 44px; }
+
+.doc-group h2 {
+  margin: 0 0 16px;
+  font-size: 20px;
+}
+
+.doc-index {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.doc-card {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--panel) 56%, var(--bg));
+  transition: border-color .15s ease, background .15s ease;
+}
+
+.doc-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--panel-border));
+  background: color-mix(in srgb, var(--panel) 72%, var(--bg));
+}
+
+.doc-card h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.doc-card h3 a { text-decoration: none; }
+
+.doc-card p {
+  margin: 8px 0 0;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+/* Macro pages */
+.macro-lede {
+  margin: 0 0 24px;
+  color: var(--text-dim);
+  font-size: 17px;
+}
+
+.macro-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 8px;
+}
+
+.macro-install-note {
+  max-width: 760px;
+  margin: 40px 0 0;
+  padding: 22px 0 0;
+  border-top: 1px solid var(--panel-border);
+}
+
+@media (max-width: 860px) {
+  .doc-index { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 620px) {
+  .pager { grid-template-columns: 1fr; }
+  .pager-next { text-align: left; }
+  .macro-actions .btn { width: 100%; }
+}

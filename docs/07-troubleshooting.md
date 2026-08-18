@@ -4,8 +4,8 @@ Symptom first. Each heading is what you actually see.
 
 ## "Can't reach SOLIDWORKS"
 
-SwMacroFlow never got a session, so the rest of the window never appeared. The panel names the
-reason; there are three.
+A connection attempt failed - either one you started from the header, or the one **Run Batch** makes
+on its way in. Nothing was run. The message names the reason; there are three.
 
 **"SOLIDWORKS is running but won't accept a connection."** One of the two programs is running as
 administrator and the other is not. Windows hides elevated programs from unelevated ones, so they
@@ -17,16 +17,27 @@ of the one you already have open.
 SwMacroFlow drives a real SOLIDWORKS; there is nothing it can do without one.
 
 **"SOLIDWORKS didn't finish starting in time."** It waited five minutes. Open SOLIDWORKS yourself,
-let it settle, then press **Try again** - it will join the one you opened.
+let it settle, then run again - it will join the one you opened.
 
-**Try again** re-runs the whole attempt, so fix the cause and press it rather than restarting
-SwMacroFlow.
+Fix the cause and press **Run Batch** again; nothing about your setup is lost by a failed connect.
 
-## "Connect to a SOLIDWORKS instance first — pick one in the header."
+## "Some macros did not compile"
 
-Run is disabled because there is no live session - the app started disconnected, or the connection
-was lost. You can still add macros and fill in inputs, but use the header controls to pick or
-reconnect to a SOLIDWORKS instance before starting the batch.
+The run connected, then loaded each ticked macro through SOLIDWORKS - which compiles its VBA project
+and checks it has a runnable `Sub` taking no arguments. At least one did not pass, and the message
+names each one with the error it gave.
+
+- **Continue** runs the rest of the chain without them. They stay in the list, still ticked, and the
+  next run tries them again.
+- **Abort** runs nothing.
+
+The usual causes are the same ones under *A macro won't load* below: VBA references the macro needs
+that this SOLIDWORKS does not have, a syntax error, or no `Sub` that can be called with no
+arguments. Open the `.swp` in SOLIDWORKS' own macro editor and press Debug > Compile to see the same
+error with a line number.
+
+If nothing in the chain compiles, there is nothing to continue with and the run is abandoned without
+asking.
 
 ## The batch seems to have stopped
 
@@ -78,11 +89,10 @@ The reason is written next to the button:
 
 | Message | What to do |
 |---|---|
-| Connect to a SOLIDWORKS instance first — pick one in the header. | Connect or pick an instance in the header. |
+| No SOLIDWORKS installation was found on this machine. | There is nothing for the run to connect to. Being disconnected is not itself a reason - **Run Batch** connects for you. |
 | Add at least one macro to run. | The macro list is empty. |
 | Tick at least one macro to run. | Every macro in the list is unticked. |
-| A macro's own error message | That macro did not load. Its row carries a **!** - hover it, then see the sections above. |
-| *macro* hasn't been checked by SOLIDWORKS yet. | It was added while disconnected. Checking starts by itself on connect and takes about a second per macro; if it persists, disconnect and connect again. |
+| A macro's own error message | That macro's `.swp` could not be read at all. Its row carries a **!** - hover it, then see the sections above. |
 | Add at least one file to the scope. | Check the Part / Assembly / Drawing checkboxes as well as the lists. A file in an unticked list is not in scope. |
 | Enter a valid whole number for every number input in *macro*. | A number input will not parse. The message names the macro, which may not be the one showing on screen. |
 | Fix every property placeholder in *macro*. | A `String`, `FilePath` or `FolderPath` value has malformed `{…}` braces - nested braces, an empty name, or a stray `{` / `}`. |

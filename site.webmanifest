@@ -1,0 +1,23 @@
+{
+  "name": "SwMacroFlow",
+  "short_name": "SwMacroFlow",
+  "description": "Batch-run SOLIDWORKS VBA macros across hundreds of parts, assemblies and drawings.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#0d0d0f",
+  "theme_color": "#0d0d0f",
+  "icons": [
+    {
+      "src": "/assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

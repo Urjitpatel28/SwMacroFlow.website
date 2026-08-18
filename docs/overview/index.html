@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>What SwMacroFlow does - SOLIDWORKS batch macro runner | SwMacroFlow</title>
+<meta name="description" content="How SwMacroFlow opens each SOLIDWORKS file once, runs every macro you ticked against it in order, and records what each macro reported.">
+<link rel="canonical" href="https://swmacroflow.in/docs/overview/">
+<meta property="og:title" content="What SwMacroFlow does - SOLIDWORKS batch macro runner | SwMacroFlow">
+<meta property="og:description" content="How SwMacroFlow opens each SOLIDWORKS file once, runs every macro you ticked against it in order, and records what each macro reported.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://swmacroflow.in/docs/overview/">
+<meta property="og:site_name" content="SwMacroFlow">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What SwMacroFlow does - SOLIDWORKS batch macro runner | SwMacroFlow">
+<meta name="twitter:description" content="How SwMacroFlow opens each SOLIDWORKS file once, runs every macro you ticked against it in order, and records what each macro reported.">
+<meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta name="theme-color" content="#0d0d0f">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/assets/logo.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/assets/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://swmacroflow.in/docs/overview/#article",
+      "headline": "What SwMacroFlow does",
+      "description": "How SwMacroFlow opens each SOLIDWORKS file once, runs every macro you ticked against it in order, and records what each macro reported.",
+      "url": "https://swmacroflow.in/docs/overview/",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://swmacroflow.in/#website"
+      },
+      "about": {
+        "@id": "https://swmacroflow.in/#software"
+      },
+      "publisher": {
+        "@id": "https://swmacroflow.in/#organization"
+      },
+      "dateModified": "2026-08-11"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://swmacroflow.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Docs",
+          "item": "https://swmacroflow.in/docs.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Overview",
+          "item": "https://swmacroflow.in/docs/overview/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="brand">
+      <img src="/assets/logo.png" alt="SwMacroFlow logo" width="28" height="28">
+      SwMacroFlow
+    </a>
+    <nav class="nav-links">
+      <a href="/index.html#features">Features</a>
+      <a href="/docs.html" aria-current="page">Docs</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#how-it-works">How it works</a>
+      <a href="/index.html#faq">FAQ</a>
+      <a href="/index.html#download">Download</a>
+    </nav>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav id="mobileNav" class="nav-mobile" aria-label="Site">
+    <a href="/index.html#features">Features</a>
+      <a href="/docs.html" aria-current="page">Docs</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#how-it-works">How it works</a>
+      <a href="/index.html#faq">FAQ</a>
+      <a href="/index.html#download">Download</a>
+  </nav>
+</header>
+
+<main class="docs-page">
+  <div class="docs-layout">
+
+    <aside class="docs-sidebar">
+      <nav class="docs-nav" aria-label="Documentation">
+        <p class="docs-nav-group">Using the app</p>
+        <ul>
+          <li><a href="/docs/overview/" class="is-active" aria-current="page">Overview</a></li>
+          <li><a href="/docs/using-the-app/">Using the app</a></li>
+        </ul>
+        <p class="docs-nav-group">Writing macros</p>
+        <ul>
+          <li><a href="/docs/writing-a-macro/">Writing a macro</a></li>
+          <li><a href="/docs/adding-inputs/">Adding inputs</a></li>
+          <li><a href="/docs/reporting-results/">Reporting a result</a></li>
+          <li><a href="/docs/macro-authoring-spec/">Macro authoring spec</a></li>
+        </ul>
+        <p class="docs-nav-group">Reference</p>
+        <ul>
+          <li><a href="/docs/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <article class="docs-content">
+      <nav class="crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/docs.html">Docs</a></li>
+        <li aria-current="page">Overview</li>
+      </ol>
+    </nav>
+      <p class="page-eyebrow">Using the app</p>
+      <h1>What SwMacroFlow does</h1>
+      <div class="docs-markdown"><p>SwMacroFlow runs one or more SOLIDWORKS macros across many parts, assemblies and drawings without anyone sitting in front of the screen. It opens each file once, runs every macro you ticked against it in order, closes it, and records what each macro reported.</p><p>It is a separate application that drives SOLIDWORKS from outside. Start it from the Start menu. It joins a SOLIDWORKS you already have open, or starts one for you if none is running - the window says which while it works that out. Nothing is installed into SOLIDWORKS itself.</p><h2>What it is for</h2><ul><li>Applying the same change to a folder of files - a template swap, a unit change, a property update.</li><li>Exporting a folder of files - PDF, DXF, STEP, a BOM.</li><li>Checking a folder of files and reporting on it, without changing anything.</li><li>Running a macro that does its own thing once, with no file open at all.</li></ul><p>If you already have a macro that works on one open document, it will almost certainly work here with no changes. See <em>Writing a macro</em>.</p><h2>Before you start</h2><p>Two machine settings matter more than anything else:</p><ul><li><strong>Trust access to the VBA project object model</strong> must be on in the SOLIDWORKS VBA editor (Tools → Options → Security → Trust Center → Macro Settings). Without it, macros fail to load with a clear message. See <em>Troubleshooting</em>.</li><li><strong>Run SwMacroFlow the same way you run SOLIDWORKS.</strong> If one is elevated as administrator and the other is not, Windows hides them from each other and connection fails. Start both normally, or both elevated - not mixed.</li></ul><p>SOLIDWORKS must be installed and licensed for the Windows user running SwMacroFlow. If SwMacroFlow starts SOLIDWORKS because none was running, that instance takes a license seat like opening SOLIDWORKS yourself would.</p><h2>How a run works</h2><p>This is the whole model, and everything else follows from it:</p><ol><li>Before the first file opens, every ticked macro is prepared and checked.</li><li>For each file in scope, in turn:</li></ol><ul><li>SOLIDWORKS opens the file.</li><li>Each ticked macro runs against it, <strong>in list order</strong>.</li><li>The file is closed. Unsaved changes are discarded, so a macro that changes something must save it.</li></ul><ol><li>Each macro-file pair produces exactly one row in the results list.</li></ol><p>The file is opened <strong>once</strong> per pass, not once per macro. Three macros over 200 files means 200 opens, not 600 - and opening is by far the slowest part of a batch. That is the reason to put several macros in one job rather than running three jobs.</p><p>Files are processed strictly one at a time, and so are the macros within a file. SOLIDWORKS automation is single-session, so there is no parallel mode to turn on.</p><h2>Two ways to run</h2><table><tr><th>Mode</th><th>Button</th><th>What happens</th></tr><tr><td>Batch</td><td><strong>Run Batch</strong></td><td>The chain runs once per file in scope. This is the normal mode.</td></tr><tr><td>Run once</td><td><strong>Run Once</strong></td><td>The chain runs a single time with nothing opened and nothing closed. Tick <strong>Run once without opening any files</strong> in the Scope panel.</td></tr></table><p>Run once is for a macro that does not act on a file handed to it - it generates a report, walks a folder itself, or sets application options. In that mode there is no active document, so the macro must not rely on <code>ActiveDoc</code>, and input values must not use <code>{Property}</code> placeholders.</p><h2>Quick start</h2><ol><li><strong>Add your macros.</strong> <strong>Add Macro...</strong> to browse to a <code>.swp</code>, or <strong>From Library</strong> to pick one that ships with SwMacroFlow. Each is checked as soon as it loads, so a macro that will not compile tells you now rather than on file 200.</li><li><strong>Choose the files.</strong> Scan a folder, add files directly, or drag and drop them in.</li><li><strong>Fill in the inputs.</strong> Click a macro in the list to see its inputs. Each macro keeps its own. Free-text fields may include <code>{PropertyName}</code> tokens that resolve per document - see <em>Using the app</em> and <em>Adding inputs</em>.</li><li><strong>Run.</strong> Rows appear as each macro finishes each file.</li><li><strong>Read the results.</strong> Green passed, amber means the macro asked a question nobody could answer, red failed, grey was skipped.</li></ol><p>Panel-by-panel detail is in <em>Using the app</em>.</p><h2>What authors need to know</h2><table><tr><th>Guide</th><th>Contents</th></tr><tr><td><em>Writing a macro</em></td><td>Entry point, <code>ActiveDoc</code>, save-before-close, temp copy</td></tr><tr><td><em>Adding inputs</em></td><td><code>&quot;@Name&quot;</code> declarations, types, validation, <code>{Property}</code> placeholders</td></tr><tr><td><em>Reporting a result</em></td><td><code>MsgBox</code> → green / amber / red rows</td></tr><tr><td><em>Macro authoring spec</em></td><td>The full contract in one pasteable document for AI assistants</td></tr></table><h2>This Help page</h2><p>The <strong>?</strong> button rebuilds and opens this Help. It is the seven guides only. Per-macro descriptions that appear as tooltips under <strong>From Library</strong> live beside the library macros and are not part of this page.</p><h2>Words used in these guides</h2><table><tr><th>Term</th><th>Meaning</th></tr><tr><td>Macro</td><td>One <code>.swp</code> file. The unit you add to a job.</td></tr><tr><td>Chain</td><td>The ticked macros in list order. Every file goes through the whole chain.</td></tr><tr><td>Scope</td><td>The files the batch will run against - the lists plus the Part / Assembly / Drawing filters.</td></tr><tr><td>Input</td><td>A value the macro declares and you fill in before the run. See <em>Adding inputs</em>.</td></tr><tr><td><code>{Property}</code></td><td>A placeholder in a free-text input value, resolved from the open document&#039;s custom properties.</td></tr><tr><td><code>{Title}</code></td><td>The one reserved placeholder name - always the open document&#039;s filename without its extension.</td></tr><tr><td>Row</td><td>One line in the Results panel: one macro, one file, one outcome.</td></tr><tr><td>Run once</td><td>The mode that runs the chain a single time with no document open.</td></tr></table></div>
+
+      <nav class="pager" aria-label="Guide">
+      <span></span>
+      <a class="pager-link pager-next" href="/docs/using-the-app/" rel="next">
+        <span class="pager-dir">Next</span>
+        <span class="pager-title">Using the app</span>
+      </a>
+    </nav>
+
+      <aside class="doc-cta">
+        <p>
+          These guides describe <a href="/index.html">SwMacroFlow</a>, a free Windows app that
+          batch-runs SOLIDWORKS macros across folders of parts, assemblies and drawings.
+          <a href="/index.html#download">Download it</a>, or browse the
+          <a href="/macros.html">ready-made macro library</a>.
+        </p>
+      </aside>
+    </article>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="/assets/logo.png" alt="SwMacroFlow logo" width="24" height="24" loading="lazy">
+      SwMacroFlow
+    </div>
+    <div class="footer-links">
+      <a href="/index.html">Home</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#download">Download</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/privacy.html">Privacy</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 SwMacroFlow. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/assets/nav.js" defer></script>
+</body>
+</html>

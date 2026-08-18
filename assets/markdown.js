@@ -197,4 +197,6 @@
   }
 
   global.SwMarkdown = { escapeHtml, inlineMarkdown, firstHeading, toHtml };
-})(window);
+// globalThis rather than window alone so tools/build-site.mjs can evaluate this file in Node and
+// render the guides at build time with the exact renderer the browser and the desktop app use.
+})(typeof window !== "undefined" ? window : globalThis);

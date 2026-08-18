@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>SOLIDWORKS macro batch errors and how to fix them | SwMacroFlow</title>
+<meta name="description" content="Symptom-first fixes for SwMacroFlow: cannot reach SOLIDWORKS, macros that will not run, elevation mismatches, and files that fail part-way through a batch.">
+<link rel="canonical" href="https://swmacroflow.in/docs/troubleshooting/">
+<meta property="og:title" content="SOLIDWORKS macro batch errors and how to fix them | SwMacroFlow">
+<meta property="og:description" content="Symptom-first fixes for SwMacroFlow: cannot reach SOLIDWORKS, macros that will not run, elevation mismatches, and files that fail part-way through a batch.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://swmacroflow.in/docs/troubleshooting/">
+<meta property="og:site_name" content="SwMacroFlow">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SOLIDWORKS macro batch errors and how to fix them | SwMacroFlow">
+<meta name="twitter:description" content="Symptom-first fixes for SwMacroFlow: cannot reach SOLIDWORKS, macros that will not run, elevation mismatches, and files that fail part-way through a batch.">
+<meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta name="theme-color" content="#0d0d0f">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/assets/logo.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/assets/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://swmacroflow.in/docs/troubleshooting/#article",
+      "headline": "Troubleshooting",
+      "description": "Symptom-first fixes for SwMacroFlow: cannot reach SOLIDWORKS, macros that will not run, elevation mismatches, and files that fail part-way through a batch.",
+      "url": "https://swmacroflow.in/docs/troubleshooting/",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://swmacroflow.in/#website"
+      },
+      "about": {
+        "@id": "https://swmacroflow.in/#software"
+      },
+      "publisher": {
+        "@id": "https://swmacroflow.in/#organization"
+      },
+      "dateModified": "2026-08-11"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://swmacroflow.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Docs",
+          "item": "https://swmacroflow.in/docs.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Troubleshooting",
+          "item": "https://swmacroflow.in/docs/troubleshooting/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="brand">
+      <img src="/assets/logo.png" alt="SwMacroFlow logo" width="28" height="28">
+      SwMacroFlow
+    </a>
+    <nav class="nav-links">
+      <a href="/index.html#features">Features</a>
+      <a href="/docs.html" aria-current="page">Docs</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#how-it-works">How it works</a>
+      <a href="/index.html#faq">FAQ</a>
+      <a href="/index.html#download">Download</a>
+    </nav>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav id="mobileNav" class="nav-mobile" aria-label="Site">
+    <a href="/index.html#features">Features</a>
+      <a href="/docs.html" aria-current="page">Docs</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#how-it-works">How it works</a>
+      <a href="/index.html#faq">FAQ</a>
+      <a href="/index.html#download">Download</a>
+  </nav>
+</header>
+
+<main class="docs-page">
+  <div class="docs-layout">
+
+    <aside class="docs-sidebar">
+      <nav class="docs-nav" aria-label="Documentation">
+        <p class="docs-nav-group">Using the app</p>
+        <ul>
+          <li><a href="/docs/overview/">Overview</a></li>
+          <li><a href="/docs/using-the-app/">Using the app</a></li>
+        </ul>
+        <p class="docs-nav-group">Writing macros</p>
+        <ul>
+          <li><a href="/docs/writing-a-macro/">Writing a macro</a></li>
+          <li><a href="/docs/adding-inputs/">Adding inputs</a></li>
+          <li><a href="/docs/reporting-results/">Reporting a result</a></li>
+          <li><a href="/docs/macro-authoring-spec/">Macro authoring spec</a></li>
+        </ul>
+        <p class="docs-nav-group">Reference</p>
+        <ul>
+          <li><a href="/docs/troubleshooting/" class="is-active" aria-current="page">Troubleshooting</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <article class="docs-content">
+      <nav class="crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/docs.html">Docs</a></li>
+        <li aria-current="page">Troubleshooting</li>
+      </ol>
+    </nav>
+      <p class="page-eyebrow">Reference</p>
+      <h1>Troubleshooting</h1>
+      <div class="docs-markdown"><p>Symptom first. Each heading is what you actually see.</p><h2>&quot;Can&#039;t reach SOLIDWORKS&quot;</h2><p>SwMacroFlow never got a session, so the rest of the window never appeared. The panel names the reason; there are three.</p><p><strong>&quot;SOLIDWORKS is running but won&#039;t accept a connection.&quot;</strong> One of the two programs is running as administrator and the other is not. Windows hides elevated programs from unelevated ones, so they cannot find each other. Close both and start them the same way - normally, that means neither as administrator. SwMacroFlow deliberately stops here rather than starting a second SOLIDWORKS on top of the one you already have open.</p><p><strong>&quot;SOLIDWORKS isn&#039;t installed on this machine.&quot;</strong> Or it is installed for a different Windows user. SwMacroFlow drives a real SOLIDWORKS; there is nothing it can do without one.</p><p><strong>&quot;SOLIDWORKS didn&#039;t finish starting in time.&quot;</strong> It waited five minutes. Open SOLIDWORKS yourself, let it settle, then press <strong>Try again</strong> - it will join the one you opened.</p><p><strong>Try again</strong> re-runs the whole attempt, so fix the cause and press it rather than restarting SwMacroFlow.</p><h2>&quot;Connect to a SOLIDWORKS instance first — pick one in the header.&quot;</h2><p>Run is disabled because there is no live session - the app started disconnected, or the connection was lost. You can still add macros and fill in inputs, but use the header controls to pick or reconnect to a SOLIDWORKS instance before starting the batch.</p><h2>The batch seems to have stopped</h2><p>Look at SOLIDWORKS. A dialog waiting for an answer blocks everything SwMacroFlow asks it to do, and a batch is unattended by definition - nobody is watching for the prompt.</p><p>Answer the dialog and the run carries on by itself; SwMacroFlow keeps retrying for five minutes before it gives up on that one file and moves to the next. The log records it after five seconds.</p><p>Your own macro&#039;s prompts are not the cause: those are answered automatically during a batch and show as amber rows. This is a dialog from SOLIDWORKS itself.</p><h2>&quot;Can&#039;t read this macro&#039;s VBA project&quot;</h2><p>Programmatic access to the VBA project is switched off. SwMacroFlow has to read your macro&#039;s source to find its inputs and its entry point, so nothing works until this is on.</p><p>In the <strong>SOLIDWORKS VBA editor</strong>: Tools → Options → Security → Trust Center → Macro Settings, then turn on <strong>Trust access to the VBA project object model</strong>. Reload the macro afterwards - remove the row and add it again.</p><h2>&quot;Macro has a compile error&quot;</h2><p>The macro is checked when you add it, by asking VBA to compile the whole project without running anything. Open it in the SOLIDWORKS VBA editor (Tools → Macro → Edit), then Debug → Compile to see the actual error.</p><p>The most common cause in a macro written for SwMacroFlow is an input declared as the wrong type. Every input must be <code>As String</code>, whatever its <code>Type:</code> metadata says:</p><pre><code class="lang-vb">Const Quantity As Integer = &quot;@Quantity&quot;   &#039; wrong - type mismatch, will not compile
+Const Quantity As String  = &quot;@Quantity&quot;   &#039; right</code></pre><h2>&quot;This macro has no runnable procedure&quot;</h2><p>SwMacroFlow needs a <code>Sub</code> that takes no arguments, preferably named <code>main</code>. A macro whose only procedures take arguments, or that contains only <code>Function</code>s, has nothing that can be called.</p><h2>&quot;This file isn&#039;t a readable VBA macro&quot;</h2><p>The file is not a valid <code>.swp</code>, or its VBA project is corrupt. Open it in the VBA editor to confirm. Only <code>.swp</code> files are accepted.</p><h2>Run is greyed out</h2><p>The reason is written next to the button:</p><table><tr><th>Message</th><th>What to do</th></tr><tr><td>Connect to a SOLIDWORKS instance first — pick one in the header.</td><td>Connect or pick an instance in the header.</td></tr><tr><td>Add at least one macro to run.</td><td>The macro list is empty.</td></tr><tr><td>Tick at least one macro to run.</td><td>Every macro in the list is unticked.</td></tr><tr><td>A macro&#039;s own error message</td><td>That macro did not load. Its row carries a <strong>!</strong> - hover it, then see the sections above.</td></tr><tr><td><em>macro</em> hasn&#039;t been checked by SOLIDWORKS yet.</td><td>It was added while disconnected. Checking starts by itself on connect and takes about a second per macro; if it persists, disconnect and connect again.</td></tr><tr><td>Add at least one file to the scope.</td><td>Check the Part / Assembly / Drawing checkboxes as well as the lists. A file in an unticked list is not in scope.</td></tr><tr><td>Enter a valid whole number for every number input in <em>macro</em>.</td><td>A number input will not parse. The message names the macro, which may not be the one showing on screen.</td></tr><tr><td>Fix every property placeholder in <em>macro</em>.</td><td>A <code>String</code>, <code>FilePath</code> or <code>FolderPath</code> value has malformed <code>{…}</code> braces - nested braces, an empty name, or a stray <code>{</code> / <code>}</code>.</td></tr><tr><td>Choose a file that exists for every file input in <em>macro</em>.</td><td>A file input points at a path that is not there (and does not contain <code>{Property}</code> tokens).</td></tr></table><p>A folder path that does not exist yet does <strong>not</strong> block Run. See <em>Adding inputs</em>.</p><h2>&quot;Fix every property placeholder in …&quot;</h2><p>Braces in a free-text input are reserved for <code>{PropertyName}</code> tokens. Every opening brace needs a matching close, the name inside must not be empty, and braces cannot nest. Examples of invalid values: <code>a{b</code>, <code>{ }</code>, <code>prefix_{Part{No}}.pdf</code>.</p><p>Fix the typing, or remove the braces if you meant a literal brace character (there is no escape in v1).</p><h2>Red row: property was not found</h2><p>An input value contained <code>{SomeName}</code>, and that property was not on the open document - neither on the active configuration nor in the file-level custom properties. The batch continues with the next file; the token is <strong>not</strong> replaced with an empty string.</p><p>Check the property name (case does not matter, spelling does), and that the property exists on the configurations you actually process.</p><h2>Red row: cannot resolve … no document is open</h2><p>A <code>{Property}</code> value was used when there was no active document - typically <strong>Run once without opening any files</strong>, or a file that failed to open. Property placeholders only work against an open document in a normal batch. Use literal paths or names in run-once mode instead.</p><h2>The batch has hung</h2><p>Something opened a real modal dialog that nobody can click. There are only two ways this happens:</p><ul><li>A call written as <strong><code>VBA.MsgBox</code></strong>. The <code>VBA.</code> prefix binds directly to the library and cannot be intercepted. Remove the prefix.</li><li>A <strong>UserForm</strong>. A form&#039;s dialog cannot be intercepted either. A macro that shows a form cannot run unattended.</li></ul><p>Click the dialog to release the batch, then fix the macro.</p><h2>Every row is amber</h2><p>Amber means the macro opened a prompt and SwMacroFlow answered it. Somewhere in the macro there is a <code>MsgBox</code> with a button set other than the plain default, or an <code>InputBox</code>, and it is being reached on every file. The log names the message.</p><p>If the macro genuinely needs an answer, make it an input instead of a prompt. See <em>Adding inputs</em>.</p><h2>Every row is red with <code>Error 91</code></h2><p><code>Error 91: Object variable or With block variable not set</code> almost always means <code>ActiveDoc</code> was used without checking it first. Add the guard:</p><pre><code class="lang-vb">Set model = swApp.ActiveDoc
+If model Is Nothing Then Exit Sub</code></pre><p>In the <strong>Run once without opening any files</strong> mode there is never an active document, so a macro that needs one will hit this on its single run.</p><h2>The rows are green but nothing changed on disk</h2><p>Closing a document discards unsaved changes, and SwMacroFlow closes each document when the chain is finished with it. A macro that modifies a document has to save it before returning.</p><h2>Files are missing from the scope</h2><ul><li>Check the Part / Assembly / Drawing checkboxes. They filter what runs, not what is listed.</li><li><strong>Include subfolders</strong> is off by default when you browse a folder.</li><li>Only <code>.sldprt</code>, <code>.sldasm</code> and <code>.slddrw</code> are recognised.</li></ul><h2>A library macro is missing or unchanged after an upgrade</h2><p><strong>From Library</strong> lists <code>%LOCALAPPDATA%\SwMacroFlow\macros</code>. Drop a <code>.swp</code> there to add your own - the folder button beside <strong>From Library</strong> opens it for you.</p><p>Shipped macros are seeded into that folder. If you edited one, a later upgrade leaves your edit alone. If you deleted one, it stays deleted. If the local folder cannot be written, the menu still lists the install copy but you cannot add files to it.</p><h2>A macro behaves differently in the VBA editor</h2><p>Two differences, both expected:</p><ul><li><code>MsgBox</code> shows a real dialog when you run the macro yourself. During a batch it becomes a row.</li><li><code>GetCurrentMacroPathName</code> returns <code>%TEMP%\SwMacroFlow\run_&lt;id&gt;.swp</code> during a batch, because SwMacroFlow runs a throwaway copy. Your own <code>.swp</code> is never modified.</li></ul><p><code>{Property}</code> tokens in input values only expand during a batch (per open document). In the VBA editor you are running the unpatched macro with whatever literal is in the Const.</p><h2>Where the logs are</h2><p>The log panel shows the last 500 lines. The full log is written to a file, one per day, named <code>logger_&lt;date&gt;.log</code>. The folder is shown at the bottom of the log panel - normally a <code>logs</code> folder beside SwMacroFlow, falling back to <code>%LOCALAPPDATA%\SwMacroFlow\logs</code> if that is not writable. Thirty days are kept.</p><h2>Leftover files in %TEMP%</h2><p>Each run copies the macro to <code>%TEMP%\SwMacroFlow\run_&lt;id&gt;.swp</code> and deletes it when the batch ends. A crash can leave one behind; the next run sweeps up anything older than an hour. They are safe to delete by hand.</p><h2>Cancel did not stop it immediately</h2><p><strong>Cancel</strong>, and <code>Ctrl+Shift+Q</code>, stop the run after the macro in progress finishes - never mid-macro, so nothing is left half-written. A slow macro on a large assembly can take a while to reach that point.</p></div>
+
+      <nav class="pager" aria-label="Guide">
+      <a class="pager-link" href="/docs/macro-authoring-spec/" rel="prev">
+        <span class="pager-dir">Previous</span>
+        <span class="pager-title">Macro authoring spec</span>
+      </a>
+      <span></span>
+    </nav>
+
+      <aside class="doc-cta">
+        <p>
+          These guides describe <a href="/index.html">SwMacroFlow</a>, a free Windows app that
+          batch-runs SOLIDWORKS macros across folders of parts, assemblies and drawings.
+          <a href="/index.html#download">Download it</a>, or browse the
+          <a href="/macros.html">ready-made macro library</a>.
+        </p>
+      </aside>
+    </article>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="/assets/logo.png" alt="SwMacroFlow logo" width="24" height="24" loading="lazy">
+      SwMacroFlow
+    </div>
+    <div class="footer-links">
+      <a href="/index.html">Home</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#download">Download</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/privacy.html">Privacy</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 SwMacroFlow. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/assets/nav.js" defer></script>
+</body>
+</html>

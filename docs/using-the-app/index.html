@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>Using SwMacroFlow to run a SOLIDWORKS macro batch | SwMacroFlow</title>
+<meta name="description" content="A panel-by-panel walkthrough: connect to SOLIDWORKS, pick files and folders, choose macros, fill in inputs, and read the results of a batch run.">
+<link rel="canonical" href="https://swmacroflow.in/docs/using-the-app/">
+<meta property="og:title" content="Using SwMacroFlow to run a SOLIDWORKS macro batch | SwMacroFlow">
+<meta property="og:description" content="A panel-by-panel walkthrough: connect to SOLIDWORKS, pick files and folders, choose macros, fill in inputs, and read the results of a batch run.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://swmacroflow.in/docs/using-the-app/">
+<meta property="og:site_name" content="SwMacroFlow">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Using SwMacroFlow to run a SOLIDWORKS macro batch | SwMacroFlow">
+<meta name="twitter:description" content="A panel-by-panel walkthrough: connect to SOLIDWORKS, pick files and folders, choose macros, fill in inputs, and read the results of a batch run.">
+<meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta name="theme-color" content="#0d0d0f">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/assets/logo.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/assets/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://swmacroflow.in/docs/using-the-app/#article",
+      "headline": "Using the app",
+      "description": "A panel-by-panel walkthrough: connect to SOLIDWORKS, pick files and folders, choose macros, fill in inputs, and read the results of a batch run.",
+      "url": "https://swmacroflow.in/docs/using-the-app/",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://swmacroflow.in/#website"
+      },
+      "about": {
+        "@id": "https://swmacroflow.in/#software"
+      },
+      "publisher": {
+        "@id": "https://swmacroflow.in/#organization"
+      },
+      "dateModified": "2026-08-11"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://swmacroflow.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Docs",
+          "item": "https://swmacroflow.in/docs.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Using the app",
+          "item": "https://swmacroflow.in/docs/using-the-app/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="brand">
+      <img src="/assets/logo.png" alt="SwMacroFlow logo" width="28" height="28">
+      SwMacroFlow
+    </a>
+    <nav class="nav-links">
+      <a href="/index.html#features">Features</a>
+      <a href="/docs.html" aria-current="page">Docs</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#how-it-works">How it works</a>
+      <a href="/index.html#faq">FAQ</a>
+      <a href="/index.html#download">Download</a>
+    </nav>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav id="mobileNav" class="nav-mobile" aria-label="Site">
+    <a href="/index.html#features">Features</a>
+      <a href="/docs.html" aria-current="page">Docs</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#how-it-works">How it works</a>
+      <a href="/index.html#faq">FAQ</a>
+      <a href="/index.html#download">Download</a>
+  </nav>
+</header>
+
+<main class="docs-page">
+  <div class="docs-layout">
+
+    <aside class="docs-sidebar">
+      <nav class="docs-nav" aria-label="Documentation">
+        <p class="docs-nav-group">Using the app</p>
+        <ul>
+          <li><a href="/docs/overview/">Overview</a></li>
+          <li><a href="/docs/using-the-app/" class="is-active" aria-current="page">Using the app</a></li>
+        </ul>
+        <p class="docs-nav-group">Writing macros</p>
+        <ul>
+          <li><a href="/docs/writing-a-macro/">Writing a macro</a></li>
+          <li><a href="/docs/adding-inputs/">Adding inputs</a></li>
+          <li><a href="/docs/reporting-results/">Reporting a result</a></li>
+          <li><a href="/docs/macro-authoring-spec/">Macro authoring spec</a></li>
+        </ul>
+        <p class="docs-nav-group">Reference</p>
+        <ul>
+          <li><a href="/docs/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <article class="docs-content">
+      <nav class="crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/docs.html">Docs</a></li>
+        <li aria-current="page">Using the app</li>
+      </ol>
+    </nav>
+      <p class="page-eyebrow">Using the app</p>
+      <h1>Using the app</h1>
+      <div class="docs-markdown"><p>A walk through the window, panel by panel, in the order they appear on screen.</p><h2>Opening and closing it</h2><p>Start SwMacroFlow from the Start menu. It opens on a connection panel while it looks for SOLIDWORKS: it joins one that is already running, or starts one if none is - which can take a couple of minutes from cold. The rest of the window appears once there is a session behind it.</p><p>If it cannot connect it says why and offers <strong>Try again</strong>. The usual cause is that one of the two is running as administrator and the other is not; start both the same way. See <em>Troubleshooting</em>.</p><p>SOLIDWORKS stays usable while SwMacroFlow is open - they are separate programs, and neither blocks the other.</p><p>If the session drops, Run stays disabled until you connect again. The reason next to the button then reads <em>Connect to a SOLIDWORKS instance first — pick one in the header.</em></p><p>Closing the window closes SwMacroFlow, and with it everything you had set up: the macros, the files, the inputs, the results. It asks first if a batch is still running. If SwMacroFlow started SOLIDWORKS itself, it closes that too; if you had SOLIDWORKS open already, it is left exactly as it was. Use <strong>Reset</strong> when you want a clean slate without closing anything.</p><h2>The header</h2><p>Buttons top right (and the connection / instance controls when they apply):</p><table><tr><th>Control</th><th>What it does</th></tr><tr><td><strong>?</strong></td><td>Opens this help page in your browser. It is rebuilt each time you click.</td></tr><tr><td><strong>Reset</strong> (circular arrow)</td><td>Clears the macros, the file list, the inputs, the results and the log, and puts the scope checkboxes back to their defaults. It asks first if there is anything to lose, and is disabled while a batch is running.</td></tr><tr><td><strong>Sun / moon</strong></td><td>Switches between the light and dark theme. The choice is remembered.</td></tr><tr><td>Instance / connection</td><td>When SOLIDWORKS must be chosen or reconnected, pick it here.</td></tr></table><h2>MACROS</h2><p>There are three ways to add a macro, and they behave identically:</p><ul><li><strong>Add Macro...</strong> browses for a <code>.swp</code>. Select several at once and they all join the chain, in the order the dialog lists them.</li><li><strong>From Library</strong> drops down the macros that ship with SwMacroFlow - pick one and it is added without browsing.</li><li><strong>Drag a <code>.swp</code></strong> from File Explorer onto the window. Drop several together, or mix them with SOLIDWORKS files and each goes where it belongs.</li></ul><p>None of them needs a connection. If SOLIDWORKS is not connected yet, SwMacroFlow reads the macro file directly so you can fill in its inputs. It is checked through SOLIDWORKS before it can run: the check happens by itself the moment you connect, and anything you typed in the meantime is kept. Disconnecting drops the check, so reconnecting - perhaps to a different SOLIDWORKS - runs it again.</p><p>The library is the folder <code>%LOCALAPPDATA%\SwMacroFlow\macros</code>. Dropping a <code>.swp</code> there yourself makes it appear in <strong>From Library</strong> the next time you open the menu - no restart required. (If that folder cannot be written, the app falls back to the install copy for listing only.)</p><p>The <strong>folder</strong> button beside <strong>From Library</strong> opens that folder in File Explorer, so you can drop a macro in without going looking for the path. It works whether or not the library has anything in it yet, and creates the folder the first time if it is not there.</p><p>Each row in the list has:</p><ul><li>A <strong>checkbox</strong>. Unticking leaves the macro out of this run <em>without</em> discarding its inputs. Untick it, run, tick it again later and everything you typed is still there.</li><li><strong>↑</strong> and <strong>↓</strong> to change the order. Reordering does not disturb the values you have typed.</li><li><strong>✕</strong> to remove the macro from the chain, along with its inputs.</li><li>A <strong>!</strong> glyph when something is wrong with it. Hover for the reason.</li></ul><p>Below the list: <strong>Keep running the other macros if one fails on a file</strong> - see <em>When a macro fails</em> below.</p><p><strong>The list order is the run order.</strong> The same macro can be added twice: exporting as STEP and then again as PDF is one macro with two sets of inputs, so add it twice and give each row different values.</p><h2>INPUTS</h2><p>Click a macro in the list to see its inputs. The panel shows <strong>one macro at a time</strong> and names which one at the top. The section hides itself when the selected macro declares none.</p><p>Inputs are declared inside the macro itself - see <em>Adding inputs</em>. SwMacroFlow reads them when the macro loads and builds a matching control:</p><table><tr><th>Declared type</th><th>Control</th></tr><tr><td><code>String</code></td><td>Text box</td></tr><tr><td><code>Integer</code></td><td>Text box that only accepts a whole number</td></tr><tr><td><code>Bool</code></td><td>Checkbox</td></tr><tr><td><code>FilePath</code></td><td>Text box with a <strong>...</strong> file picker</td></tr><tr><td><code>FolderPath</code></td><td>Text box with a <strong>...</strong> folder picker</td></tr><tr><td><code>Option</code></td><td>Dropdown</td></tr></table><p><strong>Inputs never leak between macros.</strong> Two macros that both declare <code>@Name</code> each get their own value.</p><h3>Property placeholders in values</h3><p>On <code>String</code>, <code>FilePath</code> and <code>FolderPath</code> fields you may type <code>{PropertyName}</code> mixed with ordinary text - for example <code>{PartNumber}_{Revision}.pdf</code>. Those tokens are highlighted magenta as you type.</p><p>They are resolved <strong>per document</strong> when that file runs, from the open document&#039;s custom properties (active configuration first, then file-level). A missing property fails that file with a red row; it does not expand to empty. Integer, Bool and Option fields do not take property tokens.</p><p><code>{Title}</code> is the one reserved name - it always resolves to the document&#039;s filename, not a custom property. Full rules are in <em>Adding inputs</em>.</p><p>Do not use <code>{Property}</code> values when <strong>Run once without opening any files</strong> is ticked - there is no document to resolve against. Full rules are in <em>Adding inputs</em>.</p><h3>Validation</h3><p>Inputs are validated <strong>before</strong> the run starts, on purpose. A mistyped template path would otherwise fail every file in the batch, one slow open-and-close at a time.</p><ul><li>Blank is always allowed.</li><li>A non-blank number must parse.</li><li>A non-blank <code>FilePath</code> must exist, unless it contains <code>{Property}</code> tokens (then only brace syntax is checked).</li><li>A <code>FolderPath</code> need not exist - macros often create it.</li><li>Malformed braces in a free-text value block Run.</li></ul><h2>SCOPE</h2><p>Four ways to put files in scope:</p><ul><li><strong>Browse Folder...</strong> scans a folder. <strong>Include subfolders</strong> decides how deep (off by default).</li><li><strong>Add Files...</strong> picks individual files.</li><li><strong>Drag and drop</strong> files or folders onto the panel.</li><li><strong>Remove Selected</strong>, or the Delete key, takes them out again.</li></ul><p>Only <code>.sldprt</code>, <code>.sldasm</code> and <code>.slddrw</code> are recognised.</p><p>Files land in three lists - Part, Assembly and Drawing - each with its own checkbox. <strong>The checkbox filters what actually runs.</strong> A file in an unticked list is still in your list; it is just not in scope for this run.</p><h3>Run once without opening any files</h3><p>Tick this when the macros do not act on a file you hand them.</p><ul><li>The chain runs a single time. One row per macro, titled with the macro rather than a file.</li><li>The Part / Assembly / Drawing checkboxes clear and grey out, along with Browse Folder, Add Files, Remove Selected, Include subfolders and drag-and-drop. Nothing on screen offers you a scope the run would ignore.</li><li>Your file list is not thrown away. Untick the box and it comes back, with the type checkboxes exactly as you left them.</li><li>Inputs, validation and reporting all work exactly the same - except <code>{Property}</code> placeholders cannot resolve without a document.</li><li>The skip rule still applies: a chain is a chain whether or not a document is involved.</li></ul><p>Your macro must not rely on <code>ActiveDoc</code> in this mode - there is no active document, so it will be <code>Nothing</code>.</p><h2>When a macro fails on a file</h2><p>By default the macros after it are <strong>skipped for that file</strong>, and the batch moves to the next file. Their rows say so, and name the macro that stopped them. The next file starts the chain clean.</p><p>That is usually what you want. An order you arranged tends to mean a dependency - the second macro reads what the first one set - and closing a document discards unsaved changes, so stopping throws away a half-finished edit rather than letting a later macro save one.</p><p>Tick <strong>Keep running the other macros if one fails on a file</strong> when your macros happen to share a document but not a purpose, and each should get its turn regardless.</p><p>A macro that merely opened a prompt (an amber row) does <strong>not</strong> stop the chain. Only a real failure does.</p><h2>Running, and stopping</h2><p><strong>Run Batch</strong> starts the job. In run-once mode the button reads <strong>Run Once</strong> instead.</p><p>The window stays responsive while it runs - the batch happens on its own thread, so the results and the log fill in live and every button keeps working. <strong>Cancel</strong> stops the run after the macro in progress finishes - never mid-macro, so nothing is left half-written. You do not have to wait out the rest of a file&#039;s chain. <code>Ctrl+Shift+Q</code> does the same thing when the SwMacroFlow window has focus.</p><p>A big batch is bounded by how fast SOLIDWORKS opens and closes documents, not by SwMacroFlow.</p><h2>RESULTS</h2><p>Every macro-file pair gets exactly one row, showing the <strong>most severe</strong> thing that macro reported for that file:</p><table><tr><th>Row</th><th>Meaning</th></tr><tr><td>Green</td><td>The macro ran and reported nothing worse than a status message.</td></tr><tr><td>Amber</td><td>The macro opened a prompt. Nobody was there to click, so the batch answered it - see <em>Reporting a result</em>.</td></tr><tr><td>Red</td><td>The macro reported a failure, crashed, a <code>{Property}</code> could not be resolved, or the file could not be opened.</td></tr><tr><td>Grey</td><td>The macro never ran on this file, because an earlier one in the chain failed on it.</td></tr></table><p>Each row carries the macro name under the file name, so a chain&#039;s rows can be told apart. The list scrolls to the newest row as the batch runs.</p><h2>LOG</h2><p>The log panel is collapsible and shows <strong>every</strong> message, not just the one that made it onto the row, in the order they happened. It keeps the last 500 lines on screen.</p><ul><li><strong>Copy</strong> puts the whole visible log on the clipboard.</li><li><strong>Clear</strong> empties the panel. It does not touch the file on disk.</li><li>The folder at the bottom of the panel is where the log files are written, one per day, named <code>logger_&lt;date&gt;.log</code>. Thirty days are kept. Normally a <code>logs</code> folder beside the executable; if that is not writable, <code>%LOCALAPPDATA%\SwMacroFlow\logs</code>.</li></ul><h2>When Run is greyed out</h2><p>The reason is written next to the button. It is always one of these:</p><table><tr><th>Message</th><th>Fix</th></tr><tr><td>Connect to a SOLIDWORKS instance first — pick one in the header.</td><td>There is no session yet, or it was lost. Connect or pick an instance.</td></tr><tr><td>Add at least one macro to run.</td><td>The list is empty.</td></tr><tr><td>Tick at least one macro to run.</td><td>Every macro is unticked.</td></tr><tr><td>A macro&#039;s own error message</td><td>A ticked macro did not load cleanly. Its row carries a <strong>!</strong> you can hover. See <em>Troubleshooting</em>.</td></tr><tr><td>Add at least one file to the scope.</td><td>Nothing resolves - check the Part / Assembly / Drawing boxes as well as the lists. Never applies in run-once mode.</td></tr><tr><td>Enter a valid whole number for every number input in <em>macro</em>.</td><td>A number input will not parse. The message names the macro, because that macro&#039;s inputs may not be the ones on screen.</td></tr><tr><td>Fix every property placeholder in <em>macro</em>.</td><td>A free-text input has malformed <code>{…}</code> braces.</td></tr><tr><td>Choose a file that exists for every file input in <em>macro</em>.</td><td>A file input points at something that is not there (and has no <code>{Property}</code> tokens).</td></tr></table><p>A <code>FolderPath</code> that does not exist yet does <strong>not</strong> block Run - macros commonly create it.</p></div>
+
+      <nav class="pager" aria-label="Guide">
+      <a class="pager-link" href="/docs/overview/" rel="prev">
+        <span class="pager-dir">Previous</span>
+        <span class="pager-title">Overview</span>
+      </a>
+      <a class="pager-link pager-next" href="/docs/writing-a-macro/" rel="next">
+        <span class="pager-dir">Next</span>
+        <span class="pager-title">Writing a macro</span>
+      </a>
+    </nav>
+
+      <aside class="doc-cta">
+        <p>
+          These guides describe <a href="/index.html">SwMacroFlow</a>, a free Windows app that
+          batch-runs SOLIDWORKS macros across folders of parts, assemblies and drawings.
+          <a href="/index.html#download">Download it</a>, or browse the
+          <a href="/macros.html">ready-made macro library</a>.
+        </p>
+      </aside>
+    </article>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="/assets/logo.png" alt="SwMacroFlow logo" width="24" height="24" loading="lazy">
+      SwMacroFlow
+    </div>
+    <div class="footer-links">
+      <a href="/index.html">Home</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#download">Download</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/privacy.html">Privacy</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 SwMacroFlow. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/assets/nav.js" defer></script>
+</body>
+</html>

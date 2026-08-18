@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>Add user inputs to a SOLIDWORKS VBA macro | SwMacroFlow</title>
+<meta name="description" content="Declare one Const per input with an @Name token and SwMacroFlow builds the control, validates what is typed, and substitutes the value before the macro runs.">
+<link rel="canonical" href="https://swmacroflow.in/docs/adding-inputs/">
+<meta property="og:title" content="Add user inputs to a SOLIDWORKS VBA macro | SwMacroFlow">
+<meta property="og:description" content="Declare one Const per input with an @Name token and SwMacroFlow builds the control, validates what is typed, and substitutes the value before the macro runs.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://swmacroflow.in/docs/adding-inputs/">
+<meta property="og:site_name" content="SwMacroFlow">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Add user inputs to a SOLIDWORKS VBA macro | SwMacroFlow">
+<meta name="twitter:description" content="Declare one Const per input with an @Name token and SwMacroFlow builds the control, validates what is typed, and substitutes the value before the macro runs.">
+<meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta name="theme-color" content="#0d0d0f">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/assets/logo.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/assets/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://swmacroflow.in/docs/adding-inputs/#article",
+      "headline": "Adding inputs",
+      "description": "Declare one Const per input with an @Name token and SwMacroFlow builds the control, validates what is typed, and substitutes the value before the macro runs.",
+      "url": "https://swmacroflow.in/docs/adding-inputs/",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://swmacroflow.in/#website"
+      },
+      "about": {
+        "@id": "https://swmacroflow.in/#software"
+      },
+      "publisher": {
+        "@id": "https://swmacroflow.in/#organization"
+      },
+      "dateModified": "2026-08-11"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://swmacroflow.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Docs",
+          "item": "https://swmacroflow.in/docs.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Adding inputs",
+          "item": "https://swmacroflow.in/docs/adding-inputs/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="brand">
+      <img src="/assets/logo.png" alt="SwMacroFlow logo" width="28" height="28">
+      SwMacroFlow
+    </a>
+    <nav class="nav-links">
+      <a href="/index.html#features">Features</a>
+      <a href="/docs.html" aria-current="page">Docs</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#how-it-works">How it works</a>
+      <a href="/index.html#faq">FAQ</a>
+      <a href="/index.html#download">Download</a>
+    </nav>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav id="mobileNav" class="nav-mobile" aria-label="Site">
+    <a href="/index.html#features">Features</a>
+      <a href="/docs.html" aria-current="page">Docs</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#how-it-works">How it works</a>
+      <a href="/index.html#faq">FAQ</a>
+      <a href="/index.html#download">Download</a>
+  </nav>
+</header>
+
+<main class="docs-page">
+  <div class="docs-layout">
+
+    <aside class="docs-sidebar">
+      <nav class="docs-nav" aria-label="Documentation">
+        <p class="docs-nav-group">Using the app</p>
+        <ul>
+          <li><a href="/docs/overview/">Overview</a></li>
+          <li><a href="/docs/using-the-app/">Using the app</a></li>
+        </ul>
+        <p class="docs-nav-group">Writing macros</p>
+        <ul>
+          <li><a href="/docs/writing-a-macro/">Writing a macro</a></li>
+          <li><a href="/docs/adding-inputs/" class="is-active" aria-current="page">Adding inputs</a></li>
+          <li><a href="/docs/reporting-results/">Reporting a result</a></li>
+          <li><a href="/docs/macro-authoring-spec/">Macro authoring spec</a></li>
+        </ul>
+        <p class="docs-nav-group">Reference</p>
+        <ul>
+          <li><a href="/docs/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <article class="docs-content">
+      <nav class="crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/docs.html">Docs</a></li>
+        <li aria-current="page">Adding inputs</li>
+      </ol>
+    </nav>
+      <p class="page-eyebrow">Writing macros</p>
+      <h1>Adding inputs</h1>
+      <div class="docs-markdown"><p>An input is a value the user fills in before the run. You declare it in the macro; SwMacroFlow builds the control, validates what is typed, and substitutes the value into your code before it runs.</p><p>Declare one <code>Const</code> per input, valued with an <code>&quot;@Name&quot;</code> token, and describe it in the comment tail. Declarations work in <strong>any standard module</strong>.</p><pre><code class="lang-vb">Const SheetName    As String = &quot;@SheetName&quot;    &#039;Type: String     &#039;Tooltip: &quot;Sheet to activate&quot;   &#039;Value: &quot;Sheet1&quot;
+Const Quantity     As String = &quot;@Quantity&quot;     &#039;Type: Integer    &#039;Tooltip: &quot;How many&quot;            &#039;Value: 1
+Const DryRun       As String = &quot;@DryRun&quot;       &#039;Type: Bool       &#039;Tooltip: &quot;Report only&quot;         &#039;Value: True
+Const TemplatePath As String = &quot;@TemplatePath&quot; &#039;Type: FilePath   &#039;Value: &quot;&quot;    &#039;Filter: &quot;.drwdot&quot;
+Const ExportFolder As String = &quot;@ExportFolder&quot; &#039;Type: FolderPath &#039;Value: &quot;C:\Temp&quot;
+Const Mode         As String = &quot;@Mode&quot;         &#039;Type: Option     &#039;Value: &quot;PDF&quot; &#039;Options: PDF, DXF, STEP
+Const OutputName   As String = &quot;@OutputName&quot;   &#039;Type: String     &#039;Tooltip: &quot;File name pattern&quot;   &#039;Value: &quot;{PartNumber}_{Revision}.pdf&quot;</code></pre><p>Then just use them:</p><pre><code class="lang-vb">model.Extension.SaveAs ExportFolder &amp; &quot;\&quot; &amp; OutputName, 0, 0, Nothing, 0, 0</code></pre><p>No helper code, no reading a settings file. The form labels each field with the name minus its <code>@</code>, so <code>&quot;@SheetName&quot;</code> shows as <strong>SheetName</strong>. The Const identifier is what your VBA reads; the label comes from the token.</p><h2>The shape of a declaration</h2><pre><code>Const &lt;Name&gt; As String = &quot;@&lt;Token&gt;&quot;   &#039;&lt;Key&gt;: &lt;value&gt;   &#039;&lt;Key&gt;: &lt;value&gt;</code></pre><ul><li><code>Const</code> at the start of the line, optionally indented.</li><li><code>As String</code> - required, on every input. See <em>Everything arrives as a string</em> below.</li><li>The token is the <strong>entire</strong> string literal: <code>&quot;@Token&quot;</code>, nothing else inside the quotes.</li><li>The metadata is a normal VBA comment tail. Keys are separated by <code>&#039;</code>, and each runs until the next <code>&#039;</code> that actually introduces a key - so an apostrophe inside a tooltip is data, not a delimiter.</li></ul><h2>The metadata keys</h2><p>All optional, all case-insensitive, and unknown keys are ignored.</p><table><tr><th>Key</th><th>Applies to</th><th>Meaning</th></tr><tr><td><code>Type:</code></td><td>all</td><td>Which control to build. <code>String</code> if omitted.</td></tr><tr><td><code>Tooltip:</code></td><td>all</td><td>Hover text for the field.</td></tr><tr><td><code>Value:</code></td><td>all</td><td>The default the form starts with - <strong>always</strong> a default, never a filter.</td></tr><tr><td><code>Filter:</code></td><td><code>FilePath</code></td><td>Extensions the picker narrows to, e.g. <code>&quot;.sldprt, .sldasm&quot;</code>.</td></tr><tr><td><code>Options:</code></td><td><code>Option</code></td><td>The dropdown&#039;s choices, comma-separated.</td></tr></table><p>Quotes around a metadata value are optional: <code>&#039;Value: 1</code> and <code>&#039;Value: &quot;C:\Temp&quot;</code> both work.</p><h2>The types</h2><table><tr><th><code>Type:</code></th><th>Also accepted</th><th>Control</th><th>What your macro receives</th></tr><tr><td><code>String</code></td><td>anything unrecognised</td><td>Text box</td><td>What was typed</td></tr><tr><td><code>Integer</code></td><td><code>Int</code></td><td>Text box that only accepts a whole number</td><td>The digits, as text - use <code>CInt()</code></td></tr><tr><td><code>Bool</code></td><td><code>Boolean</code></td><td>Checkbox</td><td><code>&quot;True&quot;</code> or <code>&quot;False&quot;</code>, as text</td></tr><tr><td><code>FilePath</code></td><td></td><td>Text box plus a file picker</td><td>The full path</td></tr><tr><td><code>FolderPath</code></td><td></td><td>Text box plus a folder picker</td><td>The full path</td></tr><tr><td><code>Option</code></td><td><code>Dropdown</code></td><td>Dropdown</td><td>The chosen item&#039;s <strong>text</strong>, never an index</td></tr></table><p>An <code>Option</code> whose <code>Value:</code> is not one of its own <code>Options:</code> is reported as a warning, and the first option is selected instead.</p><h2>Rules worth knowing</h2><ul><li><strong>Everything arrives as a string.</strong> A token can only live inside a string literal, so <code>Const Q As Integer = &quot;@Quantity&quot;</code> is a VBA type mismatch and fails the load check. Convert where you need to: <code>CInt(Quantity)</code>.</li><li><strong>Blank is always allowed</strong> and substitutes an empty string. Guard for it: <code>If Len(Quantity) &gt; 0 Then count = CInt(Quantity)</code>.</li><li><strong>A <code>Bool</code> is the text <code>&quot;True&quot;</code> or <code>&quot;False&quot;</code>.</strong> Compare against the text - <code>If DryRun = &quot;True&quot; Then</code> - not with <code>If DryRun Then</code>.</li><li><strong>Only a declaration creates a field.</strong> Using <code>&quot;@SheetName&quot;</code> elsewhere still substitutes, but will not add a second control - which is why a misspelled <code>&quot;@SheetNam&quot;</code> is reported as a warning instead of silently becoming its own text box.</li><li><strong>The token must be the whole literal.</strong> <code>&quot;bob@example.com&quot;</code> and <code>&quot;C:\out\@name.txt&quot;</code> are left alone. Tokens inside a <code>&#039;</code> or <code>Rem</code> comment are ignored, so commented-out code raises no phantom fields.</li><li><strong>Declaring the same token twice gives you one field</strong> that fills in both. Useful when two modules each need the value.</li><li><strong>Inputs are per macro row.</strong> Two macros that both declare <code>@Name</code> each get their own value, and the same macro added twice gets two independent sets.</li></ul><h2>Validation before Run</h2><p>SwMacroFlow checks inputs <strong>before</strong> the batch starts, so a bad value does not fail every file one slow open at a time. Blank is always legal. What blocks Run:</p><table><tr><th>Input</th><th>Rule</th></tr><tr><td><code>Integer</code></td><td>Non-blank value must parse as a whole number.</td></tr><tr><td><code>FilePath</code></td><td>Non-blank value must exist on disk, <strong>unless</strong> it contains <code>{Property}</code> tokens (see below) - then only the brace syntax is checked.</td></tr><tr><td><code>FolderPath</code></td><td><strong>Not</strong> existence-checked. Macros commonly create the folder with <code>MkDir</code>.</td></tr><tr><td><code>String</code> / <code>FilePath</code> / <code>FolderPath</code> with braces</td><td>Every <code>{…}</code> must be well-formed (see <em>Property placeholders</em>).</td></tr><tr><td><code>Bool</code>, <code>Option</code></td><td>Cannot be invalid - the control only produces legal values.</td></tr></table><p>The Run button names the macro at fault, because its inputs may not be the ones on screen:</p><ul><li><em>Enter a valid whole number for every number input in …</em></li><li><em>Fix every property placeholder in …</em></li><li><em>Choose a file that exists for every file input in …</em></li></ul><h2>Property placeholders</h2><p>A <code>String</code>, <code>FilePath</code>, or <code>FolderPath</code> value may mix literal text with <code>{PropertyName}</code> tokens - for example <code>{PartNumber}_{Revision}.pdf</code>. Type them in the Inputs panel; they are highlighted magenta as you type. Braces are reserved for this syntax in those three types - there is no escape in v1.</p><p>Integer, Bool, and Option inputs stay literal. They never resolve property tokens.</p><h3>How they differ from <code>@Name</code></h3><table><tr><th></th><th><code>&quot;@Name&quot;</code> token</th><th><code>{Property}</code> placeholder</th></tr><tr><td>Where</td><td>Declared in the macro source</td><td>Typed into an input <strong>value</strong></td></tr><tr><td>When resolved</td><td>Before the batch, baked into the temp copy</td><td><strong>Per document</strong> while that file&#039;s macro runs</td></tr><tr><td>Against what</td><td>The text the user entered</td><td>Custom properties of the open document</td></tr></table><h3>Resolution order</h3><p>Against the document that is open when the macro runs:</p><ol><li>Active configuration&#039;s properties first</li><li>Then file-level custom properties</li></ol><p>Lookup is case-insensitive and uses the <strong>resolved</strong> value, so an expression property such as <code>SW-Mass</code> becomes the evaluated number, not the expression text.</p><h3><code>{Title}</code> is reserved</h3><p><code>{Title}</code> always resolves to the open document&#039;s filename with its extension stripped - <code>Part1.SLDPRT</code> becomes <code>Part1</code>. It is checked before the lookup above and never falls through to a custom property, even one literally named <code>Title</code>. It fails the same way any <code>{Property}</code> does when no document is open, but it can never fail as &quot;missing&quot; - there is nothing to look up.</p><h3>What can go wrong</h3><table><tr><th>Situation</th><th>Result</th></tr><tr><td>Property found</td><td>The token is replaced with the resolved value; your Const holds ordinary text.</td></tr><tr><td>Property missing from both stores</td><td>That file <strong>fails</strong> with a named error. The batch continues. It does <strong>not</strong> expand to empty.</td></tr><tr><td>No document open (run-once mode, or open failed)</td><td>That run <strong>fails</strong> - there is nothing to resolve against.</td></tr><tr><td>Malformed braces (<code>a{b</code>, <code>{}</code>, nested <code>{a{b}}</code>)</td><td>Run is blocked before the batch starts.</td></tr></table><p>Do not rely on <code>{Property}</code> in a macro that only runs in <strong>Run once without opening any files</strong> - there is no active document.</p><h3>Example</h3><p>Declare a String input with a property-based default:</p><pre><code class="lang-vb">Const OutputName As String = &quot;@OutputName&quot; &#039;Type: String &#039;Value: &quot;{PartNumber}_{Revision}.pdf&quot;</code></pre><p>The user can keep that default or edit it. On each drawing or part, SwMacroFlow expands the tokens from that document&#039;s properties, then your macro sees a concrete name such as <code>BR-100_A.pdf</code>.</p><p>For a full contract in one pasteable document, see <em>Macro authoring spec</em>.</p></div>
+
+      <nav class="pager" aria-label="Guide">
+      <a class="pager-link" href="/docs/writing-a-macro/" rel="prev">
+        <span class="pager-dir">Previous</span>
+        <span class="pager-title">Writing a macro</span>
+      </a>
+      <a class="pager-link pager-next" href="/docs/reporting-results/" rel="next">
+        <span class="pager-dir">Next</span>
+        <span class="pager-title">Reporting a result</span>
+      </a>
+    </nav>
+
+      <aside class="doc-cta">
+        <p>
+          These guides describe <a href="/index.html">SwMacroFlow</a>, a free Windows app that
+          batch-runs SOLIDWORKS macros across folders of parts, assemblies and drawings.
+          <a href="/index.html#download">Download it</a>, or browse the
+          <a href="/macros.html">ready-made macro library</a>.
+        </p>
+      </aside>
+    </article>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="/assets/logo.png" alt="SwMacroFlow logo" width="24" height="24" loading="lazy">
+      SwMacroFlow
+    </div>
+    <div class="footer-links">
+      <a href="/index.html">Home</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#download">Download</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/privacy.html">Privacy</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 SwMacroFlow. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/assets/nav.js" defer></script>
+</body>
+</html>

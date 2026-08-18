@@ -1,10 +1,15 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages 
+# Deploys the site to GitHub Pages, generating the crawlable pages first.
+name: Deploy static content to Pages
 
 on:
   # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
+
+  # The macro library lives in its own repository, so a macro published there has to be able to
+  # reach the site without anyone committing here. Mondays, 05:00 UTC.
+  schedule:
+    - cron: "0 5 * * 1"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -31,13 +36,40 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Full history: tools/build-site.mjs reads each source file's last commit date for the
+          # sitemap's <lastmod>. At the default depth of 1 every page would claim to have changed
+          # on the same day, which is exactly the signal Google learns to ignore.
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Generate pages, sitemap and llms.txt
+        run: node tools/build-site.mjs
+
+      # The generated pages are committed so `python -m http.server` previews the whole site with
+      # no build. A diff here means someone edited docs/ or the macro library without re-running
+      # the generator - the deploy is still correct, because it uses what was just built, so this
+      # warns rather than fails.
+      - name: Check the committed output is current
+        run: |
+          if ! git diff --quiet; then
+            echo "::warning::Generated output is stale in the repo. Run 'node tools/build-site.mjs' and commit the result."
+            git diff --stat
+          fi
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
           path: '.'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5

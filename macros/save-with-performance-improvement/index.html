@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>Reduce SOLIDWORKS file size - batch image quality macro | SwMacroFlow</title>
+<meta name="description" content="A free SOLIDWORKS VBA macro that turns image quality down to its cheapest settings, shaded deviation at maximum and high-quality edges off, then saves a copy.">
+<link rel="canonical" href="https://swmacroflow.in/macros/save-with-performance-improvement/">
+<meta property="og:title" content="Reduce SOLIDWORKS file size - batch image quality macro | SwMacroFlow">
+<meta property="og:description" content="A free SOLIDWORKS VBA macro that turns image quality down to its cheapest settings, shaded deviation at maximum and high-quality edges off, then saves a copy.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://swmacroflow.in/macros/save-with-performance-improvement/">
+<meta property="og:site_name" content="SwMacroFlow">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Reduce SOLIDWORKS file size - batch image quality macro | SwMacroFlow">
+<meta name="twitter:description" content="A free SOLIDWORKS VBA macro that turns image quality down to its cheapest settings, shaded deviation at maximum and high-quality edges off, then saves a copy.">
+<meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta name="theme-color" content="#0d0d0f">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/assets/logo.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/assets/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://swmacroflow.in/macros/save-with-performance-improvement/#macro",
+      "name": "Save with Performance Improvement",
+      "description": "A free SOLIDWORKS VBA macro that turns image quality down to its cheapest settings, shaded deviation at maximum and high-quality edges off, then saves a copy.",
+      "url": "https://swmacroflow.in/macros/save-with-performance-improvement/",
+      "programmingLanguage": "VBA",
+      "runtimePlatform": "SOLIDWORKS",
+      "codeRepository": "https://github.com/Urjitpatel28/SwMacroFlow.MacroLibrary",
+      "codeSampleType": "full solution",
+      "targetProduct": {
+        "@id": "https://swmacroflow.in/#software"
+      },
+      "isPartOf": {
+        "@id": "https://swmacroflow.in/#website"
+      },
+      "author": {
+        "@id": "https://swmacroflow.in/#organization"
+      },
+      "license": "https://opensource.org/licenses/MIT",
+      "dateModified": "2026-08-12"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://swmacroflow.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Macros",
+          "item": "https://swmacroflow.in/macros.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Save with Performance Improvement",
+          "item": "https://swmacroflow.in/macros/save-with-performance-improvement/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="brand">
+      <img src="/assets/logo.png" alt="SwMacroFlow logo" width="28" height="28">
+      SwMacroFlow
+    </a>
+    <nav class="nav-links">
+      <a href="/index.html#features">Features</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/macros.html" aria-current="page">Macros</a>
+      <a href="/index.html#how-it-works">How it works</a>
+      <a href="/index.html#faq">FAQ</a>
+      <a href="/index.html#download">Download</a>
+    </nav>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav id="mobileNav" class="nav-mobile" aria-label="Site">
+    <a href="/index.html#features">Features</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/macros.html" aria-current="page">Macros</a>
+      <a href="/index.html#how-it-works">How it works</a>
+      <a href="/index.html#faq">FAQ</a>
+      <a href="/index.html#download">Download</a>
+  </nav>
+</header>
+
+<main class="docs-page">
+  <div class="docs-layout">
+
+    <aside class="docs-sidebar">
+      <p class="docs-nav-group">Other macros</p>
+      <nav class="docs-nav" aria-label="Macro library">
+        <ul>
+          <li><a href="/macros/change-document-unit/">Change Document Unit</a></li>
+          <li><a href="/macros/change-drawing-template/">Change Drawing Template</a></li>
+          <li><a href="/macros/insert-block-in-drawings/">Insert Block In Drawings</a></li>
+          <li><a href="/macros/save-pdf/">Save PDF</a></li>
+        </ul>
+      </nav>
+      <p class="docs-nav-group">Writing your own</p>
+      <nav class="docs-nav" aria-label="Guides">
+        <ul>
+          <li><a href="/docs/writing-a-macro/">Writing a macro</a></li>
+          <li><a href="/docs/adding-inputs/">Adding inputs</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <article class="docs-content">
+      <nav class="crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/macros.html">Macros</a></li>
+        <li aria-current="page">Save with Performance Improvement</li>
+      </ol>
+    </nav>
+      <p class="page-eyebrow">.swp macro</p>
+      <h1>Save with Performance Improvement: shrink SOLIDWORKS files</h1>
+      <p class="macro-lede">Turns image quality down to its cheapest settings — shaded deviation at maximum, high-quality edges off, wireframe quality at its lowest — then saves a copy named &lt;name&gt;_Optimized.</p>
+
+      <p class="macro-actions">
+        <a class="btn btn-primary" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Save%20with%20Performance%20Improvement.swp" download>Download Save with Performance Improvement.swp</a>
+        <a class="btn btn-secondary" href="/index.html#download">Get SwMacroFlow</a>
+      </p>
+
+      <div class="macro-install">
+        <p>Put the downloaded file in this folder, then open SwMacroFlow and choose it from the library.</p>
+        <div class="install-code-row">
+          <pre><code>%LOCALAPPDATA%\SwMacroFlow\macros</code></pre>
+          <button class="copy-path-button" type="button" aria-label="Copy macro folder path" title="Copy macro folder path">
+            <span class="copy-icon" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="docs-markdown"><p>The original file is left alone; only the copy carries the reduced settings.</p><p><strong>Runs per file</strong>, on parts, assemblies and drawings.</p><h2>Inputs</h2><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>SaveModelData</td><td>Drawings only: keep model data in the saved file. Off makes the drawing much smaller but it can no longer be opened without its model.</td></tr><tr><td>SavePath</td><td>Where to save. Blank saves beside the original.</td></tr><tr><td>SubFolder</td><td>Put the saved file in an <code>\Optimized</code> subfolder, created if missing.</td></tr></table><h2>Results</h2><p>Reports the path it wrote, or &quot;Invalid Save path&quot; if <code>SaveAs</code> was refused.</p></div>
+
+      <aside class="doc-cta">
+        <p>
+          This macro runs by hand in the SOLIDWORKS VBA editor like any other. To run it across a
+          whole folder of parts, assemblies or drawings unattended, use it inside
+          <a href="/index.html">SwMacroFlow</a> - a free Windows app that chains macros and
+          batches them over hundreds of files.
+        </p>
+      </aside>
+    </article>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="/assets/logo.png" alt="SwMacroFlow logo" width="24" height="24" loading="lazy">
+      SwMacroFlow
+    </div>
+    <div class="footer-links">
+      <a href="/index.html">Home</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#download">Download</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/privacy.html">Privacy</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 SwMacroFlow. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/assets/nav.js" defer></script>
+<script src="/assets/copy-path.js" defer></script>
+</body>
+</html>

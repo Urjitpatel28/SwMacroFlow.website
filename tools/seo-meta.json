@@ -1,0 +1,81 @@
+{
+  "_comment": "Search titles and descriptions for the generated guide and macro pages. Kept out of build-site.mjs so copy can be tuned without touching the generator, and out of the Markdown so the app's help text stays identical to the site's. A slug with no entry here falls back to the document's own H1 and first paragraph, which is worse for search but never blocks a build. primaryKeyword is documentation, not used by the build: it records what each page is meant to win so the next person editing the title knows what not to break.",
+  "_fields": {
+    "title": "the <title> tag, with ' | SwMacroFlow' appended by the build",
+    "description": "the meta description",
+    "heading": "optional. Overrides the page's H1 only. Macro pages use it to put the keyword in the heading while the cards and sidebars keep the name the desktop app shows.",
+    "navTitle": "optional. Overrides the label in sidebars, index cards and prev/next links.",
+    "primaryKeyword": "documentation only, not read by the build"
+  },
+  "docs": {
+    "overview": {
+      "title": "What SwMacroFlow does - SOLIDWORKS batch macro runner",
+      "description": "How SwMacroFlow opens each SOLIDWORKS file once, runs every macro you ticked against it in order, and records what each macro reported.",
+      "heading": "What SwMacroFlow does",
+      "navTitle": "Overview",
+      "primaryKeyword": "solidworks batch macro runner"
+    },
+    "using-the-app": {
+      "title": "Using SwMacroFlow to run a SOLIDWORKS macro batch",
+      "description": "A panel-by-panel walkthrough: connect to SOLIDWORKS, pick files and folders, choose macros, fill in inputs, and read the results of a batch run.",
+      "primaryKeyword": "run solidworks macro on multiple files"
+    },
+    "writing-a-macro": {
+      "title": "How to write a SOLIDWORKS VBA macro for batch running",
+      "description": "Any SOLIDWORKS VBA macro with an argument-less Sub main works in SwMacroFlow - no library to reference and no host-specific code. With a worked example.",
+      "primaryKeyword": "write solidworks vba macro"
+    },
+    "adding-inputs": {
+      "title": "Add user inputs to a SOLIDWORKS VBA macro",
+      "description": "Declare one Const per input with an @Name token and SwMacroFlow builds the control, validates what is typed, and substitutes the value before the macro runs.",
+      "primaryKeyword": "solidworks macro user input"
+    },
+    "reporting-results": {
+      "title": "Report macro results with MsgBox in a SOLIDWORKS batch",
+      "description": "During a SwMacroFlow batch no dialog opens: each MsgBox call becomes that file's row in the results list instead, coloured by the icon constant you pass.",
+      "primaryKeyword": "solidworks macro msgbox batch"
+    },
+    "macro-authoring-spec": {
+      "title": "SOLIDWORKS macro authoring spec for SwMacroFlow",
+      "description": "The complete contract for a macro that runs under SwMacroFlow, stated in one page - ready to paste into an AI assistant when generating a SOLIDWORKS macro.",
+      "primaryKeyword": "solidworks macro specification"
+    },
+    "troubleshooting": {
+      "title": "SOLIDWORKS macro batch errors and how to fix them",
+      "description": "Symptom-first fixes for SwMacroFlow: cannot reach SOLIDWORKS, macros that will not run, elevation mismatches, and files that fail part-way through a batch.",
+      "primaryKeyword": "solidworks macro not running"
+    }
+  },
+  "macros": {
+    "save-pdf": {
+      "title": "Batch export SOLIDWORKS to PDF - free VBA macro",
+      "description": "A free SOLIDWORKS VBA macro that exports the open document to PDF. Works on parts, assemblies and drawings, and runs across whole folders in SwMacroFlow.",
+      "heading": "Save PDF: export SOLIDWORKS files to PDF",
+      "primaryKeyword": "solidworks batch export pdf macro"
+    },
+    "change-document-unit": {
+      "title": "Change SOLIDWORKS document units in bulk - free macro",
+      "description": "A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.",
+      "heading": "Change Document Unit: set SOLIDWORKS units in bulk",
+      "primaryKeyword": "solidworks change units macro"
+    },
+    "change-drawing-template": {
+      "title": "Batch change SOLIDWORKS drawing sheet format (.slddrt)",
+      "description": "A free SOLIDWORKS VBA macro that applies a .slddrt sheet format to one sheet, several named sheets, or every sheet in a drawing, then rebuilds and saves.",
+      "heading": "Change Drawing Template: swap the .slddrt sheet format",
+      "primaryKeyword": "solidworks change drawing template batch"
+    },
+    "insert-block-in-drawings": {
+      "title": "Insert a block into every SOLIDWORKS drawing sheet",
+      "description": "A free SOLIDWORKS VBA macro that inserts a .sldblk sketch block at a fixed position on one sheet, several named sheets, or every sheet in a drawing.",
+      "heading": "Insert Block In Drawings: add a .sldblk to every sheet",
+      "primaryKeyword": "solidworks insert block macro"
+    },
+    "save-with-performance-improvement": {
+      "title": "Reduce SOLIDWORKS file size - batch image quality macro",
+      "description": "A free SOLIDWORKS VBA macro that turns image quality down to its cheapest settings, shaded deviation at maximum and high-quality edges off, then saves a copy.",
+      "heading": "Save with Performance Improvement: shrink SOLIDWORKS files",
+      "primaryKeyword": "reduce solidworks file size macro"
+    }
+  }
+}

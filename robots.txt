@@ -1,3 +1,40 @@
+# Everything here is public marketing and documentation. Nothing is disallowed.
+#
+# The AI crawlers are named explicitly rather than left to the wildcard below. The rule is the same
+# either way; stating it means a future "block the AI crawlers" decision is one edit in an obvious
+# place, and it makes clear the permission is deliberate. SwMacroFlow is free with nothing to sell,
+# so being quoted by an assistant is the point, not a cost.
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
 User-agent: *
 Allow: /
 

@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>Report macro results with MsgBox in a SOLIDWORKS batch | SwMacroFlow</title>
+<meta name="description" content="During a SwMacroFlow batch no dialog opens: each MsgBox call becomes that file&#039;s row in the results list instead, coloured by the icon constant you pass.">
+<link rel="canonical" href="https://swmacroflow.in/docs/reporting-results/">
+<meta property="og:title" content="Report macro results with MsgBox in a SOLIDWORKS batch | SwMacroFlow">
+<meta property="og:description" content="During a SwMacroFlow batch no dialog opens: each MsgBox call becomes that file&#039;s row in the results list instead, coloured by the icon constant you pass.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://swmacroflow.in/docs/reporting-results/">
+<meta property="og:site_name" content="SwMacroFlow">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Report macro results with MsgBox in a SOLIDWORKS batch | SwMacroFlow">
+<meta name="twitter:description" content="During a SwMacroFlow batch no dialog opens: each MsgBox call becomes that file&#039;s row in the results list instead, coloured by the icon constant you pass.">
+<meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta name="theme-color" content="#0d0d0f">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/assets/logo.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/assets/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://swmacroflow.in/docs/reporting-results/#article",
+      "headline": "Reporting a result",
+      "description": "During a SwMacroFlow batch no dialog opens: each MsgBox call becomes that file's row in the results list instead, coloured by the icon constant you pass.",
+      "url": "https://swmacroflow.in/docs/reporting-results/",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://swmacroflow.in/#website"
+      },
+      "about": {
+        "@id": "https://swmacroflow.in/#software"
+      },
+      "publisher": {
+        "@id": "https://swmacroflow.in/#organization"
+      },
+      "dateModified": "2026-08-11"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://swmacroflow.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Docs",
+          "item": "https://swmacroflow.in/docs.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Reporting a result",
+          "item": "https://swmacroflow.in/docs/reporting-results/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="brand">
+      <img src="/assets/logo.png" alt="SwMacroFlow logo" width="28" height="28">
+      SwMacroFlow
+    </a>
+    <nav class="nav-links">
+      <a href="/index.html#features">Features</a>
+      <a href="/docs.html" aria-current="page">Docs</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#how-it-works">How it works</a>
+      <a href="/index.html#faq">FAQ</a>
+      <a href="/index.html#download">Download</a>
+    </nav>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav id="mobileNav" class="nav-mobile" aria-label="Site">
+    <a href="/index.html#features">Features</a>
+      <a href="/docs.html" aria-current="page">Docs</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#how-it-works">How it works</a>
+      <a href="/index.html#faq">FAQ</a>
+      <a href="/index.html#download">Download</a>
+  </nav>
+</header>
+
+<main class="docs-page">
+  <div class="docs-layout">
+
+    <aside class="docs-sidebar">
+      <nav class="docs-nav" aria-label="Documentation">
+        <p class="docs-nav-group">Using the app</p>
+        <ul>
+          <li><a href="/docs/overview/">Overview</a></li>
+          <li><a href="/docs/using-the-app/">Using the app</a></li>
+        </ul>
+        <p class="docs-nav-group">Writing macros</p>
+        <ul>
+          <li><a href="/docs/writing-a-macro/">Writing a macro</a></li>
+          <li><a href="/docs/adding-inputs/">Adding inputs</a></li>
+          <li><a href="/docs/reporting-results/" class="is-active" aria-current="page">Reporting a result</a></li>
+          <li><a href="/docs/macro-authoring-spec/">Macro authoring spec</a></li>
+        </ul>
+        <p class="docs-nav-group">Reference</p>
+        <ul>
+          <li><a href="/docs/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <article class="docs-content">
+      <nav class="crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/docs.html">Docs</a></li>
+        <li aria-current="page">Reporting a result</li>
+      </ol>
+    </nav>
+      <p class="page-eyebrow">Writing macros</p>
+      <h1>Reporting a result</h1>
+      <div class="docs-markdown"><p><strong>Use <code>MsgBox</code>.</strong> During a batch no dialog opens - SwMacroFlow defines its own <code>MsgBox</code> inside the throwaway copy it runs, so each call becomes that file&#039;s row in the results list instead.</p><pre><code class="lang-vb">If Not model.ForceRebuild3(False) Then
+    MsgBox &quot;Rebuild failed&quot;, vbCritical   &#039; red row, batch continues to the next file
+    Exit Sub
+End If
+
+MsgBox &quot;Exported &quot; &amp; n &amp; &quot; configs&quot;       &#039; green row</code></pre><p>Your macro needs no SwMacroFlow-specific code, and it still shows real dialogs when you run it yourself in the VBA editor. The macro is identical either way.</p><h2>What makes a file pass or fail</h2><table><tr><th>In your macro</th><th>Row</th><th>Returns</th></tr><tr><td><code>MsgBox &quot;text&quot;</code></td><td>Green - a status note</td><td><code>vbOK</code></td></tr><tr><td><code>MsgBox &quot;text&quot;, vbCritical</code></td><td><strong>Red - the file failed</strong></td><td><code>vbOK</code></td></tr><tr><td><code>MsgBox &quot;text&quot;, vbExclamation</code> / <code>vbInformation</code> / <code>vbQuestion</code></td><td>Green - status</td><td><code>vbOK</code></td></tr><tr><td><code>MsgBox &quot;text&quot;, vbYesNo</code></td><td>Amber - prompt auto-answered</td><td><code>vbNo</code></td></tr><tr><td><code>MsgBox &quot;text&quot;, vbOKCancel</code></td><td>Amber</td><td><code>vbCancel</code></td></tr><tr><td><code>MsgBox &quot;text&quot;, vbYesNoCancel</code></td><td>Amber</td><td><code>vbCancel</code></td></tr><tr><td><code>MsgBox &quot;text&quot;, vbRetryCancel</code></td><td>Amber</td><td><code>vbCancel</code></td></tr><tr><td><code>MsgBox &quot;text&quot;, vbAbortRetryIgnore</code></td><td>Amber</td><td><code>vbAbort</code></td></tr><tr><td><code>InputBox(&quot;...&quot;, , &quot;42&quot;)</code></td><td>Amber</td><td><code>&quot;42&quot;</code> - the default you supplied</td></tr><tr><td>An unhandled runtime error</td><td>Red, with number and description</td><td>-</td></tr><tr><td>Missing <code>{Property}</code> / no document to resolve it</td><td>Red, named error from the host</td><td>-</td></tr><tr><td>Nothing at all</td><td>Green</td><td>-</td></tr></table><p><code>vbCritical</code> is the marker for failure. Other icons - <code>vbExclamation</code>, <code>vbInformation</code>, <code>vbQuestion</code> - are status notes and leave the row green.</p><p><strong>A crash no longer passes silently.</strong> An unhandled VBA error is caught, reported as <code>Error 91: Object variable or With block variable not set</code> or similar, and the batch moves on to the next file. No &quot;Run-time error&quot; dialog appears.</p><p>Severity order is <strong>red, then amber, then green</strong>. Within one severity the first message wins, and the row&#039;s status and text always come from the same call.</p><h2>Write a message worth reading</h2><p>A row you will read four hundred of should say what happened to <em>that</em> file. <code>&quot;Wrote C:\Exports\bracket.pdf&quot;</code> is useful; <code>&quot;Done&quot;</code> is not. Put the value that varies - the path, the count, the property - in the message.</p><h2>Reporting more than once</h2><p>Call <code>MsgBox</code> as often as you like. The row shows the <strong>most severe</strong> message, and the log panel keeps all of them in order.</p><pre><code class="lang-vb">MsgBox &quot;Checked 4 configurations&quot;
+MsgBox &quot;Rebuild failed&quot;, vbCritical
+MsgBox &quot;Cleaned up&quot;</code></pre><p>That file gets one red row reading <em>Rebuild failed</em>, and three lines in the log. The status and the message always come from the same call, so a failed file never shows the text of a later message that succeeded.</p><h2>Do not ask questions</h2><p>A batch runs unattended, so there is nobody to click a prompt. Rather than stall, SwMacroFlow answers on your macro&#039;s behalf and marks the file <strong>amber</strong> so you know it happened.</p><p>The answer is always the one that <strong>declines</strong>, because neither choice is safe on its own. Returning <code>vbOK</code> would skip the destructive branch in <code>If MsgBox(&quot;Overwrite?&quot;, vbYesNo) = vbYes Then Kill f</code> - but it would also skip the <code>Exit Sub</code> in <code>If MsgBox(&quot;Continue?&quot;, vbYesNo) = vbNo Then Exit Sub</code> and carry on as though you had agreed.</p><p>Amber is deliberate. It is neither a clean pass nor a failure, and after a 400-file batch you cannot reconstruct which files had a question guessed at for them unless it was recorded.</p><p>If a macro needs an answer, make it an <strong>input</strong> instead of a prompt. See <em>Adding inputs</em>.</p><h2>Property resolution failures</h2><p>If an input value contains <code>{Property}</code> tokens and a property is missing on that document, or there is no document open to resolve against, the host fails that file with a named error. That shows as a <strong>red</strong> row - the same severity as <code>vbCritical</code> or an unhandled runtime error. See <em>Adding inputs</em>.</p><h2>The one thing that still hangs a batch</h2><p><code>MsgBox</code> works because an unqualified call resolves against your macro&#039;s own project first. A call written as <strong><code>VBA.MsgBox</code></strong> is bound directly to the library instead and cannot be intercepted - it opens a real dialog and the batch stops dead until someone clicks it. Drop the <code>VBA.</code> prefix.</p><p>The same applies to a dialog raised from a UserForm. There is no way to intercept one, so a macro that shows a form cannot run unattended.</p><p>For the full authoring contract in one pasteable document, see <em>Macro authoring spec</em>.</p></div>
+
+      <nav class="pager" aria-label="Guide">
+      <a class="pager-link" href="/docs/adding-inputs/" rel="prev">
+        <span class="pager-dir">Previous</span>
+        <span class="pager-title">Adding inputs</span>
+      </a>
+      <a class="pager-link pager-next" href="/docs/macro-authoring-spec/" rel="next">
+        <span class="pager-dir">Next</span>
+        <span class="pager-title">Macro authoring spec</span>
+      </a>
+    </nav>
+
+      <aside class="doc-cta">
+        <p>
+          These guides describe <a href="/index.html">SwMacroFlow</a>, a free Windows app that
+          batch-runs SOLIDWORKS macros across folders of parts, assemblies and drawings.
+          <a href="/index.html#download">Download it</a>, or browse the
+          <a href="/macros.html">ready-made macro library</a>.
+        </p>
+      </aside>
+    </article>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="/assets/logo.png" alt="SwMacroFlow logo" width="24" height="24" loading="lazy">
+      SwMacroFlow
+    </div>
+    <div class="footer-links">
+      <a href="/index.html">Home</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#download">Download</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/privacy.html">Privacy</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 SwMacroFlow. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/assets/nav.js" defer></script>
+</body>
+</html>

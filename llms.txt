@@ -1,0 +1,41 @@
+# SwMacroFlow
+
+> A free standalone Windows application that runs chains of SOLIDWORKS VBA macros across hundreds of
+> parts, assemblies and drawings unattended. It opens each file once, runs every macro selected
+> against it in order, closes it, and records what each macro reported.
+
+SwMacroFlow drives an installed, licensed x64 SOLIDWORKS session from outside. Nothing is registered
+or installed inside SOLIDWORKS itself, and it needs no administrator rights. It is free with every
+feature included: macro chaining, batch runs across folders, a bundled macro library, an AI Copilot
+side panel (bring your own API key), and Windows Task Scheduler integration. There is no trial, no
+licence, no account, and nothing to buy.
+
+## Product
+
+- [Home](https://swmacroflow.in/): what SwMacroFlow does, how a batch runs, and the download.
+- [Documentation](https://swmacroflow.in/docs.html): every guide, from a first batch to the macro authoring contract.
+- [Macro library](https://swmacroflow.in/macros.html): free SOLIDWORKS .swp macros to download.
+
+## Guides
+
+- [SwMacroFlow](https://swmacroflow.in/docs/overview/): SwMacroFlow runs one or more SOLIDWORKS macros across many parts, assemblies and drawings without anyone sitting in front of the screen. It opens each file once, runs every macro you ticked against...
+- [Using the app](https://swmacroflow.in/docs/using-the-app/): A walk through the window, panel by panel, in the order they appear on screen.
+- [Writing a macro](https://swmacroflow.in/docs/writing-a-macro/): Any SOLIDWORKS VBA macro with an argument-less Sub main works. There is no SwMacroFlow-specific code to add, no library to reference, and no result object to fill in. A macro written for SwMacroFlow...
+- [Adding inputs](https://swmacroflow.in/docs/adding-inputs/): An input is a value the user fills in before the run. You declare it in the macro; SwMacroFlow builds the control, validates what is typed, and substitutes the value into your code before it runs.
+- [Reporting a result](https://swmacroflow.in/docs/reporting-results/): Use MsgBox. During a batch no dialog opens - SwMacroFlow defines its own MsgBox inside the throwaway copy it runs, so each call becomes that file's row in the results list instead.
+- [Macro authoring spec](https://swmacroflow.in/docs/macro-authoring-spec/): The complete contract for a macro that runs under SwMacroFlow, stated in one place.
+- [Troubleshooting](https://swmacroflow.in/docs/troubleshooting/): Symptom first. Each heading is what you actually see.
+
+## Macros
+
+- [Change Document Unit](https://swmacroflow.in/macros/change-document-unit/): Sets the document's unit system and the individual length, angle, mass, volume, time, force, power and energy units. Optionally switches inch dimensions to fractions.
+- [Change Drawing Template](https://swmacroflow.in/macros/change-drawing-template/): Applies a .slddrt sheet format to one sheet, several named sheets, or every sheet in a drawing, then rebuilds and saves.
+- [Insert Block In Drawings](https://swmacroflow.in/macros/insert-block-in-drawings/): Inserts a .sldblk sketch block at a fixed position on one sheet, several named sheets, or every sheet in a drawing, then rebuilds and saves.
+- [Save PDF](https://swmacroflow.in/macros/save-pdf/): Exports the open document to PDF. Works on parts, assemblies and drawings.
+- [Save with Performance Improvement](https://swmacroflow.in/macros/save-with-performance-improvement/): Turns image quality down to its cheapest settings — shaded deviation at maximum, high-quality edges off, wireframe quality at its lowest — then saves a copy named <name>_Optimized.
+
+## Policies
+
+- [Terms of use](https://swmacroflow.in/terms.html)
+- [Privacy policy](https://swmacroflow.in/privacy.html): the site uses no analytics and no advertising tracking.
+- [Contact](https://swmacroflow.in/contact.html): info@swmacroflow.in

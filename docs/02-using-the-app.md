@@ -4,18 +4,25 @@ A walk through the window, panel by panel, in the order they appear on screen.
 
 ## Opening and closing it
 
-Start SwMacroFlow from the Start menu. It opens on a connection panel while it looks for SOLIDWORKS:
-it joins one that is already running, or starts one if none is - which can take a couple of minutes
-from cold. The rest of the window appears once there is a session behind it.
+Start SwMacroFlow from the Start menu. The whole window opens straight away, with no connection
+behind it - you can build a complete batch before SOLIDWORKS is involved at all.
 
-If it cannot connect it says why and offers **Try again**. The usual cause is that one of the two is
-running as administrator and the other is not; start both the same way. See *Troubleshooting*.
+The header carries a dropdown listing every SOLIDWORKS installed on the machine plus any that are
+already running. You do not have to connect from it. Set up the batch, press **Run Batch**, and the
+run connects to whatever is selected there - joining a running instance, or starting one, which can
+take a couple of minutes from cold. Connecting by hand first is still there if you want to watch it
+happen, or to check that a macro compiles before you commit to a run.
+
+If the connection fails, the reason appears next to the Run button and nothing is run. The usual
+cause is that one of the two programs is running as administrator and the other is not; start both
+the same way. See *Troubleshooting*.
 
 SOLIDWORKS stays usable while SwMacroFlow is open - they are separate programs, and neither blocks
 the other.
 
-If the session drops, Run stays disabled until you connect again. The reason next to the button then
-reads *Connect to a SOLIDWORKS instance first — pick one in the header.*
+If the session drops, the next run simply connects again. The only connection state that keeps the
+Run button down is a machine with no SOLIDWORKS on it at all, which reads *No SOLIDWORKS installation
+was found on this machine.*
 
 Closing the window closes SwMacroFlow, and with it everything you had set up: the macros, the files,
 the inputs, the results. It asks first if a batch is still running. If SwMacroFlow started SOLIDWORKS
@@ -31,7 +38,7 @@ Buttons top right (and the connection / instance controls when they apply):
 | **?** | Opens this help page in your browser. It is rebuilt each time you click. |
 | **Reset** (circular arrow) | Clears the macros, the file list, the inputs, the results and the log, and puts the scope checkboxes back to their defaults. It asks first if there is anything to lose, and is disabled while a batch is running. |
 | **Sun / moon** | Switches between the light and dark theme. The choice is remembered. |
-| Instance / connection | When SOLIDWORKS must be chosen or reconnected, pick it here. |
+| Instance / connection | Which SOLIDWORKS to use. Pick one here; **Run Batch** connects to it if you have not already. |
 
 ## MACROS
 
@@ -45,9 +52,11 @@ There are three ways to add a macro, and they behave identically:
   SOLIDWORKS files and each goes where it belongs.
 
 None of them needs a connection. If SOLIDWORKS is not connected yet, SwMacroFlow reads the macro
-file directly so you can fill in its inputs. It is checked through SOLIDWORKS before it can run: the
-check happens by itself the moment you connect, and anything you typed in the meantime is kept.
-Disconnecting drops the check, so reconnecting - perhaps to a different SOLIDWORKS - runs it again.
+file directly so you can fill in its inputs. Every macro is still compiled through SOLIDWORKS before
+it can run - that check just happens later now: the moment you connect if you connect by hand, and
+otherwise as the first step of the run itself. Anything you typed is kept across it either way.
+Disconnecting drops the check, so the next connection - perhaps to a different SOLIDWORKS - runs it
+again.
 
 The library is the folder `%LOCALAPPDATA%\SwMacroFlow\macros`. Dropping a `.swp` there yourself makes
 it appear in **From Library** the next time you open the menu - no restart required. (If that folder
@@ -100,7 +109,7 @@ They are resolved **per document** when that file runs, from the open document's
 (active configuration first, then file-level). A missing property fails that file with a red row; it
 does not expand to empty. Integer, Bool and Option fields do not take property tokens.
 
-`{Title}` is the one reserved name - it always resolves to the document's filename, not a custom
+`{FileName}` is the one reserved name - it always resolves to the document's filename, not a custom
 property. Full rules are in *Adding inputs*.
 
 Do not use `{Property}` values when **Run once without opening any files** is ticked - there is no
@@ -169,6 +178,22 @@ does.
 
 **Run Batch** starts the job. In run-once mode the button reads **Run Once** instead.
 
+Two things happen before any file is opened, and the button reads **Starting...** through both:
+
+1. **Connect.** If there is no session yet, the run connects to the instance selected in the header,
+   starting SOLIDWORKS if it is not already running. If that fails, the reason appears and nothing
+   is run.
+2. **Compile.** Every ticked macro is loaded through SOLIDWORKS, which compiles its VBA project and
+   checks it has something runnable in it. If they all pass, the batch starts.
+
+If a macro does not compile, SwMacroFlow stops and asks, naming each macro and the error it gave.
+**Continue** runs the rest of the chain without them - they stay in the list, still ticked, so the
+next run tries them again. **Abort** runs nothing. If nothing in the chain compiles there is no
+question to ask, and the run is abandoned.
+
+The panel and the instance dropdown are locked from the click until the batch is handed over, so
+the run is against exactly the setup that was on screen when you pressed the button.
+
 The window stays responsive while it runs - the batch happens on its own thread, so the results and
 the log fill in live and every button keeps working. **Cancel** stops the run after the macro in
 progress finishes - never mid-macro, so nothing is left half-written. You do not have to wait out the
@@ -208,7 +233,7 @@ The reason is written next to the button. It is always one of these:
 
 | Message | Fix |
 |---|---|
-| Connect to a SOLIDWORKS instance first — pick one in the header. | There is no session yet, or it was lost. Connect or pick an instance. |
+| No SOLIDWORKS installation was found on this machine. | Nothing to connect to. Being merely disconnected does **not** block Run - the run connects for you. |
 | Add at least one macro to run. | The list is empty. |
 | Tick at least one macro to run. | Every macro is unticked. |
 | A macro's own error message | A ticked macro did not load cleanly. Its row carries a **!** you can hover. See *Troubleshooting*. |

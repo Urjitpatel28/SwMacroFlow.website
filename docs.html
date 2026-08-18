@@ -4,18 +4,117 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
-<title>Documentation - SwMacroFlow</title>
-<meta name="description" content="SwMacroFlow documentation: how the batch runner works, writing SOLIDWORKS VBA macros for it, adding inputs, reading results, and troubleshooting.">
+<title>SwMacroFlow documentation - SOLIDWORKS batch macro guides</title>
+<meta name="description" content="Guides for running SOLIDWORKS macros in batch with SwMacroFlow: using the app, writing a macro, adding inputs, reporting results, and troubleshooting.">
 <link rel="canonical" href="https://swmacroflow.in/docs.html">
-<link rel="icon" href="assets/logo.png" type="image/png">
+<meta property="og:title" content="SwMacroFlow documentation - SOLIDWORKS batch macro guides">
+<meta property="og:description" content="Guides for running SOLIDWORKS macros in batch with SwMacroFlow: using the app, writing a macro, adding inputs, reporting results, and troubleshooting.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://swmacroflow.in/docs.html">
+<meta property="og:site_name" content="SwMacroFlow">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SwMacroFlow documentation - SOLIDWORKS batch macro guides">
+<meta name="twitter:description" content="Guides for running SOLIDWORKS macros in batch with SwMacroFlow: using the app, writing a macro, adding inputs, reporting results, and troubleshooting.">
+<meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta name="theme-color" content="#0d0d0f">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="assets/logo.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <link rel="stylesheet" href="assets/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://swmacroflow.in/docs.html#page",
+      "name": "SwMacroFlow documentation",
+      "description": "Guides for running SOLIDWORKS macros in batch with SwMacroFlow: using the app, writing macros, adding inputs, reporting results and troubleshooting.",
+      "url": "https://swmacroflow.in/docs.html",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://swmacroflow.in/#website"
+      },
+      "about": {
+        "@id": "https://swmacroflow.in/#software"
+      },
+      "hasPart": [
+        {
+          "@type": "TechArticle",
+          "@id": "https://swmacroflow.in/docs/overview/#article",
+          "headline": "What SwMacroFlow does",
+          "url": "https://swmacroflow.in/docs/overview/"
+        },
+        {
+          "@type": "TechArticle",
+          "@id": "https://swmacroflow.in/docs/using-the-app/#article",
+          "headline": "Using the app",
+          "url": "https://swmacroflow.in/docs/using-the-app/"
+        },
+        {
+          "@type": "TechArticle",
+          "@id": "https://swmacroflow.in/docs/writing-a-macro/#article",
+          "headline": "Writing a macro",
+          "url": "https://swmacroflow.in/docs/writing-a-macro/"
+        },
+        {
+          "@type": "TechArticle",
+          "@id": "https://swmacroflow.in/docs/adding-inputs/#article",
+          "headline": "Adding inputs",
+          "url": "https://swmacroflow.in/docs/adding-inputs/"
+        },
+        {
+          "@type": "TechArticle",
+          "@id": "https://swmacroflow.in/docs/reporting-results/#article",
+          "headline": "Reporting a result",
+          "url": "https://swmacroflow.in/docs/reporting-results/"
+        },
+        {
+          "@type": "TechArticle",
+          "@id": "https://swmacroflow.in/docs/macro-authoring-spec/#article",
+          "headline": "Macro authoring spec",
+          "url": "https://swmacroflow.in/docs/macro-authoring-spec/"
+        },
+        {
+          "@type": "TechArticle",
+          "@id": "https://swmacroflow.in/docs/troubleshooting/#article",
+          "headline": "Troubleshooting",
+          "url": "https://swmacroflow.in/docs/troubleshooting/"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://swmacroflow.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Docs",
+          "item": "https://swmacroflow.in/docs.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
 <header class="nav">
   <div class="nav-inner">
     <a href="index.html" class="brand">
-      <img src="assets/logo.png" alt="SwMacroFlow logo">
+      <img src="assets/logo.png" alt="SwMacroFlow logo" width="28" height="28">
       SwMacroFlow
     </a>
     <nav class="nav-links">
@@ -32,42 +131,89 @@
   </div>
   <nav id="mobileNav" class="nav-mobile" aria-label="Site">
     <a href="index.html#features">Features</a>
-    <a href="docs.html" aria-current="page">Docs</a>
-    <a href="macros.html">Macros</a>
-    <a href="index.html#how-it-works">How it works</a>
-    <a href="index.html#faq">FAQ</a>
-    <a href="index.html#download">Download</a>
+      <a href="docs.html" aria-current="page">Docs</a>
+      <a href="macros.html">Macros</a>
+      <a href="index.html#how-it-works">How it works</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="index.html#download">Download</a>
   </nav>
 </header>
 
 <main class="docs-page">
-  <div class="docs-layout">
-
-    <aside class="docs-sidebar">
-      <label class="docs-search">
-        <span>Search docs</span>
-        <input id="docSearch" type="search" placeholder="Search every guide" autocomplete="off">
-      </label>
-      <nav id="docNav" class="docs-nav" aria-label="Documentation">
-        <p class="docs-nav-status">Loading guides...</p>
-      </nav>
-    </aside>
-
-    <article class="docs-content">
-      <p class="page-eyebrow">Documentation</p>
-      <h1 id="docTitle">SwMacroFlow docs</h1>
-      <div id="docBody" class="docs-markdown">
-        <p>Loading the guides...</p>
-      </div>
-    </article>
-
+  <div class="docs-index-head">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="index.html">Home</a></li>
+        <li aria-current="page">Docs</li>
+      </ol>
+    </nav>
+    <p class="page-eyebrow">Documentation</p>
+    <h1>SwMacroFlow documentation</h1>
+    <p class="docs-index-lede">
+      Everything from a first batch to the full macro authoring contract. The same guides ship inside
+      the application - open SwMacroFlow and click <strong>Help</strong>.
+    </p>
+    <label class="docs-search">
+      <span>Search guides</span>
+      <input id="docFilter" type="search" placeholder="Filter by title or summary" autocomplete="off">
+    </label>
   </div>
+
+  <div class="docs-index-body" id="docIndex">
+    <section class="doc-group">
+      <h2>Using the app</h2>
+      <ul class="doc-index">
+        <li class="doc-card">
+          <h3><a href="docs/overview/">Overview</a></h3>
+          <p>SwMacroFlow runs one or more SOLIDWORKS macros across many parts, assemblies and drawings without anyone sitting in front of the screen. It opens each file once, runs every macro you ticked against...</p>
+        </li>
+        <li class="doc-card">
+          <h3><a href="docs/using-the-app/">Using the app</a></h3>
+          <p>A walk through the window, panel by panel, in the order they appear on screen.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="doc-group">
+      <h2>Writing macros</h2>
+      <ul class="doc-index">
+        <li class="doc-card">
+          <h3><a href="docs/writing-a-macro/">Writing a macro</a></h3>
+          <p>Any SOLIDWORKS VBA macro with an argument-less Sub main works. There is no SwMacroFlow-specific code to add, no library to reference, and no result object to fill in. A macro written for SwMacroFlow...</p>
+        </li>
+        <li class="doc-card">
+          <h3><a href="docs/adding-inputs/">Adding inputs</a></h3>
+          <p>An input is a value the user fills in before the run. You declare it in the macro; SwMacroFlow builds the control, validates what is typed, and substitutes the value into your code before it runs.</p>
+        </li>
+        <li class="doc-card">
+          <h3><a href="docs/reporting-results/">Reporting a result</a></h3>
+          <p>Use MsgBox. During a batch no dialog opens - SwMacroFlow defines its own MsgBox inside the throwaway copy it runs, so each call becomes that file&#039;s row in the results list instead.</p>
+        </li>
+        <li class="doc-card">
+          <h3><a href="docs/macro-authoring-spec/">Macro authoring spec</a></h3>
+          <p>The complete contract for a macro that runs under SwMacroFlow, stated in one place.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="doc-group">
+      <h2>Reference</h2>
+      <ul class="doc-index">
+        <li class="doc-card">
+          <h3><a href="docs/troubleshooting/">Troubleshooting</a></h3>
+          <p>Symptom first. Each heading is what you actually see.</p>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <p class="docs-nav-status" id="docFilterEmpty" hidden>No guide matched your search.</p>
 </main>
 
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <img src="assets/logo.png" alt="SwMacroFlow logo">
+      <img src="assets/logo.png" alt="SwMacroFlow logo" width="24" height="24" loading="lazy">
       SwMacroFlow
     </div>
     <div class="footer-links">
@@ -83,125 +229,35 @@
   </div>
 </footer>
 
-<script src="assets/markdown.js"></script>
 <script>
-  // The guides are a copy of SwMacroFlow.Ui/Resources/Help/*.md from the application repository,
-  // which is private, so they are served from this repo rather than fetched from GitHub.
-  const DOCS_PATH = "docs";
+  // Filters cards that are already in the HTML. The previous version of this page fetched and
+  // rendered every guide before it could show anything; now the content is the page.
+  (function () {
+    var input = document.getElementById("docFilter");
+    var index = document.getElementById("docIndex");
+    var empty = document.getElementById("docFilterEmpty");
+    if (!input || !index) return;
 
-  const nav = document.getElementById("docNav");
-  const search = document.getElementById("docSearch");
-  const titleEl = document.getElementById("docTitle");
-  const bodyEl = document.getElementById("docBody");
+    var cards = Array.prototype.slice.call(index.querySelectorAll(".doc-card"));
+    var groups = Array.prototype.slice.call(index.querySelectorAll(".doc-group"));
 
-  const state = { groups: [], docs: new Map(), current: "" };
+    input.addEventListener("input", function () {
+      var query = input.value.trim().toLowerCase();
+      var shown = 0;
 
-  function titleFromSlug(slug) {
-    return slug.replace(/^\d+-/, "").replace(/-/g, " ");
-  }
-
-  async function fetchText(url) {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`Request failed with ${response.status}`);
-    return response.text();
-  }
-
-  function renderNav() {
-    const query = search.value.trim().toLowerCase();
-    const parts = [];
-
-    state.groups.forEach(group => {
-      const matches = group.docs.filter(slug => {
-        const doc = state.docs.get(slug);
-        return doc && (!query || doc.search.includes(query));
+      cards.forEach(function (card) {
+        var match = !query || card.textContent.toLowerCase().indexOf(query) !== -1;
+        card.hidden = !match;
+        if (match) shown += 1;
       });
-      if (!matches.length) return;
 
-      parts.push(`<p class="docs-nav-group">${SwMarkdown.escapeHtml(group.title)}</p><ul>`);
-      matches.forEach(slug => {
-        const doc = state.docs.get(slug);
-        const active = slug === state.current ? ' class="is-active" aria-current="page"' : "";
-        parts.push(`<li><a href="#${SwMarkdown.escapeHtml(slug)}"${active}>${SwMarkdown.escapeHtml(doc.title)}</a></li>`);
+      groups.forEach(function (group) {
+        group.hidden = !group.querySelector(".doc-card:not([hidden])");
       });
-      parts.push("</ul>");
+
+      empty.hidden = shown > 0;
     });
-
-    nav.innerHTML = parts.length
-      ? parts.join("")
-      : `<p class="docs-nav-status">No guide matched your search.</p>`;
-  }
-
-  function showDoc(slug) {
-    const doc = state.docs.get(slug);
-    if (!doc) return;
-
-    state.current = slug;
-    titleEl.textContent = doc.title;
-    bodyEl.innerHTML = SwMarkdown.toHtml(doc.markdown, { stripFirstHeading: true });
-    document.title = `${doc.title} - SwMacroFlow docs`;
-    renderNav();
-  }
-
-  function showFailure() {
-    nav.innerHTML = `<p class="docs-nav-status">Guides unavailable.</p>`;
-    titleEl.textContent = "Documentation unavailable";
-    bodyEl.innerHTML =
-      `<p>The guides could not be loaded. Reload the page, and if it keeps failing please contact ` +
-      `<a href="mailto:info@swmacroflow.in">info@swmacroflow.in</a>.</p>` +
-      `<p>The same documentation ships inside the application: open SwMacroFlow and click ` +
-      `<strong>Help</strong>.</p>`;
-  }
-
-  function selectedSlug() {
-    const slug = decodeURIComponent(window.location.hash.replace(/^#/, ""));
-    return state.docs.has(slug) ? slug : "";
-  }
-
-  async function loadDocs() {
-    let manifest;
-    try {
-      manifest = JSON.parse(await fetchText(`${DOCS_PATH}/manifest.json`));
-    } catch (error) {
-      showFailure();
-      return;
-    }
-
-    const groups = Array.isArray(manifest.groups) ? manifest.groups : [];
-    const slugs = groups.reduce((all, group) => all.concat(group.docs || []), []);
-
-    // Every guide is fetched upfront: they are small static files, switching between them is then
-    // instant, and the search box can look inside bodies as well as titles.
-    await Promise.all(slugs.map(async slug => {
-      try {
-        const markdown = await fetchText(`${DOCS_PATH}/${slug}.md`);
-        const title = SwMarkdown.firstHeading(markdown) || titleFromSlug(slug);
-        state.docs.set(slug, { title, markdown, search: `${title}\n${markdown}`.toLowerCase() });
-      } catch (error) {
-        // A guide that will not load is dropped from the list rather than shown broken.
-      }
-    }));
-
-    // Drop guides that failed, then groups left with nothing in them.
-    state.groups = groups
-      .map(group => ({ title: group.title, docs: (group.docs || []).filter(slug => state.docs.has(slug)) }))
-      .filter(group => group.docs.length);
-
-    if (!state.groups.length) {
-      showFailure();
-      return;
-    }
-
-    showDoc(selectedSlug() || state.groups[0].docs[0]);
-  }
-
-  window.addEventListener("hashchange", () => {
-    const slug = selectedSlug();
-    if (slug && slug !== state.current) showDoc(slug);
-  });
-
-  search.addEventListener("input", renderNav);
-
-  loadDocs();
+  })();
 </script>
 
 <script src="assets/nav.js" defer></script>
