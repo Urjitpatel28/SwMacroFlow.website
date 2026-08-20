@@ -632,6 +632,23 @@
     background: color-mix(in srgb, var(--panel) 48%, var(--bg));
   }
 
+  /* A quiet line under the button, sized and toned like the checksum beneath it. The button is
+     what this card is for; the count is corroboration and should not compete with it. */
+  .download-total {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin: 16px 0 0;
+    color: var(--text-faint);
+    font-size: 13px;
+  }
+
+  .download-total-value {
+    font-weight: 700;
+    color: var(--text-dim);
+  }
+
   .download-version {
     margin: 0 0 6px;
     font-size: 22px;
@@ -1088,6 +1105,13 @@
         <p class="download-version" data-download-version></p>
         <p class="download-meta" data-download-meta></p>
         <a class="btn btn-primary" href="#" data-download-link>Download for Windows</a>
+
+        <!-- Filled from downloads.json by assets/downloads.js, from the count GitHub keeps for the
+             release assets. Stays hidden if that file has no number in it. -->
+        <p class="download-total" data-download-total hidden>
+          <span class="download-total-value" data-download-total-value></span>
+          <span class="download-total-label">downloads since the first release</span>
+        </p>
         <p class="download-sha" data-download-sha-row hidden>
           SHA-256: <code data-download-sha></code>
         </p>
@@ -1199,6 +1223,7 @@
 
 <script src="assets/nav.js" defer></script>
 <script src="assets/release.js" defer></script>
+<script src="assets/downloads.js" defer></script>
 <script src="assets/review-config.js" defer></script>
 <script src="assets/reviews.js" defer></script>
 </body>

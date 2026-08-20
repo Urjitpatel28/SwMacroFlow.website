@@ -48,6 +48,10 @@ jobs:
           node-version: "20"
 
       - name: Generate pages, sitemap and llms.txt
+        # The build asks the GitHub API for the release download counts. Unauthenticated calls share
+        # a 60/hour budget with every other job on the runner's IP; this lifts it to 1000.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node tools/build-site.mjs
 
       # The generated pages are committed so `python -m http.server` previews the whole site with
@@ -55,8 +59,10 @@ jobs:
       # the generator - the deploy is still correct, because it uses what was just built, so this
       # warns rather than fails.
       - name: Check the committed output is current
+        # downloads.json is excluded: it tracks a number that changes on its own, so it would differ
+        # on nearly every run and teach everyone to ignore a warning that exists to catch real drift.
         run: |
-          if ! git diff --quiet; then
+          if ! git diff --quiet -- . ':(exclude)downloads.json'; then
             echo "::warning::Generated output is stale in the repo. Run 'node tools/build-site.mjs' and commit the result."
             git diff --stat
           fi
