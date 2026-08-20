@@ -880,9 +880,10 @@ function llmsTxt(guides, macros) {
 
 SwMacroFlow drives an installed, licensed x64 SOLIDWORKS session from outside. Nothing is registered
 or installed inside SOLIDWORKS itself, and it needs no administrator rights. It is free with every
-feature included: macro chaining, batch runs across folders, a bundled macro library, an AI Copilot
-side panel (bring your own API key), and Windows Task Scheduler integration. There is no trial, no
-licence, no account, and nothing to buy.
+feature included: macro chaining, batch runs across folders, parallel batches across two to four
+SOLIDWORKS instances, a bundled macro library, an AI Copilot side panel (bring your own API key,
+with image, PDF, Word and text attachments), and Windows Task Scheduler integration. There is no
+trial, no licence, no account, and nothing to buy.
 
 ## Product
 

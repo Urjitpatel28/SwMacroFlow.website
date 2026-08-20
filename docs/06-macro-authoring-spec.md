@@ -200,9 +200,11 @@ A `String`, `FilePath`, or `FolderPath` value the user types may mix literal tex
 syntax in those three types; there is no escape in v1. Tokens are highlighted magenta in the Inputs
 panel as you type.
 
-`{Title}` is reserved: it always resolves to the open document's filename with its extension
-stripped (`Part1.SLDPRT` -> `Part1`), never a custom property - even one literally named `Title`.
-Every other `{Name}` looks up a custom property as described below.
+`{FileName}` is reserved: it always resolves to the open document's filename with its extension
+stripped (`Part1.SLDPRT` -> `Part1`), never a custom property - even one literally named `FileName`.
+Matched case-insensitively, so `{filename}` is the same token. Every other `{Name}` looks up a
+custom property as described below. (This placeholder was called `{Title}` in earlier versions;
+`{Title}` is now an ordinary custom-property lookup.)
 
 Unlike an `"@Name"` token (baked into the temp copy before the batch starts), each `{Property}` is
 resolved **per document while the macro runs**, against the open document only:

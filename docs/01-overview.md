@@ -102,6 +102,6 @@ this page.
 | Scope | The files the batch will run against - the lists plus the Part / Assembly / Drawing filters. |
 | Input | A value the macro declares and you fill in before the run. See *Adding inputs*. |
 | `{Property}` | A placeholder in a free-text input value, resolved from the open document's custom properties. |
-| `{Title}` | The one reserved placeholder name - always the open document's filename without its extension. |
+| `{FileName}` | The one reserved placeholder name - always the open document's filename without its extension. |
 | Row | One line in the Results panel: one macro, one file, one outcome. |
 | Run once | The mode that runs the chain a single time with no document open. |

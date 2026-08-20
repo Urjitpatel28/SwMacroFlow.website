@@ -132,12 +132,20 @@ Against the document that is open when the macro runs:
 Lookup is case-insensitive and uses the **resolved** value, so an expression property such as
 `SW-Mass` becomes the evaluated number, not the expression text.
 
-### `{Title}` is reserved
+### `{FileName}` is reserved
 
-`{Title}` always resolves to the open document's filename with its extension stripped -
+`{FileName}` always resolves to the open document's filename with its extension stripped -
 `Part1.SLDPRT` becomes `Part1`. It is checked before the lookup above and never falls through to
-a custom property, even one literally named `Title`. It fails the same way any `{Property}` does
+a custom property, even one literally named `FileName`. It fails the same way any `{Property}` does
 when no document is open, but it can never fail as "missing" - there is nothing to look up.
+
+Like every other token name it is matched case-insensitively, so `{FileName}`, `{filename}` and
+`{FILENAME}` are the same token.
+
+**Renamed - this placeholder used to be `{Title}`.** `{Title}` is no longer reserved: it now reads
+an ordinary custom property called *Title*, like any other name. Update any saved job that still
+uses it, or that job will pick up the document's *Title* property instead of its filename - or fail
+that file as a missing property if the document has none.
 
 ### What can go wrong
 

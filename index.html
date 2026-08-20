@@ -57,9 +57,12 @@
       "featureList": [
         "Chain multiple SOLIDWORKS VBA macros into one run",
         "Batch across folders of parts, assemblies and drawings",
+        "Standalone application, with no SOLIDWORKS add-in to register",
         "Bundled library of ready-made macros",
         "AI Copilot side panel (bring your own API key)",
-        "Windows Task Scheduler integration"
+        "Attach images, PDFs, Word and text files to AI Copilot",
+        "Windows Task Scheduler integration",
+        "Parallel batches across two to four SOLIDWORKS instances"
       ],
       "downloadUrl": "https://swmacroflow.in/#download",
       "installUrl": "https://swmacroflow.in/#download",
@@ -107,7 +110,7 @@
           "name": "Is SwMacroFlow really free?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. SwMacroFlow is free to download and use, with every feature included: macro chaining, batch runs across folders, the bundled macro library, AI Copilot, and Task Scheduler. There is no trial, no licence, no account, and nothing to buy."
+            "text": "Yes. SwMacroFlow is free to download and use, with every feature included: macro chaining, batch runs across folders, parallel batches across several SOLIDWORKS instances, the bundled macro library, AI Copilot, and Task Scheduler. There is no trial, no licence, no account, and nothing to buy."
           }
         },
         {
@@ -140,6 +143,14 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Yes. SwMacroFlow can register saved setups with Windows Task Scheduler for one-time, daily, weekly, monthly, or every-N-minute runs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can it run more than one SOLIDWORKS at once?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Turn on parallel batches in Settings and SwMacroFlow runs the batch across two to four SOLIDWORKS instances, handing each one the next file as it comes free rather than splitting the list up front. It only applies when SwMacroFlow starts SOLIDWORKS itself — connecting to a session you already had open always uses just that one. Each instance takes its own licence seat and its own memory, so on large assemblies two or three is usually as far as a workstation gains."
           }
         },
         {
@@ -910,6 +921,16 @@
         <h3>Task Scheduler batches</h3>
         <p>Save a setup and run it later through Windows Task Scheduler: once, daily, weekly, monthly, or every N minutes.</p>
       </article>
+      <article class="capability">
+        <small>07</small>
+        <h3>Parallel batches</h3>
+        <p>Spread one batch across two to four SOLIDWORKS instances that share the file list, each taking the next file as it comes free. Opening a document is the slow part of a batch and SOLIDWORKS does it one at a time, so a second instance puts a machine that was otherwise idle to work. Off by default; turn it on in Settings.</p>
+      </article>
+      <article class="capability">
+        <small>08</small>
+        <h3>Attach files to Copilot</h3>
+        <p>Give Copilot something to look at: a screenshot, a PDF drawing, a Word document, or a text, CSV, or JSON file. Paste an image straight into the chat, or pick a file.</p>
+      </article>
     </div>
   </section>
 
@@ -1076,6 +1097,7 @@
         <li>Chain and batch-run your macros across whole folders</li>
         <li>Bundled macro library, alongside your own VBA</li>
         <li>AI Copilot, with your own API key</li>
+        <li>Parallel batches across two to four SOLIDWORKS instances</li>
         <li>Task Scheduler batches</li>
         <li>Works with any installed SOLIDWORKS</li>
         <li>Per-user install, no administrator rights needed</li>
@@ -1105,7 +1127,7 @@
       </details>
       <details>
         <summary>Is SwMacroFlow really free?</summary>
-        <p>Yes. SwMacroFlow is free to download and use, with every feature included: macro chaining, batch runs across folders, the bundled macro library, AI Copilot, and Task Scheduler. There is no trial, no licence, no account, and nothing to buy.</p>
+        <p>Yes. SwMacroFlow is free to download and use, with every feature included: macro chaining, batch runs across folders, parallel batches across several SOLIDWORKS instances, the bundled macro library, AI Copilot, and Task Scheduler. There is no trial, no licence, no account, and nothing to buy.</p>
       </details>
       <details>
         <summary>How do I get SwMacroFlow?</summary>
@@ -1122,6 +1144,10 @@
       <details>
         <summary>Can I schedule batches?</summary>
         <p>Yes. SwMacroFlow can register saved setups with Windows Task Scheduler for one-time, daily, weekly, monthly, or every-N-minute runs.</p>
+      </details>
+      <details>
+        <summary>Can it run more than one SOLIDWORKS at once?</summary>
+        <p>Yes. Turn on parallel batches in Settings and SwMacroFlow runs the batch across two to four SOLIDWORKS instances, handing each one the next file as it comes free rather than splitting the list up front. It only applies when SwMacroFlow starts SOLIDWORKS itself &mdash; connecting to a session you already had open always uses just that one. Each instance takes its own licence seat and its own memory, so on large assemblies two or three is usually as far as a workstation gains.</p>
       </details>
       <details>
         <summary>Can I install it on more than one computer?</summary>
