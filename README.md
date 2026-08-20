@@ -47,7 +47,7 @@ assets/SwMacroFlow.png  application screenshot, with a lossless .webp beside it
 assets/SwMacroFlow_Handwritten_Guide.png
                         the annotated quick-guide sheet on the home page, rendered from
                         tools/guide.html -- never edit the PNG, with a quality-88 .webp beside it
-assets/fonts/           Caveat, the handwriting on the guide sheet
+assets/fonts/           Caveat, the handwriting on the sheets
 assets/og-image.png     1200x630 social preview
 docs/manifest.json      guide groups and order
 docs/*.md               the seven guides, the source the guide pages are built from
@@ -57,9 +57,11 @@ tools/build-site.mjs    the generator
 tools/templates.mjs     head, nav, footer and breadcrumbs for generated pages
 tools/seo-meta.json     per-page search titles and descriptions
 tools/build-images.py   regenerates the webps, OG image and icons (manual, needs Pillow)
-tools/guide.html        the quick-guide sheet: paper, callout copy and the tips box
-tools/guide-draw.js     where the sheet's screenshot, callouts, outlines and arrows are placed
-tools/build-guide.mjs   renders guide.html to the sheet PNG (manual, needs no dependencies)
+tools/sheet.css         the paper, the ink colours and the handwriting, shared by every sheet
+tools/sheet-draw.js     the drawing: rough outlines, curved arrows, ruled headings. Takes a config
+tools/guide.html        the quick-guide sheet: callout copy, and the numbers that place it
+tools/settings-*.html   one sheet per Settings tab: general, copilot, scheduled
+tools/build-guide.mjs   renders the sheets to PNGs (manual, needs no dependencies)
 SEO-CONTENT-PLAN.md     keyword map, content briefs and off-page checklist
 ```
 
@@ -97,18 +99,43 @@ Images are separate and manual, because they are committed binaries and rebuildi
 push would produce a diff on every push:
 
 ```bash
-node tools/build-guide.mjs     # only if the guide sheet or the screenshot changed
+node tools/build-guide.mjs     # only if a sheet or one of the screenshots changed
 python tools/build-images.py   # needs Pillow
 ```
 
-In that order. `build-guide.mjs` renders `tools/guide.html` at 2x with whatever headless Chrome,
-Edge or Playwright Chromium is on the machine, and `build-images.py` only re-compresses the PNG
-it finds -- so running the second alone leaves a stale sheet, and `index.html` serves the `.webp`
-in preference to the PNG. The render is deterministic: the same source gives a byte-identical PNG,
-so a rerun that changes nothing produces no diff.
+In that order. `build-guide.mjs` renders every sheet at 2x with whatever headless Chrome, Edge or
+Playwright Chromium is on the machine, and `build-images.py` only re-compresses the PNGs it finds --
+so running the second alone leaves a stale sheet, and `index.html` serves the `.webp` in preference
+to the PNG. Name sheets to render only those:
 
-The sheet's copy is the application's own documentation restated -- `docs/02-using-the-app.md` is
-the source of truth for every claim on it. Change that file first, then the sheet.
+```bash
+node tools/build-guide.mjs copilot general
+```
+
+The render is deterministic: the same source gives a byte-identical PNG, so a rerun that changes
+nothing produces no diff. That is worth using -- rebuild before you commit, and a sheet that appears
+in `git status` is a sheet you actually changed.
+
+There are four sheets. `guide` is the main window, and its copy is the application's own
+documentation restated -- `docs/02-using-the-app.md` is the source of truth for every claim on it,
+so change that file first, then the sheet. `general`, `copilot` and `scheduled` are the Settings
+tabs; nothing in `docs/` covers those yet, so each one names the app source its claims come from in
+a comment at the top of the file. Check those before changing a bullet.
+
+Each sheet is an HTML file holding the callout copy and a `drawSheet({...})` config at the bottom --
+the paper size, where the screenshot sits, the rectangles to ring, where the callouts go and where
+the arrows point. `tools/sheet.css` and `tools/sheet-draw.js` are shared and hold no coordinates.
+Two things to know before editing a config:
+
+- **Panel rectangles are in the screenshot's own pixels; arrows are in sheet coordinates.** That
+  asymmetry is the easy mistake. It buys something: a new screenshot of the same window only needs
+  `panels` re-measured, and moving it on the paper only needs `shot`.
+- **Callouts have no height.** Copy that outgrows its box runs into its neighbour where you can see
+  it, rather than being silently clipped. Open the file in a browser to check -- it lays itself out.
+
+The sheet size in `build-guide.mjs`, the `sheet` block in the HTML, and the `width`/`height` on the
+`img` tag in `index.html` all have to agree. The first two are asserted at build time; the third is
+not, and getting it wrong shifts the page as the image loads.
 
 ## Access model
 

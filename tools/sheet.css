@@ -1,0 +1,117 @@
+/* Shared look for every handwritten sheet in tools/: the quick guide and the three settings sheets.
+
+   Nothing here knows how big a sheet is. Each sheet declares its own size in the config it passes to
+   drawSheet(), and sheet-draw.js writes it onto body and #sheet - so a size in this file could only
+   ever be a stale second opinion. */
+
+@font-face {
+  font-family: "Caveat";
+  src: url("../assets/fonts/caveat-latin.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+}
+
+:root {
+  --c1: #e0342a;
+  --c2: #1f9d55;
+  --c3: #2563d9;
+  --c4: #e07a1a;
+  --c5: #8b3fd4;
+  --c6: #d81b7a;
+  --c7: #1e63c8;
+  --c8: #7a5c3a;
+  --tips: #0f8a8a;
+  --ink: #1f1d1a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  overflow: hidden;
+  /* Paper: a warm off-white shading down at the edges, so the sheet reads as a page under a lamp
+     rather than a flat fill. Kept subtle - it sits behind small handwriting. */
+  background: radial-gradient(120% 90% at 50% 40%, #fdfcfa 0%, #f7f5f2 62%, #efece6 100%);
+  font-family: "Caveat", "Segoe Script", cursive;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+#sheet { position: relative; }
+
+#shot { position: absolute; image-rendering: pixelated; }
+
+/* The drawing layer: outlines round the panels, arrows from each callout to the panel it names.
+   Sized off the sheet rather than in numbers here - a fixed size would scale the viewBox that
+   sheet-draw.js sets, and quietly shrink every outline away from the panel it is meant to ring. */
+#ink { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+.note { position: absolute; }
+
+/* inline-block so the rule that sheet-draw.js appends is as wide as the longest line of the heading
+   and not as wide as the whole column. */
+.note h2 {
+  display: inline-block;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.16;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.note ul { list-style: none; }
+
+.note li {
+  position: relative;
+  padding-left: 13px;
+  font-size: 18.5px;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.note li::before {
+  content: "\2022";
+  position: absolute;
+  left: 1px;
+  top: -1px;
+}
+
+.note b { font-weight: 700; }
+
+/* Caveat has no glyph for the reorder arrows or the cross on a macro row, and none for the bulb on
+   the tips box. Those characters fall through to a sans that has them, at a size that sits with the
+   handwriting rather than shouting over it. */
+.g { font-family: "Segoe UI Symbol", "Segoe UI", sans-serif; font-size: 15px; }
+
+/* The band the title is centred in. Its width comes from the config - sheet width unless a sheet
+   overrides it - because it is not always the whole sheet. */
+#title {
+  position: absolute;
+  left: 0;
+  top: 14px;
+  text-align: center;
+  font-size: 42px;
+  font-weight: 700;
+}
+
+#title span { display: inline-block; }
+
+#tips {
+  position: absolute;
+  padding: 12px 15px 10px;
+  color: var(--tips);
+}
+
+#tips h2 { display: flex; align-items: center; gap: 7px; font-size: 22px; margin-bottom: 6px; }
+#tips li { font-size: 17.5px; margin-bottom: 5px; }
+#tips li::before { color: var(--tips); }
+
+/* A real dashed border rather than a drawn one: this is a box, not a scrawl, and a border keeps the
+   dashes even round the corners where a hand-drawn path bunches them. */
+#tips::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px dashed var(--tips);
+  border-radius: 5px;
+}

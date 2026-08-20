@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SwMacroFlow settings sheet - General</title>
+<!--
+  Source for assets/SwMacroFlow_Setting_General_Guide.png. Render it with:
+
+      node tools/build-guide.mjs general
+
+  Open this file in a browser to work on it - the config at the bottom lays it out, and the renderer
+  only screenshots it at 2x. Every claim on the sheet comes from the app itself: SettingsView.xaml,
+  AppSettingsStore.cs, ResilientSwSession.cs, ParallelSwSession.cs and App.xaml.cs. When the app
+  changes, check those before changing a bullet here.
+
+  The screenshot sits at its NATIVE 582x454 with image-rendering:pixelated, so rendering at 2x doubles
+  it by whole pixels and the UI text inside stays sharp. Do not resize it.
+-->
+<link rel="stylesheet" href="sheet.css">
+</head>
+<body>
+<div id="sheet">
+  <img id="shot" src="../assets/SwMacroFlow_Setting_General.png" alt="">
+  <svg id="ink"></svg>
+
+  <div id="title"><span>Settings &mdash; General (Theme &amp; SOLIDWORKS)</span></div>
+
+  <div class="note" id="n8" style="color: var(--c8)">
+    <h2>Where this lives &mdash; the gear in the header</h2>
+    <ul>
+      <li>Four tabs: <b>General</b> and <b>Scheduled Task</b> save as you go, <b>Copilot</b> has a Save button, <b>About</b> is the version and the licence.</li>
+      <li><b>Esc</b>, the <span class="g">&#10005;</span>, or a click outside closes it. Nothing here needs SOLIDWORKS to be connected.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n1" style="color: var(--c1)">
+    <h2>Theme</h2>
+    <ul>
+      <li>Sun or moon &mdash; the lit one is the theme you are in, not the one you would switch to.</li>
+      <li>Applied and remembered the moment you click it, for every session after this one.</li>
+      <li>Until you pick, it follows whatever Windows itself is set to.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n2" style="color: var(--c2)">
+    <h2>Automatic restart</h2>
+    <ul>
+      <li>Quits and relaunches SOLIDWORKS every <b>N</b> files, to head off the memory it piles up over a long batch. <b>0 = never</b>; it starts at 10.</li>
+      <li><b>Only instances SwMacroFlow started.</b> If you pointed it at a SOLIDWORKS you already had open, restarting it would take your own work down with it, so it refuses.</li>
+      <li>Separately, it restarts SOLIDWORKS if it stops responding mid-batch and re-runs the files it never reached.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n3" style="color: var(--c3)">
+    <h2>Run batches<br>in parallel</h2>
+    <ul>
+      <li>Several SOLIDWORKS instances pull from one queue: the next file goes to whichever is free, so one enormous assembly cannot strand the rest of the batch behind it.</li>
+      <li><b>Off by default.</b> Instances do not share memory &mdash; a machine that cannot hold three copies of a big assembly finishes slower, not faster.</li>
+      <li>Only when SwMacroFlow starts SOLIDWORKS itself. Never for a run-once macro or a single file.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n4" style="color: var(--c4)">
+    <h2>Instances</h2>
+    <ul>
+      <li><b>2 to 4</b>, and the row is greyed while the toggle above is off.</li>
+      <li>Read when you connect, not per run &mdash; change it and reconnect.</li>
+      <li>Two or three is usually all a workstation gains on large assemblies.</li>
+      <li>Each SOLIDWORKS takes 45&ndash;90 s to start, so the extras join a run already going.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="tips">
+    <h2><span class="g" style="font-size:19px">&#128161;</span> Tips</h2>
+    <ul>
+      <li>There is no Save button on this tab &mdash; every value here is written the moment you change it.</li>
+      <li>Turning parallel off does not forget the instance count. It is kept for when you turn it back on.</li>
+      <li>Leave automatic restart alone unless you have a reason: the default is there so a batch left running overnight survives it.</li>
+    </ul>
+  </div>
+</div>
+<script src="sheet-draw.js"></script>
+<script>
+drawSheet({
+  // Must match the `general` entry in build-guide.mjs.
+  sheet: { w: 1220, h: 1050 },
+
+  // Centred, with a column of handwriting either side and a band above and below.
+  shot: { x: 320, y: 230 },
+
+  /* Rectangles inside the screenshot, as [x1, y1, x2, y2] in its own pixels, measured off the PNG.
+     The three SOLIDWORKS rows are one card divided by hairlines, so each is pulled a few pixels
+     clear of the next - roughRect pads outwards, and two outlines sharing an edge read as one box
+     drawn round both. */
+  panels: {
+    tabs:      [26, 63, 294, 91],
+    theme:     [34, 125, 544, 184],
+    restart:   [34, 220, 544, 264],
+    parallel:  [34, 276, 544, 315],
+    instances: [34, 327, 544, 369],
+  },
+
+  notes: {
+    n8:   { left: 22,  top: 84,  width: 1176 },
+    n1:   { left: 22,  top: 250, width: 288 },
+    n2:   { left: 22,  top: 470, width: 288 },
+    n3:   { left: 916, top: 250, width: 288 },
+    n4:   { left: 916, top: 592, width: 288 },
+    tips: { left: 22,  top: 870, width: 1176 },
+  },
+
+  outlines: [
+    ['tabs', '#7a5c3a'], ['theme', '#e0342a'], ['restart', '#1f9d55'],
+    ['parallel', '#2563d9'], ['instances', '#e07a1a'],
+  ],
+
+  // from/to are SHEET coordinates, not screenshot ones.
+  arrows: [
+    { from: [420, 196], to: [430, 286], bend: 14,  color: '#7a5c3a' },
+    { from: [310, 330], to: [348, 380], bend: 16,  color: '#e0342a' },
+    { from: [310, 500], to: [348, 470], bend: 12,  color: '#1f9d55' },
+    { from: [908, 340], to: [870, 520], bend: 26,  color: '#2563d9' },
+    { from: [908, 652], to: [870, 582], bend: 12,  color: '#e07a1a' },
+  ],
+
+  titleInk: '#e0342a',
+});
+</script>
+</body>
+</html>

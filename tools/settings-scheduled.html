@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SwMacroFlow settings sheet - Scheduled Task</title>
+<!--
+  Source for assets/SwMacroFlow_Setting_Scheduled_Guide.png. Render it with:
+
+      node tools/build-guide.mjs scheduled
+
+  Open this file in a browser to work on it - the config at the bottom lays it out, and the renderer
+  only screenshots it at 2x. Every claim on the sheet comes from the app itself:
+  WindowsScheduledBatchService.cs, TaskScheduleView.xaml, ScheduledTaskViewModel and SettingsView.xaml.
+
+  The two cards are identical, so the sheet uses the first to say what a card IS and the second to
+  label the controls on it. That keeps the outlines side by side instead of nested.
+
+  The screenshot sits at its NATIVE 578x447 with image-rendering:pixelated, so rendering at 2x doubles
+  it by whole pixels and the UI text inside stays sharp. Do not resize it.
+-->
+<link rel="stylesheet" href="sheet.css">
+</head>
+<body>
+<div id="sheet">
+  <img id="shot" src="../assets/SwMacroFlow_Setting_TS.png" alt="">
+  <svg id="ink"></svg>
+
+  <div id="title"><span>Settings &mdash; Scheduled Tasks (Run It Tonight)</span></div>
+
+  <div class="note" id="n1" style="color: var(--c1)">
+    <h2>One card,<br>one saved batch</h2>
+    <ul>
+      <li><b>They are not made here.</b> Set the batch up in the main window, then press the clock beside <b>Run Batch</b>.</li>
+      <li>Once, Daily, Weekly, Monthly, or every N minutes.</li>
+      <li>Saving takes a snapshot: the macros, the inputs, the file list, and which SOLIDWORKS to use.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n2" style="color: var(--c2)">
+    <h2>When it runs,<br>and whether it did</h2>
+    <ul>
+      <li><b>Runs once at...</b> becomes <b>Done</b> only when a run was really recorded &mdash; a machine that was asleep says <b>Missed</b> instead of pretending.</li>
+      <li><b>Closes app when done</b>: SwMacroFlow exits after the run. Forced for repeating tasks, because Windows counts a task as still running while its window is open, and every later trigger would do nothing.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n4" style="color: var(--c4)">
+    <h2>Restore into<br>the setup</h2>
+    <ul>
+      <li>Loads that task's saved macros, inputs and files back into the main window, so you can see exactly what it will run.</li>
+      <li>Changes no timing and cancels nothing.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n5" style="color: var(--c5)">
+    <h2>Edit &amp; Run Now</h2>
+    <ul>
+      <li><b>Edit</b> reopens the schedule dialog. Timing only &mdash; the saved batch is untouched.</li>
+      <li><b>Run Now</b> starts it through Windows this second without changing the schedule. It is the real launch, connect, run, exit path, so it answers "will this actually work at 3am?"</li>
+      <li>It does start a second SwMacroFlow, and very likely a second SOLIDWORKS. It asks first.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n6" style="color: var(--c6)">
+    <h2>Update From<br>Current Setup</h2>
+    <ul>
+      <li>Re-captures whatever the main window holds now into this task, leaving its timing alone.</li>
+      <li>Greyed until that setup is actually runnable: a macro ticked, files in scope, every macro and file still on disk, nothing running.</li>
+      <li>This is how you add newer files to a schedule.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n7" style="color: var(--c7)">
+    <h2>Remove</h2>
+    <ul>
+      <li>Deletes the Windows Task Scheduler entry and the saved snapshot. It asks first.</li>
+      <li>Nothing that already ran is undone by it.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="tips">
+    <h2><span class="g" style="font-size:19px">&#128161;</span> Tips</h2>
+    <ul>
+      <li>These are real <b>Windows Task Scheduler</b> entries, so SwMacroFlow does not have to be open &mdash; Windows starts it.</li>
+      <li>You do have to be logged on, and it will not wake a sleeping machine. A machine that was off runs the batch when it comes back.</li>
+      <li><b>The file list is frozen when you schedule it.</b> Files dropped into the folder afterwards are not picked up until you press Update From Current Setup.</li>
+      <li>Try it with Run Now once, in the day, before you trust it overnight.</li>
+    </ul>
+  </div>
+</div>
+<script src="sheet-draw.js"></script>
+<script>
+drawSheet({
+  // Must match the `scheduled` entry in build-guide.mjs.
+  sheet: { w: 1220, h: 985 },
+
+  shot: { x: 320, y: 140 },
+
+  /* [x1, y1, x2, y2] in the screenshot's own pixels, measured off the PNG. `card` is the FIRST card
+     and everything else is on the second, 143px below its twin - so the outlines sit beside each
+     other rather than one inside another. */
+  panels: {
+    card:    [33, 132, 543, 266],
+    lines:   [40, 309, 300, 358],
+    restore: [510, 283, 536, 309],
+    edit:    [39, 364, 230, 400],
+    update:  [232, 364, 406, 400],
+    remove:  [409, 364, 502, 400],
+  },
+
+  notes: {
+    n1:   { left: 22,  top: 150, width: 288 },
+    n2:   { left: 22,  top: 420, width: 288 },
+    n4:   { left: 916, top: 150, width: 288 },
+    tips: { left: 916, top: 380, width: 288 },
+    n5:   { left: 22,  top: 730, width: 360 },
+    n6:   { left: 412, top: 730, width: 380 },
+    n7:   { left: 822, top: 730, width: 360 },
+  },
+
+  outlines: [
+    ['card', '#e0342a'], ['lines', '#1f9d55'], ['restore', '#e07a1a'],
+    ['edit', '#8b3fd4'], ['update', '#d81b7a'], ['remove', '#1e63c8'],
+  ],
+
+  // from/to are SHEET coordinates, not screenshot ones.
+  arrows: [
+    { from: [310, 250], to: [350, 320], bend: 16,  color: '#e0342a' },
+    { from: [310, 480], to: [356, 474], bend: 8,   color: '#1f9d55' },
+    { from: [908, 260], to: [864, 428], bend: 22,  color: '#e07a1a' },
+    { from: [240, 722], to: [430, 552], bend: 22,  color: '#8b3fd4' },
+    { from: [600, 722], to: [630, 552], bend: 14,  color: '#d81b7a' },
+    { from: [900, 722], to: [800, 552], bend: -18, color: '#1e63c8' },
+  ],
+
+  titleInk: '#e0342a',
+});
+</script>
+</body>
+</html>

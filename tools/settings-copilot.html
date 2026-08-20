@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SwMacroFlow settings sheet - Copilot</title>
+<!--
+  Source for assets/SwMacroFlow_Setting_Copilot_Guide.png. Render it with:
+
+      node tools/build-guide.mjs copilot
+
+  Open this file in a browser to work on it - the config at the bottom lays it out, and the renderer
+  only screenshots it at 2x. Every claim on the sheet comes from the app itself: CopilotSettingsView.xaml,
+  CopilotSettings.cs, CopilotProvider.cs and CopilotViewModel. Two things deliberately NOT claimed
+  here, because the source does not support them: Ollama (never mentioned anywhere in the app) and
+  Gemini tool-calling (marked an unverified guess in the code).
+
+  The screenshot sits at its NATIVE 578x451 with image-rendering:pixelated, so rendering at 2x doubles
+  it by whole pixels and the UI text inside stays sharp. Do not resize it.
+-->
+<link rel="stylesheet" href="sheet.css">
+</head>
+<body>
+<div id="sheet">
+  <img id="shot" src="../assets/SwMacroFlow_Setting_Copilot.png" alt="">
+  <svg id="ink"></svg>
+
+  <div id="title"><span>Settings &mdash; Copilot (Bring Your Own AI)</span></div>
+
+  <div class="note" id="n1" style="color: var(--c1)">
+    <h2>Provider</h2>
+    <ul>
+      <li><b>OpenAI</b>, <b>Anthropic</b>, <b>xAI (Grok)</b>, <b>Google Gemini</b>, or <b>LM Studio</b> running on your own machine.</li>
+      <li>Each keeps its own key, model and URL, so switching back and forth loses nothing.</li>
+      <li>Images work everywhere; PDFs on OpenAI and Anthropic.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n2" style="color: var(--c2)">
+    <h2>API key</h2>
+    <ul>
+      <li>Yours, from your own provider account. SwMacroFlow has no server in the middle and no key of its own.</li>
+      <li><b>Encrypted before it is stored</b>, to this Windows account on this machine &mdash; not plain text in a screen share, a registry export or a backup.</li>
+      <li>It is only ever sent to the provider you picked, and it is never written to the log.</li>
+      <li>Clear the box and Save to delete it. No box at all for LM Studio, which authenticates nobody.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n3" style="color: var(--c6)">
+    <h2>Save</h2>
+    <ul>
+      <li>Writes it, then reads it straight back &mdash; so a failure shows up here rather than on your next message.</li>
+      <li>A blank model falls back to the provider's own default.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n4" style="color: var(--c3)">
+    <h2>Base URL</h2>
+    <ul>
+      <li><b>Blank is normal.</b> The grey text is the provider's own endpoint, shown so you know what blank means &mdash; it is not a value.</li>
+      <li>Fill it in for LM Studio on a port of your choosing, or for an OpenAI-compatible gateway: Azure, OpenRouter, LiteLLM, a company proxy.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n5" style="color: var(--c4)">
+    <h2>Model &amp; the<br>refresh arrow</h2>
+    <ul>
+      <li>Free text, so a model released next month needs a new build of nothing &mdash; type its name.</li>
+      <li><span class="g">&#8635;</span> lists the models your key can actually use. It asks with what is <b>typed</b> now, not what is saved, so you can test a key before committing it.</li>
+      <li><b>40 models available</b> is however many came back.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n6" style="color: var(--c5)">
+    <h2>The model chips</h2>
+    <ul>
+      <li>Suggestions to start from &mdash; click one and it fills the box above.</li>
+      <li>A successful refresh replaces them with the real list. A failed one leaves them alone and turns the line above red.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="tips">
+    <h2><span class="g" style="font-size:19px">&#128161;</span> Tips</h2>
+    <ul>
+      <li>The four cloud providers need a key before the Copilot will answer. LM Studio does not &mdash; point it at your own machine and nothing leaves it.</li>
+      <li>The Copilot is not just chat: it can read your macros, build the chain, add files, run the batch and schedule one. It asks before anything destructive.</li>
+      <li>Start with a small, cheap model. The work it does here is reading macros and filling in a setup, not writing an essay.</li>
+    </ul>
+  </div>
+</div>
+<script src="sheet-draw.js"></script>
+<script>
+drawSheet({
+  // Must match the `copilot` entry in build-guide.mjs.
+  sheet: { w: 1220, h: 1090 },
+
+  shot: { x: 320, y: 150 },
+
+  // [x1, y1, x2, y2] in the screenshot's own pixels, measured off the PNG.
+  panels: {
+    provider: [31, 131, 527, 156],
+    apikey:   [31, 186, 527, 218],
+    baseurl:  [31, 238, 527, 270],
+    model:    [31, 290, 499, 322],
+    refresh:  [503, 292, 533, 320],
+    chips:    [27, 326, 502, 383],
+    save:     [30, 394, 119, 421],
+  },
+
+  notes: {
+    n1:   { left: 22,  top: 150, width: 288 },
+    n2:   { left: 22,  top: 400, width: 288 },
+    n3:   { left: 22,  top: 742, width: 288 },
+    n4:   { left: 916, top: 150, width: 288 },
+    n5:   { left: 916, top: 400, width: 288 },
+    n6:   { left: 916, top: 700, width: 288 },
+    tips: { left: 22,  top: 924, width: 1176 },
+  },
+
+  /* The model box, the refresh arrow beside it and the chips under it are one idea in three
+     controls, so the arrow and the chips are ringed in the model's colour and the chips get their
+     own note in a colour of their own. */
+  outlines: [
+    ['provider', '#e0342a'], ['apikey', '#1f9d55'], ['baseurl', '#2563d9'],
+    ['model', '#e07a1a'], ['refresh', '#e07a1a'], ['chips', '#8b3fd4'], ['save', '#d81b7a'],
+  ],
+
+  // from/to are SHEET coordinates, not screenshot ones.
+  arrows: [
+    { from: [310, 230], to: [345, 292], bend: 16,  color: '#e0342a' },
+    { from: [310, 430], to: [345, 354], bend: -14, color: '#1f9d55' },
+    { from: [310, 762], to: [344, 560], bend: 20,  color: '#d81b7a' },
+    { from: [908, 240], to: [853, 404], bend: 24,  color: '#2563d9' },
+    { from: [908, 460], to: [858, 458], bend: 10,  color: '#e07a1a' },
+    { from: [908, 710], to: [828, 520], bend: -20, color: '#8b3fd4' },
+  ],
+
+  titleInk: '#e0342a',
+});
+</script>
+</body>
+</html>

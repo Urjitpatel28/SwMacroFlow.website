@@ -1,8 +1,8 @@
 {
   "_comment": "Edit this file for each release. The download block on index.html reads it via assets/release.js, and the application's auto-updater should verify downloads against the same sha256. The url is GitHub's stable latest-release permalink and does not need changing; fill in version to take the download block live.",
-  "version": "v0.4",
+  "version": "v0.5",
   "url": "https://github.com/Urjitpatel28/SwMacroFlow.Releases/releases/latest/download/SwMacroFlowSetup.exe",
   "sha256": "",
   "sizeBytes": 0,
-  "releasedOn": "2026-08-20"
+  "releasedOn": "2026-08-15"
 }

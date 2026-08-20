@@ -300,6 +300,13 @@
     text-align: center;
   }
 
+  /* Three sheets, one under the other. .guide-sheet already caps and centres itself at --max-w, so
+     this is only the gap between them. */
+  .sheet-stack {
+    display: grid;
+    gap: 28px;
+  }
+
   section {
     padding: 72px 24px;
   }
@@ -876,6 +883,7 @@
       SwMacroFlow
     </a>
     <nav class="nav-links">
+      <a href="#guide">Guide</a>
       <a href="#features">Features</a>
       <a href="docs.html">Docs</a>
       <a href="macros.html">Macros</a>
@@ -889,6 +897,7 @@
     </button>
   </div>
   <nav id="mobileNav" class="nav-mobile" aria-label="Site">
+    <a href="#guide">Guide</a>
     <a href="#features">Features</a>
     <a href="docs.html">Docs</a>
     <a href="macros.html">Macros</a>
@@ -954,6 +963,58 @@
       </a>
       <figcaption>Click the sheet to open it full size.</figcaption>
     </figure>
+  </section>
+
+  <!-- The settings are where the least self-evident behaviour lives - parallel instances, the
+       automatic SOLIDWORKS restart, where the Copilot key is kept, the fact that a scheduled task is
+       a real Windows Task Scheduler entry with a frozen file list - and none of it is anywhere else
+       on the site. Same hand as the sheet above, one per tab rather than one combined sheet: at
+       1220 CSS px each these render at roughly the size they were drawn, so they are readable in
+       place instead of only when opened full size. Rendered by tools/build-guide.mjs - edit
+       tools/settings-*.html and re-run it. -->
+  <section id="settings" aria-labelledby="settings-title">
+    <div class="section-head">
+      <div class="section-tag">Settings</div>
+      <div>
+        <h2 id="settings-title">Every setting, and why it is there.</h2>
+        <p>
+          Behind the gear button: the theme, how hard to work your machine, which AI provider the
+          Copilot talks to, and how to leave a batch running tonight. Marked up the same way.
+        </p>
+      </div>
+    </div>
+
+    <div class="sheet-stack">
+      <figure class="guide-sheet">
+        <a href="assets/SwMacroFlow_Setting_General_Guide.png" target="_blank" rel="noopener">
+          <picture>
+            <source srcset="assets/SwMacroFlow_Setting_General_Guide.webp" type="image/webp">
+            <img src="assets/SwMacroFlow_Setting_General_Guide.png" width="2440" height="2100" loading="lazy" decoding="async" alt="Annotated SwMacroFlow Settings dialog, General tab. Handwritten callouts label the four tabs behind the gear button, the light and dark theme toggle which is remembered between sessions, the automatic restart box which relaunches SOLIDWORKS every N files and only for instances SwMacroFlow started, the run-batches-in-parallel toggle which shares files across several instances from one queue, and the instances box which accepts 2 to 4 and takes effect on the next connect.">
+          </picture>
+        </a>
+        <figcaption>Settings &rarr; General &mdash; theme, automatic restart, and running several SOLIDWORKS at once.</figcaption>
+      </figure>
+
+      <figure class="guide-sheet">
+        <a href="assets/SwMacroFlow_Setting_Copilot_Guide.png" target="_blank" rel="noopener">
+          <picture>
+            <source srcset="assets/SwMacroFlow_Setting_Copilot_Guide.webp" type="image/webp">
+            <img src="assets/SwMacroFlow_Setting_Copilot_Guide.png" width="2440" height="2180" loading="lazy" decoding="async" alt="Annotated SwMacroFlow Settings dialog, Copilot tab. Handwritten callouts label the provider dropdown offering OpenAI, Anthropic, xAI Grok, Google Gemini and local LM Studio, the API key box whose key is encrypted before storage and only ever sent to the chosen provider, the optional base URL for local models and OpenAI-compatible gateways, the free-text model box and its refresh arrow that lists the models a key can use, the model suggestion chips, and the Save button.">
+          </picture>
+        </a>
+        <figcaption>Settings &rarr; Copilot &mdash; your own AI provider, your own key.</figcaption>
+      </figure>
+
+      <figure class="guide-sheet">
+        <a href="assets/SwMacroFlow_Setting_Scheduled_Guide.png" target="_blank" rel="noopener">
+          <picture>
+            <source srcset="assets/SwMacroFlow_Setting_Scheduled_Guide.webp" type="image/webp">
+            <img src="assets/SwMacroFlow_Setting_Scheduled_Guide.png" width="2440" height="1970" loading="lazy" decoding="async" alt="Annotated SwMacroFlow Settings dialog, Scheduled Task tab. Handwritten callouts label a task card as one saved batch created from the clock button beside Run Batch, the timing lines that only read Done once a run was really recorded, the restore arrow that loads a saved batch back into the setup, the Edit and Run Now buttons, Update From Current Setup and when it is greyed out, and Remove, plus a note that these are real Windows Task Scheduler entries whose file list is frozen at schedule time.">
+          </picture>
+        </a>
+        <figcaption>Settings &rarr; Scheduled Task &mdash; set the batch up now, let Windows run it tonight.</figcaption>
+      </figure>
+    </div>
   </section>
 
   <section id="features" aria-labelledby="features-title">

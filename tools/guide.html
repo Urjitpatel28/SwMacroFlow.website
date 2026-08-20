@@ -6,131 +6,21 @@
 <!--
   Source for assets/SwMacroFlow_Handwritten_Guide.png. Render it with:
 
-      node tools/build-guide.mjs
+      node tools/build-guide.mjs guide
 
-  Open this file in a browser to work on it - it is a plain page, laid out at 1536x1024 CSS px, and
-  the renderer only screenshots it at 2x. Every claim on the sheet comes from docs/02-using-the-app.md;
-  when the app changes, that file changes first and this one follows it.
+  Open this file in a browser to work on it - it is a plain page, laid out at the CSS px in the
+  config at the bottom, and the renderer only screenshots it at 2x. Every claim on the sheet comes
+  from docs/02-using-the-app.md; when the app changes, that file changes first and this one follows it.
 
   The screenshot sits at its NATIVE 1066x713 with image-rendering:pixelated, so rendering at 2x
   doubles it by whole pixels and the UI text inside stays sharp. Do not resize it. If a column needs
-  room, move SHOT.x / SHOT.y in guide-draw.js instead - every outline and arrow is placed relative to
-  those two numbers, so the drawing follows the screenshot on its own.
+  room, move `shot` in the config instead - every outline is placed relative to those two numbers, so
+  the drawing follows the screenshot on its own.
+
+  The paper, the ink colours and the handwriting are in sheet.css, and the drawing is sheet-draw.js;
+  both are shared with the settings sheets. Only the copy and the numbers live here.
 -->
-<style>
-@font-face {
-  font-family: "Caveat";
-  src: url("../assets/fonts/caveat-latin.woff2") format("woff2");
-  font-weight: 400 700;
-  font-style: normal;
-}
-
-:root {
-  --c1: #e0342a;  /* macros      */
-  --c2: #1f9d55;  /* scope       */
-  --c3: #2563d9;  /* inputs      */
-  --c4: #e07a1a;  /* instance    */
-  --c5: #8b3fd4;  /* copilot     */
-  --c6: #d81b7a;  /* run         */
-  --c7: #1e63c8;  /* progress    */
-  --c8: #7a5c3a;  /* header keys */
-  --tips: #0f8a8a;
-  --ink: #1f1d1a;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  width: 1536px;
-  height: 1024px;
-  overflow: hidden;
-  /* Paper: a warm off-white shading down at the edges, so the sheet reads as a page under a lamp
-     rather than a flat fill. Kept subtle - it sits behind small handwriting. */
-  background: radial-gradient(120% 90% at 50% 40%, #fdfcfa 0%, #f7f5f2 62%, #efece6 100%);
-  font-family: "Caveat", "Segoe Script", cursive;
-  color: var(--ink);
-  -webkit-font-smoothing: antialiased;
-}
-
-#sheet { position: relative; width: 1536px; height: 1024px; }
-
-#shot { position: absolute; image-rendering: pixelated; }
-
-/* The drawing layer: outlines round the panels, arrows from each callout to the panel it names.
-   Sized off the sheet rather than in numbers here - a fixed size would scale the viewBox that
-   guide-draw.js sets, and quietly shrink every outline away from the panel it is meant to ring. */
-#ink { position: absolute; inset: 0; width: 100%; height: 100%; }
-
-.note { position: absolute; }
-
-/* inline-block so the rule that guide-draw.js appends is as wide as the longest line of the heading
-   and not as wide as the whole column. */
-.note h2 {
-  display: inline-block;
-  font-size: 21px;
-  font-weight: 700;
-  line-height: 1.16;
-  letter-spacing: 0.2px;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-
-.note ul { list-style: none; }
-
-.note li {
-  position: relative;
-  padding-left: 13px;
-  font-size: 18.5px;
-  line-height: 1.2;
-  margin-bottom: 6px;
-}
-
-.note li::before {
-  content: "\2022";
-  position: absolute;
-  left: 1px;
-  top: -1px;
-}
-
-.note b { font-weight: 700; }
-
-/* Caveat has no glyph for the reorder arrows or the cross on a macro row, and none for the bulb on
-   the tips box. Those characters fall through to a sans that has them, at a size that sits with the
-   handwriting rather than shouting over it. */
-.g { font-family: "Segoe UI Symbol", "Segoe UI", sans-serif; font-size: 15px; }
-
-#title {
-  position: absolute;
-  left: 0;
-  top: 14px;
-  width: 1536px;
-  text-align: center;
-  font-size: 42px;
-  font-weight: 700;
-}
-
-#title span { display: inline-block; }
-
-#tips {
-  position: absolute;
-  padding: 12px 15px 10px;
-  color: var(--tips);
-}
-
-#tips h2 { display: flex; align-items: center; gap: 7px; font-size: 22px; margin-bottom: 6px; }
-#tips li { font-size: 17.5px; margin-bottom: 5px; }
-#tips li::before { color: var(--tips); }
-
-/* A real dashed border rather than a drawn one: this is a box, not a scrawl, and a border keeps the
-   dashes even round the corners where a hand-drawn path bunches them. */
-#tips::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 2px dashed var(--tips);
-  border-radius: 5px;
-}
-</style>
+<link rel="stylesheet" href="sheet.css">
 </head>
 <body>
 <div id="sheet">
@@ -230,6 +120,67 @@ body {
     </ul>
   </div>
 </div>
-<script src="guide-draw.js"></script>
+<script src="sheet-draw.js"></script>
+<script>
+drawSheet({
+  /* The sheet is sized around the screenshot rather than the other way round. The screenshot cannot
+     be scaled without going soft (see the note at the top), so the paper has to be big enough to
+     hold 1066x713 in the middle plus a column of handwriting either side and a band above and below.
+     Everything here is CSS px; the render doubles all of it. Must match the `guide` entry in
+     build-guide.mjs. */
+  sheet: { w: 1760, h: 1240 },
+
+  /* Where the screenshot's top-left corner sits on the sheet. */
+  shot: { x: 347, y: 250 },
+
+  /* Rectangles inside the screenshot, as [x1, y1, x2, y2] in its own pixels. Left a few pixels short
+     of each other where panels touch: MACROS sits directly on top of SCOPE in the window, and two
+     outlines sharing an edge read as one box drawn round both. */
+  panels: {
+    macros:     [14, 92, 354, 318],
+    inputs:     [360, 92, 700, 322],
+    scope:      [10, 336, 700, 655],
+    copilot:    [706, 92, 1055, 655],
+    instance:   [536, 38, 926, 71],
+    headerKeys: [940, 42, 1052, 68],
+    run:        [14, 674, 150, 703],
+    progress:   [170, 674, 700, 703],
+  },
+
+  notes: {
+    n3:   { left: 292,  top: 96,   width: 812 },
+    n4:   { left: 1128, top: 78,   width: 612 },
+    n1:   { left: 24,   top: 300,  width: 299 },
+    n8:   { left: 1437, top: 268,  width: 299 },
+    n5:   { left: 1437, top: 430,  width: 299 },
+    n2:   { left: 24,   top: 656,  width: 299 },
+    n6:   { left: 40,   top: 1008, width: 430 },
+    n7:   { left: 524,  top: 1008, width: 616 },
+    tips: { left: 1196, top: 996,  width: 544 },
+  },
+
+  outlines: [
+    ['macros', '#e0342a'], ['scope', '#1f9d55'], ['inputs', '#2563d9'], ['instance', '#e07a1a'],
+    ['headerKeys', '#7a5c3a'], ['copilot', '#8b3fd4'], ['run', '#d81b7a'], ['progress', '#1e63c8'],
+  ],
+
+  arrows: [
+    { from: [332, 352],  to: [354, 386],  bend: 22,  color: '#e0342a' },
+    { from: [332, 710],  to: [352, 664],  bend: 26,  color: '#1f9d55' },
+    { from: [858, 232],  to: [866, 334],  bend: -22, color: '#2563d9' },
+    { from: [1158, 258], to: [1176, 282], bend: 14,  color: '#e07a1a' },
+    { from: [1432, 296], to: [1406, 306], bend: 11,  color: '#7a5c3a' },
+    { from: [1432, 468], to: [1410, 502], bend: 15,  color: '#8b3fd4' },
+    { from: [258, 1004], to: [392, 960],  bend: 22,  color: '#d81b7a' },
+    { from: [706, 1004], to: [752, 960],  bend: 16,  color: '#1e63c8' },
+  ],
+
+  titleInk: '#e0342a',
+  // Left over from when the sheet was 1536 wide, which puts the title left of centre on the 1760 it
+  // is now. Kept because it is what the committed PNG has - changing it moves the title and rewrites
+  // a 2 MB binary for no reason anyone asked for.
+  titleWidth: 1536,
+});
+</script>
 </body>
 </html>
