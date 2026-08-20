@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SwMacroFlow quick guide sheet</title>
+<!--
+  Source for assets/SwMacroFlow_Handwritten_Guide.png. Render it with:
+
+      node tools/build-guide.mjs
+
+  Open this file in a browser to work on it - it is a plain page, laid out at 1536x1024 CSS px, and
+  the renderer only screenshots it at 2x. Every claim on the sheet comes from docs/02-using-the-app.md;
+  when the app changes, that file changes first and this one follows it.
+
+  The screenshot sits at its NATIVE 1066x713 with image-rendering:pixelated, so rendering at 2x
+  doubles it by whole pixels and the UI text inside stays sharp. Do not resize it. If a column needs
+  room, move SHOT.x / SHOT.y in guide-draw.js instead - every outline and arrow is placed relative to
+  those two numbers, so the drawing follows the screenshot on its own.
+-->
+<style>
+@font-face {
+  font-family: "Caveat";
+  src: url("../assets/fonts/caveat-latin.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+}
+
+:root {
+  --c1: #e0342a;  /* macros      */
+  --c2: #1f9d55;  /* scope       */
+  --c3: #2563d9;  /* inputs      */
+  --c4: #e07a1a;  /* instance    */
+  --c5: #8b3fd4;  /* copilot     */
+  --c6: #d81b7a;  /* run         */
+  --c7: #1e63c8;  /* progress    */
+  --c8: #7a5c3a;  /* header keys */
+  --tips: #0f8a8a;
+  --ink: #1f1d1a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  width: 1536px;
+  height: 1024px;
+  overflow: hidden;
+  /* Paper: a warm off-white shading down at the edges, so the sheet reads as a page under a lamp
+     rather than a flat fill. Kept subtle - it sits behind small handwriting. */
+  background: radial-gradient(120% 90% at 50% 40%, #fdfcfa 0%, #f7f5f2 62%, #efece6 100%);
+  font-family: "Caveat", "Segoe Script", cursive;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+#sheet { position: relative; width: 1536px; height: 1024px; }
+
+#shot { position: absolute; image-rendering: pixelated; }
+
+/* The drawing layer: outlines round the panels, arrows from each callout to the panel it names.
+   Sized off the sheet rather than in numbers here - a fixed size would scale the viewBox that
+   guide-draw.js sets, and quietly shrink every outline away from the panel it is meant to ring. */
+#ink { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+.note { position: absolute; }
+
+/* inline-block so the rule that guide-draw.js appends is as wide as the longest line of the heading
+   and not as wide as the whole column. */
+.note h2 {
+  display: inline-block;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.16;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.note ul { list-style: none; }
+
+.note li {
+  position: relative;
+  padding-left: 13px;
+  font-size: 18.5px;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.note li::before {
+  content: "\2022";
+  position: absolute;
+  left: 1px;
+  top: -1px;
+}
+
+.note b { font-weight: 700; }
+
+/* Caveat has no glyph for the reorder arrows or the cross on a macro row, and none for the bulb on
+   the tips box. Those characters fall through to a sans that has them, at a size that sits with the
+   handwriting rather than shouting over it. */
+.g { font-family: "Segoe UI Symbol", "Segoe UI", sans-serif; font-size: 15px; }
+
+#title {
+  position: absolute;
+  left: 0;
+  top: 14px;
+  width: 1536px;
+  text-align: center;
+  font-size: 42px;
+  font-weight: 700;
+}
+
+#title span { display: inline-block; }
+
+#tips {
+  position: absolute;
+  padding: 12px 15px 10px;
+  color: var(--tips);
+}
+
+#tips h2 { display: flex; align-items: center; gap: 7px; font-size: 22px; margin-bottom: 6px; }
+#tips li { font-size: 17.5px; margin-bottom: 5px; }
+#tips li::before { color: var(--tips); }
+
+/* A real dashed border rather than a drawn one: this is a box, not a scrawl, and a border keeps the
+   dashes even round the corners where a hand-drawn path bunches them. */
+#tips::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px dashed var(--tips);
+  border-radius: 5px;
+}
+</style>
+</head>
+<body>
+<div id="sheet">
+  <img id="shot" src="../assets/SwMacroFlow.png" alt="">
+  <svg id="ink"></svg>
+
+  <div id="title"><span>SwMacroFlow &mdash; Quick Guide (Step by Step)</span></div>
+
+  <div class="note" id="n1" style="color: var(--c1)">
+    <h2>1. Add / create<br>a new macro</h2>
+    <ul>
+      <li><b>Add Macro...</b> browses for a <b>.swp</b> &mdash; pick several at once and they all join the chain.</li>
+      <li><b>From Library</b> adds one that ships with the app. The folder button opens that folder.</li>
+      <li>Or drag a <b>.swp</b> onto the window.</li>
+      <li>The checkbox includes a macro in this run. Unticking keeps what you typed.</li>
+      <li><span class="g">&#8593;&#8595;</span> reorder, <span class="g">&#10005;</span> removes. <b>List order is run order.</b></li>
+      <li>Add the same macro twice to run it with two sets of inputs.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n2" style="color: var(--c2)">
+    <h2>2. Select files or<br>folders to process</h2>
+    <ul>
+      <li><b>Browse Folder...</b> scans a folder. <b>Include subfolders</b> decides how deep.</li>
+      <li><b>Add Files...</b> picks single files. <b>Remove Selected</b> or Delete takes them out.</li>
+      <li>Or drag files and folders onto the window.</li>
+      <li>Only <b>.sldprt</b>, <b>.sldasm</b> and <b>.slddrw</b> are recognised.</li>
+      <li>Files land in Part / Assembly / Drawing. Each checkbox filters what actually runs.</li>
+      <li>Tick <b>Run once...</b> when the macros act on no document at all.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n3" style="color: var(--c3)">
+    <h2>3. Configure inputs for the selected macro</h2>
+    <ul>
+      <li>Click a macro to see its inputs. One macro at a time &mdash; values never leak between macros.</li>
+      <li>The control matches the declared type: text, whole number, checkbox, dropdown, file or folder picker.</li>
+      <li><b>{FileName}</b> becomes the document's own name; other <b>{Property}</b> tokens come from its custom properties, per file, as it runs.</li>
+      <li>Inputs are checked <b>before</b> the run starts, so a typo fails now rather than on every file.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n4" style="color: var(--c4)">
+    <h2>4. Choose / connect your<br>SOLIDWORKS instance</h2>
+    <ul>
+      <li>Pick any SOLIDWORKS installed, or one already running.</li>
+      <li><b>You do not have to connect first</b> &mdash; Run Batch connects for you, starting SOLIDWORKS if it is not up.</li>
+      <li>Connect by hand to watch it happen, or to compile the macros before committing to a run.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n8" style="color: var(--c8)">
+    <h2>Header buttons</h2>
+    <ul>
+      <li><b>?</b> opens the help guides.</li>
+      <li>The circular arrow is <b>Reset</b>: it clears the macros, files, inputs and results, and asks first.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n5" style="color: var(--c5)">
+    <h2>5. AI Copilot &mdash; get help,<br>view macro chain &amp; defaults</h2>
+    <ul>
+      <li>Shows the current chain and the default input values it will run with.</li>
+      <li>Names where a macro was saved in the library.</li>
+      <li>Ask it anything about the SOLIDWORKS API.</li>
+      <li>Tells you what is still stopping the batch from running.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n6" style="color: var(--c6)">
+    <h2>6. Run the batch</h2>
+    <ul>
+      <li>Run Batch connects, compiles every ticked macro, then works through the files.</li>
+      <li>It reads <b>Run Once</b> in run-once mode, and <b>Starting...</b> while it connects and compiles.</li>
+      <li><b>Cancel</b> stops after the macro in progress finishes &mdash; never mid-macro.</li>
+      <li>The window stays usable while it runs.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n7" style="color: var(--c7)">
+    <h2>7. Progress &amp; status</h2>
+    <ul>
+      <li>The count is files done against files in scope.</li>
+      <li>Every macro-file pair gets one row: <b>green</b> ran, <b>amber</b> a prompt was answered for you, <b>red</b> failed, <b>grey</b> skipped after an earlier macro failed on that file.</li>
+      <li><b>Ctrl + Shift + Q</b> cancels the batch too.</li>
+      <li>If <b>Run</b> is greyed out, the reason is written next to the button.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="tips">
+    <h2><span class="g" style="font-size:19px">&#128161;</span> Tips</h2>
+    <ul>
+      <li>Test on a few files before you point it at hundreds.</li>
+      <li>An output folder that does not exist yet is fine &mdash; macros create it.</li>
+      <li>By default a macro that fails skips the rest of the chain for that file. The checkbox under the macro list changes that.</li>
+      <li>The log keeps every message, not just the one that reached the row.</li>
+    </ul>
+  </div>
+</div>
+<script src="guide-draw.js"></script>
+</body>
+</html>

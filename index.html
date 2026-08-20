@@ -267,6 +267,39 @@
     height: auto;
   }
 
+  /* The guide sheet is 3520px wide intrinsically, so it needs the same treatment as the hero
+     screenshot or it lays the page out at its own size. It is paper rather than UI, so it gets no
+     dark panel behind it - just a frame and the shadow. */
+  .guide-sheet {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 26px 80px -48px rgba(0, 0, 0, .9);
+  }
+
+  .guide-sheet a,
+  .guide-sheet picture {
+    display: block;
+  }
+
+  .guide-sheet img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .guide-sheet figcaption {
+    padding: 10px 14px;
+    background: var(--panel);
+    border-top: 1px solid var(--panel-border);
+    color: var(--text-faint);
+    font-size: 13px;
+    text-align: center;
+  }
+
   section {
     padding: 72px 24px;
   }
@@ -893,6 +926,34 @@
         </picture>
       </figure>
     </div>    
+  </section>
+
+<!-- The annotated sheet is the whole product explained in one picture, and it is already drawn
+       in the site's own hand, so it earns the slot directly under the hero. It is deliberately not
+       IN the hero: at 3520x2480 of dense callout text it is unreadable at hero width, and a 700 KB
+       image as the LCP element would undo what the WebP hero above is doing. It is rendered by
+       tools/build-guide.mjs, not drawn by hand - edit tools/guide.html and re-run that. -->
+  <section id="guide" class="guide" aria-labelledby="guide-title">
+    <div class="section-head">
+      <div class="section-tag">Quick guide</div>
+      <div>
+        <h2 id="guide-title">The whole app, marked up in one page.</h2>
+        <p>
+          Every panel, in the order you use it: add your macros, pick the files, set the inputs,
+          connect SOLIDWORKS, and run the batch. Open it full size and keep it beside you.
+        </p>
+      </div>
+    </div>
+
+    <figure class="guide-sheet">
+      <a href="assets/SwMacroFlow_Handwritten_Guide.png" target="_blank" rel="noopener">
+        <picture>
+          <source srcset="assets/SwMacroFlow_Handwritten_Guide.webp" type="image/webp">
+          <img src="assets/SwMacroFlow_Handwritten_Guide.png" width="3520" height="2480" loading="lazy" decoding="async" alt="Annotated SwMacroFlow window. Seven numbered handwritten callouts label each area, each colour matched to an outline drawn around the panel it describes: 1 add or create a macro, 2 select files or folders to process, 3 configure inputs for the selected macro, 4 choose and connect your SOLIDWORKS instance, 5 the AI Copilot panel, 6 run the batch, 7 progress and status, plus a note on the header buttons and a tips box.">
+        </picture>
+      </a>
+      <figcaption>Click the sheet to open it full size.</figcaption>
+    </figure>
   </section>
 
   <section id="features" aria-labelledby="features-title">

@@ -10,6 +10,9 @@ every push. Pillow is the only dependency and it is only needed by whoever regen
 
 Produces:
     assets/SwMacroFlow.webp     the hero screenshot, ~3x smaller than the PNG it falls back to
+    assets/SwMacroFlow_Handwritten_Guide.webp
+                                the annotated quick-guide sheet, ~3x smaller than its PNG. The
+                                sheet itself comes from tools/build-guide.mjs - run that first
     assets/og-image.png         1200x630, the aspect ratio Open Graph and Twitter cards actually
                                 crop to (the screenshot alone is 1.49:1 and got cut badly)
     assets/apple-touch-icon.png 180x180, iOS home screen
@@ -65,6 +68,23 @@ def build_webp():
     source.save(target, "WEBP", lossless=True, method=6)
     print(f"  {target.relative_to(ROOT)}  {target.stat().st_size // 1024} KB "
           f"(was {(ASSETS / 'SwMacroFlow.png').stat().st_size // 1024} KB)")
+
+
+def build_guide_webp():
+    # The opposite call to build_webp above, for the opposite kind of image. The guide sheet is
+    # 3520x2480 of soft paper gradient and anti-aliased handwriting, which lossless WebP cannot
+    # compress - it comes out larger than the PNG. Quality 88 is indistinguishable from the source
+    # at 1:1, checked on the smallest annotation text on the sheet, and it is served below the fold
+    # and lazily, so it is on no critical path either way.
+    #
+    # The sheet itself is rendered by tools/build-guide.mjs. Run that first if it has changed:
+    # this step only re-compresses whatever PNG is sitting there, so a stale sheet stays stale, and
+    # index.html serves this .webp in preference to the PNG.
+    source = Image.open(ASSETS / "SwMacroFlow_Handwritten_Guide.png").convert("RGB")
+    target = ASSETS / "SwMacroFlow_Handwritten_Guide.webp"
+    source.save(target, "WEBP", quality=88, method=6)
+    print(f"  {target.relative_to(ROOT)}  {target.stat().st_size // 1024} KB "
+          f"(was {(ASSETS / 'SwMacroFlow_Handwritten_Guide.png').stat().st_size // 1024} KB)")
 
 
 def build_og_image():
@@ -137,5 +157,6 @@ def build_icons():
 if __name__ == "__main__":
     print("Building image assets")
     build_webp()
+    build_guide_webp()
     build_og_image()
     build_icons()

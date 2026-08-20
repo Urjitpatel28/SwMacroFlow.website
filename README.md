@@ -44,6 +44,10 @@ assets/copy-path.js     the copy button on the macro install path
 assets/logo.png         brand mark, and the 512px icon
 assets/favicon.ico      -- at the repo root, alongside apple-touch-icon.png and site.webmanifest
 assets/SwMacroFlow.png  application screenshot, with a lossless .webp beside it
+assets/SwMacroFlow_Handwritten_Guide.png
+                        the annotated quick-guide sheet on the home page, rendered from
+                        tools/guide.html -- never edit the PNG, with a quality-88 .webp beside it
+assets/fonts/           Caveat, the handwriting on the guide sheet
 assets/og-image.png     1200x630 social preview
 docs/manifest.json      guide groups and order
 docs/*.md               the seven guides, the source the guide pages are built from
@@ -52,7 +56,10 @@ robots.txt              permissive, and names the AI crawlers explicitly
 tools/build-site.mjs    the generator
 tools/templates.mjs     head, nav, footer and breadcrumbs for generated pages
 tools/seo-meta.json     per-page search titles and descriptions
-tools/build-images.py   regenerates the webp, OG image and icons (manual, needs Pillow)
+tools/build-images.py   regenerates the webps, OG image and icons (manual, needs Pillow)
+tools/guide.html        the quick-guide sheet: paper, callout copy and the tips box
+tools/guide-draw.js     where the sheet's screenshot, callouts, outlines and arrows are placed
+tools/build-guide.mjs   renders guide.html to the sheet PNG (manual, needs no dependencies)
 SEO-CONTENT-PLAN.md     keyword map, content briefs and off-page checklist
 ```
 
@@ -90,8 +97,18 @@ Images are separate and manual, because they are committed binaries and rebuildi
 push would produce a diff on every push:
 
 ```bash
+node tools/build-guide.mjs     # only if the guide sheet or the screenshot changed
 python tools/build-images.py   # needs Pillow
 ```
+
+In that order. `build-guide.mjs` renders `tools/guide.html` at 2x with whatever headless Chrome,
+Edge or Playwright Chromium is on the machine, and `build-images.py` only re-compresses the PNG
+it finds -- so running the second alone leaves a stale sheet, and `index.html` serves the `.webp`
+in preference to the PNG. The render is deterministic: the same source gives a byte-identical PNG,
+so a rerun that changes nothing produces no diff.
+
+The sheet's copy is the application's own documentation restated -- `docs/02-using-the-app.md` is
+the source of truth for every claim on it. Change that file first, then the sheet.
 
 ## Access model
 
