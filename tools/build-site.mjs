@@ -810,7 +810,7 @@ ${nav(base, "macros")}
     <div>
       ${breadcrumbTrail(base, trail)}
       <p class="page-eyebrow">Macro library</p>
-      <h1 id="macros-title">Free SOLIDWORKS macros, ready to download.</h1>
+      <h1 id="macros-title">A library of SOLIDWORKS macros, ready to download.</h1>
       <p>
         Every macro here is plain SOLIDWORKS VBA in a <code>.swp</code> file. Each one runs on its own
         in the VBA editor, and runs across a whole folder unattended inside
@@ -844,6 +844,18 @@ ${nav(base, "macros")}
 
   <section class="macro-install-note">
     ${installBlock()}
+
+    <!-- The library answers "run someone else's macro". This answers the next question, and the
+         answer is not ours. Nested inside the install note rather than beside it so it inherits
+         that section's 760px column instead of running the full width of the page. -->
+    <aside class="doc-cta">
+      <p>
+        Want to write your own instead of running ours? Learn the SOLIDWORKS API properly at
+        <a href="https://www.cadsharp.com/" target="_blank" rel="noopener">CADSharp</a> &mdash; API
+        video tutorials, developer guides, and live training. Shout-out to Keith, who has been
+        teaching this stuff to the rest of us for years.
+      </p>
+    </aside>
   </section>
 </main>
 

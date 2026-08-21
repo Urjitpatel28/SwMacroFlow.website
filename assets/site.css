@@ -908,8 +908,9 @@ footer {
   overflow-wrap: break-word;
 }
 
-/* The one place a guide or macro page sells the product. Kept to a single paragraph: these pages
-   earn their traffic by answering the question, not by pitching. */
+/* The one aside a guide or macro page gets, whether it points at the product or somewhere else
+   worth sending people. Kept to a single paragraph: these pages earn their traffic by answering
+   the question, not by pitching. */
 .doc-cta {
   margin: 34px 0 0;
   padding: 18px 20px;

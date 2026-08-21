@@ -706,6 +706,15 @@
     text-align: center;
   }
 
+  /* The button and the ask share a row. Wrapping rather than shrinking, so the ask drops to its
+     own line before the primary button ever gets squeezed. */
+  .download-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+  }
+
   .download-includes {
     margin: 22px 0 0;
     padding: 0;
@@ -791,6 +800,56 @@
     width: 100%;
   }
 
+  /* Optional, and it should look optional. Deliberately not a .btn: .btn is full width inside the
+     dialog and again below 620px, which would make the ask as loud as the download it follows. */
+  .donate {
+    margin: 18px 0 0;
+    padding: 14px 16px;
+    border: 1px dashed var(--panel-border);
+    border-radius: var(--radius);
+  }
+
+  .donate-copy {
+    margin: 0 0 12px;
+    color: var(--text-faint);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .donate-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 14px;
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius);
+    color: var(--text-dim);
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .donate-btn:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--text);
+  }
+
+  /* Beside the download button it has to match its height, so the copy and the button sit on one
+     line and the padding tightens to keep the two roughly level. */
+  .donate-beside {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 7px 12px 7px 14px;
+  }
+
+  .donate-beside .donate-copy {
+    margin: 0;
+  }
+
   @media (max-width: 1000px) {
     .hero-grid,
     .section-head {
@@ -819,6 +878,10 @@
   @media (max-width: 620px) {
     .hero {
       padding-top: 54px;
+    }
+
+    .donate-beside {
+      width: 100%;
     }
 
     .hero-grid {
@@ -1226,7 +1289,19 @@
       <div data-download-ready hidden>
         <p class="download-version" data-download-version></p>
         <p class="download-meta" data-download-meta></p>
-        <a class="btn btn-primary" href="#" data-download-link>Download for Windows</a>
+        <div class="download-actions">
+          <a class="btn btn-primary" href="#" data-download-link>Download for Windows</a>
+
+          <!-- Inside [data-download-ready] on purpose: an ask that rides alongside the download
+               button has no reason to exist while there is no button to ride alongside. Stays
+               hidden on top of that until assets/donate.js has a URL. -->
+          <div class="donate donate-beside" data-donate hidden>
+            <p class="donate-copy">Feeling generous?</p>
+            <a class="donate-btn" data-donate-link href="#" target="_blank" rel="noopener">
+              <span aria-hidden="true">&#127918;</span> Buy me a game
+            </a>
+          </div>
+        </div>
 
         <!-- Filled from downloads.json by assets/downloads.js, from the count GitHub keeps for the
              release assets. Stays hidden if that file has no number in it. -->
@@ -1273,7 +1348,7 @@
       </details>
       <details>
         <summary>Is SwMacroFlow really free?</summary>
-        <p>Yes. SwMacroFlow is free to download and use, with every feature included: macro chaining, batch runs across folders, parallel batches across several SOLIDWORKS instances, the bundled macro library, AI Copilot, and Task Scheduler. There is no trial, no licence, no account, and nothing to buy.</p>
+        <p>Yes. SwMacroFlow is free to download and use, with every feature included: macro chaining, batch runs across folders, parallel batches across several SOLIDWORKS instances, the bundled macro library, AI Copilot, and Task Scheduler. There is no trial, no licence, no account, and nothing to buy. Donations are welcome but entirely optional, and change nothing about what you get.</p>
       </details>
       <details>
         <summary>How do I get SwMacroFlow?</summary>
@@ -1320,6 +1395,16 @@
     SwMacroFlow is an app from an independent developer and has not yet built up Microsoft's
     download reputation. Click <strong>More info</strong> &rarr; <strong>Run anyway</strong>.
   </p>
+  <!-- After the warning and outside the closing form: the warning is why this dialog exists, and
+       a link inside a method="dialog" form would sit next to the button that dismisses it. -->
+  <div class="donate" data-donate hidden>
+    <p class="donate-copy">
+      SwMacroFlow is free, and stays free. If it saved you an afternoon, you can buy me a game.
+    </p>
+    <a class="donate-btn" data-donate-link href="#" target="_blank" rel="noopener">
+      <span aria-hidden="true">&#127918;</span> Buy me a game
+    </a>
+  </div>
   <form method="dialog">
     <button class="btn btn-primary" type="submit">Got it</button>
   </form>
@@ -1345,6 +1430,7 @@
 
 <script src="assets/nav.js" defer></script>
 <script src="assets/release.js" defer></script>
+<script src="assets/donate.js" defer></script>
 <script src="assets/downloads.js" defer></script>
 <script src="assets/review-config.js" defer></script>
 <script src="assets/reviews.js" defer></script>
