@@ -792,11 +792,11 @@
     background: var(--accent-soft);
   }
 
-  .thanks-dialog form {
+  .thanks-dialog form[method="dialog"] {
     margin: 18px 0 0;
   }
 
-  .thanks-dialog .btn {
+  .thanks-dialog form[method="dialog"] .btn {
     width: 100%;
   }
 
@@ -816,23 +816,16 @@
     line-height: 1.6;
   }
 
-  .donate-btn {
+  .donate-form {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    padding: 9px 14px;
-    border: 1px solid var(--panel-border);
-    border-radius: var(--radius);
-    color: var(--text-dim);
-    font-size: 13px;
-    font-weight: 700;
-    text-decoration: none;
+    margin: 0;
   }
 
-  .donate-btn:hover {
-    border-color: var(--accent);
-    background: var(--accent-soft);
-    color: var(--text);
+  .donate-form .razorpay-payment-button a:focus-visible,
+  .donate-form .razorpay-payment-button button:focus-visible {
+    outline: 3px solid var(--text);
+    outline-offset: 3px;
   }
 
   /* Beside the download button it has to match its height, so the copy and the button sit on one
@@ -1293,13 +1286,11 @@
           <a class="btn btn-primary" href="#" data-download-link>Download for Windows</a>
 
           <!-- Inside [data-download-ready] on purpose: an ask that rides alongside the download
-               button has no reason to exist while there is no button to ride alongside. Stays
-               hidden on top of that until assets/donate.js has a URL. -->
+               button has no reason to exist while there is no button to ride alongside. It also
+               stays hidden until assets/donate.js confirms Razorpay rendered a working button. -->
           <div class="donate donate-beside" data-donate hidden>
             <p class="donate-copy">Feeling generous?</p>
-            <a class="donate-btn" data-donate-link href="#" target="_blank" rel="noopener">
-              <span aria-hidden="true">&#127918;</span> Buy me a game
-            </a>
+            <form class="donate-form" data-donate-form></form>
           </div>
         </div>
 
@@ -1401,9 +1392,7 @@
     <p class="donate-copy">
       SwMacroFlow is free, and stays free. If it saved you an afternoon, you can buy me a game.
     </p>
-    <a class="donate-btn" data-donate-link href="#" target="_blank" rel="noopener">
-      <span aria-hidden="true">&#127918;</span> Buy me a game
-    </a>
+    <form class="donate-form" data-donate-form></form>
   </div>
   <form method="dialog">
     <button class="btn btn-primary" type="submit">Got it</button>

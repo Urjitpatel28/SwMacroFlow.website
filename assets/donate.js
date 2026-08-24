@@ -1,19 +1,53 @@
-/* Reveals the donate blocks once there is a page behind them.
+/* Mounts Razorpay's hosted Payment Button in every donate block.
  *
- * The URL lives here and nowhere else. While it is empty every [data-donate] block stays hidden,
- * so this ships fine before the payment page exists - a dead donate link asks for money and then
- * fails, which is worse than not asking at all. Paste the page URL in and both CTAs appear. */
+ * The live button ID lives here and nowhere else. Each block stays hidden until Razorpay has
+ * rendered an actual button, so a blocked script or unavailable configuration never leaves a dead
+ * donation CTA on the page. */
 (function () {
-  var DONATE_URL = 'https://rzp.io/rzp/bhf8pQp';   // Razorpay page, e.g. https://rzp.io/l/...
+  var PAYMENT_BUTTON_ID = 'pl_TTdJGyiwOzStHB';
+  var PAYMENT_BUTTON_SCRIPT = 'https://checkout.razorpay.com/v1/payment-button.js';
+  var PAYMENT_BUTTON_SELECTOR = '.razorpay-payment-button a, .razorpay-payment-button button';
 
-  var url = String(DONATE_URL).trim();
-  if (!url) return;
+  var buttonId = String(PAYMENT_BUTTON_ID).trim();
+  if (!buttonId) return;
 
   var blocks = document.querySelectorAll('[data-donate]');
+  var thanksDialog = document.querySelector('dialog[data-thanks]');
+
   for (var i = 0; i < blocks.length; i++) {
-    var link = blocks[i].querySelector('[data-donate-link]');
-    if (!link) continue;
-    link.href = url;
-    blocks[i].hidden = false;
+    mountButton(blocks[i]);
+  }
+
+  function mountButton(block) {
+    var form = block.querySelector('[data-donate-form]');
+    if (!form) return;
+
+    // A native modal dialog occupies the browser's top layer. Close it before Razorpay opens its
+    // own modal so Checkout cannot appear behind the thank-you message.
+    if (thanksDialog && thanksDialog.contains(form)) {
+      form.addEventListener('click', function (event) {
+        var button = form.querySelector(PAYMENT_BUTTON_SELECTOR);
+        if (button && button.contains(event.target) && thanksDialog.open) {
+          thanksDialog.close();
+        }
+      }, true);
+    }
+
+    var observer = new MutationObserver(function () {
+      if (!form.querySelector(PAYMENT_BUTTON_SELECTOR)) return;
+      observer.disconnect();
+      block.hidden = false;
+    });
+
+    observer.observe(form, { childList: true, subtree: true });
+
+    var script = document.createElement('script');
+    script.src = PAYMENT_BUTTON_SCRIPT;
+    script.async = true;
+    script.setAttribute('data-payment_button_id', buttonId);
+    script.addEventListener('error', function () {
+      observer.disconnect();
+    });
+    form.appendChild(script);
   }
 })();
