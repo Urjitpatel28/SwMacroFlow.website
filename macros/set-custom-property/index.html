@@ -4,21 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
-<title>Change SOLIDWORKS document units in bulk - free macro | SwMacroFlow</title>
-<meta name="description" content="A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.">
-<link rel="canonical" href="https://swmacroflow.in/macros/change-document-unit/">
-<meta property="og:title" content="Change SOLIDWORKS document units in bulk - free macro | SwMacroFlow">
-<meta property="og:description" content="A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.">
+<title>Batch add a SOLIDWORKS custom property - free macro | SwMacroFlow</title>
+<meta name="description" content="A free SOLIDWORKS VBA macro that writes one custom property into every part, assembly and drawing in the scope, at file or configuration level.">
+<link rel="canonical" href="https://swmacroflow.in/macros/set-custom-property/">
+<meta property="og:title" content="Batch add a SOLIDWORKS custom property - free macro | SwMacroFlow">
+<meta property="og:description" content="A free SOLIDWORKS VBA macro that writes one custom property into every part, assembly and drawing in the scope, at file or configuration level.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://swmacroflow.in/macros/change-document-unit/">
+<meta property="og:url" content="https://swmacroflow.in/macros/set-custom-property/">
 <meta property="og:site_name" content="SwMacroFlow">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://swmacroflow.in/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Change SOLIDWORKS document units in bulk - free macro | SwMacroFlow">
-<meta name="twitter:description" content="A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.">
+<meta name="twitter:title" content="Batch add a SOLIDWORKS custom property - free macro | SwMacroFlow">
+<meta name="twitter:description" content="A free SOLIDWORKS VBA macro that writes one custom property into every part, assembly and drawing in the scope, at file or configuration level.">
 <meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
 <meta name="theme-color" content="#0d0d0f">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -32,10 +32,10 @@
   "@graph": [
     {
       "@type": "SoftwareSourceCode",
-      "@id": "https://swmacroflow.in/macros/change-document-unit/#macro",
-      "name": "Change Document Unit",
-      "description": "A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.",
-      "url": "https://swmacroflow.in/macros/change-document-unit/",
+      "@id": "https://swmacroflow.in/macros/set-custom-property/#macro",
+      "name": "Set Custom Property",
+      "description": "A free SOLIDWORKS VBA macro that writes one custom property into every part, assembly and drawing in the scope, at file or configuration level.",
+      "url": "https://swmacroflow.in/macros/set-custom-property/",
       "programmingLanguage": "VBA",
       "runtimePlatform": "SOLIDWORKS",
       "codeRepository": "https://github.com/Urjitpatel28/SwMacroFlow.MacroLibrary",
@@ -70,8 +70,8 @@
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Change Document Unit",
-          "item": "https://swmacroflow.in/macros/change-document-unit/"
+          "name": "Set Custom Property",
+          "item": "https://swmacroflow.in/macros/set-custom-property/"
         }
       ]
     }
@@ -113,11 +113,15 @@
   <div class="docs-layout">
 
     <aside class="docs-sidebar">
-      <p class="docs-nav-group">Utility</p>
-      <nav class="docs-nav" aria-label="Utility macros">
+      <p class="docs-nav-group">Properties</p>
+      <nav class="docs-nav" aria-label="Properties macros">
         <ul>
-          <li><a href="/macros/change-document-unit/" class="is-active" aria-current="page">Change Document Unit</a></li>
-          <li><a href="/macros/save-with-performance-improvement/">Save with Performance Improvement</a></li>
+          <li><a href="/macros/export-properties-to-csv/">Export Properties to CSV</a></li>
+          <li><a href="/macros/find-and-replace-in-properties/">Find and Replace in Properties</a></li>
+          <li><a href="/macros/import-properties-from-csv/">Import Properties from CSV</a></li>
+          <li><a href="/macros/rename-custom-property/">Rename Custom Property</a></li>
+          <li><a href="/macros/set-custom-property/" class="is-active" aria-current="page">Set Custom Property</a></li>
+          <li><a href="/macros/write-mass-properties/">Write Mass Properties</a></li>
         </ul>
       </nav>
       <p class="docs-nav-group">Export</p>
@@ -131,22 +135,18 @@
           <li><a href="/macros/save-step/">Save STEP</a></li>
         </ul>
       </nav>
-      <p class="docs-nav-group">Properties</p>
-      <nav class="docs-nav" aria-label="Properties macros">
-        <ul>
-          <li><a href="/macros/export-properties-to-csv/">Export Properties to CSV</a></li>
-          <li><a href="/macros/find-and-replace-in-properties/">Find and Replace in Properties</a></li>
-          <li><a href="/macros/import-properties-from-csv/">Import Properties from CSV</a></li>
-          <li><a href="/macros/rename-custom-property/">Rename Custom Property</a></li>
-          <li><a href="/macros/set-custom-property/">Set Custom Property</a></li>
-          <li><a href="/macros/write-mass-properties/">Write Mass Properties</a></li>
-        </ul>
-      </nav>
       <p class="docs-nav-group">Drawing</p>
       <nav class="docs-nav" aria-label="Drawing macros">
         <ul>
           <li><a href="/macros/change-drawing-template/">Change Drawing Template</a></li>
           <li><a href="/macros/insert-block-in-drawings/">Insert Block In Drawings</a></li>
+        </ul>
+      </nav>
+      <p class="docs-nav-group">Utility</p>
+      <nav class="docs-nav" aria-label="Utility macros">
+        <ul>
+          <li><a href="/macros/change-document-unit/">Change Document Unit</a></li>
+          <li><a href="/macros/save-with-performance-improvement/">Save with Performance Improvement</a></li>
         </ul>
       </nav>
       <p class="docs-nav-group">Writing your own</p>
@@ -163,20 +163,20 @@
       <ol>
         <li><a href="/index.html">Home</a></li>
         <li><a href="/macros.html">Macros</a></li>
-        <li aria-current="page">Change Document Unit</li>
+        <li aria-current="page">Set Custom Property</li>
       </ol>
     </nav>
       <p class="page-eyebrow">.swp macro</p>
-      <h1>Change Document Unit: set SOLIDWORKS units in bulk</h1>
-      <p class="macro-lede">Sets the document&#039;s unit system and the individual length, angle, mass, volume, time, force, power and energy units. Optionally switches inch dimensions to fractions.</p>
+      <h1>Set Custom Property: write a property across files</h1>
+      <p class="macro-lede">Writes one custom property across every file in the scope. Works on parts, assemblies and drawings.</p>
 
       <div class="macro-meta">
-        <span class="macro-tag" data-tag="utility">Utility</span>
+        <span class="macro-tag" data-tag="properties">Properties</span>
         <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
       </div>
 
       <p class="macro-actions">
-        <a class="btn btn-primary" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Change%20Document%20Unit.swp" download>Download Change Document Unit.swp</a>
+        <a class="btn btn-primary" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Set%20Custom%20Property.swp" download>Download Set Custom Property.swp</a>
         <a class="btn btn-secondary" href="/index.html#download">Get SwMacroFlow</a>
       </p>
 
@@ -190,7 +190,7 @@
         </div>
       </div>
 
-      <div class="docs-markdown"><p><strong>Runs per file</strong>, on parts, assemblies and drawings.</p><h2>Inputs</h2><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>UnitSystem</td><td><code>MMGS</code>, <code>IPS</code>, <code>MKS</code>, <code>CGS</code> or <code>Custom</code>.</td></tr><tr><td>LengthUnit</td><td>Length unit for the document.</td></tr><tr><td>DualLengthUnit</td><td>Length unit for dual dimensions.</td></tr><tr><td>AngleUnit</td><td><code>degrees</code>, <code>deg/min</code>, <code>deg/min/sec</code> or <code>radians</code>.</td></tr></table><h3>Only read when UnitSystem is <code>Custom</code></h3><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>CustomLength / CustomMass / CustomVolume</td><td>Custom system base units.</td></tr><tr><td>CustomTime / CustomForce / CustomPower / CustomEnergy</td><td>The rest of the custom system.</td></tr></table><h3>Fractions — only apply to IPS, or a Custom system using inches</h3><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>UseFractions</td><td>Show inch dimensions as fractions.</td></tr><tr><td>Denominator</td><td>Smallest fraction to show: 2, 4, 8, 16, 32 or 64.</td></tr><tr><td>RoundFractions</td><td>Round to the nearest fraction rather than showing a remainder.</td></tr></table><h2>Results</h2><p>Reports the unit system and length unit that were applied, or the first unit name it could not recognise.</p></div>
+      <div class="docs-markdown"><p><strong>Runs per file</strong> — point the scope at a folder and it writes the property into each document in turn.</p><h2>Inputs</h2><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>PropertyName</td><td>The property to write, for example <code>PartNumber</code>. Required.</td></tr><tr><td>PropertyValue</td><td>The value. <code>{Property}</code> and <code>{FileName}</code> placeholders are resolved per document, so <code>{FileName}</code> writes each file&#039;s own name and <code>{PartNumber}-{Revision}</code> composes from existing properties.</td></tr><tr><td>Scope</td><td><code>File</code>, <code>Active configuration</code>, or <code>All configurations</code>.</td></tr><tr><td>OnlyIfMissing</td><td>Off by default. Tick it to leave documents that already have the property untouched.</td></tr></table><h3>Scope is not a hierarchy</h3><p>File-level properties and configuration-specific properties are <strong>separate stores</strong>, not a default and an override. Writing to <code>File</code> does not give the configurations the value, and writing to <code>All configurations</code> does not put it in the file-level store. Pick the one your drawing template and BOM actually read.</p><h2>Results</h2><table><tr><th>Outcome</th><th>Meaning</th></tr><tr><td>OK</td><td>The property was written and the document was saved. The message says how many targets changed.</td></tr><tr><td>Warning</td><td>Every target already had the property and OnlyIfMissing is on. Nothing was changed and nothing was saved.</td></tr><tr><td>Error</td><td>Read-only, never saved, no such configuration, or the save itself failed — each reported with the specific cause.</td></tr></table><h2>Notes</h2><p><strong>It saves the document.</strong> SwMacroFlow closes each file with <code>CloseAllDocuments(True)</code>, which discards unsaved changes. A property written and not saved would be thrown away when the file closes, reporting a clean run for a file that never changed on disk. Read-only documents are therefore rejected <em>before</em> anything is written, rather than after — SOLIDWORKS accepts the property into the in-memory document quite happily and only refuses at save time.</p><p><strong>Existing properties keep their type and their links.</strong> The write uses <code>swCustomPropertyReplaceValue</code> rather than delete-and-re-add, so a property linked to a dimension or an equation keeps that link. New properties are created as text, because the value it is given is free text and a property typed as Number or Date rejects anything it cannot parse.</p><p><strong><code>OnlyIfMissing</code> counts a linked property as present.</strong> A property driven by a dimension or equation resolves rather than reads from cache, and both count as existing.</p><h2>Chaining</h2><p>Place it <strong>before</strong> any export macro in a chain so the exported file carries the new value. It saves but does not close or rebuild the document, so later macros see the saved state.</p><p>Two copies of this macro in one chain write two different properties in one pass over the files — each row in the chain keeps its own inputs.</p></div>
 
       <aside class="doc-cta">
         <p>

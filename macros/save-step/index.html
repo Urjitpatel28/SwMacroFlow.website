@@ -4,21 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
-<title>Change SOLIDWORKS document units in bulk - free macro | SwMacroFlow</title>
-<meta name="description" content="A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.">
-<link rel="canonical" href="https://swmacroflow.in/macros/change-document-unit/">
-<meta property="og:title" content="Change SOLIDWORKS document units in bulk - free macro | SwMacroFlow">
-<meta property="og:description" content="A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.">
+<title>Batch export SOLIDWORKS to STEP - free VBA macro | SwMacroFlow</title>
+<meta name="description" content="A free SOLIDWORKS VBA macro that exports parts and assemblies to STEP in AP203, AP214 or AP242, and restores the protocol preference it found.">
+<link rel="canonical" href="https://swmacroflow.in/macros/save-step/">
+<meta property="og:title" content="Batch export SOLIDWORKS to STEP - free VBA macro | SwMacroFlow">
+<meta property="og:description" content="A free SOLIDWORKS VBA macro that exports parts and assemblies to STEP in AP203, AP214 or AP242, and restores the protocol preference it found.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://swmacroflow.in/macros/change-document-unit/">
+<meta property="og:url" content="https://swmacroflow.in/macros/save-step/">
 <meta property="og:site_name" content="SwMacroFlow">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://swmacroflow.in/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Change SOLIDWORKS document units in bulk - free macro | SwMacroFlow">
-<meta name="twitter:description" content="A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.">
+<meta name="twitter:title" content="Batch export SOLIDWORKS to STEP - free VBA macro | SwMacroFlow">
+<meta name="twitter:description" content="A free SOLIDWORKS VBA macro that exports parts and assemblies to STEP in AP203, AP214 or AP242, and restores the protocol preference it found.">
 <meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
 <meta name="theme-color" content="#0d0d0f">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -32,10 +32,10 @@
   "@graph": [
     {
       "@type": "SoftwareSourceCode",
-      "@id": "https://swmacroflow.in/macros/change-document-unit/#macro",
-      "name": "Change Document Unit",
-      "description": "A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.",
-      "url": "https://swmacroflow.in/macros/change-document-unit/",
+      "@id": "https://swmacroflow.in/macros/save-step/#macro",
+      "name": "Save STEP",
+      "description": "A free SOLIDWORKS VBA macro that exports parts and assemblies to STEP in AP203, AP214 or AP242, and restores the protocol preference it found.",
+      "url": "https://swmacroflow.in/macros/save-step/",
       "programmingLanguage": "VBA",
       "runtimePlatform": "SOLIDWORKS",
       "codeRepository": "https://github.com/Urjitpatel28/SwMacroFlow.MacroLibrary",
@@ -70,8 +70,8 @@
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Change Document Unit",
-          "item": "https://swmacroflow.in/macros/change-document-unit/"
+          "name": "Save STEP",
+          "item": "https://swmacroflow.in/macros/save-step/"
         }
       ]
     }
@@ -113,13 +113,6 @@
   <div class="docs-layout">
 
     <aside class="docs-sidebar">
-      <p class="docs-nav-group">Utility</p>
-      <nav class="docs-nav" aria-label="Utility macros">
-        <ul>
-          <li><a href="/macros/change-document-unit/" class="is-active" aria-current="page">Change Document Unit</a></li>
-          <li><a href="/macros/save-with-performance-improvement/">Save with Performance Improvement</a></li>
-        </ul>
-      </nav>
       <p class="docs-nav-group">Export</p>
       <nav class="docs-nav" aria-label="Export macros">
         <ul>
@@ -128,7 +121,7 @@
           <li><a href="/macros/save-neutral-format/">Save Neutral Format</a></li>
           <li><a href="/macros/save-pdf/">Save PDF</a></li>
           <li><a href="/macros/save-preview-image/">Save Preview Image</a></li>
-          <li><a href="/macros/save-step/">Save STEP</a></li>
+          <li><a href="/macros/save-step/" class="is-active" aria-current="page">Save STEP</a></li>
         </ul>
       </nav>
       <p class="docs-nav-group">Properties</p>
@@ -149,6 +142,13 @@
           <li><a href="/macros/insert-block-in-drawings/">Insert Block In Drawings</a></li>
         </ul>
       </nav>
+      <p class="docs-nav-group">Utility</p>
+      <nav class="docs-nav" aria-label="Utility macros">
+        <ul>
+          <li><a href="/macros/change-document-unit/">Change Document Unit</a></li>
+          <li><a href="/macros/save-with-performance-improvement/">Save with Performance Improvement</a></li>
+        </ul>
+      </nav>
       <p class="docs-nav-group">Writing your own</p>
       <nav class="docs-nav" aria-label="Guides">
         <ul>
@@ -163,20 +163,20 @@
       <ol>
         <li><a href="/index.html">Home</a></li>
         <li><a href="/macros.html">Macros</a></li>
-        <li aria-current="page">Change Document Unit</li>
+        <li aria-current="page">Save STEP</li>
       </ol>
     </nav>
       <p class="page-eyebrow">.swp macro</p>
-      <h1>Change Document Unit: set SOLIDWORKS units in bulk</h1>
-      <p class="macro-lede">Sets the document&#039;s unit system and the individual length, angle, mass, volume, time, force, power and energy units. Optionally switches inch dimensions to fractions.</p>
+      <h1>Save STEP: export SOLIDWORKS parts to STEP</h1>
+      <p class="macro-lede">Exports the open part or assembly to a STEP file. Drawings are reported as unsupported.</p>
 
       <div class="macro-meta">
-        <span class="macro-tag" data-tag="utility">Utility</span>
-        <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
+        <span class="macro-tag" data-tag="export">Export</span>
+        <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span></p>
       </div>
 
       <p class="macro-actions">
-        <a class="btn btn-primary" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Change%20Document%20Unit.swp" download>Download Change Document Unit.swp</a>
+        <a class="btn btn-primary" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Save%20STEP.swp" download>Download Save STEP.swp</a>
         <a class="btn btn-secondary" href="/index.html#download">Get SwMacroFlow</a>
       </p>
 
@@ -190,7 +190,7 @@
         </div>
       </div>
 
-      <div class="docs-markdown"><p><strong>Runs per file</strong>, on parts, assemblies and drawings.</p><h2>Inputs</h2><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>UnitSystem</td><td><code>MMGS</code>, <code>IPS</code>, <code>MKS</code>, <code>CGS</code> or <code>Custom</code>.</td></tr><tr><td>LengthUnit</td><td>Length unit for the document.</td></tr><tr><td>DualLengthUnit</td><td>Length unit for dual dimensions.</td></tr><tr><td>AngleUnit</td><td><code>degrees</code>, <code>deg/min</code>, <code>deg/min/sec</code> or <code>radians</code>.</td></tr></table><h3>Only read when UnitSystem is <code>Custom</code></h3><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>CustomLength / CustomMass / CustomVolume</td><td>Custom system base units.</td></tr><tr><td>CustomTime / CustomForce / CustomPower / CustomEnergy</td><td>The rest of the custom system.</td></tr></table><h3>Fractions — only apply to IPS, or a Custom system using inches</h3><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>UseFractions</td><td>Show inch dimensions as fractions.</td></tr><tr><td>Denominator</td><td>Smallest fraction to show: 2, 4, 8, 16, 32 or 64.</td></tr><tr><td>RoundFractions</td><td>Round to the nearest fraction rather than showing a remainder.</td></tr></table><h2>Results</h2><p>Reports the unit system and length unit that were applied, or the first unit name it could not recognise.</p></div>
+      <div class="docs-markdown"><p><strong>Runs per file</strong> — point the scope at a folder and it exports every part and assembly in turn.</p><h2>Inputs</h2><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>OutputFolder</td><td>Where the STEP goes. Blank saves it beside the document. Created if missing.</td></tr><tr><td>OutputName</td><td>File name. Blank uses the document&#039;s own name. <code>{Property}</code> placeholders work here, so <code>{PartNumber}_{Revision}</code> is a valid pattern.</td></tr><tr><td>Protocol</td><td><code>AP203</code>, <code>AP214</code> or <code>AP242</code>. <code>AP214</code> is the usual choice — it carries colour and is what most suppliers ask for.</td></tr><tr><td>Overwrite</td><td>On by default. Clear it to skip any document whose STEP file already exists, which is reported as a warning rather than an error.</td></tr></table><h3>File extension</h3><p><code>.step</code> is appended unless the name you give already ends in <code>.step</code> or <code>.stp</code> — so type <code>{PartNumber}.stp</code> if your downstream system wants the short form. The extension is never doubled.</p><h2>Results</h2><p>Reports the path it wrote and the protocol used.</p><p>On failure it decodes the SOLIDWORKS error rather than printing a number, so a run report distinguishes the cases that need different fixes:</p><table><tr><th>Reported as</th><th>Cause</th></tr><tr><td>The target file is read-only</td><td>The existing STEP is read-only or checked in</td></tr><tr><td>The file is locked by another program</td><td>Something else has the STEP open</td></tr><tr><td>STEP export is not available in this SOLIDWORKS licence</td><td>Translator not licensed</td></tr><tr><td>The full path is longer than Windows allows</td><td>Long folder plus long property-based name</td></tr></table><h2>Notes</h2><p><strong>The STEP protocol is a global SOLIDWORKS preference</strong>, not a per-export argument. This macro reads the current setting, changes it only if it differs from the one you chose, and puts it back on every exit path — including when an error is raised part-way through. Without that, running the macro once would quietly change the protocol for every STEP the user later exports by hand.</p><p><strong>A document that has never been saved</strong> has no folder or name to derive from. Rather than writing to the drive root, the macro fails that file with a message asking for both OutputFolder and OutputName.</p><h2>Chaining</h2><p>Safe to place anywhere in a chain. It does not save, rebuild or close the document, so macros after it see the file exactly as they would have without it.</p></div>
 
       <aside class="doc-cta">
         <p>

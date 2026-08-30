@@ -31,12 +31,23 @@ trial, no licence, no account, and nothing to buy.
 
 - [Change Document Unit](https://swmacroflow.in/macros/change-document-unit/): Sets the document's unit system and the individual length, angle, mass, volume, time, force, power and energy units. Optionally switches inch dimensions to fractions.
 - [Change Drawing Template](https://swmacroflow.in/macros/change-drawing-template/): Applies a .slddrt sheet format to one sheet, several named sheets, or every sheet in a drawing, then rebuilds and saves.
+- [Export Properties to CSV](https://swmacroflow.in/macros/export-properties-to-csv/): Appends every custom property of each document to one CSV. A folder of 300 files produces one spreadsheet, not 300. Works on parts, assemblies and drawings.
+- [Find and Replace in Properties](https://swmacroflow.in/macros/find-and-replace-in-properties/): Replaces text inside custom property values across many files. Works on parts, assemblies and drawings.
+- [Import Properties from CSV](https://swmacroflow.in/macros/import-properties-from-csv/): Writes custom properties into documents from a spreadsheet. Reads the long-format CSV that Export Properties to CSV writes, picks the rows belonging to each document, and writes them.
 - [Insert Block In Drawings](https://swmacroflow.in/macros/insert-block-in-drawings/): Inserts a .sldblk sketch block at a fixed position on one sheet, several named sheets, or every sheet in a drawing, then rebuilds and saves.
+- [Rename Custom Property](https://swmacroflow.in/macros/rename-custom-property/): Renames a custom property across many files. Works on parts, assemblies and drawings.
+- [Save Drawing as DXF or DWG](https://swmacroflow.in/macros/save-drawing-as-dxf-or-dwg/): Exports the open drawing to DXF or DWG. Parts and assemblies are reported as unsupported — use Save Neutral Format for those.
+- [Save eDrawings](https://swmacroflow.in/macros/save-edrawings/): Exports the open document as an eDrawings file, for sending to people who do not have SOLIDWORKS.
+- [Save Neutral Format](https://swmacroflow.in/macros/save-neutral-format/): Exports the open part or assembly to Parasolid, IGES, STL, ACIS or 3D XML. Drawings are reported as unsupported.
 - [Save PDF](https://swmacroflow.in/macros/save-pdf/): Exports the open document to PDF. Works on parts, assemblies and drawings.
+- [Save Preview Image](https://swmacroflow.in/macros/save-preview-image/): Captures a bitmap of the open document. Works on parts, assemblies and drawings — on a drawing it captures the active sheet.
+- [Save STEP](https://swmacroflow.in/macros/save-step/): Exports the open part or assembly to a STEP file. Drawings are reported as unsupported.
 - [Save with Performance Improvement](https://swmacroflow.in/macros/save-with-performance-improvement/): Turns image quality down to its cheapest settings — shaded deviation at maximum, high-quality edges off, wireframe quality at its lowest — then saves a copy named <name>_Optimized.
+- [Set Custom Property](https://swmacroflow.in/macros/set-custom-property/): Writes one custom property across every file in the scope. Works on parts, assemblies and drawings.
+- [Write Mass Properties](https://swmacroflow.in/macros/write-mass-properties/): Measures the model and writes mass, volume, surface area and centre of mass into custom properties, so a BOM or a drawing note can read them. Parts and assemblies only — drawings have no geometry to...
 
 ## Policies
 
 - [Terms of use](https://swmacroflow.in/terms.html)
 - [Privacy policy](https://swmacroflow.in/privacy.html): the site uses no analytics and no advertising tracking.
-- [Contact](https://swmacroflow.in/contact.html): urjitpatel28@gmail.com
+- [Contact](https://swmacroflow.in/contact.html): info@swmacroflow.in

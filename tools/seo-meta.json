@@ -76,6 +76,72 @@
       "description": "A free SOLIDWORKS VBA macro that turns image quality down to its cheapest settings, shaded deviation at maximum and high-quality edges off, then saves a copy.",
       "heading": "Save with Performance Improvement: shrink SOLIDWORKS files",
       "primaryKeyword": "reduce solidworks file size macro"
+    },
+    "save-step": {
+      "title": "Batch export SOLIDWORKS to STEP - free VBA macro",
+      "description": "A free SOLIDWORKS VBA macro that exports parts and assemblies to STEP in AP203, AP214 or AP242, and restores the protocol preference it found.",
+      "heading": "Save STEP: export SOLIDWORKS parts to STEP",
+      "primaryKeyword": "solidworks batch export step"
+    },
+    "save-neutral-format": {
+      "title": "Export SOLIDWORKS to Parasolid, IGES, STL or ACIS",
+      "description": "A free SOLIDWORKS VBA macro that exports the open part or assembly to Parasolid, IGES, STL, ACIS or 3D XML, across a whole folder in SwMacroFlow.",
+      "heading": "Save Neutral Format: IGES, STL, Parasolid and ACIS",
+      "primaryKeyword": "solidworks export iges stl macro"
+    },
+    "save-drawing-as-dxf-or-dwg": {
+      "title": "Batch convert SOLIDWORKS drawings to DXF or DWG",
+      "description": "A free SOLIDWORKS VBA macro that exports drawings to DXF or DWG. Point it at a folder and every drawing is converted in turn, unattended.",
+      "heading": "Save Drawing as DXF or DWG: batch convert drawings",
+      "primaryKeyword": "solidworks drawing to dxf batch"
+    },
+    "save-edrawings": {
+      "title": "Batch export SOLIDWORKS to eDrawings - free macro",
+      "description": "A free SOLIDWORKS VBA macro that exports parts, assemblies and drawings as eDrawings files, for sending to people who do not have SOLIDWORKS.",
+      "heading": "Save eDrawings: share files without SOLIDWORKS",
+      "primaryKeyword": "solidworks export edrawings macro"
+    },
+    "save-preview-image": {
+      "title": "Batch save SOLIDWORKS files as images - free macro",
+      "description": "A free SOLIDWORKS VBA macro that captures a bitmap of each part, assembly or drawing sheet, so a folder of models becomes a folder of thumbnails.",
+      "heading": "Save Preview Image: capture SOLIDWORKS thumbnails",
+      "primaryKeyword": "solidworks save screenshot macro"
+    },
+    "set-custom-property": {
+      "title": "Batch add a SOLIDWORKS custom property - free macro",
+      "description": "A free SOLIDWORKS VBA macro that writes one custom property into every part, assembly and drawing in the scope, at file or configuration level.",
+      "heading": "Set Custom Property: write a property across files",
+      "primaryKeyword": "solidworks add custom property batch"
+    },
+    "rename-custom-property": {
+      "title": "Rename a SOLIDWORKS custom property in bulk",
+      "description": "A free SOLIDWORKS VBA macro that renames a custom property across many parts, assemblies and drawings while keeping the value it holds.",
+      "heading": "Rename Custom Property: rename across many files",
+      "primaryKeyword": "solidworks rename custom property"
+    },
+    "find-and-replace-in-properties": {
+      "title": "Find and replace SOLIDWORKS custom property values",
+      "description": "A free SOLIDWORKS VBA macro that replaces text inside custom property values across many files, with a preview pass before anything is written.",
+      "heading": "Find and Replace in Properties: bulk edit values",
+      "primaryKeyword": "solidworks find replace custom property"
+    },
+    "export-properties-to-csv": {
+      "title": "Export SOLIDWORKS custom properties to one CSV",
+      "description": "A free SOLIDWORKS VBA macro that appends every custom property of every document to a single CSV. A folder of 300 files gives one spreadsheet.",
+      "heading": "Export Properties to CSV: one spreadsheet per batch",
+      "primaryKeyword": "solidworks export custom properties csv"
+    },
+    "import-properties-from-csv": {
+      "title": "Import SOLIDWORKS custom properties from a CSV",
+      "description": "A free SOLIDWORKS VBA macro that writes custom properties into parts, assemblies and drawings from a spreadsheet, with a preview pass by default.",
+      "heading": "Import Properties from CSV: bulk write properties",
+      "primaryKeyword": "solidworks import custom properties csv"
+    },
+    "write-mass-properties": {
+      "title": "Write SOLIDWORKS mass and volume to properties",
+      "description": "A free SOLIDWORKS VBA macro that measures each model and writes mass, volume, surface area and centre of mass into custom properties for a BOM.",
+      "heading": "Write Mass Properties: mass and volume into properties",
+      "primaryKeyword": "solidworks mass property macro"
     }
   }
 }

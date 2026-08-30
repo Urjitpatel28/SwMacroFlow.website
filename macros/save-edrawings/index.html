@@ -4,21 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
-<title>Change SOLIDWORKS document units in bulk - free macro | SwMacroFlow</title>
-<meta name="description" content="A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.">
-<link rel="canonical" href="https://swmacroflow.in/macros/change-document-unit/">
-<meta property="og:title" content="Change SOLIDWORKS document units in bulk - free macro | SwMacroFlow">
-<meta property="og:description" content="A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.">
+<title>Batch export SOLIDWORKS to eDrawings - free macro | SwMacroFlow</title>
+<meta name="description" content="A free SOLIDWORKS VBA macro that exports parts, assemblies and drawings as eDrawings files, for sending to people who do not have SOLIDWORKS.">
+<link rel="canonical" href="https://swmacroflow.in/macros/save-edrawings/">
+<meta property="og:title" content="Batch export SOLIDWORKS to eDrawings - free macro | SwMacroFlow">
+<meta property="og:description" content="A free SOLIDWORKS VBA macro that exports parts, assemblies and drawings as eDrawings files, for sending to people who do not have SOLIDWORKS.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://swmacroflow.in/macros/change-document-unit/">
+<meta property="og:url" content="https://swmacroflow.in/macros/save-edrawings/">
 <meta property="og:site_name" content="SwMacroFlow">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://swmacroflow.in/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Change SOLIDWORKS document units in bulk - free macro | SwMacroFlow">
-<meta name="twitter:description" content="A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.">
+<meta name="twitter:title" content="Batch export SOLIDWORKS to eDrawings - free macro | SwMacroFlow">
+<meta name="twitter:description" content="A free SOLIDWORKS VBA macro that exports parts, assemblies and drawings as eDrawings files, for sending to people who do not have SOLIDWORKS.">
 <meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
 <meta name="theme-color" content="#0d0d0f">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -32,10 +32,10 @@
   "@graph": [
     {
       "@type": "SoftwareSourceCode",
-      "@id": "https://swmacroflow.in/macros/change-document-unit/#macro",
-      "name": "Change Document Unit",
-      "description": "A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.",
-      "url": "https://swmacroflow.in/macros/change-document-unit/",
+      "@id": "https://swmacroflow.in/macros/save-edrawings/#macro",
+      "name": "Save eDrawings",
+      "description": "A free SOLIDWORKS VBA macro that exports parts, assemblies and drawings as eDrawings files, for sending to people who do not have SOLIDWORKS.",
+      "url": "https://swmacroflow.in/macros/save-edrawings/",
       "programmingLanguage": "VBA",
       "runtimePlatform": "SOLIDWORKS",
       "codeRepository": "https://github.com/Urjitpatel28/SwMacroFlow.MacroLibrary",
@@ -70,8 +70,8 @@
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Change Document Unit",
-          "item": "https://swmacroflow.in/macros/change-document-unit/"
+          "name": "Save eDrawings",
+          "item": "https://swmacroflow.in/macros/save-edrawings/"
         }
       ]
     }
@@ -113,18 +113,11 @@
   <div class="docs-layout">
 
     <aside class="docs-sidebar">
-      <p class="docs-nav-group">Utility</p>
-      <nav class="docs-nav" aria-label="Utility macros">
-        <ul>
-          <li><a href="/macros/change-document-unit/" class="is-active" aria-current="page">Change Document Unit</a></li>
-          <li><a href="/macros/save-with-performance-improvement/">Save with Performance Improvement</a></li>
-        </ul>
-      </nav>
       <p class="docs-nav-group">Export</p>
       <nav class="docs-nav" aria-label="Export macros">
         <ul>
           <li><a href="/macros/save-drawing-as-dxf-or-dwg/">Save Drawing as DXF or DWG</a></li>
-          <li><a href="/macros/save-edrawings/">Save eDrawings</a></li>
+          <li><a href="/macros/save-edrawings/" class="is-active" aria-current="page">Save eDrawings</a></li>
           <li><a href="/macros/save-neutral-format/">Save Neutral Format</a></li>
           <li><a href="/macros/save-pdf/">Save PDF</a></li>
           <li><a href="/macros/save-preview-image/">Save Preview Image</a></li>
@@ -149,6 +142,13 @@
           <li><a href="/macros/insert-block-in-drawings/">Insert Block In Drawings</a></li>
         </ul>
       </nav>
+      <p class="docs-nav-group">Utility</p>
+      <nav class="docs-nav" aria-label="Utility macros">
+        <ul>
+          <li><a href="/macros/change-document-unit/">Change Document Unit</a></li>
+          <li><a href="/macros/save-with-performance-improvement/">Save with Performance Improvement</a></li>
+        </ul>
+      </nav>
       <p class="docs-nav-group">Writing your own</p>
       <nav class="docs-nav" aria-label="Guides">
         <ul>
@@ -163,20 +163,20 @@
       <ol>
         <li><a href="/index.html">Home</a></li>
         <li><a href="/macros.html">Macros</a></li>
-        <li aria-current="page">Change Document Unit</li>
+        <li aria-current="page">Save eDrawings</li>
       </ol>
     </nav>
       <p class="page-eyebrow">.swp macro</p>
-      <h1>Change Document Unit: set SOLIDWORKS units in bulk</h1>
-      <p class="macro-lede">Sets the document&#039;s unit system and the individual length, angle, mass, volume, time, force, power and energy units. Optionally switches inch dimensions to fractions.</p>
+      <h1>Save eDrawings: share files without SOLIDWORKS</h1>
+      <p class="macro-lede">Exports the open document as an eDrawings file, for sending to people who do not have SOLIDWORKS.</p>
 
       <div class="macro-meta">
-        <span class="macro-tag" data-tag="utility">Utility</span>
+        <span class="macro-tag" data-tag="export">Export</span>
         <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
       </div>
 
       <p class="macro-actions">
-        <a class="btn btn-primary" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Change%20Document%20Unit.swp" download>Download Change Document Unit.swp</a>
+        <a class="btn btn-primary" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Save%20eDrawings.swp" download>Download Save eDrawings.swp</a>
         <a class="btn btn-secondary" href="/index.html#download">Get SwMacroFlow</a>
       </p>
 
@@ -190,7 +190,7 @@
         </div>
       </div>
 
-      <div class="docs-markdown"><p><strong>Runs per file</strong>, on parts, assemblies and drawings.</p><h2>Inputs</h2><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>UnitSystem</td><td><code>MMGS</code>, <code>IPS</code>, <code>MKS</code>, <code>CGS</code> or <code>Custom</code>.</td></tr><tr><td>LengthUnit</td><td>Length unit for the document.</td></tr><tr><td>DualLengthUnit</td><td>Length unit for dual dimensions.</td></tr><tr><td>AngleUnit</td><td><code>degrees</code>, <code>deg/min</code>, <code>deg/min/sec</code> or <code>radians</code>.</td></tr></table><h3>Only read when UnitSystem is <code>Custom</code></h3><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>CustomLength / CustomMass / CustomVolume</td><td>Custom system base units.</td></tr><tr><td>CustomTime / CustomForce / CustomPower / CustomEnergy</td><td>The rest of the custom system.</td></tr></table><h3>Fractions — only apply to IPS, or a Custom system using inches</h3><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>UseFractions</td><td>Show inch dimensions as fractions.</td></tr><tr><td>Denominator</td><td>Smallest fraction to show: 2, 4, 8, 16, 32 or 64.</td></tr><tr><td>RoundFractions</td><td>Round to the nearest fraction rather than showing a remainder.</td></tr></table><h2>Results</h2><p>Reports the unit system and length unit that were applied, or the first unit name it could not recognise.</p></div>
+      <div class="docs-markdown"><p><strong>Runs per file</strong> — point the scope at a folder and it exports every document in turn.</p><h2>Inputs</h2><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>OutputFolder</td><td>Where the file goes. Blank saves it beside the document. Created if missing.</td></tr><tr><td>OutputName</td><td>File name <strong>without</strong> an extension. Blank uses the document&#039;s own name. <code>{Property}</code> placeholders work.</td></tr><tr><td>Overwrite</td><td>On by default. Clear it to skip documents whose eDrawings file already exists.</td></tr></table><h3>The extension follows the document</h3><table><tr><th>Document</th><th>Written as</th></tr><tr><td>Part</td><td><code>.eprt</code></td></tr><tr><td>Assembly</td><td><code>.easm</code></td></tr><tr><td>Drawing</td><td><code>.edrw</code></td></tr></table><p>There is no format field, which is the point: a mixed folder of parts, assemblies and drawings exports in one pass without anyone choosing per file. An extension typed into OutputName is stripped rather than honoured, so naming a part export <code>assembly.easm</code> cannot produce a file SOLIDWORKS refuses to write.</p><h2>Results</h2><p>Reports the path it wrote, or decodes the SOLIDWORKS error:</p><table><tr><th>Reported as</th><th>Cause</th></tr><tr><td>The installed eDrawings version cannot write this file</td><td>eDrawings older than the document</td></tr><tr><td>eDrawings export is not available in the current SOLIDWORKS licence</td><td>Translator not installed or not licensed</td></tr><tr><td>The target file is read-only</td><td>The existing eDrawings file is read-only or checked in</td></tr><tr><td>The file is locked by another program</td><td>Something else has the output open</td></tr></table><h2>Chaining</h2><p>Safe anywhere in a chain. It does not save, rebuild or close the document.</p><p>Pair it with <em>Set Custom Property</em> earlier in the chain to stamp a revision before publishing, and the exported file carries the new value.</p></div>
 
       <aside class="doc-cta">
         <p>

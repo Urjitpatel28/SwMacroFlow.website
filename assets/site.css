@@ -363,8 +363,8 @@ footer {
 .macros-hero > *,
 .macro-browser,
 .macro-toolbar,
-.macro-grid,
-.macro-card {
+.macro-index,
+.macro-row {
   min-width: 0;
 }
 
@@ -404,8 +404,7 @@ footer {
 
 .macro-search {
   display: grid;
-  gap: 8px;
-  min-width: min(100%, 420px);
+  min-width: min(100%, 260px);
   color: var(--text-dim);
   font-size: 13px;
   font-weight: 700;
@@ -441,56 +440,256 @@ footer {
   background: color-mix(in srgb, var(--panel) 50%, var(--bg));
 }
 
-.macro-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+/* The library is an index, not a gallery. Sixteen bordered cards in a grid read as sixteen equal
+   adverts; sixteen numbered rows read as a parts list, which is the document an engineer already
+   knows how to scan. Rows also let a summary, a group, the document types and the file itself sit
+   on one line, which a card had no room for. */
+.macro-index {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: macro;
+  border-top: 1px solid var(--panel-border);
 }
 
-.macro-card {
+.macro-row {
   position: relative;
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) 112px auto;
+  gap: 0 18px;
+  align-items: center;
+  padding: 16px 14px 16px 0;
+  border-bottom: 1px solid var(--panel-border);
+  transition: background .14s ease, box-shadow .14s ease;
+}
+
+/* Only the rows still showing, so filtering renumbers 01..N rather than leaving the gaps that make
+   a filtered list look like it lost something. */
+.macro-row:not([hidden]) {
+  counter-increment: macro;
+}
+
+.macro-row:hover {
+  background: color-mix(in srgb, var(--panel) 62%, transparent);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+.macro-row-n {
+  align-self: start;
+  padding-top: 2px;
+  color: var(--text-faint);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .06em;
+}
+
+.macro-row-n::before {
+  content: counter(macro, decimal-leading-zero);
+}
+
+.macro-row:hover .macro-row-n {
+  color: var(--accent);
+}
+
+.macro-row-main {
   min-width: 0;
-  padding: 20px;
-  border: 1px solid var(--panel-border);
-  border-radius: var(--radius);
-  background: color-mix(in srgb, var(--panel) 56%, var(--bg));
-  transition: border-color .15s ease, background .15s ease;
 }
 
-.macro-card:hover {
-  border-color: color-mix(in srgb, var(--accent) 42%, var(--panel-border));
-  background: color-mix(in srgb, var(--panel) 72%, var(--bg));
+.macro-row-title {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.25;
 }
 
-.macro-card h2 {
-  margin: 4px 0 0;
-  font-size: 20px;
-  line-height: 1.2;
-}
-
-/* A real link to the macro's own page, not a button opening a modal: the card has to be something
-   a crawler can follow. Its ::after is stretched over the card, which makes the whole card the hit
-   area while the accessible name stays just the macro title. */
-.macro-card-link {
+/* Stretched over the whole row, so the row is the hit area while the accessible name stays just the
+   macro title. The download link below sits above it on the z axis, so the one thing a reader might
+   want other than the page is still reachable. */
+.macro-row-link {
   color: inherit;
   text-decoration: none;
 }
 
-.macro-card-link::after {
+.macro-row-link::after {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: var(--radius);
 }
 
-.macro-card-link:focus-visible::after {
+.macro-row-link:focus-visible::after {
   outline: 2px solid color-mix(in srgb, var(--accent) 64%, transparent);
-  outline-offset: 2px;
+  outline-offset: -2px;
 }
 
-.macro-description {
-  margin: 8px 0 0;
+/* Clamped so a two-sentence summary and a one-line summary produce rows of the same height - the
+   even rhythm is most of what makes a long list scannable. */
+.macro-row-summary {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 5px 0 0;
   color: var(--text-dim);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.macro-row-summary a {
+  color: var(--text-dim);
+}
+
+.macro-applies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 9px 0 0;
+}
+
+.macro-chip {
+  padding: 2px 6px;
+  border: 1px solid var(--panel-border);
+  border-radius: 3px;
+  color: var(--text-faint);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+
+.macro-tag {
+  justify-self: start;
+  padding: 4px 10px;
+  border: 1px solid color-mix(in srgb, currentColor 34%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  color: var(--text-faint);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Four groups, four hues, all of them already in the palette - a category is a label, not a reason
+   to add a brand colour. */
+.macro-tag[data-tag="export"] { color: var(--accent); }
+.macro-tag[data-tag="properties"] { color: var(--blue); }
+.macro-tag[data-tag="drawing"] { color: var(--success); }
+
+.macro-dl {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 13px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--panel) 74%, var(--bg));
+  color: var(--text-dim);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.macro-dl:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.macro-dl-arrow::before {
+  content: "\2193";
+  font-weight: 700;
+}
+
+/* Filter bar */
+.macro-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.macro-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--panel-border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--panel) 60%, transparent);
+  color: var(--text-dim);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color .14s ease, color .14s ease, background .14s ease;
+}
+
+.macro-pill:hover {
+  border-color: var(--text-faint);
+  color: var(--text);
+}
+
+.macro-pill.is-active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.macro-pill-n {
+  color: var(--text-faint);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.macro-pill.is-active .macro-pill-n {
+  color: var(--accent);
+}
+
+.macro-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text-faint);
+  font-size: 13px;
+}
+
+.macro-stats strong {
+  color: var(--text);
+}
+
+/* The same tag and chips as the index row, repeated at the top of a macro's own page: someone
+   arriving from search has not seen the index and still has to know whether it touches drawings. */
+.macro-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0 0;
+}
+
+.macro-meta .macro-tag {
+  justify-self: start;
+}
+
+.macro-meta .macro-applies {
+  margin: 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .macro-toolbar-end {
@@ -498,6 +697,7 @@ footer {
   align-items: center;
   gap: 14px;
 }
+
 
 .btn-compact {
   min-height: 38px;
@@ -600,8 +800,16 @@ footer {
     justify-content: space-between;
   }
 
-  .macro-grid {
-    grid-template-columns: 1fr;
+  .macro-row {
+    grid-template-columns: 34px minmax(0, 1fr) auto;
+    row-gap: 12px;
+  }
+
+  /* The category moves under the title rather than competing with the download for the right edge. */
+  .macro-row .macro-tag {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: start;
   }
 }
 
@@ -623,6 +831,31 @@ footer {
 
   .macros-hero .btn {
     width: 100%;
+  }
+
+  .macro-row {
+    grid-template-columns: minmax(0, 1fr);
+    padding-inline: 0;
+  }
+
+  .macro-row-n {
+    display: none;
+  }
+
+  .macro-row .macro-tag,
+  .macro-row .macro-dl {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: stretch;
+    justify-content: center;
+  }
+
+  .macro-row .macro-tag {
+    justify-self: start;
+  }
+
+  .macro-toolbar-end {
+    flex-wrap: wrap;
   }
 }
 

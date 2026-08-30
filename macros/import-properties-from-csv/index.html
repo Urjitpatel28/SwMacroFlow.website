@@ -4,21 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
-<title>Batch export SOLIDWORKS to PDF - free VBA macro | SwMacroFlow</title>
-<meta name="description" content="A free SOLIDWORKS VBA macro that exports the open document to PDF. Works on parts, assemblies and drawings, and runs across whole folders in SwMacroFlow.">
-<link rel="canonical" href="https://swmacroflow.in/macros/save-pdf/">
-<meta property="og:title" content="Batch export SOLIDWORKS to PDF - free VBA macro | SwMacroFlow">
-<meta property="og:description" content="A free SOLIDWORKS VBA macro that exports the open document to PDF. Works on parts, assemblies and drawings, and runs across whole folders in SwMacroFlow.">
+<title>Import SOLIDWORKS custom properties from a CSV | SwMacroFlow</title>
+<meta name="description" content="A free SOLIDWORKS VBA macro that writes custom properties into parts, assemblies and drawings from a spreadsheet, with a preview pass by default.">
+<link rel="canonical" href="https://swmacroflow.in/macros/import-properties-from-csv/">
+<meta property="og:title" content="Import SOLIDWORKS custom properties from a CSV | SwMacroFlow">
+<meta property="og:description" content="A free SOLIDWORKS VBA macro that writes custom properties into parts, assemblies and drawings from a spreadsheet, with a preview pass by default.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://swmacroflow.in/macros/save-pdf/">
+<meta property="og:url" content="https://swmacroflow.in/macros/import-properties-from-csv/">
 <meta property="og:site_name" content="SwMacroFlow">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://swmacroflow.in/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Batch export SOLIDWORKS to PDF - free VBA macro | SwMacroFlow">
-<meta name="twitter:description" content="A free SOLIDWORKS VBA macro that exports the open document to PDF. Works on parts, assemblies and drawings, and runs across whole folders in SwMacroFlow.">
+<meta name="twitter:title" content="Import SOLIDWORKS custom properties from a CSV | SwMacroFlow">
+<meta name="twitter:description" content="A free SOLIDWORKS VBA macro that writes custom properties into parts, assemblies and drawings from a spreadsheet, with a preview pass by default.">
 <meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
 <meta name="theme-color" content="#0d0d0f">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -32,10 +32,10 @@
   "@graph": [
     {
       "@type": "SoftwareSourceCode",
-      "@id": "https://swmacroflow.in/macros/save-pdf/#macro",
-      "name": "Save PDF",
-      "description": "A free SOLIDWORKS VBA macro that exports the open document to PDF. Works on parts, assemblies and drawings, and runs across whole folders in SwMacroFlow.",
-      "url": "https://swmacroflow.in/macros/save-pdf/",
+      "@id": "https://swmacroflow.in/macros/import-properties-from-csv/#macro",
+      "name": "Import Properties from CSV",
+      "description": "A free SOLIDWORKS VBA macro that writes custom properties into parts, assemblies and drawings from a spreadsheet, with a preview pass by default.",
+      "url": "https://swmacroflow.in/macros/import-properties-from-csv/",
       "programmingLanguage": "VBA",
       "runtimePlatform": "SOLIDWORKS",
       "codeRepository": "https://github.com/Urjitpatel28/SwMacroFlow.MacroLibrary",
@@ -70,8 +70,8 @@
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Save PDF",
-          "item": "https://swmacroflow.in/macros/save-pdf/"
+          "name": "Import Properties from CSV",
+          "item": "https://swmacroflow.in/macros/import-properties-from-csv/"
         }
       ]
     }
@@ -113,26 +113,26 @@
   <div class="docs-layout">
 
     <aside class="docs-sidebar">
+      <p class="docs-nav-group">Properties</p>
+      <nav class="docs-nav" aria-label="Properties macros">
+        <ul>
+          <li><a href="/macros/export-properties-to-csv/">Export Properties to CSV</a></li>
+          <li><a href="/macros/find-and-replace-in-properties/">Find and Replace in Properties</a></li>
+          <li><a href="/macros/import-properties-from-csv/" class="is-active" aria-current="page">Import Properties from CSV</a></li>
+          <li><a href="/macros/rename-custom-property/">Rename Custom Property</a></li>
+          <li><a href="/macros/set-custom-property/">Set Custom Property</a></li>
+          <li><a href="/macros/write-mass-properties/">Write Mass Properties</a></li>
+        </ul>
+      </nav>
       <p class="docs-nav-group">Export</p>
       <nav class="docs-nav" aria-label="Export macros">
         <ul>
           <li><a href="/macros/save-drawing-as-dxf-or-dwg/">Save Drawing as DXF or DWG</a></li>
           <li><a href="/macros/save-edrawings/">Save eDrawings</a></li>
           <li><a href="/macros/save-neutral-format/">Save Neutral Format</a></li>
-          <li><a href="/macros/save-pdf/" class="is-active" aria-current="page">Save PDF</a></li>
+          <li><a href="/macros/save-pdf/">Save PDF</a></li>
           <li><a href="/macros/save-preview-image/">Save Preview Image</a></li>
           <li><a href="/macros/save-step/">Save STEP</a></li>
-        </ul>
-      </nav>
-      <p class="docs-nav-group">Properties</p>
-      <nav class="docs-nav" aria-label="Properties macros">
-        <ul>
-          <li><a href="/macros/export-properties-to-csv/">Export Properties to CSV</a></li>
-          <li><a href="/macros/find-and-replace-in-properties/">Find and Replace in Properties</a></li>
-          <li><a href="/macros/import-properties-from-csv/">Import Properties from CSV</a></li>
-          <li><a href="/macros/rename-custom-property/">Rename Custom Property</a></li>
-          <li><a href="/macros/set-custom-property/">Set Custom Property</a></li>
-          <li><a href="/macros/write-mass-properties/">Write Mass Properties</a></li>
         </ul>
       </nav>
       <p class="docs-nav-group">Drawing</p>
@@ -163,20 +163,20 @@
       <ol>
         <li><a href="/index.html">Home</a></li>
         <li><a href="/macros.html">Macros</a></li>
-        <li aria-current="page">Save PDF</li>
+        <li aria-current="page">Import Properties from CSV</li>
       </ol>
     </nav>
       <p class="page-eyebrow">.swp macro</p>
-      <h1>Save PDF: export SOLIDWORKS files to PDF</h1>
-      <p class="macro-lede">Exports the open document to PDF. Works on parts, assemblies and drawings.</p>
+      <h1>Import Properties from CSV: bulk write properties</h1>
+      <p class="macro-lede">Writes custom properties into documents from a spreadsheet. Reads the long-format CSV that Export Properties to CSV writes, picks the rows belonging to each document, and writes them.</p>
 
       <div class="macro-meta">
-        <span class="macro-tag" data-tag="export">Export</span>
+        <span class="macro-tag" data-tag="properties">Properties</span>
         <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
       </div>
 
       <p class="macro-actions">
-        <a class="btn btn-primary" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Save%20PDF.swp" download>Download Save PDF.swp</a>
+        <a class="btn btn-primary" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Import%20Properties%20from%20CSV.swp" download>Download Import Properties from CSV.swp</a>
         <a class="btn btn-secondary" href="/index.html#download">Get SwMacroFlow</a>
       </p>
 
@@ -190,7 +190,7 @@
         </div>
       </div>
 
-      <div class="docs-markdown"><p><strong>Runs per file</strong> — point the scope at a folder and it exports each document in turn.</p><h2>Inputs</h2><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>OutputName</td><td>PDF file name, without the <code>.pdf</code> extension. Required.</td></tr><tr><td>OutputFolder</td><td>Where the PDF goes. Blank saves it beside the document. Created if missing.</td></tr><tr><td>Options</td><td>Free text matched against the option names below. Combine as many as you like.</td></tr><tr><td>SheetName</td><td>Drawings only. A sheet name, or a comma-separated list. Blank exports every sheet.</td></tr></table><h3>Options</h3><table><tr><th>Word</th><th>Effect</th></tr><tr><td><code>Zoom Model</code></td><td>Zoom to fit before exporting.</td></tr><tr><td><code>Open Created PDF</code></td><td>Open each PDF in the default viewer. <strong>Leave this out of an unattended batch</strong> — it opens a window per file.</td></tr><tr><td><code>Save Only Current Sheet</code></td><td>Drawings: export just the active sheet. Ignored if SheetName is set.</td></tr><tr><td><code>Save 3D PDF</code></td><td>Parts and assemblies: export as a 3D PDF.</td></tr></table><h2>Results</h2><p>Reports the path it wrote, or the SOLIDWORKS error code if <code>SaveAs</code> failed.</p></div>
+      <div class="docs-markdown"><p><strong>Runs per file</strong> — point the scope at the same folder you exported from, edit the CSV in between.</p><p>&gt; <strong>This macro has the largest blast radius in the library.</strong> It writes to every file in the scope &gt; from a spreadsheet a human has edited. It therefore defaults to <strong>Preview</strong>, which writes nothing.</p><h2>Inputs</h2><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>CsvPath</td><td>The CSV to read. Must already exist — the file picker will not accept a path that does not.</td></tr><tr><td>Mode</td><td><code>Preview (report only)</code> by default, or <code>Apply changes</code>.</td></tr><tr><td>MatchBy</td><td><code>File path</code> or <code>File name</code>. File name is the forgiving option when the CSV was exported before the files moved.</td></tr></table><h2>Run Preview first</h2><p>In Preview the macro does everything except write: it matches rows, compares each value against what the document holds, and reports exactly what would change —</p><pre><code>Preview - would change 3, leave 11. Revision: A -&gt; B. [Config1] Cost: (new) -&gt; 42. ...</code></pre><p>Every previewed file comes back as a <strong>Warning</strong>, not an OK, so a 300-file preview makes it obvious at a glance that nothing was written. Export the results to CSV from the results panel if you want the full list to review. Then switch Mode to <code>Apply changes</code> and run the same job again.</p><h2>What counts as a change</h2><p>A row is skipped when the document already holds that exact value. The comparison is against the <strong>stored</strong> value, never the resolved one — a property holding <code>D1@Sketch1</code> resolves to a number, and comparing against that number would look like a difference on every run and would overwrite the expression with its own answer, permanently.</p><p>The comparison is case-<strong>sensitive</strong>, so correcting <code>abc-123</code> to <code>ABC-123</code> is a change.</p><h2>Columns it reads</h2><p><code>PropertyName</code> and <code>Value</code> are required. <code>FilePath</code> or <code>FileName</code> is required depending on MatchBy. <code>Configuration</code> is optional — blank or absent means the file-level property store.</p><p><code>Type</code> and <code>ResolvedValue</code> are <strong>ignored</strong>. Writing <code>ResolvedValue</code> back would bake a computed number over the expression that produced it.</p><h2>Encoding</h2><p>The file is read in whatever encoding it was saved in — the byte order mark decides between UTF-16LE, UTF-16BE, UTF-8 and Windows-1252. That matters because the whole point of this macro is that a human edited the file in between, and Excel&#039;s <em>CSV UTF-8</em> and plain <em>CSV</em> save it as different things. A UTF-8 file read as ANSI would turn every accented character into mojibake and write <strong>that</strong> into the documents.</p><p>Quoted fields, doubled quotes and line breaks inside a quoted field are all parsed properly. A part description containing a comma will not shift the later columns on its row.</p><h2>Results</h2><table><tr><th>Outcome</th><th>Meaning</th></tr><tr><td>OK</td><td>Applied and saved. Names the first few changes and counts the rest.</td></tr><tr><td>Warning</td><td>Preview, or nothing needed changing, or no CSV row mentions this document.</td></tr><tr><td>Error</td><td>Read-only, never saved, missing required column, unreadable CSV, or the save failed.</td></tr></table><p>Read-only is checked <strong>before</strong> the CSV is even read. SOLIDWORKS accepts a property into the in-memory document quite happily and only refuses at save time, so a late check would report a clean run for a file that never changed on disk.</p><h2>Notes</h2><p><strong>Speed.</strong> The CSV is re-read for each document in the batch. Before parsing, a fast scan checks whether the document is mentioned at all, so a CSV covering only part of the scope costs almost nothing for the rest. A large CSV that mentions every file adds a fraction of a second per document — small next to the time SOLIDWORKS takes to open one.</p><h2>Chaining</h2><p>Place it <strong>before</strong> any export macro so the exported files carry the new values. It saves the document in Apply mode, and does nothing at all in Preview.</p></div>
 
       <aside class="doc-cta">
         <p>

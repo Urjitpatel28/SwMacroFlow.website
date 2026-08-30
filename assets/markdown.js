@@ -26,6 +26,14 @@
 
   function inlineMarkdown(value) {
     return escapeHtml(value)
+      // Links. Restricted to shapes that can only navigate - absolute http(s), site-root, or a
+      // fragment - so a document can never introduce a javascript: or data: URL through here. An
+      // href that does not match is left as the literal text it was written as: visible, and
+      // harmless. Run before the emphasis rules so a URL containing an asterisk is not mangled.
+      .replace(
+        /\[([^\]]+)\]\((https?:\/\/[^\s)]+|\/[^\s)]*|#[^\s)]+)\)/g,
+        (whole, text, href) => `<a href="${href}">${text}</a>`
+      )
       .replace(/`([^`]+)`/g, "<code>$1</code>")
       .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
       .replace(/\*([^*]+)\*/g, "<em>$1</em>");

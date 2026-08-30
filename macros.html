@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
 <title>Free SOLIDWORKS macros - downloadable .swp macro library</title>
-<meta name="description" content="Free SOLIDWORKS VBA macros to download: batch export to PDF, change document units, swap drawing sheet formats, insert blocks, and reduce file size.">
+<meta name="description" content="Free SOLIDWORKS VBA macros to download: batch export to PDF and STEP, read and write custom properties, swap drawing sheet formats, insert blocks, and reduce file size.">
 <link rel="canonical" href="https://swmacroflow.in/macros.html">
 <meta property="og:title" content="Free SOLIDWORKS macros - downloadable .swp macro library">
-<meta property="og:description" content="Free SOLIDWORKS VBA macros to download: batch export to PDF, change document units, swap drawing sheet formats, insert blocks, and reduce file size.">
+<meta property="og:description" content="Free SOLIDWORKS VBA macros to download: batch export to PDF and STEP, read and write custom properties, swap drawing sheet formats, insert blocks, and reduce file size.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://swmacroflow.in/macros.html">
 <meta property="og:site_name" content="SwMacroFlow">
@@ -18,7 +18,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Free SOLIDWORKS macros - downloadable .swp macro library">
-<meta name="twitter:description" content="Free SOLIDWORKS VBA macros to download: batch export to PDF, change document units, swap drawing sheet formats, insert blocks, and reduce file size.">
+<meta name="twitter:description" content="Free SOLIDWORKS VBA macros to download: batch export to PDF and STEP, read and write custom properties, swap drawing sheet formats, insert blocks, and reduce file size.">
 <meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
 <meta name="theme-color" content="#0d0d0f">
 <link rel="icon" href="favicon.ico" sizes="32x32">
@@ -48,7 +48,7 @@
       "@type": "ItemList",
       "@id": "https://swmacroflow.in/macros.html#list",
       "name": "Free SOLIDWORKS macros",
-      "numberOfItems": 5,
+      "numberOfItems": 16,
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -65,20 +65,86 @@
         {
           "@type": "ListItem",
           "position": 3,
+          "url": "https://swmacroflow.in/macros/export-properties-to-csv/",
+          "name": "Export Properties to CSV"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "url": "https://swmacroflow.in/macros/find-and-replace-in-properties/",
+          "name": "Find and Replace in Properties"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "url": "https://swmacroflow.in/macros/import-properties-from-csv/",
+          "name": "Import Properties from CSV"
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
           "url": "https://swmacroflow.in/macros/insert-block-in-drawings/",
           "name": "Insert Block In Drawings"
         },
         {
           "@type": "ListItem",
-          "position": 4,
+          "position": 7,
+          "url": "https://swmacroflow.in/macros/rename-custom-property/",
+          "name": "Rename Custom Property"
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "url": "https://swmacroflow.in/macros/save-drawing-as-dxf-or-dwg/",
+          "name": "Save Drawing as DXF or DWG"
+        },
+        {
+          "@type": "ListItem",
+          "position": 9,
+          "url": "https://swmacroflow.in/macros/save-edrawings/",
+          "name": "Save eDrawings"
+        },
+        {
+          "@type": "ListItem",
+          "position": 10,
+          "url": "https://swmacroflow.in/macros/save-neutral-format/",
+          "name": "Save Neutral Format"
+        },
+        {
+          "@type": "ListItem",
+          "position": 11,
           "url": "https://swmacroflow.in/macros/save-pdf/",
           "name": "Save PDF"
         },
         {
           "@type": "ListItem",
-          "position": 5,
+          "position": 12,
+          "url": "https://swmacroflow.in/macros/save-preview-image/",
+          "name": "Save Preview Image"
+        },
+        {
+          "@type": "ListItem",
+          "position": 13,
+          "url": "https://swmacroflow.in/macros/save-step/",
+          "name": "Save STEP"
+        },
+        {
+          "@type": "ListItem",
+          "position": 14,
           "url": "https://swmacroflow.in/macros/save-with-performance-improvement/",
           "name": "Save with Performance Improvement"
+        },
+        {
+          "@type": "ListItem",
+          "position": 15,
+          "url": "https://swmacroflow.in/macros/set-custom-property/",
+          "name": "Set Custom Property"
+        },
+        {
+          "@type": "ListItem",
+          "position": 16,
+          "url": "https://swmacroflow.in/macros/write-mass-properties/",
+          "name": "Write Mass Properties"
         }
       ]
     },
@@ -147,20 +213,31 @@
       <p>
         Every macro here is plain SOLIDWORKS VBA in a <code>.swp</code> file. Each one runs on its own
         in the VBA editor, and runs across a whole folder unattended inside
-        <a href="index.html">SwMacroFlow</a>. Open a macro to read its notes and download it.
+        <a href="index.html">SwMacroFlow</a>. Open a macro to read its notes, or take the file directly.
       </p>
+      <ul class="macro-stats">
+        <li><strong>16</strong> macros</li>
+        <li><strong>4</strong> groups</li>
+        <li><strong>Free</strong> and MIT licensed</li>
+      </ul>
     </div>
     <a class="btn btn-secondary" href="https://github.com/Urjitpatel28/SwMacroFlow.MacroLibrary" target="_blank" rel="noopener">View source repo</a>
   </section>
 
   <section class="macro-browser">
     <div class="macro-toolbar">
-      <label class="macro-search">
-        <span>Search macros</span>
-        <input id="macroFilter" type="search" placeholder="Search by name or description">
-      </label>
+      <div class="macro-pills" role="group" aria-label="Filter by category">
+        <button class="macro-pill is-active" type="button" data-filter="all" aria-pressed="true">All<span class="macro-pill-n">16</span></button>
+          <button class="macro-pill" type="button" data-filter="export" aria-pressed="false">Export<span class="macro-pill-n">6</span></button>
+          <button class="macro-pill" type="button" data-filter="properties" aria-pressed="false">Properties<span class="macro-pill-n">6</span></button>
+          <button class="macro-pill" type="button" data-filter="drawing" aria-pressed="false">Drawing<span class="macro-pill-n">2</span></button>
+          <button class="macro-pill" type="button" data-filter="utility" aria-pressed="false">Utility<span class="macro-pill-n">2</span></button>
+      </div>
       <div class="macro-toolbar-end">
-        <div id="macroCount" class="macro-count">5 macros</div>
+        <label class="macro-search">
+          <span class="visually-hidden">Search macros</span>
+          <input id="macroFilter" type="search" placeholder="Search macros">
+        </label>
         <a class="btn btn-secondary btn-compact"
            href="https://github.com/Urjitpatel28/SwMacroFlow.MacroLibrary/archive/refs/heads/main.zip"
            title="Downloads the whole repository as a zip. Extract the Macros folder into your macro folder.">
@@ -169,38 +246,218 @@
       </div>
     </div>
 
+    <p id="macroCount" class="macro-count" role="status">16 macros</p>
     <div id="macroStatus" class="macro-status" hidden></div>
-    <div id="macroGrid" class="macro-grid">
-      <article class="macro-card">
-        <span class="macro-file">.swp macro</span>
-        <h2><a class="macro-card-link" href="macros/change-document-unit/">Change Document Unit</a></h2>
-        <p class="macro-description">Sets the document&#039;s unit system and the individual length, angle, mass, volume, time, force, power and energy units. Optionally switches inch dimensions to fractions.</p>
-      </article>
 
-      <article class="macro-card">
-        <span class="macro-file">.swp macro</span>
-        <h2><a class="macro-card-link" href="macros/change-drawing-template/">Change Drawing Template</a></h2>
-        <p class="macro-description">Applies a .slddrt sheet format to one sheet, several named sheets, or every sheet in a drawing, then rebuilds and saves.</p>
-      </article>
+    <ol id="macroIndex" class="macro-index">
+      <li class="macro-row" data-category="utility">
+        <span class="macro-row-n" aria-hidden="true"></span>
+        <div class="macro-row-main">
+          <h2 class="macro-row-title"><a class="macro-row-link" href="macros/change-document-unit/">Change Document Unit</a></h2>
+          <p class="macro-row-summary">Sets the document&#039;s unit system and the individual length, angle, mass, volume, time, force, power and energy units. Optionally switches inch dimensions to fractions.</p>
+          <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
+        </div>
+        <span class="macro-tag" data-tag="utility">Utility</span>
+        <a class="macro-dl" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Change%20Document%20Unit.swp" download>
+          <span class="macro-dl-arrow" aria-hidden="true"></span>.swp<span class="visually-hidden"> - download Change Document Unit.swp</span>
+        </a>
+      </li>
 
-      <article class="macro-card">
-        <span class="macro-file">.swp macro</span>
-        <h2><a class="macro-card-link" href="macros/insert-block-in-drawings/">Insert Block In Drawings</a></h2>
-        <p class="macro-description">Inserts a .sldblk sketch block at a fixed position on one sheet, several named sheets, or every sheet in a drawing, then rebuilds and saves.</p>
-      </article>
+      <li class="macro-row" data-category="drawing">
+        <span class="macro-row-n" aria-hidden="true"></span>
+        <div class="macro-row-main">
+          <h2 class="macro-row-title"><a class="macro-row-link" href="macros/change-drawing-template/">Change Drawing Template</a></h2>
+          <p class="macro-row-summary">Applies a .slddrt sheet format to one sheet, several named sheets, or every sheet in a drawing, then rebuilds and saves.</p>
+          <p class="macro-applies"><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
+        </div>
+        <span class="macro-tag" data-tag="drawing">Drawing</span>
+        <a class="macro-dl" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Change%20Drawing%20Template.swp" download>
+          <span class="macro-dl-arrow" aria-hidden="true"></span>.swp<span class="visually-hidden"> - download Change Drawing Template.swp</span>
+        </a>
+      </li>
 
-      <article class="macro-card">
-        <span class="macro-file">.swp macro</span>
-        <h2><a class="macro-card-link" href="macros/save-pdf/">Save PDF</a></h2>
-        <p class="macro-description">Exports the open document to PDF. Works on parts, assemblies and drawings.</p>
-      </article>
+      <li class="macro-row" data-category="properties">
+        <span class="macro-row-n" aria-hidden="true"></span>
+        <div class="macro-row-main">
+          <h2 class="macro-row-title"><a class="macro-row-link" href="macros/export-properties-to-csv/">Export Properties to CSV</a></h2>
+          <p class="macro-row-summary">Appends every custom property of each document to one CSV. A folder of 300 files produces one spreadsheet, not 300. Works on parts, assemblies and drawings.</p>
+          <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
+        </div>
+        <span class="macro-tag" data-tag="properties">Properties</span>
+        <a class="macro-dl" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Export%20Properties%20to%20CSV.swp" download>
+          <span class="macro-dl-arrow" aria-hidden="true"></span>.swp<span class="visually-hidden"> - download Export Properties to CSV.swp</span>
+        </a>
+      </li>
 
-      <article class="macro-card">
-        <span class="macro-file">.swp macro</span>
-        <h2><a class="macro-card-link" href="macros/save-with-performance-improvement/">Save with Performance Improvement</a></h2>
-        <p class="macro-description">Turns image quality down to its cheapest settings — shaded deviation at maximum, high-quality edges off, wireframe quality at its lowest — then saves a copy named &lt;name&gt;_Optimized.</p>
-      </article>
-    </div>
+      <li class="macro-row" data-category="properties">
+        <span class="macro-row-n" aria-hidden="true"></span>
+        <div class="macro-row-main">
+          <h2 class="macro-row-title"><a class="macro-row-link" href="macros/find-and-replace-in-properties/">Find and Replace in Properties</a></h2>
+          <p class="macro-row-summary">Replaces text inside custom property values across many files. Works on parts, assemblies and drawings.</p>
+          <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
+        </div>
+        <span class="macro-tag" data-tag="properties">Properties</span>
+        <a class="macro-dl" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Find%20and%20Replace%20in%20Properties.swp" download>
+          <span class="macro-dl-arrow" aria-hidden="true"></span>.swp<span class="visually-hidden"> - download Find and Replace in Properties.swp</span>
+        </a>
+      </li>
+
+      <li class="macro-row" data-category="properties">
+        <span class="macro-row-n" aria-hidden="true"></span>
+        <div class="macro-row-main">
+          <h2 class="macro-row-title"><a class="macro-row-link" href="macros/import-properties-from-csv/">Import Properties from CSV</a></h2>
+          <p class="macro-row-summary">Writes custom properties into documents from a spreadsheet. Reads the long-format CSV that Export Properties to CSV writes, picks the rows belonging to each document, and writes them.</p>
+          <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
+        </div>
+        <span class="macro-tag" data-tag="properties">Properties</span>
+        <a class="macro-dl" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Import%20Properties%20from%20CSV.swp" download>
+          <span class="macro-dl-arrow" aria-hidden="true"></span>.swp<span class="visually-hidden"> - download Import Properties from CSV.swp</span>
+        </a>
+      </li>
+
+      <li class="macro-row" data-category="drawing">
+        <span class="macro-row-n" aria-hidden="true"></span>
+        <div class="macro-row-main">
+          <h2 class="macro-row-title"><a class="macro-row-link" href="macros/insert-block-in-drawings/">Insert Block In Drawings</a></h2>
+          <p class="macro-row-summary">Inserts a .sldblk sketch block at a fixed position on one sheet, several named sheets, or every sheet in a drawing, then rebuilds and saves.</p>
+          <p class="macro-applies"><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
+        </div>
+        <span class="macro-tag" data-tag="drawing">Drawing</span>
+        <a class="macro-dl" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Insert%20Block%20In%20Drawings.swp" download>
+          <span class="macro-dl-arrow" aria-hidden="true"></span>.swp<span class="visually-hidden"> - download Insert Block In Drawings.swp</span>
+        </a>
+      </li>
+
+      <li class="macro-row" data-category="properties">
+        <span class="macro-row-n" aria-hidden="true"></span>
+        <div class="macro-row-main">
+          <h2 class="macro-row-title"><a class="macro-row-link" href="macros/rename-custom-property/">Rename Custom Property</a></h2>
+          <p class="macro-row-summary">Renames a custom property across many files. Works on parts, assemblies and drawings.</p>
+          <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
+        </div>
+        <span class="macro-tag" data-tag="properties">Properties</span>
+        <a class="macro-dl" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Rename%20Custom%20Property.swp" download>
+          <span class="macro-dl-arrow" aria-hidden="true"></span>.swp<span class="visually-hidden"> - download Rename Custom Property.swp</span>
+        </a>
+      </li>
+
+      <li class="macro-row" data-category="export">
+        <span class="macro-row-n" aria-hidden="true"></span>
+        <div class="macro-row-main">
+          <h2 class="macro-row-title"><a class="macro-row-link" href="macros/save-drawing-as-dxf-or-dwg/">Save Drawing as DXF or DWG</a></h2>
+          <p class="macro-row-summary">Exports the open drawing to DXF or DWG. Parts and assemblies are reported as unsupported — use Save Neutral Format for those.</p>
+          <p class="macro-applies"><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
+        </div>
+        <span class="macro-tag" data-tag="export">Export</span>
+        <a class="macro-dl" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Save%20Drawing%20as%20DXF%20or%20DWG.swp" download>
+          <span class="macro-dl-arrow" aria-hidden="true"></span>.swp<span class="visually-hidden"> - download Save Drawing as DXF or DWG.swp</span>
+        </a>
+      </li>
+
+      <li class="macro-row" data-category="export">
+        <span class="macro-row-n" aria-hidden="true"></span>
+        <div class="macro-row-main">
+          <h2 class="macro-row-title"><a class="macro-row-link" href="macros/save-edrawings/">Save eDrawings</a></h2>
+          <p class="macro-row-summary">Exports the open document as an eDrawings file, for sending to people who do not have SOLIDWORKS.</p>
+          <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
+        </div>
+        <span class="macro-tag" data-tag="export">Export</span>
+        <a class="macro-dl" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Save%20eDrawings.swp" download>
+          <span class="macro-dl-arrow" aria-hidden="true"></span>.swp<span class="visually-hidden"> - download Save eDrawings.swp</span>
+        </a>
+      </li>
+
+      <li class="macro-row" data-category="export">
+        <span class="macro-row-n" aria-hidden="true"></span>
+        <div class="macro-row-main">
+          <h2 class="macro-row-title"><a class="macro-row-link" href="macros/save-neutral-format/">Save Neutral Format</a></h2>
+          <p class="macro-row-summary">Exports the open part or assembly to Parasolid, IGES, STL, ACIS or 3D XML. Drawings are reported as unsupported.</p>
+          <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span></p>
+        </div>
+        <span class="macro-tag" data-tag="export">Export</span>
+        <a class="macro-dl" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Save%20Neutral%20Format.swp" download>
+          <span class="macro-dl-arrow" aria-hidden="true"></span>.swp<span class="visually-hidden"> - download Save Neutral Format.swp</span>
+        </a>
+      </li>
+
+      <li class="macro-row" data-category="export">
+        <span class="macro-row-n" aria-hidden="true"></span>
+        <div class="macro-row-main">
+          <h2 class="macro-row-title"><a class="macro-row-link" href="macros/save-pdf/">Save PDF</a></h2>
+          <p class="macro-row-summary">Exports the open document to PDF. Works on parts, assemblies and drawings.</p>
+          <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
+        </div>
+        <span class="macro-tag" data-tag="export">Export</span>
+        <a class="macro-dl" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Save%20PDF.swp" download>
+          <span class="macro-dl-arrow" aria-hidden="true"></span>.swp<span class="visually-hidden"> - download Save PDF.swp</span>
+        </a>
+      </li>
+
+      <li class="macro-row" data-category="export">
+        <span class="macro-row-n" aria-hidden="true"></span>
+        <div class="macro-row-main">
+          <h2 class="macro-row-title"><a class="macro-row-link" href="macros/save-preview-image/">Save Preview Image</a></h2>
+          <p class="macro-row-summary">Captures a bitmap of the open document. Works on parts, assemblies and drawings — on a drawing it captures the active sheet.</p>
+          <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
+        </div>
+        <span class="macro-tag" data-tag="export">Export</span>
+        <a class="macro-dl" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Save%20Preview%20Image.swp" download>
+          <span class="macro-dl-arrow" aria-hidden="true"></span>.swp<span class="visually-hidden"> - download Save Preview Image.swp</span>
+        </a>
+      </li>
+
+      <li class="macro-row" data-category="export">
+        <span class="macro-row-n" aria-hidden="true"></span>
+        <div class="macro-row-main">
+          <h2 class="macro-row-title"><a class="macro-row-link" href="macros/save-step/">Save STEP</a></h2>
+          <p class="macro-row-summary">Exports the open part or assembly to a STEP file. Drawings are reported as unsupported.</p>
+          <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span></p>
+        </div>
+        <span class="macro-tag" data-tag="export">Export</span>
+        <a class="macro-dl" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Save%20STEP.swp" download>
+          <span class="macro-dl-arrow" aria-hidden="true"></span>.swp<span class="visually-hidden"> - download Save STEP.swp</span>
+        </a>
+      </li>
+
+      <li class="macro-row" data-category="utility">
+        <span class="macro-row-n" aria-hidden="true"></span>
+        <div class="macro-row-main">
+          <h2 class="macro-row-title"><a class="macro-row-link" href="macros/save-with-performance-improvement/">Save with Performance Improvement</a></h2>
+          <p class="macro-row-summary">Turns image quality down to its cheapest settings — shaded deviation at maximum, high-quality edges off, wireframe quality at its lowest — then saves a copy named &lt;name&gt;_Optimized.</p>
+          <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
+        </div>
+        <span class="macro-tag" data-tag="utility">Utility</span>
+        <a class="macro-dl" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Save%20with%20Performance%20Improvement.swp" download>
+          <span class="macro-dl-arrow" aria-hidden="true"></span>.swp<span class="visually-hidden"> - download Save with Performance Improvement.swp</span>
+        </a>
+      </li>
+
+      <li class="macro-row" data-category="properties">
+        <span class="macro-row-n" aria-hidden="true"></span>
+        <div class="macro-row-main">
+          <h2 class="macro-row-title"><a class="macro-row-link" href="macros/set-custom-property/">Set Custom Property</a></h2>
+          <p class="macro-row-summary">Writes one custom property across every file in the scope. Works on parts, assemblies and drawings.</p>
+          <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
+        </div>
+        <span class="macro-tag" data-tag="properties">Properties</span>
+        <a class="macro-dl" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Set%20Custom%20Property.swp" download>
+          <span class="macro-dl-arrow" aria-hidden="true"></span>.swp<span class="visually-hidden"> - download Set Custom Property.swp</span>
+        </a>
+      </li>
+
+      <li class="macro-row" data-category="properties">
+        <span class="macro-row-n" aria-hidden="true"></span>
+        <div class="macro-row-main">
+          <h2 class="macro-row-title"><a class="macro-row-link" href="macros/write-mass-properties/">Write Mass Properties</a></h2>
+          <p class="macro-row-summary">Measures the model and writes mass, volume, surface area and centre of mass into custom properties, so a BOM or a drawing note can read them. Parts and assemblies only — drawings have no geometry to...</p>
+          <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span></p>
+        </div>
+        <span class="macro-tag" data-tag="properties">Properties</span>
+        <a class="macro-dl" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Write%20Mass%20Properties.swp" download>
+          <span class="macro-dl-arrow" aria-hidden="true"></span>.swp<span class="visually-hidden"> - download Write Mass Properties.swp</span>
+        </a>
+      </li>
+    </ol>
   </section>
 
   <section class="macro-install-note">
@@ -248,30 +505,52 @@
 </footer>
 
 <script>
-  // Same filter as the docs index: the cards are in the HTML, this only hides them.
+  // Every row is already in the HTML; this only hides them. Two independent filters - the category
+  // pill and the search box - and a row shows when it passes both, so narrowing one never silently
+  // undoes the other.
   (function () {
     var input = document.getElementById("macroFilter");
-    var grid = document.getElementById("macroGrid");
+    var index = document.getElementById("macroIndex");
     var count = document.getElementById("macroCount");
     var status = document.getElementById("macroStatus");
-    if (!input || !grid) return;
+    var pills = document.querySelectorAll(".macro-pill");
+    if (!index) return;
 
-    var cards = Array.prototype.slice.call(grid.querySelectorAll(".macro-card"));
+    var rows = Array.prototype.slice.call(index.querySelectorAll(".macro-row"));
+    var category = "all";
 
-    input.addEventListener("input", function () {
-      var query = input.value.trim().toLowerCase();
+    function apply() {
+      var query = input ? input.value.trim().toLowerCase() : "";
       var shown = 0;
 
-      cards.forEach(function (card) {
-        var match = !query || card.textContent.toLowerCase().indexOf(query) !== -1;
-        card.hidden = !match;
-        if (match) shown += 1;
+      rows.forEach(function (row) {
+        var inCategory = category === "all" || row.getAttribute("data-category") === category;
+        var matches = !query || row.textContent.toLowerCase().indexOf(query) !== -1;
+        var show = inCategory && matches;
+        row.hidden = !show;
+        if (show) shown += 1;
       });
 
-      count.textContent = shown + " of " + cards.length + " macros";
+      count.textContent = shown === rows.length
+        ? rows.length + " macros"
+        : shown + " of " + rows.length + " macros";
       status.hidden = shown > 0;
-      status.textContent = shown ? "" : "No macros matched your search.";
+      status.textContent = shown ? "" : "No macros matched. Clear the search or choose All.";
+    }
+
+    Array.prototype.forEach.call(pills, function (pill) {
+      pill.addEventListener("click", function () {
+        category = pill.getAttribute("data-filter");
+        Array.prototype.forEach.call(pills, function (other) {
+          var active = other === pill;
+          other.classList.toggle("is-active", active);
+          other.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+        apply();
+      });
     });
+
+    if (input) input.addEventListener("input", apply);
   })();
 </script>
 

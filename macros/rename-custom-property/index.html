@@ -4,21 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
-<title>Change SOLIDWORKS document units in bulk - free macro | SwMacroFlow</title>
-<meta name="description" content="A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.">
-<link rel="canonical" href="https://swmacroflow.in/macros/change-document-unit/">
-<meta property="og:title" content="Change SOLIDWORKS document units in bulk - free macro | SwMacroFlow">
-<meta property="og:description" content="A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.">
+<title>Rename a SOLIDWORKS custom property in bulk | SwMacroFlow</title>
+<meta name="description" content="A free SOLIDWORKS VBA macro that renames a custom property across many parts, assemblies and drawings while keeping the value it holds.">
+<link rel="canonical" href="https://swmacroflow.in/macros/rename-custom-property/">
+<meta property="og:title" content="Rename a SOLIDWORKS custom property in bulk | SwMacroFlow">
+<meta property="og:description" content="A free SOLIDWORKS VBA macro that renames a custom property across many parts, assemblies and drawings while keeping the value it holds.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://swmacroflow.in/macros/change-document-unit/">
+<meta property="og:url" content="https://swmacroflow.in/macros/rename-custom-property/">
 <meta property="og:site_name" content="SwMacroFlow">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://swmacroflow.in/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Change SOLIDWORKS document units in bulk - free macro | SwMacroFlow">
-<meta name="twitter:description" content="A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.">
+<meta name="twitter:title" content="Rename a SOLIDWORKS custom property in bulk | SwMacroFlow">
+<meta name="twitter:description" content="A free SOLIDWORKS VBA macro that renames a custom property across many parts, assemblies and drawings while keeping the value it holds.">
 <meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
 <meta name="theme-color" content="#0d0d0f">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -32,10 +32,10 @@
   "@graph": [
     {
       "@type": "SoftwareSourceCode",
-      "@id": "https://swmacroflow.in/macros/change-document-unit/#macro",
-      "name": "Change Document Unit",
-      "description": "A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.",
-      "url": "https://swmacroflow.in/macros/change-document-unit/",
+      "@id": "https://swmacroflow.in/macros/rename-custom-property/#macro",
+      "name": "Rename Custom Property",
+      "description": "A free SOLIDWORKS VBA macro that renames a custom property across many parts, assemblies and drawings while keeping the value it holds.",
+      "url": "https://swmacroflow.in/macros/rename-custom-property/",
       "programmingLanguage": "VBA",
       "runtimePlatform": "SOLIDWORKS",
       "codeRepository": "https://github.com/Urjitpatel28/SwMacroFlow.MacroLibrary",
@@ -70,8 +70,8 @@
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Change Document Unit",
-          "item": "https://swmacroflow.in/macros/change-document-unit/"
+          "name": "Rename Custom Property",
+          "item": "https://swmacroflow.in/macros/rename-custom-property/"
         }
       ]
     }
@@ -113,11 +113,15 @@
   <div class="docs-layout">
 
     <aside class="docs-sidebar">
-      <p class="docs-nav-group">Utility</p>
-      <nav class="docs-nav" aria-label="Utility macros">
+      <p class="docs-nav-group">Properties</p>
+      <nav class="docs-nav" aria-label="Properties macros">
         <ul>
-          <li><a href="/macros/change-document-unit/" class="is-active" aria-current="page">Change Document Unit</a></li>
-          <li><a href="/macros/save-with-performance-improvement/">Save with Performance Improvement</a></li>
+          <li><a href="/macros/export-properties-to-csv/">Export Properties to CSV</a></li>
+          <li><a href="/macros/find-and-replace-in-properties/">Find and Replace in Properties</a></li>
+          <li><a href="/macros/import-properties-from-csv/">Import Properties from CSV</a></li>
+          <li><a href="/macros/rename-custom-property/" class="is-active" aria-current="page">Rename Custom Property</a></li>
+          <li><a href="/macros/set-custom-property/">Set Custom Property</a></li>
+          <li><a href="/macros/write-mass-properties/">Write Mass Properties</a></li>
         </ul>
       </nav>
       <p class="docs-nav-group">Export</p>
@@ -131,22 +135,18 @@
           <li><a href="/macros/save-step/">Save STEP</a></li>
         </ul>
       </nav>
-      <p class="docs-nav-group">Properties</p>
-      <nav class="docs-nav" aria-label="Properties macros">
-        <ul>
-          <li><a href="/macros/export-properties-to-csv/">Export Properties to CSV</a></li>
-          <li><a href="/macros/find-and-replace-in-properties/">Find and Replace in Properties</a></li>
-          <li><a href="/macros/import-properties-from-csv/">Import Properties from CSV</a></li>
-          <li><a href="/macros/rename-custom-property/">Rename Custom Property</a></li>
-          <li><a href="/macros/set-custom-property/">Set Custom Property</a></li>
-          <li><a href="/macros/write-mass-properties/">Write Mass Properties</a></li>
-        </ul>
-      </nav>
       <p class="docs-nav-group">Drawing</p>
       <nav class="docs-nav" aria-label="Drawing macros">
         <ul>
           <li><a href="/macros/change-drawing-template/">Change Drawing Template</a></li>
           <li><a href="/macros/insert-block-in-drawings/">Insert Block In Drawings</a></li>
+        </ul>
+      </nav>
+      <p class="docs-nav-group">Utility</p>
+      <nav class="docs-nav" aria-label="Utility macros">
+        <ul>
+          <li><a href="/macros/change-document-unit/">Change Document Unit</a></li>
+          <li><a href="/macros/save-with-performance-improvement/">Save with Performance Improvement</a></li>
         </ul>
       </nav>
       <p class="docs-nav-group">Writing your own</p>
@@ -163,20 +163,20 @@
       <ol>
         <li><a href="/index.html">Home</a></li>
         <li><a href="/macros.html">Macros</a></li>
-        <li aria-current="page">Change Document Unit</li>
+        <li aria-current="page">Rename Custom Property</li>
       </ol>
     </nav>
       <p class="page-eyebrow">.swp macro</p>
-      <h1>Change Document Unit: set SOLIDWORKS units in bulk</h1>
-      <p class="macro-lede">Sets the document&#039;s unit system and the individual length, angle, mass, volume, time, force, power and energy units. Optionally switches inch dimensions to fractions.</p>
+      <h1>Rename Custom Property: rename across many files</h1>
+      <p class="macro-lede">Renames a custom property across many files. Works on parts, assemblies and drawings.</p>
 
       <div class="macro-meta">
-        <span class="macro-tag" data-tag="utility">Utility</span>
+        <span class="macro-tag" data-tag="properties">Properties</span>
         <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
       </div>
 
       <p class="macro-actions">
-        <a class="btn btn-primary" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Change%20Document%20Unit.swp" download>Download Change Document Unit.swp</a>
+        <a class="btn btn-primary" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Rename%20Custom%20Property.swp" download>Download Rename Custom Property.swp</a>
         <a class="btn btn-secondary" href="/index.html#download">Get SwMacroFlow</a>
       </p>
 
@@ -190,7 +190,7 @@
         </div>
       </div>
 
-      <div class="docs-markdown"><p><strong>Runs per file</strong>, on parts, assemblies and drawings.</p><h2>Inputs</h2><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>UnitSystem</td><td><code>MMGS</code>, <code>IPS</code>, <code>MKS</code>, <code>CGS</code> or <code>Custom</code>.</td></tr><tr><td>LengthUnit</td><td>Length unit for the document.</td></tr><tr><td>DualLengthUnit</td><td>Length unit for dual dimensions.</td></tr><tr><td>AngleUnit</td><td><code>degrees</code>, <code>deg/min</code>, <code>deg/min/sec</code> or <code>radians</code>.</td></tr></table><h3>Only read when UnitSystem is <code>Custom</code></h3><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>CustomLength / CustomMass / CustomVolume</td><td>Custom system base units.</td></tr><tr><td>CustomTime / CustomForce / CustomPower / CustomEnergy</td><td>The rest of the custom system.</td></tr></table><h3>Fractions — only apply to IPS, or a Custom system using inches</h3><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>UseFractions</td><td>Show inch dimensions as fractions.</td></tr><tr><td>Denominator</td><td>Smallest fraction to show: 2, 4, 8, 16, 32 or 64.</td></tr><tr><td>RoundFractions</td><td>Round to the nearest fraction rather than showing a remainder.</td></tr></table><h2>Results</h2><p>Reports the unit system and length unit that were applied, or the first unit name it could not recognise.</p></div>
+      <div class="docs-markdown"><p><strong>Runs per file</strong> — point the scope at a folder and it renames the property in each document in turn.</p><h2>Inputs</h2><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>OldName</td><td>The property to rename. Files that do not have it are reported as <em>nothing to do</em>, not as failures.</td></tr><tr><td>NewName</td><td>The name to give it.</td></tr><tr><td>Scope</td><td><code>File</code>, <code>Active configuration</code>, <code>All configurations</code>, or <code>File and all configurations</code> (the default).</td></tr><tr><td>Overwrite</td><td>Off by default. Leave it off and a document that already has NewName is reported rather than quietly overwritten.</td></tr></table><h2>SOLIDWORKS has no rename</h2><p>There is no rename API for a custom property, so this <strong>adds the new name carrying the old value and then deletes the old one</strong>. Two consequences:</p><ul><li><strong>The property moves to the end of the list.</strong> It is genuinely a new property. Nothing reads custom properties by position, but it will look different in the Summary Information dialog.</li><li><strong>The stored value is carried, never the resolved one.</strong> A property holding <code>D1@Sketch1</code> keeps that expression. Carrying the resolved value would write the number it currently evaluates to and break the link permanently — the rename would quietly become a flatten.</li></ul><p><strong>The type is carried too.</strong> A property that was a Date or a Number keeps behaving like one in a BOM or a drawing note, rather than everything becoming Text.</p><h2>Results</h2><table><tr><th>Outcome</th><th>Meaning</th></tr><tr><td>OK</td><td>Renamed and saved. Says how many stores changed.</td></tr><tr><td>Warning</td><td>The document does not have OldName anywhere in scope. Nothing was saved.</td></tr><tr><td>Error</td><td>Read-only, never saved, NewName already present with Overwrite off, or the save failed.</td></tr></table><h3>Linked properties</h3><p>If the old property is linked to a dimension or an equation, SOLIDWORKS refuses to delete it. The new name will have been created in memory, but nothing is saved and the file is reported as an error naming the property — rather than being left with <strong>both</strong> names on disk.</p><h2>Chaining</h2><p>Place it before any export macro so the exported files carry the renamed property. It saves the document, and does not close or rebuild it.</p><p>Add the macro several times in one chain to rename several properties in a single pass over the files.</p></div>
 
       <aside class="doc-cta">
         <p>

@@ -4,21 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
-<title>Batch export SOLIDWORKS to PDF - free VBA macro | SwMacroFlow</title>
-<meta name="description" content="A free SOLIDWORKS VBA macro that exports the open document to PDF. Works on parts, assemblies and drawings, and runs across whole folders in SwMacroFlow.">
-<link rel="canonical" href="https://swmacroflow.in/macros/save-pdf/">
-<meta property="og:title" content="Batch export SOLIDWORKS to PDF - free VBA macro | SwMacroFlow">
-<meta property="og:description" content="A free SOLIDWORKS VBA macro that exports the open document to PDF. Works on parts, assemblies and drawings, and runs across whole folders in SwMacroFlow.">
+<title>Write SOLIDWORKS mass and volume to properties | SwMacroFlow</title>
+<meta name="description" content="A free SOLIDWORKS VBA macro that measures each model and writes mass, volume, surface area and centre of mass into custom properties for a BOM.">
+<link rel="canonical" href="https://swmacroflow.in/macros/write-mass-properties/">
+<meta property="og:title" content="Write SOLIDWORKS mass and volume to properties | SwMacroFlow">
+<meta property="og:description" content="A free SOLIDWORKS VBA macro that measures each model and writes mass, volume, surface area and centre of mass into custom properties for a BOM.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://swmacroflow.in/macros/save-pdf/">
+<meta property="og:url" content="https://swmacroflow.in/macros/write-mass-properties/">
 <meta property="og:site_name" content="SwMacroFlow">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://swmacroflow.in/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Batch export SOLIDWORKS to PDF - free VBA macro | SwMacroFlow">
-<meta name="twitter:description" content="A free SOLIDWORKS VBA macro that exports the open document to PDF. Works on parts, assemblies and drawings, and runs across whole folders in SwMacroFlow.">
+<meta name="twitter:title" content="Write SOLIDWORKS mass and volume to properties | SwMacroFlow">
+<meta name="twitter:description" content="A free SOLIDWORKS VBA macro that measures each model and writes mass, volume, surface area and centre of mass into custom properties for a BOM.">
 <meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
 <meta name="theme-color" content="#0d0d0f">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -32,10 +32,10 @@
   "@graph": [
     {
       "@type": "SoftwareSourceCode",
-      "@id": "https://swmacroflow.in/macros/save-pdf/#macro",
-      "name": "Save PDF",
-      "description": "A free SOLIDWORKS VBA macro that exports the open document to PDF. Works on parts, assemblies and drawings, and runs across whole folders in SwMacroFlow.",
-      "url": "https://swmacroflow.in/macros/save-pdf/",
+      "@id": "https://swmacroflow.in/macros/write-mass-properties/#macro",
+      "name": "Write Mass Properties",
+      "description": "A free SOLIDWORKS VBA macro that measures each model and writes mass, volume, surface area and centre of mass into custom properties for a BOM.",
+      "url": "https://swmacroflow.in/macros/write-mass-properties/",
       "programmingLanguage": "VBA",
       "runtimePlatform": "SOLIDWORKS",
       "codeRepository": "https://github.com/Urjitpatel28/SwMacroFlow.MacroLibrary",
@@ -70,8 +70,8 @@
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Save PDF",
-          "item": "https://swmacroflow.in/macros/save-pdf/"
+          "name": "Write Mass Properties",
+          "item": "https://swmacroflow.in/macros/write-mass-properties/"
         }
       ]
     }
@@ -113,17 +113,6 @@
   <div class="docs-layout">
 
     <aside class="docs-sidebar">
-      <p class="docs-nav-group">Export</p>
-      <nav class="docs-nav" aria-label="Export macros">
-        <ul>
-          <li><a href="/macros/save-drawing-as-dxf-or-dwg/">Save Drawing as DXF or DWG</a></li>
-          <li><a href="/macros/save-edrawings/">Save eDrawings</a></li>
-          <li><a href="/macros/save-neutral-format/">Save Neutral Format</a></li>
-          <li><a href="/macros/save-pdf/" class="is-active" aria-current="page">Save PDF</a></li>
-          <li><a href="/macros/save-preview-image/">Save Preview Image</a></li>
-          <li><a href="/macros/save-step/">Save STEP</a></li>
-        </ul>
-      </nav>
       <p class="docs-nav-group">Properties</p>
       <nav class="docs-nav" aria-label="Properties macros">
         <ul>
@@ -132,7 +121,18 @@
           <li><a href="/macros/import-properties-from-csv/">Import Properties from CSV</a></li>
           <li><a href="/macros/rename-custom-property/">Rename Custom Property</a></li>
           <li><a href="/macros/set-custom-property/">Set Custom Property</a></li>
-          <li><a href="/macros/write-mass-properties/">Write Mass Properties</a></li>
+          <li><a href="/macros/write-mass-properties/" class="is-active" aria-current="page">Write Mass Properties</a></li>
+        </ul>
+      </nav>
+      <p class="docs-nav-group">Export</p>
+      <nav class="docs-nav" aria-label="Export macros">
+        <ul>
+          <li><a href="/macros/save-drawing-as-dxf-or-dwg/">Save Drawing as DXF or DWG</a></li>
+          <li><a href="/macros/save-edrawings/">Save eDrawings</a></li>
+          <li><a href="/macros/save-neutral-format/">Save Neutral Format</a></li>
+          <li><a href="/macros/save-pdf/">Save PDF</a></li>
+          <li><a href="/macros/save-preview-image/">Save Preview Image</a></li>
+          <li><a href="/macros/save-step/">Save STEP</a></li>
         </ul>
       </nav>
       <p class="docs-nav-group">Drawing</p>
@@ -163,20 +163,20 @@
       <ol>
         <li><a href="/index.html">Home</a></li>
         <li><a href="/macros.html">Macros</a></li>
-        <li aria-current="page">Save PDF</li>
+        <li aria-current="page">Write Mass Properties</li>
       </ol>
     </nav>
       <p class="page-eyebrow">.swp macro</p>
-      <h1>Save PDF: export SOLIDWORKS files to PDF</h1>
-      <p class="macro-lede">Exports the open document to PDF. Works on parts, assemblies and drawings.</p>
+      <h1>Write Mass Properties: mass and volume into properties</h1>
+      <p class="macro-lede">Measures the model and writes mass, volume, surface area and centre of mass into custom properties, so a BOM or a drawing note can read them. Parts and assemblies only — drawings have no geometry to...</p>
 
       <div class="macro-meta">
-        <span class="macro-tag" data-tag="export">Export</span>
-        <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
+        <span class="macro-tag" data-tag="properties">Properties</span>
+        <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span></p>
       </div>
 
       <p class="macro-actions">
-        <a class="btn btn-primary" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Save%20PDF.swp" download>Download Save PDF.swp</a>
+        <a class="btn btn-primary" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Write%20Mass%20Properties.swp" download>Download Write Mass Properties.swp</a>
         <a class="btn btn-secondary" href="/index.html#download">Get SwMacroFlow</a>
       </p>
 
@@ -190,7 +190,7 @@
         </div>
       </div>
 
-      <div class="docs-markdown"><p><strong>Runs per file</strong> — point the scope at a folder and it exports each document in turn.</p><h2>Inputs</h2><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>OutputName</td><td>PDF file name, without the <code>.pdf</code> extension. Required.</td></tr><tr><td>OutputFolder</td><td>Where the PDF goes. Blank saves it beside the document. Created if missing.</td></tr><tr><td>Options</td><td>Free text matched against the option names below. Combine as many as you like.</td></tr><tr><td>SheetName</td><td>Drawings only. A sheet name, or a comma-separated list. Blank exports every sheet.</td></tr></table><h3>Options</h3><table><tr><th>Word</th><th>Effect</th></tr><tr><td><code>Zoom Model</code></td><td>Zoom to fit before exporting.</td></tr><tr><td><code>Open Created PDF</code></td><td>Open each PDF in the default viewer. <strong>Leave this out of an unattended batch</strong> — it opens a window per file.</td></tr><tr><td><code>Save Only Current Sheet</code></td><td>Drawings: export just the active sheet. Ignored if SheetName is set.</td></tr><tr><td><code>Save 3D PDF</code></td><td>Parts and assemblies: export as a 3D PDF.</td></tr></table><h2>Results</h2><p>Reports the path it wrote, or the SOLIDWORKS error code if <code>SaveAs</code> failed.</p></div>
+      <div class="docs-markdown"><p><strong>Runs per file</strong> — point the scope at a folder and it measures each document in turn.</p><h2>Inputs</h2><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>MassProperty</td><td>Property to write the mass into. Defaults to <code>Mass</code>. Blank skips it.</td></tr><tr><td>VolumeProperty</td><td>Property for the volume. Blank skips it.</td></tr><tr><td>SurfaceAreaProperty</td><td>Property for the surface area. Blank skips it.</td></tr><tr><td>CentreOfMassProperty</td><td>Property for the centre of mass, written as <code>x, y, z</code>. Blank skips it.</td></tr><tr><td>Units</td><td><code>Kilograms and millimetres</code> (default), <code>Grams and millimetres</code>, <code>Kilograms and metres</code>, or <code>Pounds and inches</code>.</td></tr><tr><td>Decimals</td><td>Digits after the decimal point. Defaults to 3.</td></tr><tr><td>Scope</td><td><code>Active configuration</code> (default), <code>File</code>, or <code>File and active configuration</code>.</td></tr></table><p>At least one property name must be filled in, or the macro reports that there is nothing to write.</p><h2>Mass belongs to the configuration</h2><p>A part with a <strong>Long</strong> and a <strong>Short</strong> configuration has two different masses. The values written are the ones for whichever configuration is <strong>active when the macro runs</strong>, which is why Scope defaults to the active configuration rather than the file-level store.</p><p>If you need every configuration&#039;s mass, that needs a macro that activates each one in turn and rebuilds — a different and much slower job than this one.</p><h2>Units are converted, not read from the document</h2><p>SOLIDWORKS is asked for system units — kilograms and metres — and the macro converts from there. The numbers therefore do <strong>not</strong> depend on how each document happens to have its units configured, which is what makes a folder of mixed documents come out consistent.</p><p>Volume and surface area follow the chosen length unit: <code>Kilograms and millimetres</code> writes mm³ and mm².</p><h2>The decimal point is always a full stop</h2><p><code>Format</code> uses the machine&#039;s regional settings, so a German workstation would otherwise write <code>1,234</code> into a property — which a BOM or a downstream CSV then reads as two columns or as a thousands group. This macro detects the locale separator and normalises it to <code>.</code> every time.</p><h2>Results</h2><table><tr><th>Outcome</th><th>Meaning</th></tr><tr><td>OK</td><td>Written and saved. Reports how many properties changed, and the mass.</td></tr><tr><td>Warning</td><td>Every value already matched what the document holds. Nothing was saved.</td></tr><tr><td>Error</td><td>A drawing, read-only, never saved, no property names given, no solid bodies to measure, or the save failed.</td></tr></table><p><strong>Unchanged values are not rewritten.</strong> Re-running over a folder whose geometry has not moved saves nothing and dirties nothing — which matters, because a needless save changes every file&#039;s timestamp and, in a PDM system, every file&#039;s version.</p><h2>Chaining</h2><p>Place it <strong>before</strong> any export or BOM macro so the exported files carry the measured values. It saves the document, and does not close or rebuild it.</p><p>Pair it with <em>Export Properties to CSV</em> as the last link to get a weights table for the whole folder in one pass.</p></div>
 
       <aside class="doc-cta">
         <p>

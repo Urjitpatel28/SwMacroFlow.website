@@ -4,21 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
-<title>Change SOLIDWORKS document units in bulk - free macro | SwMacroFlow</title>
-<meta name="description" content="A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.">
-<link rel="canonical" href="https://swmacroflow.in/macros/change-document-unit/">
-<meta property="og:title" content="Change SOLIDWORKS document units in bulk - free macro | SwMacroFlow">
-<meta property="og:description" content="A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.">
+<title>Batch save SOLIDWORKS files as images - free macro | SwMacroFlow</title>
+<meta name="description" content="A free SOLIDWORKS VBA macro that captures a bitmap of each part, assembly or drawing sheet, so a folder of models becomes a folder of thumbnails.">
+<link rel="canonical" href="https://swmacroflow.in/macros/save-preview-image/">
+<meta property="og:title" content="Batch save SOLIDWORKS files as images - free macro | SwMacroFlow">
+<meta property="og:description" content="A free SOLIDWORKS VBA macro that captures a bitmap of each part, assembly or drawing sheet, so a folder of models becomes a folder of thumbnails.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://swmacroflow.in/macros/change-document-unit/">
+<meta property="og:url" content="https://swmacroflow.in/macros/save-preview-image/">
 <meta property="og:site_name" content="SwMacroFlow">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://swmacroflow.in/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Change SOLIDWORKS document units in bulk - free macro | SwMacroFlow">
-<meta name="twitter:description" content="A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.">
+<meta name="twitter:title" content="Batch save SOLIDWORKS files as images - free macro | SwMacroFlow">
+<meta name="twitter:description" content="A free SOLIDWORKS VBA macro that captures a bitmap of each part, assembly or drawing sheet, so a folder of models becomes a folder of thumbnails.">
 <meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
 <meta name="theme-color" content="#0d0d0f">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -32,10 +32,10 @@
   "@graph": [
     {
       "@type": "SoftwareSourceCode",
-      "@id": "https://swmacroflow.in/macros/change-document-unit/#macro",
-      "name": "Change Document Unit",
-      "description": "A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.",
-      "url": "https://swmacroflow.in/macros/change-document-unit/",
+      "@id": "https://swmacroflow.in/macros/save-preview-image/#macro",
+      "name": "Save Preview Image",
+      "description": "A free SOLIDWORKS VBA macro that captures a bitmap of each part, assembly or drawing sheet, so a folder of models becomes a folder of thumbnails.",
+      "url": "https://swmacroflow.in/macros/save-preview-image/",
       "programmingLanguage": "VBA",
       "runtimePlatform": "SOLIDWORKS",
       "codeRepository": "https://github.com/Urjitpatel28/SwMacroFlow.MacroLibrary",
@@ -70,8 +70,8 @@
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Change Document Unit",
-          "item": "https://swmacroflow.in/macros/change-document-unit/"
+          "name": "Save Preview Image",
+          "item": "https://swmacroflow.in/macros/save-preview-image/"
         }
       ]
     }
@@ -113,13 +113,6 @@
   <div class="docs-layout">
 
     <aside class="docs-sidebar">
-      <p class="docs-nav-group">Utility</p>
-      <nav class="docs-nav" aria-label="Utility macros">
-        <ul>
-          <li><a href="/macros/change-document-unit/" class="is-active" aria-current="page">Change Document Unit</a></li>
-          <li><a href="/macros/save-with-performance-improvement/">Save with Performance Improvement</a></li>
-        </ul>
-      </nav>
       <p class="docs-nav-group">Export</p>
       <nav class="docs-nav" aria-label="Export macros">
         <ul>
@@ -127,7 +120,7 @@
           <li><a href="/macros/save-edrawings/">Save eDrawings</a></li>
           <li><a href="/macros/save-neutral-format/">Save Neutral Format</a></li>
           <li><a href="/macros/save-pdf/">Save PDF</a></li>
-          <li><a href="/macros/save-preview-image/">Save Preview Image</a></li>
+          <li><a href="/macros/save-preview-image/" class="is-active" aria-current="page">Save Preview Image</a></li>
           <li><a href="/macros/save-step/">Save STEP</a></li>
         </ul>
       </nav>
@@ -149,6 +142,13 @@
           <li><a href="/macros/insert-block-in-drawings/">Insert Block In Drawings</a></li>
         </ul>
       </nav>
+      <p class="docs-nav-group">Utility</p>
+      <nav class="docs-nav" aria-label="Utility macros">
+        <ul>
+          <li><a href="/macros/change-document-unit/">Change Document Unit</a></li>
+          <li><a href="/macros/save-with-performance-improvement/">Save with Performance Improvement</a></li>
+        </ul>
+      </nav>
       <p class="docs-nav-group">Writing your own</p>
       <nav class="docs-nav" aria-label="Guides">
         <ul>
@@ -163,20 +163,20 @@
       <ol>
         <li><a href="/index.html">Home</a></li>
         <li><a href="/macros.html">Macros</a></li>
-        <li aria-current="page">Change Document Unit</li>
+        <li aria-current="page">Save Preview Image</li>
       </ol>
     </nav>
       <p class="page-eyebrow">.swp macro</p>
-      <h1>Change Document Unit: set SOLIDWORKS units in bulk</h1>
-      <p class="macro-lede">Sets the document&#039;s unit system and the individual length, angle, mass, volume, time, force, power and energy units. Optionally switches inch dimensions to fractions.</p>
+      <h1>Save Preview Image: capture SOLIDWORKS thumbnails</h1>
+      <p class="macro-lede">Captures a bitmap of the open document. Works on parts, assemblies and drawings — on a drawing it captures the active sheet.</p>
 
       <div class="macro-meta">
-        <span class="macro-tag" data-tag="utility">Utility</span>
+        <span class="macro-tag" data-tag="export">Export</span>
         <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
       </div>
 
       <p class="macro-actions">
-        <a class="btn btn-primary" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Change%20Document%20Unit.swp" download>Download Change Document Unit.swp</a>
+        <a class="btn btn-primary" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Save%20Preview%20Image.swp" download>Download Save Preview Image.swp</a>
         <a class="btn btn-secondary" href="/index.html#download">Get SwMacroFlow</a>
       </p>
 
@@ -190,7 +190,7 @@
         </div>
       </div>
 
-      <div class="docs-markdown"><p><strong>Runs per file</strong>, on parts, assemblies and drawings.</p><h2>Inputs</h2><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>UnitSystem</td><td><code>MMGS</code>, <code>IPS</code>, <code>MKS</code>, <code>CGS</code> or <code>Custom</code>.</td></tr><tr><td>LengthUnit</td><td>Length unit for the document.</td></tr><tr><td>DualLengthUnit</td><td>Length unit for dual dimensions.</td></tr><tr><td>AngleUnit</td><td><code>degrees</code>, <code>deg/min</code>, <code>deg/min/sec</code> or <code>radians</code>.</td></tr></table><h3>Only read when UnitSystem is <code>Custom</code></h3><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>CustomLength / CustomMass / CustomVolume</td><td>Custom system base units.</td></tr><tr><td>CustomTime / CustomForce / CustomPower / CustomEnergy</td><td>The rest of the custom system.</td></tr></table><h3>Fractions — only apply to IPS, or a Custom system using inches</h3><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>UseFractions</td><td>Show inch dimensions as fractions.</td></tr><tr><td>Denominator</td><td>Smallest fraction to show: 2, 4, 8, 16, 32 or 64.</td></tr><tr><td>RoundFractions</td><td>Round to the nearest fraction rather than showing a remainder.</td></tr></table><h2>Results</h2><p>Reports the unit system and length unit that were applied, or the first unit name it could not recognise.</p></div>
+      <div class="docs-markdown"><p><strong>Runs per file</strong> — point the scope at a folder and it writes one image per document.</p><p>Built for ERP and catalogue thumbnails, where a folder of images named after the part number is all the downstream system needs.</p><h2>Inputs</h2><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>OutputFolder</td><td>Where the image goes. Blank saves it beside the document. Created if missing.</td></tr><tr><td>OutputName</td><td>File name <strong>without</strong> an extension. Blank uses the document&#039;s own name. <code>{Property}</code> placeholders work, so <code>{PartNumber}</code> names each image after the part number.</td></tr><tr><td>Width</td><td>Image width in pixels. Defaults to 1920.</td></tr><tr><td>Height</td><td>Image height in pixels. Defaults to 1080.</td></tr><tr><td>ZoomToFit</td><td>On by default. Zooms to fit and redraws before capturing, so the model fills the frame.</td></tr><tr><td>Overwrite</td><td>On by default. Clear it to skip documents whose image already exists.</td></tr></table><h2>Results</h2><p>Reports the path and the pixel size it wrote.</p><p><code>SaveBMP</code> returns only true or false — it reports <strong>no error code at all</strong>, so there is nothing to decode on failure. Rather than printing &quot;SaveBMP returned False&quot;, the macro names the causes worth checking: a read-only or locked target file, or a folder that could not be created.</p><h2>Notes</h2><p><strong>Leave ZoomToFit on for a batch.</strong> The capture is of the graphics area as it stands, so a model left zoomed in by an earlier macro in the chain would be captured that way.</p><p><strong>Width and Height are pixels, not a scale.</strong> Blank falls back to 1920×1080 rather than to zero: <code>SaveBMP</code> is not documented to treat zero as &quot;use the current window&quot;, so the macro supplies a real size instead of guessing at one.</p><p><strong>The output is a <code>.bmp</code>.</strong> That is what the SOLIDWORKS API writes; converting to PNG or JPEG is a job for whatever consumes the folder.</p><h2>Chaining</h2><p>Safe anywhere in a chain, with one caveat: it changes the view when ZoomToFit is on. That affects nothing on disk, but a later macro that captures or prints the view will see the zoomed-to-fit state. It does not save, rebuild or close the document.</p></div>
 
       <aside class="doc-cta">
         <p>

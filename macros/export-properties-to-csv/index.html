@@ -4,21 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
-<title>Change SOLIDWORKS document units in bulk - free macro | SwMacroFlow</title>
-<meta name="description" content="A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.">
-<link rel="canonical" href="https://swmacroflow.in/macros/change-document-unit/">
-<meta property="og:title" content="Change SOLIDWORKS document units in bulk - free macro | SwMacroFlow">
-<meta property="og:description" content="A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.">
+<title>Export SOLIDWORKS custom properties to one CSV | SwMacroFlow</title>
+<meta name="description" content="A free SOLIDWORKS VBA macro that appends every custom property of every document to a single CSV. A folder of 300 files gives one spreadsheet.">
+<link rel="canonical" href="https://swmacroflow.in/macros/export-properties-to-csv/">
+<meta property="og:title" content="Export SOLIDWORKS custom properties to one CSV | SwMacroFlow">
+<meta property="og:description" content="A free SOLIDWORKS VBA macro that appends every custom property of every document to a single CSV. A folder of 300 files gives one spreadsheet.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://swmacroflow.in/macros/change-document-unit/">
+<meta property="og:url" content="https://swmacroflow.in/macros/export-properties-to-csv/">
 <meta property="og:site_name" content="SwMacroFlow">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://swmacroflow.in/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Change SOLIDWORKS document units in bulk - free macro | SwMacroFlow">
-<meta name="twitter:description" content="A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.">
+<meta name="twitter:title" content="Export SOLIDWORKS custom properties to one CSV | SwMacroFlow">
+<meta name="twitter:description" content="A free SOLIDWORKS VBA macro that appends every custom property of every document to a single CSV. A folder of 300 files gives one spreadsheet.">
 <meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
 <meta name="theme-color" content="#0d0d0f">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -32,10 +32,10 @@
   "@graph": [
     {
       "@type": "SoftwareSourceCode",
-      "@id": "https://swmacroflow.in/macros/change-document-unit/#macro",
-      "name": "Change Document Unit",
-      "description": "A free SOLIDWORKS VBA macro that sets the document unit system and the individual length, angle, mass, volume, time, force, power and energy units.",
-      "url": "https://swmacroflow.in/macros/change-document-unit/",
+      "@id": "https://swmacroflow.in/macros/export-properties-to-csv/#macro",
+      "name": "Export Properties to CSV",
+      "description": "A free SOLIDWORKS VBA macro that appends every custom property of every document to a single CSV. A folder of 300 files gives one spreadsheet.",
+      "url": "https://swmacroflow.in/macros/export-properties-to-csv/",
       "programmingLanguage": "VBA",
       "runtimePlatform": "SOLIDWORKS",
       "codeRepository": "https://github.com/Urjitpatel28/SwMacroFlow.MacroLibrary",
@@ -70,8 +70,8 @@
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Change Document Unit",
-          "item": "https://swmacroflow.in/macros/change-document-unit/"
+          "name": "Export Properties to CSV",
+          "item": "https://swmacroflow.in/macros/export-properties-to-csv/"
         }
       ]
     }
@@ -113,11 +113,15 @@
   <div class="docs-layout">
 
     <aside class="docs-sidebar">
-      <p class="docs-nav-group">Utility</p>
-      <nav class="docs-nav" aria-label="Utility macros">
+      <p class="docs-nav-group">Properties</p>
+      <nav class="docs-nav" aria-label="Properties macros">
         <ul>
-          <li><a href="/macros/change-document-unit/" class="is-active" aria-current="page">Change Document Unit</a></li>
-          <li><a href="/macros/save-with-performance-improvement/">Save with Performance Improvement</a></li>
+          <li><a href="/macros/export-properties-to-csv/" class="is-active" aria-current="page">Export Properties to CSV</a></li>
+          <li><a href="/macros/find-and-replace-in-properties/">Find and Replace in Properties</a></li>
+          <li><a href="/macros/import-properties-from-csv/">Import Properties from CSV</a></li>
+          <li><a href="/macros/rename-custom-property/">Rename Custom Property</a></li>
+          <li><a href="/macros/set-custom-property/">Set Custom Property</a></li>
+          <li><a href="/macros/write-mass-properties/">Write Mass Properties</a></li>
         </ul>
       </nav>
       <p class="docs-nav-group">Export</p>
@@ -131,22 +135,18 @@
           <li><a href="/macros/save-step/">Save STEP</a></li>
         </ul>
       </nav>
-      <p class="docs-nav-group">Properties</p>
-      <nav class="docs-nav" aria-label="Properties macros">
-        <ul>
-          <li><a href="/macros/export-properties-to-csv/">Export Properties to CSV</a></li>
-          <li><a href="/macros/find-and-replace-in-properties/">Find and Replace in Properties</a></li>
-          <li><a href="/macros/import-properties-from-csv/">Import Properties from CSV</a></li>
-          <li><a href="/macros/rename-custom-property/">Rename Custom Property</a></li>
-          <li><a href="/macros/set-custom-property/">Set Custom Property</a></li>
-          <li><a href="/macros/write-mass-properties/">Write Mass Properties</a></li>
-        </ul>
-      </nav>
       <p class="docs-nav-group">Drawing</p>
       <nav class="docs-nav" aria-label="Drawing macros">
         <ul>
           <li><a href="/macros/change-drawing-template/">Change Drawing Template</a></li>
           <li><a href="/macros/insert-block-in-drawings/">Insert Block In Drawings</a></li>
+        </ul>
+      </nav>
+      <p class="docs-nav-group">Utility</p>
+      <nav class="docs-nav" aria-label="Utility macros">
+        <ul>
+          <li><a href="/macros/change-document-unit/">Change Document Unit</a></li>
+          <li><a href="/macros/save-with-performance-improvement/">Save with Performance Improvement</a></li>
         </ul>
       </nav>
       <p class="docs-nav-group">Writing your own</p>
@@ -163,20 +163,20 @@
       <ol>
         <li><a href="/index.html">Home</a></li>
         <li><a href="/macros.html">Macros</a></li>
-        <li aria-current="page">Change Document Unit</li>
+        <li aria-current="page">Export Properties to CSV</li>
       </ol>
     </nav>
       <p class="page-eyebrow">.swp macro</p>
-      <h1>Change Document Unit: set SOLIDWORKS units in bulk</h1>
-      <p class="macro-lede">Sets the document&#039;s unit system and the individual length, angle, mass, volume, time, force, power and energy units. Optionally switches inch dimensions to fractions.</p>
+      <h1>Export Properties to CSV: one spreadsheet per batch</h1>
+      <p class="macro-lede">Appends every custom property of each document to one CSV. A folder of 300 files produces one spreadsheet, not 300. Works on parts, assemblies and drawings.</p>
 
       <div class="macro-meta">
-        <span class="macro-tag" data-tag="utility">Utility</span>
+        <span class="macro-tag" data-tag="properties">Properties</span>
         <p class="macro-applies"><span class="macro-chip" title="Parts">PRT<span class="visually-hidden"> Parts</span></span><span class="macro-chip" title="Assemblies">ASM<span class="visually-hidden"> Assemblies</span></span><span class="macro-chip" title="Drawings">DRW<span class="visually-hidden"> Drawings</span></span></p>
       </div>
 
       <p class="macro-actions">
-        <a class="btn btn-primary" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Change%20Document%20Unit.swp" download>Download Change Document Unit.swp</a>
+        <a class="btn btn-primary" href="https://raw.githubusercontent.com/Urjitpatel28/SwMacroFlow.MacroLibrary/main/Macros/Export%20Properties%20to%20CSV.swp" download>Download Export Properties to CSV.swp</a>
         <a class="btn btn-secondary" href="/index.html#download">Get SwMacroFlow</a>
       </p>
 
@@ -190,7 +190,7 @@
         </div>
       </div>
 
-      <div class="docs-markdown"><p><strong>Runs per file</strong>, on parts, assemblies and drawings.</p><h2>Inputs</h2><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>UnitSystem</td><td><code>MMGS</code>, <code>IPS</code>, <code>MKS</code>, <code>CGS</code> or <code>Custom</code>.</td></tr><tr><td>LengthUnit</td><td>Length unit for the document.</td></tr><tr><td>DualLengthUnit</td><td>Length unit for dual dimensions.</td></tr><tr><td>AngleUnit</td><td><code>degrees</code>, <code>deg/min</code>, <code>deg/min/sec</code> or <code>radians</code>.</td></tr></table><h3>Only read when UnitSystem is <code>Custom</code></h3><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>CustomLength / CustomMass / CustomVolume</td><td>Custom system base units.</td></tr><tr><td>CustomTime / CustomForce / CustomPower / CustomEnergy</td><td>The rest of the custom system.</td></tr></table><h3>Fractions — only apply to IPS, or a Custom system using inches</h3><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>UseFractions</td><td>Show inch dimensions as fractions.</td></tr><tr><td>Denominator</td><td>Smallest fraction to show: 2, 4, 8, 16, 32 or 64.</td></tr><tr><td>RoundFractions</td><td>Round to the nearest fraction rather than showing a remainder.</td></tr></table><h2>Results</h2><p>Reports the unit system and length unit that were applied, or the first unit name it could not recognise.</p></div>
+      <div class="docs-markdown"><p><strong>Runs per file</strong> — each file in the batch appends its own rows as it is opened.</p><h2>Inputs</h2><table><tr><th>Field</th><th>Purpose</th></tr><tr><td>OutputFolder</td><td>Folder for the CSV. Blank writes it beside each document, which for a batch spread across folders means several CSVs — rarely what you want.</td></tr><tr><td>CsvName</td><td>The one file every document appends to. Defaults to <code>properties.csv</code>.</td></tr><tr><td>Scope</td><td><code>File</code>, <code>Active configuration</code>, <code>All configurations</code>, or <code>File and all configurations</code>.</td></tr><tr><td>IncludeEmpty</td><td>On by default. Clear it to leave out properties whose value is blank.</td></tr></table><h2>The format</h2><p>One row per property — &quot;long&quot; format:</p><table><tr><th>Column</th><th>Holds</th></tr><tr><td>FilePath</td><td>Full path of the document</td></tr><tr><td>FileName</td><td>Just the file name, for matching after files move</td></tr><tr><td>Configuration</td><td>Empty for a file-level property, otherwise the configuration name</td></tr><tr><td>PropertyName</td><td>The property</td></tr><tr><td>Type</td><td><code>Text</code>, <code>Number</code>, <code>Double</code>, <code>YesOrNo</code>, <code>Date</code>, <code>Equation</code></td></tr><tr><td>Value</td><td>The <strong>stored</strong> value, so <code>D1@Sketch1</code> stays an expression</td></tr><tr><td>ResolvedValue</td><td>What that expression evaluates to</td></tr></table><p><strong>Why long and not one column per property.</strong> The macro sees one document at a time and appends as it goes, so it cannot know the full set of property names in advance to build a header from. Long format also survives a folder where every document has a different property set, and it is what <em>Import Properties from CSV</em> reads back.</p><h2>Encoding</h2><p>Written as <strong>UTF-16LE</strong>, which Excel opens directly by double-click. This is not a detail: a property value can hold any character in the customer&#039;s documents, and the system codepage cannot represent all of them. An ANSI write turns those into question marks silently — a corrupted export that still reports success.</p><h2>Results</h2><p>Reports how many properties it appended and to which file. A document with no properties is a warning rather than an error, so it stands out in the run report without failing the batch.</p><h2>Notes</h2><p><strong>Several SOLIDWORKS instances can share one batch queue</strong>, so two of them can reach the CSV at the same moment. The append is a single open-write-close and retries for a few seconds if the file is locked. If the CSV is open in Excel when the batch runs, the file is reported as locked rather than silently skipped — close it and re-run.</p><p><strong>The header is written only by whichever file creates the CSV.</strong> Point a second batch at an existing CSV and it appends to it. Delete the file first if you want a clean export.</p><h2>Chaining</h2><p>Read-only with respect to the document — it does not write, save, rebuild or close anything. Safe anywhere in a chain, and useful as the <strong>last</strong> link to record what the earlier macros left behind.</p></div>
 
       <aside class="doc-cta">
         <p>

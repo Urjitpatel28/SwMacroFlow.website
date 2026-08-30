@@ -164,13 +164,86 @@ function stripLeadingSummary(markdown, summary) {
   return [...lines.slice(0, index), ...lines.slice(end)].join("\n");
 }
 
+/* The two metadata lines each macro document carries under its lede:
+
+       **Category:** Export
+       **Applies to:** Parts, Assemblies
+
+   They are prose in the file because the desktop app renders the same document in its help pane and
+   has no schema to put them in. Here they are structure - the category drives the index page's
+   filters, and "applies to" is the question a reader actually arrives with ("does this work on my
+   drawings?"). Lifted out rather than left in place, because rendered they are two stray bold lines
+   sitting between the lede and the first heading of every page.
+
+   A document without the lines is not an error: the five macros published before this convention
+   existed still have to build. Category falls back to Utility, which is where an uncategorised
+   utility belongs anyway, and the chips are simply omitted. */
+const DOC_TYPES = [
+  { key: "parts", label: "PRT", full: "Parts" },
+  { key: "assemblies", label: "ASM", full: "Assemblies" },
+  { key: "drawings", label: "DRW", full: "Drawings" }
+];
+
+function parseMacroMeta(markdown) {
+  const read = field => {
+    const match = markdown.match(new RegExp(`^\\*\\*${field}:\\*\\*\\s*(.+)$`, "mi"));
+    return match ? match[1].trim() : "";
+  };
+
+  const category = read("Category") || "Utility";
+
+  // Matched on the word rather than split on the comma, so "Parts and assemblies" and
+  // "Parts, Assemblies" both read the same and a stray "and" never becomes a fourth chip.
+  const appliesRaw = read("Applies to").toLowerCase();
+  const appliesTo = DOC_TYPES.filter(type => appliesRaw.includes(type.key)).map(type => type.key);
+
+  // Lifting the lines out leaves the blank line above them next to the blank line below them, so
+  // the run is collapsed rather than left as a double gap the renderer would turn into an empty
+  // paragraph.
+  const body = markdown
+    .replace(/^\*\*(?:Category|Applies to):\*\*.*(?:\r?\n)?/gim, "")
+    .replace(/(\r?\n){3,}/g, "$1$1")
+    .replace(/^(?:[ \t]*\r?\n)+/, "");
+
+  return { category, appliesTo, body };
+}
+
+/* Macro documents link to each other by file name - [Save STEP](Save%20STEP.md) - which is correct
+   in the library repo and in the app's help pane, and a dead link on the website, where each
+   document lives at /macros/<slug>/ and no .md file is served at all. Rewritten rather than
+   forbidden: cross-references are the most useful thing these documents do, and an author should
+   not have to know where the site puts them.
+
+   Only links whose target is actually published are rewritten. One pointing at HelloWorld, or at a
+   document that never reached the library, is left as it was - a visibly broken link in a preview
+   is a better outcome than a confident link to a page that 404s. */
+function rewriteDocLinks(text, slugs) {
+  return text.replace(/\]\(([^)\s]+?)\.md\)/g, (whole, target) => {
+    let decoded;
+    try {
+      decoded = decodeURIComponent(target);
+    } catch {
+      return whole;
+    }
+
+    const slug = slugify(decoded);
+    return slugs.has(slug) ? `](/macros/${slug}/)` : whole;
+  });
+}
+
 /* Descriptions are cut at a word boundary rather than mid-word: a snippet Google truncates itself
    is fine, one the site truncates badly is not. The default is sized for a meta description;
    visible ledes and cards pass DISPLAY_LIMIT so a two-sentence macro summary shows in full. */
 const DISPLAY_LIMIT = 200;
 
 function clamp(text, limit = 158) {
-  const clean = String(text).replace(/[*`]/g, "").replace(/\s+/g, " ").trim();
+  // Link syntax is flattened to the text it wraps rather than carried through: these strings
+  // become a meta description, a lede, and a row inside an element that is already one big link.
+  const clean = String(text)
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+    .replace(/[*`]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
   if (clean.length <= limit) return clean;
   const cut = clean.slice(0, limit);
   return `${cut.slice(0, cut.lastIndexOf(" "))}...`;
@@ -402,17 +475,22 @@ async function loadMacros(seoMeta) {
       }
     }
 
+    const { category, appliesTo, body } = parseMacroMeta(markdown);
+
     macros.push({
       name: entry.name,
       slug,
       title,
       heading: meta.heading || title,
       navTitle: meta.navTitle || title,
-      markdown,
-      summary: clamp(entry.summary || firstProse(markdown, title) || title, DISPLAY_LIMIT),
+      markdown: body,
+      category,
+      appliesTo,
+      summary: clamp(entry.summary || firstProse(body, title) || title, DISPLAY_LIMIT),
       seoTitle: meta.title ? `${meta.title} | SwMacroFlow` : `${title} - SOLIDWORKS macro | SwMacroFlow`,
-      seoDescription: clamp(meta.description || entry.summary || firstProse(markdown, title) || title),
+      seoDescription: clamp(meta.description || entry.summary || firstProse(body, title) || title),
       downloadUrl: rawUrl(entry.macroPath),
+      fileName: decodeURIComponent(entry.macroPath.split("/").pop()),
       path: `/macros/${slug}/`,
       lastmod
     });
@@ -420,6 +498,17 @@ async function loadMacros(seoMeta) {
 
   macros.sort((a, b) => a.title.localeCompare(b.title));
   if (!macros.length) throw new Error("Every macro was excluded - refusing to publish an empty macro index.");
+
+  // After the loop, not inside it: a link is only rewritten to a page that exists, and which pages
+  // exist is not known until every entry has been read and the excluded ones dropped.
+  // Bodies only. A summary has already been through clamp(), which flattens a link to its text,
+  // because a meta description cannot carry markup and a row that is itself one big link cannot
+  // carry another inside it.
+  const slugs = new Set(macros.map(macro => macro.slug));
+  for (const macro of macros) {
+    macro.markdown = rewriteDocLinks(macro.markdown, slugs);
+  }
+
   return macros;
 }
 
@@ -521,6 +610,51 @@ ${footer(base)}
 `;
 }
 
+/* Declared rather than derived from the data, so the filter bar and the sidebar keep a stable order
+   as macros are added: Export and Properties are the two anyone came for, and the order does not
+   reshuffle the day a fifth Drawing macro overtakes a category above it. A category that turns up in
+   a document without being listed here still renders - it sorts to the end rather than disappearing,
+   which is the failure mode you can see. */
+const CATEGORY_ORDER = ["Export", "Properties", "Drawing", "Utility"];
+
+function categoryRank(category) {
+  const at = CATEGORY_ORDER.indexOf(category);
+  return at === -1 ? CATEGORY_ORDER.length : at;
+}
+
+function categoryGroups(macros) {
+  const seen = new Map();
+  for (const macro of macros) {
+    if (!seen.has(macro.category)) seen.set(macro.category, []);
+    seen.get(macro.category).push(macro);
+  }
+
+  return [...seen.entries()]
+    .map(([title, entries]) => ({ title, key: slugify(title), macros: entries }))
+    .sort((a, b) => categoryRank(a.title) - categoryRank(b.title) || a.title.localeCompare(b.title));
+}
+
+function macroTag(macro) {
+  return `<span class="macro-tag" data-tag="${escapeHtml(slugify(macro.category))}">${escapeHtml(macro.category)}</span>`;
+}
+
+/* PRT / ASM / DRW rather than the full words: three short chips fit on one line beside a summary at
+   every width, and these are the abbreviations the file extensions already use. The full word is on
+   the title attribute, and repeated in the visually hidden text so a screen reader is not read three
+   consonant clusters. */
+function appliesChips(macro) {
+  if (!macro.appliesTo.length) return "";
+
+  const chips = DOC_TYPES.filter(type => macro.appliesTo.includes(type.key))
+    .map(
+      type =>
+        `<span class="macro-chip" title="${type.full}">${type.label}<span class="visually-hidden"> ${type.full}</span></span>`
+    )
+    .join("");
+
+  return `<p class="macro-applies">${chips}</p>`;
+}
+
 function macroPage(macro, macros) {
   const base = "/";
   const trail = [
@@ -553,10 +687,28 @@ function macroPage(macro, macros) {
     ? SwMarkdown.toHtml(stripLeadingSummary(macro.markdown, macro.summary), { stripFirstHeading: true })
     : "<p>No documentation has been published for this macro yet. The download below still works.</p>";
 
-  const others = macros
-    .filter(other => other.slug !== macro.slug)
-    .map(other => `<li><a href="${base}macros/${other.slug}/">${escapeHtml(other.navTitle)}</a></li>`)
-    .join("\n          ");
+  /* Grouped by category rather than one flat list. At five macros a flat list was the whole library
+     and fine; at sixteen it is a column of near-identical "Save …" links, and the reader arriving on
+     Save STEP is usually looking for the other export they half-remember. The macro's own category
+     is listed first, because that is where the neighbour they want almost always is. */
+  const others = categoryGroups(macros)
+    .sort((a, b) => (a.title === macro.category ? -1 : b.title === macro.category ? 1 : 0))
+    .map(group => {
+      const items = group.macros
+        .map(other => {
+          const active = other.slug === macro.slug ? ' class="is-active" aria-current="page"' : "";
+          return `<li><a href="${base}macros/${other.slug}/"${active}>${escapeHtml(other.navTitle)}</a></li>`;
+        })
+        .join("\n          ");
+
+      return `<p class="docs-nav-group">${escapeHtml(group.title)}</p>
+      <nav class="docs-nav" aria-label="${escapeHtml(group.title)} macros">
+        <ul>
+          ${items}
+        </ul>
+      </nav>`;
+    })
+    .join("\n      ");
 
   return `${head({
     base,
@@ -573,12 +725,7 @@ ${nav(base, "macros")}
   <div class="docs-layout">
 
     <aside class="docs-sidebar">
-      <p class="docs-nav-group">Other macros</p>
-      <nav class="docs-nav" aria-label="Macro library">
-        <ul>
-          ${others}
-        </ul>
-      </nav>
+      ${others}
       <p class="docs-nav-group">Writing your own</p>
       <nav class="docs-nav" aria-label="Guides">
         <ul>
@@ -593,6 +740,11 @@ ${nav(base, "macros")}
       <p class="page-eyebrow">.swp macro</p>
       <h1>${escapeHtml(macro.heading)}</h1>
       <p class="macro-lede">${SwMarkdown.inlineMarkdown(macro.summary)}</p>
+
+      <div class="macro-meta">
+        ${macroTag(macro)}
+        ${appliesChips(macro)}
+      </div>
 
       <p class="macro-actions">
         <a class="btn btn-primary" href="${escapeHtml(macro.downloadUrl)}" download>Download ${escapeHtml(macro.title)}.swp</a>
@@ -751,6 +903,7 @@ function macrosIndexPage(macros) {
   const base = "";
   const path = "/macros.html";
   const repoUrl = `https://github.com/${MACRO_LIBRARY.owner}/${MACRO_LIBRARY.repo}`;
+  const groups = categoryGroups(macros);
   const trail = [
     { name: "Home", path: "/" },
     { name: "Macros", path }
@@ -783,13 +936,35 @@ function macrosIndexPage(macros) {
     breadcrumbs(trail)
   ];
 
-  const cards = macros
+  /* Counted here rather than in the browser. A pill that says "Export 6" before any script has run
+     is a fact about the library; one that fills itself in on load is a number that flickers, and is
+     simply absent for anything reading the HTML rather than running it. */
+  const pills = [
+    `<button class="macro-pill is-active" type="button" data-filter="all" aria-pressed="true">All<span class="macro-pill-n">${macros.length}</span></button>`,
+    ...groups.map(
+      group =>
+        `<button class="macro-pill" type="button" data-filter="${escapeHtml(group.key)}" aria-pressed="false">${escapeHtml(group.title)}<span class="macro-pill-n">${group.macros.length}</span></button>`
+    )
+  ].join("\n          ");
+
+  /* One row per macro, and the row is the whole record: what it is called, what it does, what it
+     runs on, which group it belongs to, and the file itself. The number is a CSS counter over the
+     rows still showing, so filtering renumbers 01..N instead of leaving the gaps that make a
+     filtered list look broken. */
+  const rows = macros
     .map(
-      macro => `<article class="macro-card">
-        <span class="macro-file">.swp macro</span>
-        <h2><a class="macro-card-link" href="macros/${macro.slug}/">${escapeHtml(macro.navTitle)}</a></h2>
-        <p class="macro-description">${SwMarkdown.inlineMarkdown(macro.summary)}</p>
-      </article>`
+      macro => `<li class="macro-row" data-category="${escapeHtml(slugify(macro.category))}">
+        <span class="macro-row-n" aria-hidden="true"></span>
+        <div class="macro-row-main">
+          <h2 class="macro-row-title"><a class="macro-row-link" href="macros/${macro.slug}/">${escapeHtml(macro.navTitle)}</a></h2>
+          <p class="macro-row-summary">${SwMarkdown.inlineMarkdown(macro.summary)}</p>
+          ${appliesChips(macro)}
+        </div>
+        ${macroTag(macro)}
+        <a class="macro-dl" href="${escapeHtml(macro.downloadUrl)}" download>
+          <span class="macro-dl-arrow" aria-hidden="true"></span>.swp<span class="visually-hidden"> - download ${escapeHtml(macro.fileName)}</span>
+        </a>
+      </li>`
     )
     .join("\n\n      ");
 
@@ -798,7 +973,7 @@ function macrosIndexPage(macros) {
     path,
     title: "Free SOLIDWORKS macros - downloadable .swp macro library",
     description:
-      "Free SOLIDWORKS VBA macros to download: batch export to PDF, change document units, swap drawing sheet formats, insert blocks, and reduce file size.",
+      "Free SOLIDWORKS VBA macros to download: batch export to PDF and STEP, read and write custom properties, swap drawing sheet formats, insert blocks, and reduce file size.",
     schema
   })}
 <body>
@@ -814,20 +989,27 @@ ${nav(base, "macros")}
       <p>
         Every macro here is plain SOLIDWORKS VBA in a <code>.swp</code> file. Each one runs on its own
         in the VBA editor, and runs across a whole folder unattended inside
-        <a href="index.html">SwMacroFlow</a>. Open a macro to read its notes and download it.
+        <a href="index.html">SwMacroFlow</a>. Open a macro to read its notes, or take the file directly.
       </p>
+      <ul class="macro-stats">
+        <li><strong>${macros.length}</strong> macros</li>
+        <li><strong>${groups.length}</strong> groups</li>
+        <li><strong>Free</strong> and MIT licensed</li>
+      </ul>
     </div>
     <a class="btn btn-secondary" href="${repoUrl}" target="_blank" rel="noopener">View source repo</a>
   </section>
 
   <section class="macro-browser">
     <div class="macro-toolbar">
-      <label class="macro-search">
-        <span>Search macros</span>
-        <input id="macroFilter" type="search" placeholder="Search by name or description">
-      </label>
+      <div class="macro-pills" role="group" aria-label="Filter by category">
+        ${pills}
+      </div>
       <div class="macro-toolbar-end">
-        <div id="macroCount" class="macro-count">${macros.length} macros</div>
+        <label class="macro-search">
+          <span class="visually-hidden">Search macros</span>
+          <input id="macroFilter" type="search" placeholder="Search macros">
+        </label>
         <a class="btn btn-secondary btn-compact"
            href="${repoUrl}/archive/refs/heads/${MACRO_LIBRARY.branch}.zip"
            title="Downloads the whole repository as a zip. Extract the Macros folder into your macro folder.">
@@ -836,10 +1018,12 @@ ${nav(base, "macros")}
       </div>
     </div>
 
+    <p id="macroCount" class="macro-count" role="status">${macros.length} macros</p>
     <div id="macroStatus" class="macro-status" hidden></div>
-    <div id="macroGrid" class="macro-grid">
-      ${cards}
-    </div>
+
+    <ol id="macroIndex" class="macro-index">
+      ${rows}
+    </ol>
   </section>
 
   <section class="macro-install-note">
@@ -862,30 +1046,52 @@ ${nav(base, "macros")}
 ${footer(base)}
 
 <script>
-  // Same filter as the docs index: the cards are in the HTML, this only hides them.
+  // Every row is already in the HTML; this only hides them. Two independent filters - the category
+  // pill and the search box - and a row shows when it passes both, so narrowing one never silently
+  // undoes the other.
   (function () {
     var input = document.getElementById("macroFilter");
-    var grid = document.getElementById("macroGrid");
+    var index = document.getElementById("macroIndex");
     var count = document.getElementById("macroCount");
     var status = document.getElementById("macroStatus");
-    if (!input || !grid) return;
+    var pills = document.querySelectorAll(".macro-pill");
+    if (!index) return;
 
-    var cards = Array.prototype.slice.call(grid.querySelectorAll(".macro-card"));
+    var rows = Array.prototype.slice.call(index.querySelectorAll(".macro-row"));
+    var category = "all";
 
-    input.addEventListener("input", function () {
-      var query = input.value.trim().toLowerCase();
+    function apply() {
+      var query = input ? input.value.trim().toLowerCase() : "";
       var shown = 0;
 
-      cards.forEach(function (card) {
-        var match = !query || card.textContent.toLowerCase().indexOf(query) !== -1;
-        card.hidden = !match;
-        if (match) shown += 1;
+      rows.forEach(function (row) {
+        var inCategory = category === "all" || row.getAttribute("data-category") === category;
+        var matches = !query || row.textContent.toLowerCase().indexOf(query) !== -1;
+        var show = inCategory && matches;
+        row.hidden = !show;
+        if (show) shown += 1;
       });
 
-      count.textContent = shown + " of " + cards.length + " macros";
+      count.textContent = shown === rows.length
+        ? rows.length + " macros"
+        : shown + " of " + rows.length + " macros";
       status.hidden = shown > 0;
-      status.textContent = shown ? "" : "No macros matched your search.";
+      status.textContent = shown ? "" : "No macros matched. Clear the search or choose All.";
+    }
+
+    Array.prototype.forEach.call(pills, function (pill) {
+      pill.addEventListener("click", function () {
+        category = pill.getAttribute("data-filter");
+        Array.prototype.forEach.call(pills, function (other) {
+          var active = other === pill;
+          other.classList.toggle("is-active", active);
+          other.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+        apply();
+      });
     });
+
+    if (input) input.addEventListener("input", apply);
   })();
 </script>
 
