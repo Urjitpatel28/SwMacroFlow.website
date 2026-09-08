@@ -393,6 +393,178 @@ async function loadGuides(seoMeta) {
   return { guides, groups };
 }
 
+/*
+  Editorial guides at /guides/<slug>/. A third source directory beside docs/ and the macro library.
+
+  These are search-facing articles rather than product documentation, which is why they carry Article
+  schema and an authored publication date the docs do not have, and why they get their own hub rather
+  than being folded into /docs/. A reader who arrives on "free SOLIDWORKS batch tools" wants a
+  different page from the one who clicked Help inside the application.
+
+  Called "articles" everywhere in this file because "guides" already means the pages under /docs/:
+  loadGuides, guidePage and guideSidebar all predate this, and renaming them would churn the one code
+  path that is already deployed and working.
+*/
+async function loadArticles(seoMeta) {
+  let manifest;
+
+  try {
+    manifest = JSON.parse(await readFile(join(ROOT, "guides", "manifest.json"), "utf8"));
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+    // A checkout without guides/ still builds and still deploys. The thing that must never ship
+    // ahead of the content is the nav link, which would point every page on the site at a 404.
+    console.warn("  ! guides/manifest.json is missing - no guides will be published");
+    return { articles: [], articleGroups: [] };
+  }
+
+  const files = await readdir(join(ROOT, "guides"));
+  const present = new Set(files.filter(name => name.endsWith(".md")).map(name => name.replace(/\.md$/, "")));
+
+  const articles = [];
+  const articleGroups = [];
+
+  for (const group of manifest.groups || []) {
+    const members = [];
+
+    for (const entry of group.guides || []) {
+      const name = typeof entry === "string" ? entry : entry.file;
+
+      if (!present.has(name)) {
+        console.warn(`  ! guides/manifest.json lists ${name}, which has no .md file - skipped`);
+        continue;
+      }
+
+      const markdown = await readFile(join(ROOT, "guides", `${name}.md`), "utf8");
+      const slug = slugify(name);
+      const title = SwMarkdown.firstHeading(markdown) || slug.replace(/-/g, " ");
+      const meta = (seoMeta.guides || {})[slug] || {};
+
+      const article = {
+        name,
+        slug,
+        title,
+        heading: meta.heading || title,
+        navTitle: meta.navTitle || title,
+        group: group.title,
+        // "comparison" changes the eyebrow and lets the page carry mentions[]. It is deliberately
+        // not a separate code path - that is the whole reason these are not under a /compare/ prefix.
+        kind: entry.kind || "guide",
+        markdown,
+        faq: extractFaq(markdown, slug),
+        mentions: entry.mentions || [],
+        related: entry.related || [],
+        published: entry.published || null,
+        summary: clamp(firstProse(markdown, title) || meta.description || title, DISPLAY_LIMIT),
+        seoTitle: meta.title ? `${meta.title} | SwMacroFlow` : `${title} - SwMacroFlow`,
+        seoDescription: clamp(meta.description || firstProse(markdown, title) || title),
+        path: `/guides/${slug}/`,
+        lastmod: gitLastModified(`guides/${name}.md`)
+      };
+
+      // A guide sharing a nav hub with the documentation sets an expectation about depth. Three
+      // substantial guides is a strong section; eight stubs drags the whole domain down, and nothing
+      // else in this build would ever notice it happening.
+      const words = markdown.split(/\s+/).filter(Boolean).length;
+      if (words < 600) {
+        console.warn(`  ! ${slug} is ${words} words - thin for a search-facing guide`);
+      }
+
+      // Google ignores a headline over roughly 110 characters rather than truncating it, so warn
+      // rather than clamp: a silently dropped property is worse than a long one.
+      if (article.heading.length > 110) {
+        console.warn(`  ! ${slug} heading is ${article.heading.length} characters - over the ~110 headline limit`);
+      }
+
+      articles.push(article);
+      members.push(article);
+    }
+
+    if (members.length) articleGroups.push({ title: group.title, articles: members });
+  }
+
+  return { articles, articleGroups };
+}
+
+/* An FAQPage node is emitted only when the document actually contains an FAQ: an "## FAQ" heading
+   with "###" questions under it. Driven by the document's own structure rather than by a flag in the
+   manifest, because a flag can be set on a page with no FAQ, or forgotten on one that has a good
+   one - and then the structured data disagrees with the visible page, which is the case Google
+   treats as spam rather than as a mistake. */
+function extractFaq(markdown, slug) {
+  const lines = markdown.replace(/\r\n/g, "\n").split("\n");
+  const start = lines.findIndex(line => /^##\s+(FAQ|Frequently asked questions)\s*$/i.test(line.trim()));
+
+  if (start === -1) {
+    // Silence is the failure mode to guard against here: an author who writes "## Common questions"
+    // gets no FAQ node and no error, and nobody finds out for months.
+    if (lines.some(line => /^##\s+.*(questions|q ?& ?a)\s*$/i.test(line.trim()))) {
+      console.warn(`  ! ${slug}: a heading looks like an FAQ but is not "## FAQ" - no FAQPage emitted`);
+    }
+    return [];
+  }
+
+  const entries = [];
+
+  for (let index = start + 1; index < lines.length; index += 1) {
+    const line = lines[index].trim();
+    if (/^##\s/.test(line)) break;
+
+    const question = /^###\s+(.*)$/.exec(line);
+    if (question) {
+      entries.push({ question: question[1].trim(), answer: [] });
+      continue;
+    }
+
+    if (entries.length && line) entries[entries.length - 1].answer.push(line);
+  }
+
+  return entries
+    .map(entry => ({
+      question: entry.question,
+      answer: clamp(entry.answer.join(" ").replace(/[*`]/g, ""), 1000)
+    }))
+    .filter(entry => entry.question && entry.answer);
+}
+
+/* A related[] entry naming a page that does not exist is dropped with a warning rather than
+   emitted. Macros come from a live fetch of the library repo, so one can genuinely disappear between
+   builds, and a confident link to a 404 is worse than a missing link. This is the rule
+   rewriteDocLinks already follows for links written inside the macro documents. */
+function resolveRelated(articles, known) {
+  for (const article of articles) {
+    article.related = (article.related || [])
+      .map(path => {
+        if (!known.has(path)) {
+          console.warn(`  ! ${article.slug}: related "${path}" is not a published page - dropped`);
+          return null;
+        }
+        return { href: path, title: known.get(path) };
+      })
+      .filter(Boolean);
+  }
+}
+
+/* Cross-links are declared once, on the guide, and the reverse direction is derived here. Declaring
+   both ends by hand is how a link graph goes stale: someone deletes a guide and the doc page it
+   pointed at keeps its link to a 404. Derived, deleting the guide deletes both ends.
+
+   Sorted, because the map would otherwise iterate in manifest order and the committed HTML would
+   flap every time a guide was reordered. */
+function invertRelated(articles) {
+  const map = new Map();
+
+  for (const article of articles) {
+    for (const target of article.related) {
+      if (!map.has(target.href)) map.set(target.href, []);
+      map.get(target.href).push({ href: article.path, title: article.navTitle });
+    }
+  }
+
+  for (const list of map.values()) list.sort((a, b) => a.href.localeCompare(b.href));
+  return map;
+}
+
 function rawUrl(path) {
   const encoded = path.split("/").map(encodeURIComponent).join("/");
   return `https://raw.githubusercontent.com/${MACRO_LIBRARY.owner}/${MACRO_LIBRARY.repo}/${MACRO_LIBRARY.branch}/${encoded}`;
@@ -534,7 +706,46 @@ function guideSidebar(groups, currentSlug, base) {
       </nav>`;
 }
 
-function guidePage(guide, groups, previous, next) {
+/* The sidebar block that carries cross-silo links, in both directions: a guide's own "Related pages"
+   and, on a doc or macro page, the guides that pointed at it. Reuses the docs-nav markup so it needs
+   no CSS of its own. */
+function relatedNav(base, items, label = "Related guides") {
+  const links = items
+    .map(item => `<li><a href="${base}${item.href.replace(/^\//, "")}">${escapeHtml(item.title)}</a></li>`)
+    .join("\n          ");
+
+  return `<p class="docs-nav-group">${escapeHtml(label)}</p>
+      <nav class="docs-nav" aria-label="${escapeHtml(label)}">
+        <ul>
+          ${links}
+        </ul>
+      </nav>`;
+}
+
+function articleSidebar(groups, currentSlug, base) {
+  const blocks = groups.map(group => {
+    const items = group.articles
+      .map(article => {
+        const active = article.slug === currentSlug ? ' class="is-active" aria-current="page"' : "";
+        return `<li><a href="${base}guides/${article.slug}/"${active}>${escapeHtml(article.navTitle)}</a></li>`;
+      })
+      .join("\n          ");
+
+    return `<p class="docs-nav-group">${escapeHtml(group.title)}</p>
+        <ul>
+          ${items}
+        </ul>`;
+  });
+
+  return `<nav class="docs-nav" aria-label="Guides">
+        ${blocks.join("\n        ")}
+      </nav>`;
+}
+
+/* `relatedGuides` is optional and defaults to empty, which emits byte-identical output to the
+   version of this function that existed before guides did. That matters: it keeps the workflow's
+   stale-output check quiet for every doc page no guide happens to reference. */
+function guidePage(guide, groups, previous, next, relatedGuides = []) {
   const base = "/";
   const trail = [
     { name: "Home", path: "/" },
@@ -575,7 +786,7 @@ ${nav(base, "docs")}
   <div class="docs-layout">
 
     <aside class="docs-sidebar">
-      ${guideSidebar(groups, guide.slug, base)}
+      ${guideSidebar(groups, guide.slug, base)}${relatedGuides.length ? `\n      ${relatedNav(base, relatedGuides)}` : ""}
     </aside>
 
     <article class="docs-content">
@@ -595,6 +806,123 @@ ${nav(base, "docs")}
           batch-runs SOLIDWORKS macros across folders of parts, assemblies and drawings.
           <a href="${base}index.html#download">Download it</a>, or browse the
           <a href="${base}macros.html">ready-made macro library</a>.
+        </p>
+      </aside>
+    </article>
+
+  </div>
+</main>
+
+${footer(base)}
+
+<script src="${base}assets/nav.js" defer></script>
+</body>
+</html>
+`;
+}
+
+function articlePage(article, groups, previous, next) {
+  const base = "/";
+  const trail = [
+    { name: "Home", path: "/" },
+    { name: "Guides", path: "/guides.html" },
+    { name: article.navTitle, path: article.path }
+  ];
+
+  /* Article rather than BlogPosting. Google treats the two identically for rich results, so the
+     choice is only about describing the site honestly - BlogPosting asserts a Blog, which would
+     imply a reverse-chronological index and a publication cadence that do not exist. These are
+     evergreen pages edited in place. author and publisher both point at the Organization node the
+     homepage already defines, so no new entity is invented to satisfy the author requirement. */
+  const schema = [
+    {
+      "@type": "Article",
+      "@id": `${ORIGIN}${article.path}#article`,
+      headline: article.heading,
+      description: article.seoDescription,
+      url: `${ORIGIN}${article.path}`,
+      mainEntityOfPage: { "@id": `${ORIGIN}${article.path}` },
+      inLanguage: "en",
+      isPartOf: { "@id": WEBSITE_ID },
+      about: { "@id": SOFTWARE_ID },
+      author: { "@id": ORGANIZATION_ID },
+      publisher: { "@id": ORGANIZATION_ID },
+      ...(article.published ? { datePublished: article.published } : {}),
+      ...(article.lastmod || article.published
+        ? { dateModified: article.lastmod || article.published }
+        : {}),
+      /* Name and URL only. A Review or AggregateRating node about a competitor - or about our own
+         product - is self-serving markup and carries a manual action, so the comparison pages say
+         who they discuss and stop there. */
+      ...(article.mentions.length
+        ? {
+            mentions: article.mentions.map(mention => ({
+              "@type": "SoftwareApplication",
+              name: mention.name,
+              url: mention.url
+            }))
+          }
+        : {})
+    },
+    ...(article.faq.length
+      ? [
+          {
+            "@type": "FAQPage",
+            "@id": `${ORIGIN}${article.path}#faq`,
+            isPartOf: { "@id": WEBSITE_ID },
+            mainEntity: article.faq.map(entry => ({
+              "@type": "Question",
+              name: entry.question,
+              acceptedAnswer: { "@type": "Answer", text: entry.answer }
+            }))
+          }
+        ]
+      : []),
+    breadcrumbs(trail)
+  ];
+
+  const body = SwMarkdown.toHtml(article.markdown, { stripFirstHeading: true });
+  const eyebrow = article.kind === "comparison" ? "Comparison" : "Guide";
+
+  return `${head({
+    base,
+    path: article.path,
+    title: article.seoTitle,
+    description: article.seoDescription,
+    schema
+  })}
+<body>
+
+${nav(base, "guides")}
+
+<main class="docs-page">
+  <div class="docs-layout">
+
+    <aside class="docs-sidebar">
+      ${articleSidebar(groups, article.slug, base)}${
+        article.related.length ? `\n      ${relatedNav(base, article.related, "Related pages")}` : ""
+      }
+    </aside>
+
+    <article class="docs-content">
+      ${breadcrumbTrail(base, trail)}
+      <p class="page-eyebrow">${eyebrow}</p>
+      <h1>${escapeHtml(article.heading)}</h1>
+      <div class="docs-markdown">${body}</div>
+
+      ${pager(
+        previous ? { href: `${base}guides/${previous.slug}/`, title: previous.navTitle } : null,
+        next ? { href: `${base}guides/${next.slug}/`, title: next.navTitle } : null
+      )}
+
+      <aside class="doc-cta">
+        <p>
+          <a href="${base}index.html">SwMacroFlow</a> is a free Windows app that batch-runs
+          SOLIDWORKS macros across folders of parts, assemblies and drawings. Every feature is
+          included, with no account and no licence key.
+          <a href="${base}index.html#download">Download it</a>, browse the
+          <a href="${base}macros.html">macro library</a>, or read the
+          <a href="${base}docs.html">documentation</a>.
         </p>
       </aside>
     </article>
@@ -655,7 +983,7 @@ function appliesChips(macro) {
   return `<p class="macro-applies">${chips}</p>`;
 }
 
-function macroPage(macro, macros) {
+function macroPage(macro, macros, relatedGuides = []) {
   const base = "/";
   const trail = [
     { name: "Home", path: "/" },
@@ -727,12 +1055,12 @@ ${nav(base, "macros")}
     <aside class="docs-sidebar">
       ${others}
       <p class="docs-nav-group">Writing your own</p>
-      <nav class="docs-nav" aria-label="Guides">
+      <nav class="docs-nav" aria-label="Writing your own">
         <ul>
           <li><a href="${base}docs/writing-a-macro/">Writing a macro</a></li>
           <li><a href="${base}docs/adding-inputs/">Adding inputs</a></li>
         </ul>
-      </nav>
+      </nav>${relatedGuides.length ? `\n      ${relatedNav(base, relatedGuides)}` : ""}
     </aside>
 
     <article class="docs-content">
@@ -892,6 +1220,100 @@ ${footer(base)}
     });
   })();
 </script>
+
+<script src="assets/nav.js" defer></script>
+</body>
+</html>
+`;
+}
+
+/* No filter box, unlike docs.html and macros.html. Those index sixteen and seven items; this one
+   indexes three, and a search field over three cards is furniture. Leaving it out also means this
+   page ships no inline <script> that has to be kept in step with the other two. */
+function guidesIndexPage(groups, articles) {
+  const base = "";
+  const path = "/guides.html";
+  const trail = [
+    { name: "Home", path: "/" },
+    { name: "Guides", path }
+  ];
+
+  const schema = [
+    {
+      "@type": "CollectionPage",
+      "@id": `${ORIGIN}${path}#page`,
+      name: "SOLIDWORKS batch processing guides",
+      description:
+        "Guides on batch processing SOLIDWORKS files: running a macro across multiple files, Task Scheduler alternatives, and whether you need an add-in.",
+      url: `${ORIGIN}${path}`,
+      inLanguage: "en",
+      isPartOf: { "@id": WEBSITE_ID },
+      about: { "@id": SOFTWARE_ID }
+    },
+    {
+      "@type": "ItemList",
+      "@id": `${ORIGIN}${path}#list`,
+      numberOfItems: articles.length,
+      itemListElement: articles.map((article, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: article.heading,
+        url: `${ORIGIN}${article.path}`
+      }))
+    },
+    breadcrumbs(trail)
+  ];
+
+  const sections = groups
+    .map(group => {
+      const cards = group.articles
+        .map(
+          article => `<li class="doc-card">
+          <h3><a href="guides/${article.slug}/">${escapeHtml(article.navTitle)}</a></h3>
+          <p>${SwMarkdown.inlineMarkdown(article.summary)}</p>
+        </li>`
+        )
+        .join("\n        ");
+
+      return `<section class="doc-group">
+      <h2>${escapeHtml(group.title)}</h2>
+      <ul class="doc-index">
+        ${cards}
+      </ul>
+    </section>`;
+    })
+    .join("\n\n    ");
+
+  return `${head({
+    base,
+    path,
+    title: "SOLIDWORKS batch processing guides | SwMacroFlow",
+    description:
+      "How to run a SOLIDWORKS macro on multiple files, what to use instead of Task Scheduler, and whether batch processing needs an add-in. Free guides, no sign-up.",
+    schema
+  })}
+<body>
+
+${nav(base, "guides")}
+
+<main class="docs-page">
+  <div class="docs-index-head">
+    ${breadcrumbTrail(base, trail)}
+    <p class="page-eyebrow">Guides</p>
+    <h1>SOLIDWORKS batch processing guides</h1>
+    <p class="docs-index-lede">
+      Practical answers to the questions people actually ask about automating SOLIDWORKS across
+      folders of files - including honest comparisons of the tools that are not ours. For how
+      SwMacroFlow itself works, see the <a href="docs.html">documentation</a>.
+    </p>
+  </div>
+
+  <div class="docs-index-body">
+    ${sections}
+  </div>
+</main>
+
+${footer(base)}
 
 <script src="assets/nav.js" defer></script>
 </body>
@@ -1125,8 +1547,15 @@ ${urls}
 `;
 }
 
-function llmsTxt(guides, macros) {
-  const guideLines = guides.map(guide => `- [${guide.title}](${ORIGIN}${guide.path}): ${guide.summary}`);
+/* Takes an object rather than positional arguments so that adding a fourth section later does not
+   silently reshuffle the existing three at every call site.
+
+   Note the section rename: what this file called "## Guides" was always the documentation, back when
+   that was the only long-form content on the site. Now that /guides/ exists and means something
+   else, the docs section is "## Documentation" - which is what it should have said all along. */
+function llmsTxt({ docs, articles, macros }) {
+  const docLines = docs.map(guide => `- [${guide.title}](${ORIGIN}${guide.path}): ${guide.summary}`);
+  const articleLines = articles.map(article => `- [${article.title}](${ORIGIN}${article.path}): ${article.summary}`);
   const macroLines = macros.map(macro => `- [${macro.title}](${ORIGIN}${macro.path}): ${macro.summary}`);
 
   return `# SwMacroFlow
@@ -1146,11 +1575,16 @@ trial, no licence, no account, and nothing to buy.
 
 - [Home](${ORIGIN}/): what SwMacroFlow does, how a batch runs, and the download.
 - [Documentation](${ORIGIN}/docs.html): every guide, from a first batch to the macro authoring contract.
+- [Guides](${ORIGIN}/guides.html): how-to and comparison articles on batch processing SOLIDWORKS files.
 - [Macro library](${ORIGIN}/macros.html): free SOLIDWORKS .swp macros to download.
+
+## Documentation
+
+${docLines.join("\n")}
 
 ## Guides
 
-${guideLines.join("\n")}
+${articleLines.join("\n")}
 
 ## Macros
 
@@ -1160,7 +1594,7 @@ ${macroLines.join("\n")}
 
 - [Terms of use](${ORIGIN}/terms.html)
 - [Privacy policy](${ORIGIN}/privacy.html): the site uses no analytics and no advertising tracking.
-- [Contact](${ORIGIN}/contact.html): info@swmacroflow.in
+- [Contact](${ORIGIN}/contact.html): urjitpatel28@gmail.com
 `;
 }
 
@@ -1201,22 +1635,53 @@ async function build() {
   const macros = await loadMacros(seoMeta);
   console.log(`  ${macros.length} macros from ${MACRO_LIBRARY.owner}/${MACRO_LIBRARY.repo}`);
 
+  const { articles, articleGroups } = await loadArticles(seoMeta);
+  console.log(`  ${articles.length} guides from guides/`);
+
+  /* Cross-links are resolved only once every source has loaded, so a related[] entry can never
+     point at a macro that was excluded from the build or a doc that was removed from the manifest. */
+  const known = new Map([
+    ...guides.map(guide => [guide.path, guide.navTitle]),
+    ...macros.map(macro => [macro.path, macro.navTitle]),
+    ...articles.map(article => [article.path, article.navTitle]),
+    ["/docs.html", "Documentation"],
+    ["/macros.html", "Macro library"],
+    ["/guides.html", "Guides"]
+  ]);
+
+  resolveRelated(articles, known);
+  const backlinks = invertRelated(articles);
+
   await writeDownloadTotal();
 
   for (const [index, guide] of guides.entries()) {
-    await write(`docs/${guide.slug}/index.html`, guidePage(guide, groups, guides[index - 1], guides[index + 1]));
+    await write(
+      `docs/${guide.slug}/index.html`,
+      guidePage(guide, groups, guides[index - 1], guides[index + 1], backlinks.get(guide.path) || [])
+    );
   }
 
   for (const macro of macros) {
-    await write(`macros/${macro.slug}/index.html`, macroPage(macro, macros));
+    await write(`macros/${macro.slug}/index.html`, macroPage(macro, macros, backlinks.get(macro.path) || []));
+  }
+
+  for (const [index, article] of articles.entries()) {
+    await write(
+      `guides/${article.slug}/index.html`,
+      articlePage(article, articleGroups, articles[index - 1], articles[index + 1])
+    );
   }
 
   await write("docs.html", docsIndexPage(groups, guides));
   await write("macros.html", macrosIndexPage(macros));
+  if (articles.length) await write("guides.html", guidesIndexPage(articleGroups, articles));
 
   const staticPages = [
     { path: "/", changefreq: "weekly", priority: "1.0", lastmod: gitLastModified("index.html") },
     { path: "/docs.html", changefreq: "monthly", priority: "0.8", lastmod: gitLastModified("docs") },
+    ...(articles.length
+      ? [{ path: "/guides.html", changefreq: "monthly", priority: "0.8", lastmod: gitLastModified("guides") }]
+      : []),
     { path: "/macros.html", changefreq: "weekly", priority: "0.8", lastmod: macros[0]?.lastmod || null },
     { path: "/contact.html", changefreq: "yearly", priority: "0.4", lastmod: gitLastModified("contact.html") },
     { path: "/terms.html", changefreq: "yearly", priority: "0.3", lastmod: gitLastModified("terms.html") },
@@ -1228,13 +1693,21 @@ async function build() {
     sitemap([
       ...staticPages,
       ...guides.map(guide => ({ path: guide.path, lastmod: guide.lastmod, changefreq: "monthly", priority: "0.7" })),
+      ...articles.map(article => ({
+        path: article.path,
+        lastmod: article.lastmod || article.published,
+        changefreq: "monthly",
+        priority: "0.7"
+      })),
       ...macros.map(macro => ({ path: macro.path, lastmod: macro.lastmod, changefreq: "monthly", priority: "0.7" }))
     ])
   );
 
-  await write("llms.txt", llmsTxt(guides, macros));
+  await write("llms.txt", llmsTxt({ docs: guides, articles, macros }));
 
-  console.log(`Done: ${staticPages.length + guides.length + macros.length} URLs in the sitemap.`);
+  console.log(
+    `Done: ${staticPages.length + guides.length + articles.length + macros.length} URLs in the sitemap.`
+  );
 }
 
 await build();

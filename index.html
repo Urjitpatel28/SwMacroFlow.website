@@ -939,9 +939,10 @@
       SwMacroFlow
     </a>
     <nav class="nav-links">
-      <a href="#guide">Guide</a>
+      <a href="#guide">Visual guide</a>
       <a href="#features">Features</a>
       <a href="docs.html">Docs</a>
+      <a href="guides.html">Guides</a>
       <a href="macros.html">Macros</a>
       <a href="#how-it-works">How it works</a>
       <a href="#reviews">Reviews</a>
@@ -953,9 +954,10 @@
     </button>
   </div>
   <nav id="mobileNav" class="nav-mobile" aria-label="Site">
-    <a href="#guide">Guide</a>
+    <a href="#guide">Visual guide</a>
     <a href="#features">Features</a>
     <a href="docs.html">Docs</a>
+    <a href="guides.html">Guides</a>
     <a href="macros.html">Macros</a>
     <a href="#how-it-works">How it works</a>
     <a href="#reviews">Reviews</a>
@@ -1371,6 +1373,49 @@
       </details>
     </div>
   </section>
+
+  <!-- Deep links into the three generated sections. This page is the most linked-to on the site and
+       until now it passed that on to nothing: the nav reached docs.html and macros.html and stopped
+       at the hubs. Hand-written rather than generated, because index.html is the one file a human
+       owns and a generator reaching into it would take that away. The slugs below are stable ones. -->
+  <section id="learn" aria-labelledby="learn-title">
+    <div class="section-head">
+      <div class="section-tag">Learn</div>
+      <div>
+        <h2 id="learn-title">Where to go next.</h2>
+      </div>
+    </div>
+
+    <ul class="doc-index">
+      <li class="doc-card">
+        <h3><a href="guides.html">Guides</a></h3>
+        <p>
+          How to <a href="guides/run-macro-on-multiple-files/">run a macro on multiple files</a>,
+          the <a href="guides/task-scheduler-alternatives/">alternatives to SOLIDWORKS Task
+          Scheduler</a>, and whether you
+          <a href="guides/do-you-need-a-solidworks-add-in/">need an add-in at all</a>.
+        </p>
+      </li>
+      <li class="doc-card">
+        <h3><a href="docs.html">Documentation</a></h3>
+        <p>
+          <a href="docs/using-the-app/">Using the app</a>,
+          <a href="docs/writing-a-macro/">writing a macro</a>,
+          <a href="docs/adding-inputs/">adding inputs</a> and
+          <a href="docs/troubleshooting/">troubleshooting</a>.
+        </p>
+      </li>
+      <li class="doc-card">
+        <h3><a href="macros.html">Macro library</a></h3>
+        <p>
+          Free <code>.swp</code> macros: <a href="macros/save-pdf/">Save PDF</a>,
+          <a href="macros/save-step/">Save STEP</a>,
+          <a href="macros/save-drawing-as-dxf-or-dwg/">Save Drawing as DXF or DWG</a> and
+          <a href="macros/export-properties-to-csv/">Export Properties to CSV</a>.
+        </p>
+      </li>
+    </ul>
+  </section>
 </main>
 
 <!-- Shown after the download starts, not instead of it. SmartScreen blocks unsigned installers from
@@ -1407,6 +1452,7 @@
     </div>
     <div class="footer-links">
       <a href="docs.html">Docs</a>
+      <a href="guides.html">Guides</a>
       <a href="macros.html">Macros</a>
       <a href="index.html#download">Download</a>
       <a href="contact.html">Contact</a>

@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>Do you need a SOLIDWORKS add-in? Macro vs add-in vs app | SwMacroFlow</title>
+<meta name="description" content="Macros, add-ins and standalone applications extend SOLIDWORKS in different ways. What each can and cannot do, and why batch processing wants an...">
+<link rel="canonical" href="https://swmacroflow.in/guides/do-you-need-a-solidworks-add-in/">
+<meta property="og:title" content="Do you need a SOLIDWORKS add-in? Macro vs add-in vs app | SwMacroFlow">
+<meta property="og:description" content="Macros, add-ins and standalone applications extend SOLIDWORKS in different ways. What each can and cannot do, and why batch processing wants an...">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://swmacroflow.in/guides/do-you-need-a-solidworks-add-in/">
+<meta property="og:site_name" content="SwMacroFlow">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Do you need a SOLIDWORKS add-in? Macro vs add-in vs app | SwMacroFlow">
+<meta name="twitter:description" content="Macros, add-ins and standalone applications extend SOLIDWORKS in different ways. What each can and cannot do, and why batch processing wants an...">
+<meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta name="theme-color" content="#0d0d0f">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/assets/logo.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/assets/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://swmacroflow.in/guides/do-you-need-a-solidworks-add-in/#article",
+      "headline": "Do you need a SOLIDWORKS add-in?",
+      "description": "Macros, add-ins and standalone applications extend SOLIDWORKS in different ways. What each can and cannot do, and why batch processing wants an...",
+      "url": "https://swmacroflow.in/guides/do-you-need-a-solidworks-add-in/",
+      "mainEntityOfPage": {
+        "@id": "https://swmacroflow.in/guides/do-you-need-a-solidworks-add-in/"
+      },
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://swmacroflow.in/#website"
+      },
+      "about": {
+        "@id": "https://swmacroflow.in/#software"
+      },
+      "author": {
+        "@id": "https://swmacroflow.in/#organization"
+      },
+      "publisher": {
+        "@id": "https://swmacroflow.in/#organization"
+      },
+      "datePublished": "2026-09-08",
+      "dateModified": "2026-09-08"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://swmacroflow.in/guides/do-you-need-a-solidworks-add-in/#faq",
+      "isPartOf": {
+        "@id": "https://swmacroflow.in/#website"
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Do I need a SOLIDWORKS add-in to batch process files?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Batch processing is better served by a standalone application, because it can restart SOLIDWORKS after a crash, drive several instances in parallel, and be launched by a scheduler - none of which an in-process add-in can do. See the Task Scheduler alternatives guide for the tools available."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between a SOLIDWORKS macro and an add-in?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A macro is a VBA script in a .swp file that runs on the open document, needs no compilation and no installation. An add-in is a compiled, registered COM library that loads inside the SOLIDWORKS process and can add ribbon buttons, PropertyManager pages and event handlers. Macros are far quicker to write; add-ins integrate far more deeply."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a macro do everything an add-in can?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Almost, for anything that acts on the current document. What a macro cannot do is persist UI between sessions, subscribe to SOLIDWORKS events in the background, or run when nothing is open. Those three are the reasons to write an add-in."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does installing an add-in require administrator rights?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually yes, because a COM add-in has to be registered with Windows. This is one of the practical reasons batch tools are often standalone applications instead - SwMacroFlow installs per user with no elevation because it registers nothing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a standalone application slower than an add-in?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Per API call, yes - the calls cross a process boundary. For batch work it rarely shows, because the time is spent opening, rebuilding and saving files rather than in the calls that ask for it. For chatty interactive geometry work, an add-in is genuinely faster."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I write an add-in in VBA?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Add-ins must be compiled COM libraries, typically C# or VB.NET. VBA is for macros. If you want the recorded-macro workflow, you want a macro, and then something to run it across your files."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://swmacroflow.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://swmacroflow.in/guides.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Do you need an add-in?",
+          "item": "https://swmacroflow.in/guides/do-you-need-a-solidworks-add-in/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="brand">
+      <img src="/assets/logo.png" alt="SwMacroFlow logo" width="28" height="28">
+      SwMacroFlow
+    </a>
+    <nav class="nav-links">
+      <a href="/index.html#features">Features</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/guides.html" aria-current="page">Guides</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#how-it-works">How it works</a>
+      <a href="/index.html#faq">FAQ</a>
+      <a href="/index.html#download">Download</a>
+    </nav>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav id="mobileNav" class="nav-mobile" aria-label="Site">
+    <a href="/index.html#features">Features</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/guides.html" aria-current="page">Guides</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#how-it-works">How it works</a>
+      <a href="/index.html#faq">FAQ</a>
+      <a href="/index.html#download">Download</a>
+  </nav>
+</header>
+
+<main class="docs-page">
+  <div class="docs-layout">
+
+    <aside class="docs-sidebar">
+      <nav class="docs-nav" aria-label="Guides">
+        <p class="docs-nav-group">Running macros in batch</p>
+        <ul>
+          <li><a href="/guides/run-macro-on-multiple-files/">Run a macro on multiple files</a></li>
+          <li><a href="/guides/do-you-need-a-solidworks-add-in/" class="is-active" aria-current="page">Do you need an add-in?</a></li>
+        </ul>
+        <p class="docs-nav-group">Comparisons</p>
+        <ul>
+          <li><a href="/guides/task-scheduler-alternatives/">Task Scheduler alternatives</a></li>
+        </ul>
+      </nav>
+      <p class="docs-nav-group">Related pages</p>
+      <nav class="docs-nav" aria-label="Related pages">
+        <ul>
+          <li><a href="/docs/overview/">Overview</a></li>
+          <li><a href="/docs/writing-a-macro/">Writing a macro</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <article class="docs-content">
+      <nav class="crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/guides.html">Guides</a></li>
+        <li aria-current="page">Do you need an add-in?</li>
+      </ol>
+    </nav>
+      <p class="page-eyebrow">Guide</p>
+      <h1>Do you need a SOLIDWORKS add-in?</h1>
+      <div class="docs-markdown"><p>People searching for a SOLIDWORKS add-in usually are not looking for an add-in. They are looking for a way to make SOLIDWORKS do something repetitive without doing it by hand, and &quot;add-in&quot; is the word they know for software that extends SOLIDWORKS.</p><p>There are three genuinely different ways to extend or automate SOLIDWORKS, and the differences matter</p><ul><li>particularly if what you actually want is to batch process a folder of files. This page explains what each one is, what it can and cannot do, and how to tell which you need.</li></ul><h2>The three shapes</h2><h3>A macro</h3><p>A <code>.swp</code> file containing VBA. You record or write it, and it runs inside the VBA host that ships with SOLIDWORKS. No compiler, no installation, no registration - open the VBA editor, paste, run.</p><p>A macro operates on whatever document is currently open. It can do very nearly anything the API exposes, which is very nearly everything you can do by hand. What it cannot do is respond to events in the background, add buttons to the ribbon that persist between sessions, or run when SOLIDWORKS is not already open with the right file in front of it.</p><p>Macros are the correct answer far more often than people expect. If the task is &quot;do this specific thing to this document&quot;, a macro is the whole job.</p><h3>An add-in</h3><p>A compiled COM library - a <code>.dll</code> written in C#, VB.NET or C++ - that implements the <code>ISwAddin</code> interface, is registered with Windows, and is loaded by SOLIDWORKS <strong>inside the SOLIDWORKS process</strong> when it starts.</p><p>An add-in gets things a macro cannot have:</p><ul><li>Toolbar and CommandManager buttons that are there every session</li><li>PropertyManager pages, so your feature looks like a native SOLIDWORKS feature</li><li>Task pane tabs</li><li>Event subscriptions - react when a document opens, a feature changes, a save happens</li><li>Persistent state across the session</li></ul><p>The cost is proportionate. It has to be compiled, it has to be registered (which usually wants administrator rights), it is bound to an architecture and broadly to a version range, and deploying it to twenty seats is a real IT task rather than emailing a file.</p><p>The critical property, for our purposes: an add-in shares a process with SOLIDWORKS. That is what makes its API calls fast and its UI seamless. It is also what makes it fragile.</p><h3>A standalone application</h3><p>A separate <code>.exe</code> that connects to SOLIDWORKS over COM from outside, in its own process. It can attach to a session that is already running, or start one.</p><p>It gets no ribbon buttons and no PropertyManager pages - it is not inside SOLIDWORKS, so it has no access to SOLIDWORKS&#039; own UI. It has its own window instead.</p><p>In exchange it gets four things no add-in can have, and every one of them is about batch work.</p><h2>Why batch processing wants a standalone application</h2><p><strong>It survives a SOLIDWORKS crash.</strong> This is the big one. On a batch of four hundred files, SOLIDWORKS will occasionally fall over - a corrupt file, a bad rebuild, memory exhaustion after three hours. An add-in lives in that process, so when SOLIDWORKS dies the add-in dies with it, mid-batch, with nothing left running to notice or to recover. A separate process watches its child die, restarts SOLIDWORKS, and carries on from the next file.</p><p><strong>It can restart SOLIDWORKS deliberately.</strong> SOLIDWORKS accumulates memory over a long unattended run. Restarting it every N files keeps a four-hour batch healthy. Code running inside the application cannot restart the application it is running inside.</p><p><strong>It can drive several SOLIDWORKS instances at once.</strong> Two to four sessions sharing one file list, each taking the next file as it comes free, is straightforward from outside and impossible from within - an add-in instance only ever sees its own host.</p><p><strong>It can be scheduled.</strong> A Windows Task Scheduler entry launches an executable. There is no way to tell Windows to start SOLIDWORKS, wait for it, and then poke a button that an add-in installed.</p><p>There is a real cost to being out of process: every API call is marshalled across a process boundary, so a chatty operation is measurably slower than the same code in an add-in. For batch work this rarely matters, because the wall-clock time is dominated by opening, rebuilding and saving files, not by the calls that request it.</p><h2>Choosing</h2><table><tr><th>You want to</th><th>Use</th></tr><tr><td>Do one repetitive thing to the open document</td><td>A macro</td></tr><tr><td>Give your team a button on the ribbon</td><td>An add-in</td></tr><tr><td>React when a document opens or a feature changes</td><td>An add-in</td></tr><tr><td>Make your tool look like native SOLIDWORKS</td><td>An add-in</td></tr><tr><td>Apply the same operation to a folder of files</td><td>A standalone application</td></tr><tr><td>Run unattended, overnight, or on a schedule</td><td>A standalone application</td></tr><tr><td>Survive crashes across a long batch</td><td>A standalone application</td></tr><tr><td>Use several SOLIDWORKS instances in parallel</td><td>A standalone application</td></tr></table><p>If two rows apply, they are not in conflict - plenty of shops have an add-in for interactive work and something else for batches.</p><h2>Where SwMacroFlow sits</h2><p>SwMacroFlow is a standalone application, deliberately. It is not a SOLIDWORKS add-in and it does not register anything inside SOLIDWORKS. It attaches to an installed, licensed x64 SOLIDWORKS session over COM, or starts one, and drives it from outside.</p><p>That choice is exactly the trade above. There is no SwMacroFlow button in your SOLIDWORKS ribbon and there never will be. In return it restarts SOLIDWORKS when it crashes or on a file-count interval, runs batches across two to four instances in parallel, and creates real Windows Task Scheduler entries for unattended overnight runs.</p><p>It also means installation is per user with no administrator rights and no elevation prompt, because there is no COM registration to perform. On a locked-down corporate machine that is often the difference between using a tool and filing a ticket.</p><p>The macros it runs are ordinary macros. Any SOLIDWORKS VBA macro with an argument-less <code>Sub main</code> that operates on the active document works with no changes - see <a href="/docs/writing-a-macro/">writing a macro</a>. The <a href="/macros.html">macro library</a> has ready-made ones, and <a href="/docs/overview/">what SwMacroFlow does</a> describes the model in full.</p><h2>FAQ</h2><h3>Do I need a SOLIDWORKS add-in to batch process files?</h3><p>No. Batch processing is better served by a standalone application, because it can restart SOLIDWORKS after a crash, drive several instances in parallel, and be launched by a scheduler - none of which an in-process add-in can do. See the <a href="/guides/task-scheduler-alternatives/">Task Scheduler alternatives guide</a> for the tools available.</p><h3>What is the difference between a SOLIDWORKS macro and an add-in?</h3><p>A macro is a VBA script in a <code>.swp</code> file that runs on the open document, needs no compilation and no installation. An add-in is a compiled, registered COM library that loads inside the SOLIDWORKS process and can add ribbon buttons, PropertyManager pages and event handlers. Macros are far quicker to write; add-ins integrate far more deeply.</p><h3>Can a macro do everything an add-in can?</h3><p>Almost, for anything that acts on the current document. What a macro cannot do is persist UI between sessions, subscribe to SOLIDWORKS events in the background, or run when nothing is open. Those three are the reasons to write an add-in.</p><h3>Does installing an add-in require administrator rights?</h3><p>Usually yes, because a COM add-in has to be registered with Windows. This is one of the practical reasons batch tools are often standalone applications instead - SwMacroFlow installs per user with no elevation because it registers nothing.</p><h3>Is a standalone application slower than an add-in?</h3><p>Per API call, yes - the calls cross a process boundary. For batch work it rarely shows, because the time is spent opening, rebuilding and saving files rather than in the calls that ask for it. For chatty interactive geometry work, an add-in is genuinely faster.</p><h3>Can I write an add-in in VBA?</h3><p>No. Add-ins must be compiled COM libraries, typically C# or VB.NET. VBA is for macros. If you want the recorded-macro workflow, you want a macro, and then something to run it across your files.</p></div>
+
+      <nav class="pager" aria-label="Guide">
+      <a class="pager-link" href="/guides/run-macro-on-multiple-files/" rel="prev">
+        <span class="pager-dir">Previous</span>
+        <span class="pager-title">Run a macro on multiple files</span>
+      </a>
+      <a class="pager-link pager-next" href="/guides/task-scheduler-alternatives/" rel="next">
+        <span class="pager-dir">Next</span>
+        <span class="pager-title">Task Scheduler alternatives</span>
+      </a>
+    </nav>
+
+      <aside class="doc-cta">
+        <p>
+          <a href="/index.html">SwMacroFlow</a> is a free Windows app that batch-runs
+          SOLIDWORKS macros across folders of parts, assemblies and drawings. Every feature is
+          included, with no account and no licence key.
+          <a href="/index.html#download">Download it</a>, browse the
+          <a href="/macros.html">macro library</a>, or read the
+          <a href="/docs.html">documentation</a>.
+        </p>
+      </aside>
+    </article>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="/assets/logo.png" alt="SwMacroFlow logo" width="24" height="24" loading="lazy">
+      SwMacroFlow
+    </div>
+    <div class="footer-links">
+      <a href="/index.html">Home</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#download">Download</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/privacy.html">Privacy</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 SwMacroFlow. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/assets/nav.js" defer></script>
+</body>
+</html>

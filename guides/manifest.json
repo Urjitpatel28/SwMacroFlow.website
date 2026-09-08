@@ -1,0 +1,55 @@
+{
+  "_comment": "Ordering, grouping and cross-links for the editorial guides at /guides/<slug>/. These are search-facing articles, not product documentation - the docs live in docs/ and are a different section with a different schema type. Titles and descriptions live in tools/seo-meta.json under \"guides\"; the H1 comes from each document's own first heading unless seo-meta overrides it with \"heading\". related[] is the only place cross-links are declared: the build derives the reverse link on the target page from it, so deleting a guide removes both ends and the graph cannot go stale.",
+  "_authoring": {
+    "markdown": "assets/markdown.js renders these. It supports headings, fenced code, flat lists, pipe tables, horizontal rules, and inline code, bold, italic and links. It does NOT support images or blockquotes and fails at both silently - an image renders as a stray ! followed by a link, and a > line renders as literal text. Do not use either.",
+    "links": "Links inside the Markdown must be site-absolute (/docs/writing-a-macro/) or fully qualified (https://...). A relative link such as ../docs/ is not matched by the link rule and renders as visible literal text.",
+    "faq": "A guide gets an FAQPage schema node when it contains an '## FAQ' heading with '###' questions beneath it. Structure drives the schema, so the markup can never claim an FAQ the page does not have.",
+    "length": "Aim for 1200 words or more. The build warns below 600, because a thin guide sharing a nav hub with the documentation drags the whole section down."
+  },
+  "groups": [
+    {
+      "title": "Running macros in batch",
+      "guides": [
+        {
+          "file": "run-macro-on-multiple-files",
+          "published": "2026-09-08",
+          "related": [
+            "/docs/writing-a-macro/",
+            "/docs/adding-inputs/",
+            "/docs/reporting-results/",
+            "/macros/save-pdf/",
+            "/macros/save-step/",
+            "/macros/save-drawing-as-dxf-or-dwg/"
+          ]
+        },
+        {
+          "file": "do-you-need-a-solidworks-add-in",
+          "published": "2026-09-08",
+          "related": [
+            "/docs/overview/",
+            "/docs/writing-a-macro/"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Comparisons",
+      "guides": [
+        {
+          "file": "task-scheduler-alternatives",
+          "kind": "comparison",
+          "published": "2026-09-08",
+          "related": [
+            "/docs/overview/",
+            "/docs/using-the-app/"
+          ],
+          "mentions": [
+            { "name": "SOLIDWORKS Task Scheduler", "url": "https://www.solidworks.com/" },
+            { "name": "Batch+", "url": "https://cadplus.xarial.com/batch/" },
+            { "name": "Drew", "url": "https://cadbooster.com/" }
+          ]
+        }
+      ]
+    }
+  ]
+}

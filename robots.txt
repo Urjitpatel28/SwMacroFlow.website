@@ -38,4 +38,9 @@ Allow: /
 User-agent: *
 Allow: /
 
+# tools/ holds the render harnesses that produce the annotated PNGs in assets/ - no <h1>, no
+# description, no canonical, and no reader. They are unlinked and absent from the sitemap, but
+# nothing stopped a crawler that found them anyway from indexing four titles with no page behind them.
+Disallow: /tools/
+
 Sitemap: https://swmacroflow.in/sitemap.xml

@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>SOLIDWORKS batch processing guides | SwMacroFlow</title>
+<meta name="description" content="How to run a SOLIDWORKS macro on multiple files, what to use instead of Task Scheduler, and whether batch processing needs an add-in. Free guides, no sign-up.">
+<link rel="canonical" href="https://swmacroflow.in/guides.html">
+<meta property="og:title" content="SOLIDWORKS batch processing guides | SwMacroFlow">
+<meta property="og:description" content="How to run a SOLIDWORKS macro on multiple files, what to use instead of Task Scheduler, and whether batch processing needs an add-in. Free guides, no sign-up.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://swmacroflow.in/guides.html">
+<meta property="og:site_name" content="SwMacroFlow">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SOLIDWORKS batch processing guides | SwMacroFlow">
+<meta name="twitter:description" content="How to run a SOLIDWORKS macro on multiple files, what to use instead of Task Scheduler, and whether batch processing needs an add-in. Free guides, no sign-up.">
+<meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta name="theme-color" content="#0d0d0f">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="assets/logo.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="stylesheet" href="assets/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://swmacroflow.in/guides.html#page",
+      "name": "SOLIDWORKS batch processing guides",
+      "description": "Guides on batch processing SOLIDWORKS files: running a macro across multiple files, Task Scheduler alternatives, and whether you need an add-in.",
+      "url": "https://swmacroflow.in/guides.html",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://swmacroflow.in/#website"
+      },
+      "about": {
+        "@id": "https://swmacroflow.in/#software"
+      }
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://swmacroflow.in/guides.html#list",
+      "numberOfItems": 3,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "How to run a SOLIDWORKS macro on multiple files",
+          "url": "https://swmacroflow.in/guides/run-macro-on-multiple-files/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Do you need a SOLIDWORKS add-in?",
+          "url": "https://swmacroflow.in/guides/do-you-need-a-solidworks-add-in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "SOLIDWORKS Task Scheduler alternatives",
+          "url": "https://swmacroflow.in/guides/task-scheduler-alternatives/"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://swmacroflow.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Guides",
+          "item": "https://swmacroflow.in/guides.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <img src="assets/logo.png" alt="SwMacroFlow logo" width="28" height="28">
+      SwMacroFlow
+    </a>
+    <nav class="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="docs.html">Docs</a>
+      <a href="guides.html" aria-current="page">Guides</a>
+      <a href="macros.html">Macros</a>
+      <a href="index.html#how-it-works">How it works</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="index.html#download">Download</a>
+    </nav>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav id="mobileNav" class="nav-mobile" aria-label="Site">
+    <a href="index.html#features">Features</a>
+      <a href="docs.html">Docs</a>
+      <a href="guides.html" aria-current="page">Guides</a>
+      <a href="macros.html">Macros</a>
+      <a href="index.html#how-it-works">How it works</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="index.html#download">Download</a>
+  </nav>
+</header>
+
+<main class="docs-page">
+  <div class="docs-index-head">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="index.html">Home</a></li>
+        <li aria-current="page">Guides</li>
+      </ol>
+    </nav>
+    <p class="page-eyebrow">Guides</p>
+    <h1>SOLIDWORKS batch processing guides</h1>
+    <p class="docs-index-lede">
+      Practical answers to the questions people actually ask about automating SOLIDWORKS across
+      folders of files - including honest comparisons of the tools that are not ours. For how
+      SwMacroFlow itself works, see the <a href="docs.html">documentation</a>.
+    </p>
+  </div>
+
+  <div class="docs-index-body">
+    <section class="doc-group">
+      <h2>Running macros in batch</h2>
+      <ul class="doc-index">
+        <li class="doc-card">
+          <h3><a href="guides/run-macro-on-multiple-files/">Run a macro on multiple files</a></h3>
+          <p>You have a macro that works. It does exactly what you want to the document that is open. Now you have a folder with four hundred files in it, and running the macro four hundred times by hand is not a...</p>
+        </li>
+        <li class="doc-card">
+          <h3><a href="guides/do-you-need-a-solidworks-add-in/">Do you need an add-in?</a></h3>
+          <p>People searching for a SOLIDWORKS add-in usually are not looking for an add-in. They are looking for a way to make SOLIDWORKS do something repetitive without doing it by hand, and &quot;add-in&quot; is the...</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="doc-group">
+      <h2>Comparisons</h2>
+      <ul class="doc-index">
+        <li class="doc-card">
+          <h3><a href="guides/task-scheduler-alternatives/">Task Scheduler alternatives</a></h3>
+          <p>If you have gone looking for a way to batch process SOLIDWORKS files and found that Task Scheduler will not do what you need, you are in a well-worn groove. The threads asking this question go back...</p>
+        </li>
+      </ul>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="assets/logo.png" alt="SwMacroFlow logo" width="24" height="24" loading="lazy">
+      SwMacroFlow
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="docs.html">Docs</a>
+      <a href="guides.html">Guides</a>
+      <a href="macros.html">Macros</a>
+      <a href="index.html#download">Download</a>
+      <a href="contact.html">Contact</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 SwMacroFlow. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="assets/nav.js" defer></script>
+</body>
+</html>

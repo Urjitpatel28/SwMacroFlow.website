@@ -103,6 +103,7 @@ export function nav(base = "", current = "") {
   const links = [
     { href: `${base}index.html#features`, label: "Features", key: "" },
     { href: `${base}docs.html`, label: "Docs", key: "docs" },
+    { href: `${base}guides.html`, label: "Guides", key: "guides" },
     { href: `${base}macros.html`, label: "Macros", key: "macros" },
     { href: `${base}index.html#how-it-works`, label: "How it works", key: "" },
     { href: `${base}index.html#faq`, label: "FAQ", key: "" },
@@ -145,6 +146,7 @@ export function footer(base = "") {
     <div class="footer-links">
       <a href="${base}index.html">Home</a>
       <a href="${base}docs.html">Docs</a>
+      <a href="${base}guides.html">Guides</a>
       <a href="${base}macros.html">Macros</a>
       <a href="${base}index.html#download">Download</a>
       <a href="${base}contact.html">Contact</a>

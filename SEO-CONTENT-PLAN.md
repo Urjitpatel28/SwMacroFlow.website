@@ -1,5 +1,12 @@
 # SwMacroFlow content and keyword plan
 
+**Partly superseded, September 2026.** The `/guides/` section now exists and three of the briefs
+below have shipped as real pages. Two decisions here have been overridden: comparison pages live
+under `/guides/` with a `"kind": "comparison"` flag rather than a separate `/compare/` prefix, and
+brief 1 shipped as `/guides/run-macro-on-multiple-files/`. See `SEO-NEXT-BRIEFS.md` for what is
+still outstanding and the current authoring rules. The keyword map and competitor notes below are
+still accurate and still the reason for all of it.
+
 Written August 2026, alongside the technical SEO pass that turned the guides and the macro library
 into indexable pages. This file is the part that needs writing rather than building: a keyword map,
 ten briefs to write against, and the off-page work that no amount of on-page tuning substitutes for.
