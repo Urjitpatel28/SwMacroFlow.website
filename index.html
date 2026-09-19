@@ -20,6 +20,11 @@
 <meta name="twitter:title" content="SwMacroFlow - Batch-run SOLIDWORKS macros automatically">
 <meta name="twitter:description" content="A standalone Windows app that runs chains of SOLIDWORKS VBA macros across hundreds of parts, assemblies, and drawings.">
 <meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta property="og:video" content="https://swmacroflow.in/assets/intro.mp4">
+<meta property="og:video:secure_url" content="https://swmacroflow.in/assets/intro.mp4">
+<meta property="og:video:type" content="video/mp4">
+<meta property="og:video:width" content="1920">
+<meta property="og:video:height" content="1080">
 <meta name="theme-color" content="#0d0d0f">
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="icon" href="assets/logo.png" type="image/png" sizes="512x512">
@@ -80,6 +85,24 @@
       },
       "publisher": {
         "@id": "https://swmacroflow.in/#organization"
+      }
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://swmacroflow.in/#intro-video",
+      "name": "SwMacroFlow intro - the macro isn't the robot. You are.",
+      "description": "A 24-second introduction to SwMacroFlow: chain SOLIDWORKS VBA macros, run them across a whole folder of parts, assemblies and drawings, build the inputs automatically from \"@Token\" consts, resolve {PropertyName} tokens per document, run up to 8 SOLIDWORKS sessions in parallel, schedule unattended batches, and get a per-file result for every macro - with nothing installed into SOLIDWORKS.",
+      "thumbnailUrl": "https://swmacroflow.in/assets/intro-poster.jpg",
+      "contentUrl": "https://swmacroflow.in/assets/intro.mp4",
+      "uploadDate": "2026-09-19",
+      "duration": "PT24S",
+      "inLanguage": "en",
+      "isFamilyFriendly": true,
+      "publisher": {
+        "@id": "https://swmacroflow.in/#organization"
+      },
+      "about": {
+        "@id": "https://swmacroflow.in/#software"
       }
     },
     {
@@ -298,6 +321,127 @@
     color: var(--text-faint);
     font-size: 13px;
     text-align: center;
+  }
+
+  /* The launch teaser. Same frame as .hero-shot and .guide-sheet so the three read as one
+     family, but locked to 16:9 with aspect-ratio: the player is swapped in after load and the box
+     must not resize under the reader when it happens. */
+  .intro-frame {
+    position: relative;
+    max-width: var(--max-w);
+    margin: 0 auto;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius);
+    /* The video's own background, so the letterbox - if a browser rounds the box off 16:9 - is the
+       film's black rather than the panel grey. */
+    background: #07080b;
+    box-shadow: 0 26px 80px -48px rgba(0, 0, 0, .9);
+  }
+
+  /* The facade: the poster full-bleed, with the play badge over it. It is a real <button>, so it is
+     focusable and keyboard-operable for free, and it covers the whole frame - the click target is
+     the poster, not the badge. The badge itself sits bottom-right rather than dead centre, because
+     the poster is a title card whose type fills the left of the frame and a centred button lands
+     straight on top of it. */
+  .intro-play {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: end end;
+    width: 100%;
+    margin: 0;
+    padding: 24px;
+    border: 0;
+    background: none;
+    color: var(--text);
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .intro-play picture {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+
+  .intro-play img,
+  .intro-player {
+    display: block;
+    width: 100%;
+    height: 100%;
+    /* Both are 16:9 inside a 16:9 box, so cover and contain agree - cover only guards the
+       sub-pixel rounding at odd viewport widths. */
+    object-fit: cover;
+  }
+
+  .intro-play-badge {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 24px 12px 14px;
+    border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, #07080b 64%, transparent);
+    backdrop-filter: blur(6px);
+    transition: transform .15s ease, border-color .15s ease, background .15s ease;
+  }
+
+  .intro-play:hover .intro-play-badge,
+  .intro-play:focus-visible .intro-play-badge {
+    transform: scale(1.04);
+    border-color: var(--accent);
+    background: color-mix(in srgb, #07080b 78%, transparent);
+  }
+
+  /* The triangle is a border trick rather than an SVG or an icon font: one glyph, no request. */
+  .intro-play-icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .intro-play-icon::before {
+    content: "";
+    /* Nudged right by a couple of pixels: an optically centred triangle is not a geometrically
+       centred one. */
+    margin-left: 4px;
+    border: 9px solid transparent;
+    border-left: 15px solid #fff;
+    border-right: 0;
+  }
+
+  .intro-play-text {
+    display: grid;
+    gap: 2px;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #f5f2ed;
+  }
+
+  .intro-play-text small {
+    color: #b5aea6;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .intro-play-badge,
+    .intro-play:hover .intro-play-badge,
+    .intro-play:focus-visible .intro-play-badge {
+      transform: none;
+      transition: none;
+    }
   }
 
   /* Three sheets, one under the other. .guide-sheet already caps and centres itself at --max-w, so
@@ -903,6 +1047,36 @@
       width: 100%;
     }
 
+    /* At phone width the badge would otherwise eat most of a 16:9 box that is only ~200px tall. */
+    .intro-play {
+      padding: 12px;
+    }
+
+    .intro-play-badge {
+      gap: 10px;
+      padding: 9px 16px 9px 10px;
+    }
+
+    .intro-play-icon {
+      width: 36px;
+      height: 36px;
+    }
+
+    .intro-play-icon::before {
+      margin-left: 3px;
+      border-width: 7px;
+      border-left-width: 12px;
+      border-right-width: 0;
+    }
+
+    .intro-play-text {
+      font-size: 13px;
+    }
+
+    .intro-play-text small {
+      font-size: 11px;
+    }
+
     h1 {
       font-size: clamp(1.95rem, 8vw, 2.4rem);
       line-height: 1.08;
@@ -993,6 +1167,47 @@
         </picture>
       </figure>
     </div>    
+  </section>
+
+  <!-- The 24 second launch teaser, directly under the hero: it is the fastest statement of what
+       the app is for, and the annotated sheet below it is the slow one. Deliberately not a muted
+       autoplaying background - the cut is scored to the music and says nothing without it - so it
+       ships as a facade (lazy poster + button) that assets/intro.js turns into a real player on
+       click. Nothing of the 6 MB file is fetched until then. -->
+  <section id="intro" aria-labelledby="intro-title">
+    <div class="section-head">
+      <div class="section-tag">Watch</div>
+      <div>
+        <h2 id="intro-title">The whole pitch, in twenty-four seconds.</h2>
+        <p>
+          The chain, the folder, the inputs that build themselves, the parallel sessions &mdash;
+          and the line that decides it for most people, which is that nothing is installed into
+          SOLIDWORKS. Sound on.
+        </p>
+      </div>
+    </div>
+
+    <figure class="intro-frame" data-intro-video data-src="assets/intro.mp4" data-poster="assets/intro-poster.jpg">
+      <button class="intro-play" type="button" data-intro-play aria-label="Play the SwMacroFlow intro video. 24 seconds, with sound.">
+        <picture>
+          <source srcset="assets/intro-poster.webp" type="image/webp">
+          <img src="assets/intro-poster.jpg" width="1920" height="1080" loading="lazy" decoding="async" alt="Opening title card of the SwMacroFlow intro video, on black: the line SOLIDWORKS, open, run, close, repeat above the words &quot;The macro isn't the robot.&quot; and, in red, &quot;You are.&quot;">
+        </picture>
+        <span class="intro-play-badge">
+          <span class="intro-play-icon" aria-hidden="true"></span>
+          <span class="intro-play-text">
+            Watch the intro
+            <small>24 seconds &middot; has sound</small>
+          </span>
+        </span>
+      </button>
+      <noscript>
+        <video class="intro-player" controls preload="none" playsinline poster="assets/intro-poster.jpg" aria-label="SwMacroFlow intro video">
+          <source src="assets/intro.mp4" type="video/mp4">
+          Your browser cannot play this video. <a href="assets/intro.mp4">Download it instead</a>.
+        </video>
+      </noscript>
+    </figure>
   </section>
 
 <!-- The annotated sheet is the whole product explained in one picture, and it is already drawn
@@ -1464,6 +1679,7 @@
 </footer>
 
 <script src="assets/nav.js" defer></script>
+<script src="assets/intro.js" defer></script>
 <script src="assets/release.js" defer></script>
 <script src="assets/donate.js" defer></script>
 <script src="assets/downloads.js" defer></script>

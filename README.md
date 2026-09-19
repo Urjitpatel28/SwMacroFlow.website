@@ -41,6 +41,7 @@ assets/release.js       fills the #download block on index.html from release.jso
 assets/markdown.js      minimal Markdown renderer, shared by the browser and the build
 assets/nav.js           mobile nav toggle for the shared header
 assets/copy-path.js     the copy button on the macro install path
+assets/intro.js         click-to-play for the intro teaser in #intro on the home page
 assets/logo.png         brand mark, and the 512px icon
 assets/favicon.ico      -- at the repo root, alongside apple-touch-icon.png and site.webmanifest
 assets/SwMacroFlow.png  application screenshot, with a lossless .webp beside it
@@ -48,6 +49,8 @@ assets/SwMacroFlow_Handwritten_Guide.png
                         the annotated quick-guide sheet on the home page, rendered from
                         tools/guide.html -- never edit the PNG, with a quality-88 .webp beside it
 assets/fonts/           Caveat, the handwriting on the sheets
+assets/intro.mp4        the 24s launch teaser, H.264 CRF 23 + faststart, from the brag render
+assets/intro-poster.jpg its opening frame, with a quality-78 .webp beside it
 assets/og-image.png     1200x630 social preview
 docs/manifest.json      guide groups and order
 docs/*.md               the seven guides, the source the guide pages are built from
