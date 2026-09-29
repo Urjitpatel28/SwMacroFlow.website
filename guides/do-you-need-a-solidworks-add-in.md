@@ -66,7 +66,7 @@ SOLIDWORKS, and carries on from the next file.
 Restarting it every N files keeps a four-hour batch healthy. Code running inside the application
 cannot restart the application it is running inside.
 
-**It can drive several SOLIDWORKS instances at once.** Two to four sessions sharing one file list,
+**It can drive several SOLIDWORKS instances at once.** Two to eight sessions sharing one file list,
 each taking the next file as it comes free, is straightforward from outside and impossible from
 within - an add-in instance only ever sees its own host.
 
@@ -102,7 +102,7 @@ over COM, or starts one, and drives it from outside.
 
 That choice is exactly the trade above. There is no SwMacroFlow button in your SOLIDWORKS ribbon and
 there never will be. In return it restarts SOLIDWORKS when it crashes or on a file-count interval,
-runs batches across two to four instances in parallel, and creates real Windows Task Scheduler
+runs batches across two to eight instances in parallel, and creates real Windows Task Scheduler
 entries for unattended overnight runs.
 
 It also means installation is per user with no administrator rights and no elevation prompt, because
@@ -121,7 +121,8 @@ that operates on the active document works with no changes - see
 No. Batch processing is better served by a standalone application, because it can restart SOLIDWORKS
 after a crash, drive several instances in parallel, and be launched by a scheduler - none of which an
 in-process add-in can do. See the
-[Task Scheduler alternatives guide](/guides/task-scheduler-alternatives/) for the tools available.
+guide to [batch processing beyond Task Scheduler](/guides/task-scheduler-alternatives/) for how
+that works in practice.
 
 ### What is the difference between a SOLIDWORKS macro and an add-in?
 

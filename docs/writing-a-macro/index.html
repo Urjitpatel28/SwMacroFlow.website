@@ -116,6 +116,7 @@
         <ul>
           <li><a href="/docs/overview/">Overview</a></li>
           <li><a href="/docs/using-the-app/">Using the app</a></li>
+          <li><a href="/docs/copilot/">Copilot</a></li>
         </ul>
         <p class="docs-nav-group">Writing macros</p>
         <ul>
@@ -174,9 +175,9 @@ End Sub</code></pre><p>Inputs are declared as <code>Const</code> values with <co
 End If</code></pre><h2>Your macro runs once per file</h2><p>The same <code>Sub</code> is called again for the next file, in the same VBA session. That has two consequences worth knowing:</p><ul><li><strong>Do not cache per-file state in a module-level variable</strong> unless you reset it at the top of <code>main</code>. Whatever the last file left behind is still there.</li><li><strong>Save what you change.</strong> SwMacroFlow closes the document when the chain is done with it, and closing discards unsaved changes.</li></ul><p>When several macros are in the chain, each file is opened <strong>once</strong>. Every ticked macro runs against that open document in list order, then the file closes. Do not open or close documents yourself in batch mode - the host does it.</p><h2>Running with no document</h2><p>A macro that does its own work needs no document at all. Leave out <code>ActiveDoc</code>, tick <strong>Run once without opening any files</strong> in the Scope panel, and the macro runs a single time with nothing opened or closed - useful for a report, a folder walk, or setting application options.</p><p>Inputs and <code>MsgBox</code> reporting work exactly the same. <code>ActiveDoc</code> returns <code>Nothing</code> in this mode, so a macro that needs a document will simply exit at its guard.</p><p>Do not use <code>{Property}</code> placeholders in input values in this mode - there is no document to resolve them against. See <em>Adding inputs</em>.</p><h2>Your <code>.swp</code> is never modified</h2><p>Each run works on a throwaway copy in <code>%TEMP%\SwMacroFlow\</code>. That copy is where SwMacroFlow puts your input values and the machinery that captures your results. Open your own macro in the VBA editor any time and it is exactly as you wrote it.</p><p>Two things follow from this:</p><ul><li><code>GetCurrentMacroPathName</code> inside your macro reports that temporary location, not where you saved it. Do not use it to find files next to your macro - use a <code>FilePath</code> or <code>FolderPath</code> input instead.</li><li>The copy is deleted at the end of the batch. Copies left behind by a crash are swept up an hour later, on the next run.</li></ul><h2>Checking it works</h2><ol><li>Run the macro once by hand from the VBA editor before batching it. It behaves identically there, with one difference: <code>MsgBox</code> shows a real dialog instead of writing to the results list.</li><li>Add it to a job with a single file in scope and run that. If it is going to fail, it should fail on one file, not on four hundred.</li><li>Use <code>Option Explicit</code> and compile with Debug → Compile in the VBA editor so load-time surprises are fewer.</li></ol><p>For how to expose typed inputs and <code>{Property}</code> patterns, see <em>Adding inputs</em>. For how results become green, amber or red rows, see <em>Reporting a result</em>.</p></div>
 
       <nav class="pager" aria-label="Guide">
-      <a class="pager-link" href="/docs/using-the-app/" rel="prev">
+      <a class="pager-link" href="/docs/copilot/" rel="prev">
         <span class="pager-dir">Previous</span>
-        <span class="pager-title">Using the app</span>
+        <span class="pager-title">Copilot</span>
       </a>
       <a class="pager-link pager-next" href="/docs/adding-inputs/" rel="next">
         <span class="pager-dir">Next</span>

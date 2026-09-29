@@ -193,11 +193,51 @@ Blank is always legal. Run is blocked (and the reason names the macro) when:
 `FilePath` whose value contains well-formed `{Property}` tokens also skips the existence check,
 because the path is not meant to exist until each document resolves it.
 
+## Running a macro by hand (optional)
+
+The host never edits your macro - it substitutes into a throwaway copy. So a `Const` still holds
+the literal text `"@ExportFolder"` when you press F5 in the VBA editor, and the macro builds paths
+out of the placeholder text.
+
+Only worth doing for a macro that has to work both ways. Declare the inputs twice, with the **same
+identifiers**, and ship the manual block commented:
+
+```vb
+' ===== SwMacroFlow Inputs - filled in by the app. Leave these uncommented. =====
+Const ExportFolder As String = "@ExportFolder" 'Type: FolderPath 'Tooltip: "Where exports go"
+Const ExportType   As String = "@ExportType"   'Type: Option     'Options: PDF, DWG 'Value: "PDF"
+
+' ===== Manual Run - uncomment this block AND comment the block above. =====
+'Const ExportFolder As String = "C:\Exports"
+'Const ExportType   As String = "PDF"
+```
+
+Identical names are the safety net: leave both blocks live and VBA refuses to compile a duplicate
+`Const`, so the mistake surfaces when the macro is loaded instead of running a whole batch with the
+wrong values.
+
+Guard the other direction - neither block live - on an input that is never legitimately blank,
+which means an `Option` or a `Bool`:
+
+```vb
+If Left$(ExportType, 1) = "@" Then
+    MsgBox "No inputs were supplied. Uncomment the 'Manual Run' block, or run it " & _
+           "from SwMacroFlow.", vbCritical
+    Exit Sub
+End If
+```
+
+Manual values have to match what the host substitutes: a `Bool` is the text `"True"` or `"False"`,
+an `Option` is spelled exactly as in its `Options:` list, and `{Property}` / `{FileName}` do **not**
+work - they are expanded by VBA the host injects, so a manual run has no resolver. Use a literal, or
+leave it blank and derive it from the document.
+
+
 ## Property placeholders in input values
 
 A `String`, `FilePath`, or `FolderPath` value the user types may mix literal text with
 `{PropertyName}` tokens - for example `{PartNumber}_{Revision}.pdf`. Braces are reserved for that
-syntax in those three types; there is no escape in v1. Tokens are highlighted magenta in the Inputs
+syntax in those three types; there is no way to escape a literal brace. Tokens are highlighted magenta in the Inputs
 panel as you type.
 
 `{FileName}` is reserved: it always resolves to the open document's filename with its extension
@@ -240,7 +280,8 @@ instead of opening a dialog. The row shows the most severe line; the log keeps t
 |---|---|---|
 | `MsgBox "text"` | Green - status | `vbOK` |
 | `MsgBox "text", vbCritical` | **Red - the file failed** | `vbOK` |
-| `MsgBox "text", vbExclamation` / `vbInformation` / `vbQuestion` | Green - status | `vbOK` |
+| `MsgBox "text", vbExclamation` | **Amber - finished, but not entirely** | `vbOK` |
+| `MsgBox "text", vbInformation` / `vbQuestion` | Green - status | `vbOK` |
 | `MsgBox "text", vbYesNo` | Amber - prompt auto-answered | `vbNo` |
 | `MsgBox "text", vbOKCancel` | Amber | `vbCancel` |
 | `MsgBox "text", vbYesNoCancel` | Amber | `vbCancel` |
@@ -257,8 +298,11 @@ row's status and text always come from the same call.
 Write messages that identify the file or the value that varies - a row is read alongside hundreds of
 others.
 
-If the macro needs a yes/no or a path, make it an **input** instead of a `MsgBox` / `InputBox`
-prompt. Amber means the batch guessed.
+Amber has two meanings and they are worth telling apart. `vbExclamation` is *you* saying the run
+finished but not entirely - use it whenever the honest answer is "3 of 5 sheets", because without
+it that file reads as a clean success. A button set other than the default is the *batch* saying
+it guessed an answer nobody was there to give; if the macro needs a yes/no or a path, make it an
+**input** rather than a `MsgBox` / `InputBox` prompt.
 
 ## Must
 
@@ -270,6 +314,7 @@ prompt. Amber means the batch guessed.
 - Check the document type with `model.GetType` if the macro only suits one kind.
 - Save any document you change.
 - Report failure with `MsgBox "...", vbCritical` and return from the `Sub`.
+- Report a partial success with `MsgBox "...", vbExclamation` rather than letting it pass as green.
 
 ## Must not
 
@@ -298,7 +343,7 @@ prompt. Amber means the batch guessed.
 | *"Fix every property placeholder in …"* | A `String` / `FilePath` / `FolderPath` value has malformed braces. |
 | *"Choose a file that exists …"* | A `FilePath` without `{Property}` tokens points at a missing file. |
 | The batch hangs on the first file | A `VBA.MsgBox` call or a UserForm somewhere in the project. |
-| Every row is amber | A `MsgBox` with a button set other than the default, or an `InputBox`, is being reached on every file. |
+| Every row is amber | A `MsgBox` with a button set other than the default, or an `InputBox`, is being reached on every file - or every file really is a partial success reported with `vbExclamation`. |
 | An input has no field on the form | The token was used but never declared as a `Const`, or the literal is not exactly `"@Token"`. A declaration on the line after a comment ending in `_` is part of that comment. |
 | An input is a plain text box with no tooltip or default, though the metadata is there | On a continued declaration, a key lost the `'` in front of it and was read as part of the previous key. |
 | A wrong procedure runs | The entry point is not named `main`. |

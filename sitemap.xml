@@ -3,18 +3,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://swmacroflow.in/</loc>
-    <lastmod>2026-08-24</lastmod>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://swmacroflow.in/docs.html</loc>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://swmacroflow.in/guides.html</loc>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -26,19 +27,19 @@
   </url>
   <url>
     <loc>https://swmacroflow.in/contact.html</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://swmacroflow.in/terms.html</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://swmacroflow.in/privacy.html</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
@@ -51,6 +52,11 @@
   <url>
     <loc>https://swmacroflow.in/docs/using-the-app/</loc>
     <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://swmacroflow.in/docs/copilot/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

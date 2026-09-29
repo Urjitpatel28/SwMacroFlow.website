@@ -121,8 +121,8 @@ For the jobs on its fixed menu - printing drawings, converting drawings to DXF o
 files to the current version - it is excellent and it is already installed. For running your own
 macros it is usually more work than option 1.
 
-The [Task Scheduler alternatives guide](/guides/task-scheduler-alternatives/) covers what it can and
-cannot do in detail.
+The guide to [batch processing beyond Task Scheduler](/guides/task-scheduler-alternatives/) covers
+what it can and cannot do in detail.
 
 ## Option 3: A batch runner that supplies the loop
 
@@ -130,7 +130,7 @@ The third approach separates the two concerns. Your macro stays exactly as it is
 operates on the open document - and a separate application supplies the file list, the open, and the
 close.
 
-This is what SwMacroFlow does, and what Batch+ from the Xarial CAD+ Toolset does. Both are free.
+This is the approach SwMacroFlow takes, and it is free.
 
 With SwMacroFlow the loop lives outside your macro entirely:
 
@@ -190,13 +190,13 @@ SwMacroFlow reroutes `MsgBox` into the results list rather than letting it open.
 
 ### Can I run a SOLIDWORKS macro on a whole folder without writing code?
 
-Yes, with a batch runner. SwMacroFlow and Batch+ are both free and both take an ordinary macro and
-supply the folder loop themselves. Task Scheduler can do it too, but only for macros written against
+Yes, with a batch runner. SwMacroFlow is free, takes an ordinary macro and supplies the folder loop
+itself. Task Scheduler can do it too, but only for macros written against
 its own interface.
 
 ### Do I need to modify my macro to batch it?
 
-With SwMacroFlow or Batch+, generally not - a macro with an argument-less `Sub main` that works on
+With a batch runner such as SwMacroFlow, generally not - a macro with an argument-less `Sub main` that works on
 the active document works as it is. With Task Scheduler's custom task, yes, it needs rewriting
 against that interface. Writing the loop yourself obviously means changing the macro.
 

@@ -9,18 +9,33 @@
       node tools/build-guide.mjs guide
 
   Open this file in a browser to work on it - it is a plain page, laid out at the CSS px in the
-  config at the bottom, and the renderer only screenshots it at 2x. Every claim on the sheet comes
-  from docs/02-using-the-app.md; when the app changes, that file changes first and this one follows it.
+  config at the bottom. Every claim on the sheet comes from docs/02-using-the-app.md (and
+  docs/08-copilot.md for the Copilot note); when the app changes, those files change first and this
+  one follows them.
 
-  The screenshot sits at its NATIVE 1066x713 with image-rendering:pixelated, so rendering at 2x
-  doubles it by whole pixels and the UI text inside stays sharp. Do not resize it. If a column needs
-  room, move `shot` in the config instead - every outline is placed relative to those two numbers, so
-  the drawing follows the screenshot on its own.
+  The screenshot is a full-size 1920x1032 capture shown at its NATIVE size, so this sheet is rendered
+  at 1x (see `scale` on the guide entry in build-guide.mjs) - the capture is already sharp, and a 2x
+  render would only double the bytes. The callouts sit in a band above and a band below the
+  screenshot rather than in side columns, so the screenshot can span the sheet and the page shows it
+  as large as its column allows. The handwriting is set larger than the settings sheets (the style
+  block below) because this sheet is shown at roughly half its design size on the page.
+
+  Do not resize the screenshot. If a band needs room, move `shot` in the config instead - every
+  outline is placed relative to it, so the drawing follows the screenshot on its own.
 
   The paper, the ink colours and the handwriting are in sheet.css, and the drawing is sheet-draw.js;
-  both are shared with the settings sheets. Only the copy and the numbers live here.
+  both are shared with the settings sheets. Only the copy, the numbers and the type size live here.
 -->
 <link rel="stylesheet" href="sheet.css">
+<style>
+  :root { --c9: #0e7490; }
+  #title { font-size: 58px; top: 18px; }
+  .note h2 { font-size: 29px; margin-bottom: 10px; }
+  .note li { font-size: 25px; line-height: 1.18; margin-bottom: 7px; padding-left: 16px; }
+  #tips h2 { font-size: 29px; }
+  #tips li { font-size: 24px; }
+  .g { font-size: 20px; }
+</style>
 </head>
 <body>
 <div id="sheet">
@@ -29,157 +44,163 @@
 
   <div id="title"><span>SwMacroFlow &mdash; Quick Guide (Step by Step)</span></div>
 
+  <!-- Top band, left to right in the order the panels sit under it. -->
+
   <div class="note" id="n1" style="color: var(--c1)">
-    <h2>1. Add / create<br>a new macro</h2>
+    <h2>1. Add / create<br>a macro</h2>
     <ul>
-      <li><b>Add Macro...</b> browses for a <b>.swp</b> &mdash; pick several at once and they all join the chain.</li>
-      <li><b>From Library</b> adds one that ships with the app. The folder button opens that folder.</li>
+      <li><b>Add Macro...</b> browses for a <b>.swp</b> &mdash; pick several and they all join the chain.</li>
+      <li>The buttons beside it: macros that <b>ship with the app</b>, the <b>library folder</b>, and the <b>online macro library</b>.</li>
       <li>Or drag a <b>.swp</b> onto the window.</li>
-      <li>The checkbox includes a macro in this run. Unticking keeps what you typed.</li>
-      <li><span class="g">&#8593;&#8595;</span> reorder, <span class="g">&#10005;</span> removes. <b>List order is run order.</b></li>
-      <li>Add the same macro twice to run it with two sets of inputs.</li>
+      <li>Tick to include, <span class="g">&#8593;&#8595;</span> to reorder, <span class="g">&#10005;</span> to remove. <b>List order is run order.</b></li>
     </ul>
   </div>
 
-  <div class="note" id="n2" style="color: var(--c2)">
-    <h2>2. Select files or<br>folders to process</h2>
+  <div class="note" id="n9" style="color: var(--c9)">
+    <h2>New: save &amp; reuse<br>a workflow</h2>
     <ul>
-      <li><b>Browse Folder...</b> scans a folder. <b>Include subfolders</b> decides how deep.</li>
-      <li><b>Add Files...</b> picks single files. <b>Remove Selected</b> or Delete takes them out.</li>
-      <li>Or drag files and folders onto the window.</li>
-      <li>Only <b>.sldprt</b>, <b>.sldasm</b> and <b>.slddrw</b> are recognised.</li>
-      <li>Files land in Part / Assembly / Drawing. Each checkbox filters what actually runs.</li>
-      <li>Tick <b>Run once...</b> when the macros act on no document at all.</li>
+      <li>The <b>disk</b> icon saves the chain <b>and the values typed into it</b> under a name. Not the files in scope.</li>
+      <li>The <b>open-file</b> icon applies a saved workflow: the whole chain and every input come back.</li>
+      <li>Apply it, then point it at this week's folder.</li>
+      <li>Rename or delete under <b>Settings &rarr; Workflows</b>.</li>
     </ul>
   </div>
 
   <div class="note" id="n3" style="color: var(--c3)">
-    <h2>3. Configure inputs for the selected macro</h2>
+    <h2>3. Configure inputs for<br>the selected macro</h2>
     <ul>
-      <li>Click a macro to see its inputs. One macro at a time &mdash; values never leak between macros.</li>
-      <li>The control matches the declared type: text, whole number, checkbox, dropdown, file or folder picker.</li>
-      <li><b>{FileName}</b> becomes the document's own name; other <b>{Property}</b> tokens come from its custom properties, per file, as it runs.</li>
-      <li>Inputs are checked <b>before</b> the run starts, so a typo fails now rather than on every file.</li>
+      <li>Click a macro to see its inputs. Values never leak between macros.</li>
+      <li>The control matches the declared type: text, number, checkbox, dropdown, file or folder.</li>
+      <li><b>{FileName}</b> and other <b>{Property}</b> tokens are filled in per file, as it runs.</li>
+      <li>Inputs are checked <b>before</b> the run, so a typo fails now, not on every file.</li>
     </ul>
   </div>
 
   <div class="note" id="n4" style="color: var(--c4)">
-    <h2>4. Choose / connect your<br>SOLIDWORKS instance</h2>
+    <h2>4. Choose / connect<br>SOLIDWORKS</h2>
     <ul>
       <li>Pick any SOLIDWORKS installed, or one already running.</li>
-      <li><b>You do not have to connect first</b> &mdash; Run Batch connects for you, starting SOLIDWORKS if it is not up.</li>
-      <li>Connect by hand to watch it happen, or to compile the macros before committing to a run.</li>
+      <li><b>No need to connect first</b> &mdash; Run Batch connects for you, and starts SOLIDWORKS if it is not up.</li>
+      <li>Connect by hand to compile the macros before committing to a run.</li>
     </ul>
   </div>
 
   <div class="note" id="n8" style="color: var(--c8)">
     <h2>Header buttons</h2>
     <ul>
-      <li><b>?</b> opens the help guides.</li>
-      <li>The circular arrow is <b>Reset</b>: it clears the macros, files, inputs and results, and asks first.</li>
+      <li>The robot opens the <b>AI Copilot</b>.</li>
+      <li><b>?</b> opens the documentation.</li>
+      <li>The circular arrow is <b>Reset</b>: clears macros, files, inputs and results. It asks first.</li>
+      <li>The gear is <b>Settings</b>: theme, restarts, parallel runs, Copilot, schedules and workflows.</li>
     </ul>
   </div>
 
-  <div class="note" id="n5" style="color: var(--c5)">
-    <h2>5. AI Copilot &mdash; get help,<br>view macro chain &amp; defaults</h2>
-    <ul>
-      <li>Shows the current chain and the default input values it will run with.</li>
-      <li>Names where a macro was saved in the library.</li>
-      <li>Ask it anything about the SOLIDWORKS API.</li>
-      <li>Tells you what is still stopping the batch from running.</li>
-    </ul>
-  </div>
+  <!-- Bottom band. -->
 
   <div class="note" id="n6" style="color: var(--c6)">
     <h2>6. Run the batch</h2>
     <ul>
-      <li>Run Batch connects, compiles every ticked macro, then works through the files.</li>
-      <li>It reads <b>Run Once</b> in run-once mode, and <b>Starting...</b> while it connects and compiles.</li>
-      <li><b>Cancel</b> stops after the macro in progress finishes &mdash; never mid-macro.</li>
-      <li>The window stays usable while it runs.</li>
+      <li><b>Run Batch</b> connects, compiles every ticked macro, then works through the files.</li>
+      <li>The clock beside it <b>schedules</b> this batch as a Windows task.</li>
+      <li><b>Cancel</b> stops after the macro in progress &mdash; never mid-macro.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n2" style="color: var(--c2)">
+    <h2>2. Select files or<br>folders to process</h2>
+    <ul>
+      <li><b>Browse Folder...</b> scans a folder; <b>Include subfolders</b> decides how deep.</li>
+      <li><b>Add Files...</b> picks single files. Or drag files and folders onto the window.</li>
+      <li>Only <b>.sldprt</b>, <b>.sldasm</b> and <b>.slddrw</b>. They land in Part / Assembly / Drawing, and each checkbox filters what runs.</li>
+      <li>Tick <b>Run once...</b> when the macros act on no document at all.</li>
     </ul>
   </div>
 
   <div class="note" id="n7" style="color: var(--c7)">
-    <h2>7. Progress &amp; status</h2>
+    <h2>7. Progress &amp; results</h2>
     <ul>
-      <li>The count is files done against files in scope.</li>
-      <li>Every macro-file pair gets one row: <b>green</b> ran, <b>amber</b> a prompt was answered for you, <b>red</b> failed, <b>grey</b> skipped after an earlier macro failed on that file.</li>
-      <li><b>Ctrl + Shift + Q</b> cancels the batch too.</li>
-      <li>If <b>Run</b> is greyed out, the reason is written next to the button.</li>
+      <li>While it runs, the count and a progress bar appear here.</li>
+      <li>Results fill the right-hand column, one row per macro and file: <b>green</b> ran, <b>amber</b> not entirely, <b>red</b> failed, <b>grey</b> skipped.</li>
+      <li><b>Ctrl + Shift + Q</b> cancels too.</li>
+      <li>If Run is greyed out, the reason is written next to it.</li>
+    </ul>
+  </div>
+
+  <div class="note" id="n5" style="color: var(--c5)">
+    <h2>5. AI Copilot</h2>
+    <ul>
+      <li>Opens in the results column. Needs your own API key, set in Settings.</li>
+      <li>Ask about the SOLIDWORKS API, or have it write a macro, save it to the library and add it to the chain.</li>
+      <li>Every step it takes is listed. <b>It always asks before running a batch.</b></li>
     </ul>
   </div>
 
   <div class="note" id="tips">
-    <h2><span class="g" style="font-size:19px">&#128161;</span> Tips</h2>
+    <h2><span class="g" style="font-size:25px">&#128161;</span> Tips</h2>
     <ul>
       <li>Test on a few files before you point it at hundreds.</li>
       <li>An output folder that does not exist yet is fine &mdash; macros create it.</li>
-      <li>By default a macro that fails skips the rest of the chain for that file. The checkbox under the macro list changes that.</li>
-      <li>The log keeps every message, not just the one that reached the row.</li>
+      <li>A macro that fails skips the rest of the chain for that file, unless you tick the box under the list.</li>
     </ul>
   </div>
 </div>
 <script src="sheet-draw.js"></script>
 <script>
 drawSheet({
-  /* The sheet is sized around the screenshot rather than the other way round. The screenshot cannot
-     be scaled without going soft (see the note at the top), so the paper has to be big enough to
-     hold 1066x713 in the middle plus a column of handwriting either side and a band above and below.
-     Everything here is CSS px; the render doubles all of it. Must match the `guide` entry in
+  /* The paper holds the 1920x1032 screenshot with a 40px margin either side, a band of callouts
+     above it and a band below. CSS px, rendered at 1x. Must match the `guide` entry in
      build-guide.mjs. */
-  sheet: { w: 1760, h: 1240 },
+  sheet: { w: 2000, h: 2040 },
 
   /* Where the screenshot's top-left corner sits on the sheet. */
-  shot: { x: 347, y: 250 },
+  shot: { x: 40, y: 560 },
 
   /* Rectangles inside the screenshot, as [x1, y1, x2, y2] in its own pixels. Left a few pixels short
-     of each other where panels touch: MACROS sits directly on top of SCOPE in the window, and two
-     outlines sharing an edge read as one box drawn round both. */
+     of each other where panels touch, so two outlines sharing an edge do not read as one box. */
   panels: {
-    macros:     [14, 92, 354, 318],
-    inputs:     [360, 92, 700, 322],
-    scope:      [10, 336, 700, 655],
-    copilot:    [706, 92, 1055, 655],
-    instance:   [536, 38, 926, 71],
-    headerKeys: [940, 42, 1052, 68],
-    run:        [14, 674, 150, 703],
-    progress:   [170, 674, 700, 703],
+    macros:     [14, 94, 634, 470],
+    workflows:  [568, 70, 614, 90],
+    inputs:     [648, 94, 1266, 470],
+    scope:      [12, 486, 1266, 972],
+    copilot:    [1282, 74, 1906, 970],
+    instance:   [1396, 34, 1778, 60],
+    headerKeys: [1797, 34, 1906, 60],
+    run:        [14, 996, 146, 1022],
+    progress:   [160, 996, 900, 1022],
   },
 
   notes: {
-    n3:   { left: 292,  top: 96,   width: 812 },
-    n4:   { left: 1128, top: 78,   width: 612 },
-    n1:   { left: 24,   top: 300,  width: 299 },
-    n8:   { left: 1437, top: 268,  width: 299 },
-    n5:   { left: 1437, top: 430,  width: 299 },
-    n2:   { left: 24,   top: 656,  width: 299 },
-    n6:   { left: 40,   top: 1008, width: 430 },
-    n7:   { left: 524,  top: 1008, width: 616 },
-    tips: { left: 1196, top: 996,  width: 544 },
+    n1:   { left: 40,   top: 110, width: 360 },
+    n9:   { left: 430,  top: 110, width: 370 },
+    n3:   { left: 830,  top: 110, width: 390 },
+    n4:   { left: 1250, top: 110, width: 340 },
+    n8:   { left: 1620, top: 110, width: 350 },
+    n6:   { left: 40,   top: 1650, width: 330 },
+    n2:   { left: 400,  top: 1650, width: 420 },
+    n7:   { left: 850,  top: 1650, width: 400 },
+    n5:   { left: 1280, top: 1650, width: 330 },
+    tips: { left: 1640, top: 1650, width: 330 },
   },
 
   outlines: [
-    ['macros', '#e0342a'], ['scope', '#1f9d55'], ['inputs', '#2563d9'], ['instance', '#e07a1a'],
-    ['headerKeys', '#7a5c3a'], ['copilot', '#8b3fd4'], ['run', '#d81b7a'], ['progress', '#1e63c8'],
+    ['macros', '#e0342a'], ['workflows', '#0e7490'], ['inputs', '#2563d9'], ['instance', '#e07a1a'],
+    ['headerKeys', '#7a5c3a'], ['scope', '#1f9d55'], ['copilot', '#8b3fd4'], ['run', '#d81b7a'],
+    ['progress', '#1e63c8'],
   ],
 
   arrows: [
-    { from: [332, 352],  to: [354, 386],  bend: 22,  color: '#e0342a' },
-    { from: [332, 710],  to: [352, 664],  bend: 26,  color: '#1f9d55' },
-    { from: [858, 232],  to: [866, 334],  bend: -22, color: '#2563d9' },
-    { from: [1158, 258], to: [1176, 282], bend: 14,  color: '#e07a1a' },
-    { from: [1432, 296], to: [1406, 306], bend: 11,  color: '#7a5c3a' },
-    { from: [1432, 468], to: [1410, 502], bend: 15,  color: '#8b3fd4' },
-    { from: [258, 1004], to: [392, 960],  bend: 22,  color: '#d81b7a' },
-    { from: [706, 1004], to: [752, 960],  bend: 16,  color: '#1e63c8' },
+    { from: [220, 540],  to: [260, 648],  bend: 18,  color: '#e0342a' },
+    { from: [600, 540],  to: [628, 624],  bend: -16, color: '#0e7490' },
+    { from: [1020, 540], to: [1010, 648], bend: 16,  color: '#2563d9' },
+    { from: [1420, 540], to: [1520, 588], bend: -18, color: '#e07a1a' },
+    { from: [1800, 540], to: [1880, 588], bend: -16, color: '#7a5c3a' },
+    { from: [150, 1640], to: [110, 1590], bend: -14, color: '#d81b7a' },
+    { from: [600, 1640], to: [560, 1540], bend: 16,  color: '#1f9d55' },
+    { from: [1020, 1640], to: [800, 1590], bend: 18, color: '#1e63c8' },
+    { from: [1440, 1640], to: [1540, 1538], bend: -16, color: '#8b3fd4' },
   ],
 
   titleInk: '#e0342a',
-  // Left over from when the sheet was 1536 wide, which puts the title left of centre on the 1760 it
-  // is now. Kept because it is what the committed PNG has - changing it moves the title and rewrites
-  // a 2 MB binary for no reason anyone asked for.
-  titleWidth: 1536,
 });
 </script>
 </body>

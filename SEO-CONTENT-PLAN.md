@@ -1,5 +1,11 @@
 # SwMacroFlow content and keyword plan
 
+**Owner decision, 29 September 2026: no competitor comparisons.** The site does not compare
+SwMacroFlow with other vendors' tools or name them to rank against. `task-scheduler-alternatives`
+was rewritten on that basis (Task Scheduler limits and how to get past them, no vendor table), and
+the comparison briefs and "vs" keywords below are dropped. Describe what SwMacroFlow does on its own
+terms; describing SOLIDWORKS' own features is fine.
+
 **Partly superseded, September 2026.** The `/guides/` section now exists and three of the briefs
 below have shipped as real pages. Two decisions here have been overridden: comparison pages live
 under `/guides/` with a `"kind": "comparison"` flag rather than a separate `/compare/` prefix, and

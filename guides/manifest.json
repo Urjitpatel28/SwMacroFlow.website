@@ -33,20 +33,14 @@
       ]
     },
     {
-      "title": "Comparisons",
+      "title": "Beyond Task Scheduler",
       "guides": [
         {
           "file": "task-scheduler-alternatives",
-          "kind": "comparison",
           "published": "2026-09-08",
           "related": [
             "/docs/overview/",
             "/docs/using-the-app/"
-          ],
-          "mentions": [
-            { "name": "SOLIDWORKS Task Scheduler", "url": "https://www.solidworks.com/" },
-            { "name": "Batch+", "url": "https://cadplus.xarial.com/batch/" },
-            { "name": "Drew", "url": "https://cadbooster.com/" }
           ]
         }
       ]

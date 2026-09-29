@@ -1,4 +1,4 @@
-# Using the app
+﻿# Using the app
 
 A walk through the window, panel by panel, in the order they appear on screen.
 
@@ -24,6 +24,17 @@ If the session drops, the next run simply connects again. The only connection st
 Run button down is a machine with no SOLIDWORKS on it at all, which reads *No SOLIDWORKS installation
 was found on this machine.*
 
+SwMacroFlow opens one window at a time. Starting it again while it is open brings the open window
+to the front instead of opening a second one.
+
+A scheduled batch is the exception. Windows runs it in a window of its own, so it still runs if you
+left SwMacroFlow open. Only one batch runs at a time, though. A scheduled batch that fires while
+another batch is running waits for it to finish - for up to 4 hours, after which it is recorded as
+blocked and does not run. While a scheduled batch is running, **Run Batch** in your window tells you
+which one and when it started, and runs nothing; try again when it has finished. The line under the
+header shows a scheduled batch that is running or waiting, and the schedule list picks up how it went
+as soon as it ends.
+
 Closing the window closes SwMacroFlow, and with it everything you had set up: the macros, the files,
 the inputs, the results. It asks first if a batch is still running. If SwMacroFlow started SOLIDWORKS
 itself, it closes that too; if you had SOLIDWORKS open already, it is left exactly as it was. Use
@@ -35,7 +46,7 @@ Buttons top right (and the connection / instance controls when they apply):
 
 | Control | What it does |
 |---|---|
-| **?** | Opens this help page in your browser. It is rebuilt each time you click. |
+| **?** | Opens the online documentation in your browser. |
 | **Reset** (circular arrow) | Clears the macros, the file list, the inputs, the results and the log, and puts the scope checkboxes back to their defaults. It asks first if there is anything to lose, and is disabled while a batch is running. |
 | **Sun / moon** | Switches between the light and dark theme. The choice is remembered. |
 | Instance / connection | Which SOLIDWORKS to use. Pick one here; **Run Batch** connects to it if you have not already. |
@@ -127,6 +138,79 @@ fail every file in the batch, one slow open-and-close at a time.
 - A `FolderPath` need not exist - macros often create it.
 - Malformed braces in a free-text value block Run.
 
+## WORKFLOWS
+
+A **workflow** is the macro chain and the values typed into it, saved under a name so that next
+week you can bring the same setup back instead of rebuilding it.
+
+**It does not save the files in scope.** The panel says so under the heading - *Saves the macro
+chain and the values typed into it. Not the files in scope.* That is the point rather than a
+limitation: a workflow is the work, not the batch. Apply it, then point it at whatever folder you
+have this time.
+
+### Saving one
+
+Two buttons sit in the **MACROS** header row: **Apply a saved workflow** and **Save this macro
+chain as a workflow**.
+
+Build the chain, fill in the inputs, then press **Save this macro chain as a workflow**. A **SAVE
+WORKFLOW** box drops down: type a name and press **Save**.
+
+The box is pre-filled with the workflow you last applied, so re-saving the one you have been editing
+is what happens by default. Names are matched without regard to case: typing the name of a workflow
+that already exists asks whether to overwrite *that* one, and answering no leaves the box open so
+you can type a different name.
+
+Three things stop a save, each saying so in the box:
+
+| Message | What it means |
+|---|---|
+| Give the workflow a name. | The name box is empty. |
+| There are no macros in the chain to save. | Add a macro to the chain first. |
+| The workflow could not be saved. | The file could not be written - see *Troubleshooting*. |
+
+A workflow whose chain points at a `.swp` outside the macro library still saves, with a warning:
+
+> This workflow points at *macro*, which is outside the macro library, so it will stop working if
+> that file is moved.
+
+A workflow stores *where* each macro is, not a copy of it. Macros in
+`%LOCALAPPDATA%\SwMacroFlow\macros` stay put; one you dragged off a network share is only as
+reliable as that share.
+
+### Applying one
+
+**Apply a saved workflow**, in the **MACROS** header row, picks one and brings it back. The same
+workflows are also listed under **Settings → Workflows** by **NAME**, **MACROS** and **SAVED**,
+where **Apply into the setup** on a row does the same thing.
+
+Applying **replaces the whole chain and every input value** with the saved ones. You are only asked
+to confirm when there is a chain to lose - applying onto an empty panel just happens. Your files,
+your scope and your results are not touched either way.
+
+A batch that is running blocks it, with **A batch is running.** Wait for it to finish.
+
+If a macro in the saved chain is no longer on disk, the workflow still applies - without it - and
+says so:
+
+> Workflow *name* was applied without *macro*, which is ticked in the saved chain but no longer on
+> disk. This chain will not do what the workflow did. Dismiss this to run it anyway.
+
+Read that one before dismissing it. The chain will run. It is just shorter than the one you saved,
+and the step that went missing is often the one that did the work.
+
+### Renaming and removing
+
+Both are under **Settings → Workflows**. Rename by typing over the name in the row. Two
+workflows cannot share a name - **Another workflow is already called "…"** - and a blank name is
+refused with **A workflow needs a name.**
+
+**Delete this workflow** asks first, and deletes only the saved chain; the `.swp` files it pointed
+at are left alone.
+
+Workflows live in `%LOCALAPPDATA%\SwMacroFlow\workflows.xml`, with one file per chain in the
+`workflows` folder beside it.
+
 ## SCOPE
 
 Four ways to put files in scope:
@@ -171,7 +255,7 @@ away a half-finished edit rather than letting a later macro save one.
 Tick **Keep running the other macros if one fails on a file** when your macros happen to share a
 document but not a purpose, and each should get its turn regardless.
 
-A macro that merely opened a prompt (an amber row) does **not** stop the chain. Only a real failure
+An amber row - a partial success, or a prompt the batch answered - does **not** stop the chain. Only a real failure
 does.
 
 ## Running, and stopping
@@ -209,7 +293,7 @@ for that file:
 | Row | Meaning |
 |---|---|
 | Green | The macro ran and reported nothing worse than a status message. |
-| Amber | The macro opened a prompt. Nobody was there to click, so the batch answered it - see *Reporting a result*. |
+| Amber | The macro finished but not entirely, and said so with `vbExclamation` - or it opened a prompt nobody was there to click and the batch answered it. See *Reporting a result*. |
 | Red | The macro reported a failure, crashed, a `{Property}` could not be resolved, or the file could not be opened. |
 | Grey | The macro never ran on this file, because an earlier one in the chain failed on it. |
 
@@ -224,8 +308,9 @@ row, in the order they happened. It keeps the last 500 lines on screen.
 - **Copy** puts the whole visible log on the clipboard.
 - **Clear** empties the panel. It does not touch the file on disk.
 - The folder at the bottom of the panel is where the log files are written, one per day, named
-  `logger_<date>.log`. Thirty days are kept. Normally a `logs` folder beside the executable; if that
-  is not writable, `%LOCALAPPDATA%\SwMacroFlow\logs`.
+  `logger_<date>.log`. Thirty days are kept. The folder is `%LOCALAPPDATA%\SwMacroFlow\logs`, beside
+  your macro library rather than inside the install folder, so uninstalling does not take the logs
+  with it.
 
 ## When Run is greyed out
 
@@ -243,3 +328,27 @@ The reason is written next to the button. It is always one of these:
 | Choose a file that exists for every file input in *macro*. | A file input points at something that is not there (and has no `{Property}` tokens). |
 
 A `FolderPath` that does not exist yet does **not** block Run - macros commonly create it.
+
+## What leaves the machine
+
+Nothing about your work - unless you turn the Copilot on.
+
+The app itself transmits nothing. No file name, no macro, no result, no log line. Two things do go
+out on their own, both of them small:
+
+| What | When | Why |
+|---|---|---|
+| Update check | At launch | Asks GitHub whether a newer release exists. |
+| Status check | At launch | Reads a small file that lets the app be switched off remotely if it is ever retired. |
+
+Both are plain downloads: they ask for a file and read the answer. Neither sends anything about you,
+this machine, or your work. There is no usage tracking and no install identifier of any kind.
+
+**The Copilot is the exception, and it is a real one.** It is off until you enter an API key, and it
+sends nothing before then. Once configured, what you type, any file you attach, and whatever it
+reads while answering - macro source, the file list, results, log lines, your settings - is sent to
+the provider you chose. Four of the five providers are somebody else's servers; **LM Studio** is a
+model running on your own machine, and nothing leaves it. See *Using the Copilot*.
+
+If that trade is not one you want to make, leave the API key blank. Everything else in SwMacroFlow
+works exactly as described above.

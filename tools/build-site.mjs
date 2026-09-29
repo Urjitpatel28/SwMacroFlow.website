@@ -1244,7 +1244,7 @@ function guidesIndexPage(groups, articles) {
       "@id": `${ORIGIN}${path}#page`,
       name: "SOLIDWORKS batch processing guides",
       description:
-        "Guides on batch processing SOLIDWORKS files: running a macro across multiple files, Task Scheduler alternatives, and whether you need an add-in.",
+        "Guides on batch processing SOLIDWORKS files: running a macro across multiple files, getting past the limits of Task Scheduler, and whether you need an add-in.",
       url: `${ORIGIN}${path}`,
       inLanguage: "en",
       isPartOf: { "@id": WEBSITE_ID },
@@ -1303,8 +1303,8 @@ ${nav(base, "guides")}
     <h1>SOLIDWORKS batch processing guides</h1>
     <p class="docs-index-lede">
       Practical answers to the questions people actually ask about automating SOLIDWORKS across
-      folders of files - including honest comparisons of the tools that are not ours. For how
-      SwMacroFlow itself works, see the <a href="docs.html">documentation</a>.
+      folders of files. For how SwMacroFlow itself works, see the
+      <a href="docs.html">documentation</a>.
     </p>
   </div>
 
@@ -1566,7 +1566,7 @@ function llmsTxt({ docs, articles, macros }) {
 
 SwMacroFlow drives an installed, licensed x64 SOLIDWORKS session from outside. Nothing is registered
 or installed inside SOLIDWORKS itself, and it needs no administrator rights. It is free with every
-feature included: macro chaining, batch runs across folders, parallel batches across two to four
+feature included: macro chaining, batch runs across folders, parallel batches across two to eight
 SOLIDWORKS instances, a bundled macro library, an AI Copilot side panel (bring your own API key,
 with image, PDF, Word and text attachments), and Windows Task Scheduler integration. There is no
 trial, no licence, no account, and nothing to buy.
@@ -1575,7 +1575,7 @@ trial, no licence, no account, and nothing to buy.
 
 - [Home](${ORIGIN}/): what SwMacroFlow does, how a batch runs, and the download.
 - [Documentation](${ORIGIN}/docs.html): every guide, from a first batch to the macro authoring contract.
-- [Guides](${ORIGIN}/guides.html): how-to and comparison articles on batch processing SOLIDWORKS files.
+- [Guides](${ORIGIN}/guides.html): how-to articles on batch processing SOLIDWORKS files.
 - [Macro library](${ORIGIN}/macros.html): free SOLIDWORKS .swp macros to download.
 
 ## Documentation

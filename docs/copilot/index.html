@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>Using the SwMacroFlow Copilot to write SOLIDWORKS macros | SwMacroFlow</title>
+<meta name="description" content="The AI Copilot panel: how to connect a provider, what the five modes let it do without asking, what it can read, and what that sends to your provider.">
+<link rel="canonical" href="https://swmacroflow.in/docs/copilot/">
+<meta property="og:title" content="Using the SwMacroFlow Copilot to write SOLIDWORKS macros | SwMacroFlow">
+<meta property="og:description" content="The AI Copilot panel: how to connect a provider, what the five modes let it do without asking, what it can read, and what that sends to your provider.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://swmacroflow.in/docs/copilot/">
+<meta property="og:site_name" content="SwMacroFlow">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Using the SwMacroFlow Copilot to write SOLIDWORKS macros | SwMacroFlow">
+<meta name="twitter:description" content="The AI Copilot panel: how to connect a provider, what the five modes let it do without asking, what it can read, and what that sends to your provider.">
+<meta name="twitter:image" content="https://swmacroflow.in/assets/og-image.png">
+<meta name="theme-color" content="#0d0d0f">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/assets/logo.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="stylesheet" href="/assets/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://swmacroflow.in/docs/copilot/#article",
+      "headline": "Using the Copilot",
+      "description": "The AI Copilot panel: how to connect a provider, what the five modes let it do without asking, what it can read, and what that sends to your provider.",
+      "url": "https://swmacroflow.in/docs/copilot/",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://swmacroflow.in/#website"
+      },
+      "about": {
+        "@id": "https://swmacroflow.in/#software"
+      },
+      "publisher": {
+        "@id": "https://swmacroflow.in/#organization"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://swmacroflow.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Docs",
+          "item": "https://swmacroflow.in/docs.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Copilot",
+          "item": "https://swmacroflow.in/docs/copilot/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="brand">
+      <img src="/assets/logo.png" alt="SwMacroFlow logo" width="28" height="28">
+      SwMacroFlow
+    </a>
+    <nav class="nav-links">
+      <a href="/index.html#features">Features</a>
+      <a href="/docs.html" aria-current="page">Docs</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#how-it-works">How it works</a>
+      <a href="/index.html#faq">FAQ</a>
+      <a href="/index.html#download">Download</a>
+    </nav>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav id="mobileNav" class="nav-mobile" aria-label="Site">
+    <a href="/index.html#features">Features</a>
+      <a href="/docs.html" aria-current="page">Docs</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#how-it-works">How it works</a>
+      <a href="/index.html#faq">FAQ</a>
+      <a href="/index.html#download">Download</a>
+  </nav>
+</header>
+
+<main class="docs-page">
+  <div class="docs-layout">
+
+    <aside class="docs-sidebar">
+      <nav class="docs-nav" aria-label="Documentation">
+        <p class="docs-nav-group">Using the app</p>
+        <ul>
+          <li><a href="/docs/overview/">Overview</a></li>
+          <li><a href="/docs/using-the-app/">Using the app</a></li>
+          <li><a href="/docs/copilot/" class="is-active" aria-current="page">Copilot</a></li>
+        </ul>
+        <p class="docs-nav-group">Writing macros</p>
+        <ul>
+          <li><a href="/docs/writing-a-macro/">Writing a macro</a></li>
+          <li><a href="/docs/adding-inputs/">Adding inputs</a></li>
+          <li><a href="/docs/reporting-results/">Reporting a result</a></li>
+          <li><a href="/docs/macro-authoring-spec/">Macro authoring spec</a></li>
+        </ul>
+        <p class="docs-nav-group">Reference</p>
+        <ul>
+          <li><a href="/docs/troubleshooting/">Troubleshooting</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <article class="docs-content">
+      <nav class="crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/docs.html">Docs</a></li>
+        <li aria-current="page">Copilot</li>
+      </ol>
+    </nav>
+      <p class="page-eyebrow">Using the app</p>
+      <h1>Using the Copilot</h1>
+      <div class="docs-markdown"><p>The Copilot is a chat panel that answers questions about SwMacroFlow and SOLIDWORKS VBA, and - if you let it - writes and edits macros in your library, builds the chain, changes the scope and starts a run.</p><p>It does nothing until you give it an API key, and sends nothing anywhere before then.</p><h2>Opening and closing it</h2><p>The <strong>AI Copilot</strong> button sits in the header beside <strong>Help</strong>, <strong>Reset</strong> and <strong>Settings</strong>. The panel opens where <strong>RESULTS</strong> and <strong>LOG</strong> were; closing it puts them back.</p><p><strong>Closing the panel ends the conversation.</strong> Opening it again starts a fresh one. That is on purpose: the Copilot reasons about the panel as it is right now, and a conversation that outlived three different chains would be answering about a setup that no longer exists. Conversations are saved as you have them, so an old one can still be read from <strong>Chat history</strong> - it is the live session that ends, not the record of it.</p><h2>Turning it on</h2><p>Everything is under <strong>Settings → Copilot</strong>:</p><table><tr><th>Field</th><th>What it is</th></tr><tr><td><strong>PROVIDER</strong></td><td>OpenAI, Anthropic, xAI, Gemini or LM Studio.</td></tr><tr><td><strong>API KEY</strong></td><td>Your key for that provider. Stored encrypted for your Windows account only, and never written to the log. Clear the box to remove it.</td></tr><tr><td><strong>BASE URL</strong></td><td>Leave blank to use the provider&#039;s own endpoint.</td></tr><tr><td><strong>MODEL</strong></td><td>The model name that provider expects.</td></tr></table><p>Press <strong>Save</strong>.</p><p><strong>LM Studio is the local one</strong> - a model running on your own machine, so nothing leaves it. The other four are somebody else&#039;s servers. See <em>What leaves the machine</em> in <em>Using the app</em> before you put a key in.</p><h2>Modes</h2><p>The mode decides how much the Copilot may do without asking. Use the <strong>Mode</strong> button by the message box, or press <strong>Shift+Tab</strong> in the message box to step through them.</p><table><tr><th>Mode</th><th>What it does</th></tr><tr><td><strong>Ask</strong></td><td>Answers questions and can look things up. Changes nothing.</td></tr><tr><td><strong>Plan</strong></td><td>Looks around and proposes a plan. Changes nothing until you switch mode.</td></tr><tr><td><strong>Manual</strong></td><td>Asks before every change that needs approval.</td></tr><tr><td><strong>Edit automatically</strong></td><td>Writes and edits macros without asking. Still asks before scope changes, restores and runs.</td></tr><tr><td><strong>Auto</strong></td><td>Edits macros and changes the scope without asking. Still asks before running or scheduling a batch.</td></tr></table><p><strong>Manual is the default</strong>, on a fresh install and whenever a saved mode cannot be read.</p><p>In <strong>Ask</strong> and <strong>Plan</strong> the tools that change anything are not offered to the model at all - not only the ones that would raise a card, but the panel ones too. It cannot quietly build a chain and then describe it as a proposal.</p><p><strong>No mode approves a run.</strong> Not <strong>Auto</strong>, and not any mode added later. A batch closes the documents you have open and discards unsaved work, and a schedule does the same with nobody at the keyboard, so running, running a schedule now and scheduling a batch always ask. <strong>Auto</strong> means <em>stop asking me about the setup</em>, not <em>stop asking me before you touch my files</em>.</p><p>Turning the mode up never removes the app&#039;s own checks either. Ask for a run with nothing ticked and it is refused in <strong>Auto</strong> exactly as it is in <strong>Manual</strong>.</p><h2>Approval</h2><p>When the Copilot wants to do something gated, an <strong>Approval needed</strong> card appears in the transcript with <strong>Decline</strong> and <strong>Approve</strong>. Declining is an answer rather than an error - the model is told you said no, and carries on from there.</p><p>What raises a card, by mode:</p><table><tr><th>Action</th><th>Manual</th><th>Edit automatically</th><th>Auto</th></tr><tr><td>Write or edit a macro</td><td>Card</td><td>Goes ahead</td><td>Goes ahead</td></tr><tr><td>Scan a folder, add files, restore a session or a schedule</td><td>Card</td><td>Card</td><td>Goes ahead</td></tr><tr><td>Run, run a schedule now, schedule a batch</td><td>Card</td><td>Card</td><td>Card</td></tr></table><p>Everything else - reading, and the panel changes that can only make a run smaller or leave it the same size - never raises a card in any acting mode.</p><p>In the two automatic modes the Copilot is told to say what it is about to do before it does it, so you get a sentence instead of a card. That is a smaller thing than an approval. It is worth reading.</p><h2>What it can see</h2><p>The reading tools are available in every mode, <strong>Ask</strong> included: the macro library and the current chain, a macro&#039;s source, the files in scope, the last results, the log, your settings, the scheduled batches, the saved workflows, and these help guides.</p><p>That list is also what can end up in a request to your provider. Whatever it reads while answering is sent.</p><h2>Macros in a reply</h2><p>A code block in a reply is marked <strong>VBA only</strong> and has two buttons:</p><ul><li><strong>Save</strong> writes it into the library as a <code>.swp</code> - the same <code>%LOCALAPPDATA%\SwMacroFlow\macros</code> folder that <strong>From Library</strong> reads.</li><li><strong>Copy</strong> puts the code on the clipboard.</li></ul><p>A macro the Copilot writes is a macro like any other. It still has to compile, it still needs its inputs declared, and it is still worth reading before you run it over four hundred files.</p><h2>Attachments</h2><p>The attach button takes an image, PDF, Word or text file, and you can paste one straight into the message box instead.</p><h2>Chat history</h2><p><strong>Chat history</strong> lists your conversations; they are saved as you have them. A row can be renamed or deleted - <strong>Delete this chat</strong> removes it for good. Before you have had any, the list says <em>No saved chats yet.</em></p><p>They are files in <code>%LOCALAPPDATA%\SwMacroFlow\chats</code>.</p><h2>Changing something you already sent</h2><p>A message you sent can be edited: change the text and send it again, and <strong>Previous version</strong> and <strong>Next version</strong> step between the answers you have had to it.</p><h2>Commands</h2><p>Four things are handled by the app itself and never sent to the model:</p><table><tr><th>Type</th><th>Does</th></tr><tr><td><code>/clear</code></td><td>Clears the transcript.</td></tr><tr><td><code>/theme</code></td><td>Switches between light and dark.</td></tr><tr><td><code>/dark</code></td><td>Switches to dark.</td></tr><tr><td><code>/light</code></td><td>Switches to light.</td></tr></table><p>A short phrase that plainly means one of those - <em>switch to dark mode</em> - is handled the same way. A question about themes is not; that goes to the model like anything else. Any other <code>/something</code> is sent as ordinary text.</p></div>
+
+      <nav class="pager" aria-label="Guide">
+      <a class="pager-link" href="/docs/using-the-app/" rel="prev">
+        <span class="pager-dir">Previous</span>
+        <span class="pager-title">Using the app</span>
+      </a>
+      <a class="pager-link pager-next" href="/docs/writing-a-macro/" rel="next">
+        <span class="pager-dir">Next</span>
+        <span class="pager-title">Writing a macro</span>
+      </a>
+    </nav>
+
+      <aside class="doc-cta">
+        <p>
+          These guides describe <a href="/index.html">SwMacroFlow</a>, a free Windows app that
+          batch-runs SOLIDWORKS macros across folders of parts, assemblies and drawings.
+          <a href="/index.html#download">Download it</a>, or browse the
+          <a href="/macros.html">ready-made macro library</a>.
+        </p>
+      </aside>
+    </article>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="/assets/logo.png" alt="SwMacroFlow logo" width="24" height="24" loading="lazy">
+      SwMacroFlow
+    </div>
+    <div class="footer-links">
+      <a href="/index.html">Home</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/macros.html">Macros</a>
+      <a href="/index.html#download">Download</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/terms.html">Terms</a>
+      <a href="/privacy.html">Privacy</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 SwMacroFlow. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="/assets/nav.js" defer></script>
+</body>
+</html>

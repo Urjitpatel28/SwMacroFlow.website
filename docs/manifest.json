@@ -3,7 +3,11 @@
   "groups": [
     {
       "title": "Using the app",
-      "docs": ["01-overview", "02-using-the-app"]
+      "docs": [
+        "01-overview",
+        "02-using-the-app",
+        "08-copilot"
+      ]
     },
     {
       "title": "Writing macros",
@@ -16,7 +20,9 @@
     },
     {
       "title": "Reference",
-      "docs": ["07-troubleshooting"]
+      "docs": [
+        "07-troubleshooting"
+      ]
     }
   ]
 }

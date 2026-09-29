@@ -49,8 +49,12 @@ The file is opened **once** per pass, not once per macro. Three macros over 200 
 opens, not 600 - and opening is by far the slowest part of a batch. That is the reason to put
 several macros in one job rather than running three jobs.
 
-Files are processed strictly one at a time, and so are the macros within a file. SOLIDWORKS
-automation is single-session, so there is no parallel mode to turn on.
+Within one SOLIDWORKS, files are processed one at a time, and so are the macros within a file.
+
+Settings has a **Run batches in parallel** switch that shares the scope across up to eight SOLIDWORKS
+instances, each working through its own file. It is off by default, and it only applies when
+SwMacroFlow starts SOLIDWORKS itself - if you connect to one you already had open, that instance is
+the only one used.
 
 ## Two ways to run
 
@@ -73,7 +77,8 @@ must not rely on `ActiveDoc`, and input values must not use `{Property}` placeho
    Free-text fields may include `{PropertyName}` tokens that resolve per document - see *Using the
    app* and *Adding inputs*.
 4. **Run.** Rows appear as each macro finishes each file.
-5. **Read the results.** Green passed, amber means the macro asked a question nobody could answer,
+5. **Read the results.** Green passed, amber means the macro finished but not entirely - or asked
+   a question nobody could answer,
    red failed, grey was skipped.
 
 Panel-by-panel detail is in *Using the app*.

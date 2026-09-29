@@ -20,6 +20,12 @@
       "description": "A panel-by-panel walkthrough: connect to SOLIDWORKS, pick files and folders, choose macros, fill in inputs, and read the results of a batch run.",
       "primaryKeyword": "run solidworks macro on multiple files"
     },
+    "copilot": {
+      "title": "Using the SwMacroFlow Copilot to write SOLIDWORKS macros",
+      "description": "The AI Copilot panel: how to connect a provider, what the five modes let it do without asking, what it can read, and what that sends to your provider.",
+      "navTitle": "Copilot",
+      "primaryKeyword": "ai solidworks macro assistant"
+    },
     "writing-a-macro": {
       "title": "How to write a SOLIDWORKS VBA macro for batch running",
       "description": "Any SOLIDWORKS VBA macro with an argument-less Sub main works in SwMacroFlow - no library to reference and no host-specific code. With a worked example.",
@@ -60,9 +66,9 @@
       "primaryKeyword": "solidworks add-in"
     },
     "task-scheduler-alternatives": {
-      "title": "SOLIDWORKS Task Scheduler alternatives - free batch tools",
-      "description": "What Task Scheduler cannot do, what happened to #TASK in 2020, and an honest comparison of Batch+, Drew and SwMacroFlow for batch processing SOLIDWORKS files.",
-      "navTitle": "Task Scheduler alternatives",
+      "title": "Batch processing beyond SOLIDWORKS Task Scheduler",
+      "description": "What SOLIDWORKS Task Scheduler does well, the three limits that stop it, and how to get past them by looping in a macro or with a free batch runner.",
+      "navTitle": "Beyond Task Scheduler",
       "primaryKeyword": "solidworks task scheduler alternative"
     }
   },

@@ -10,8 +10,9 @@
 
    It drives a headless Chromium over its command line rather than through Playwright, so it needs
    nothing installed - any Chrome, Edge or Playwright Chromium already on the machine will do. A sheet
-   is laid out at CSS pixels and shot at --force-device-scale-factor=2, so the handwriting and the
-   arrows are drawn at 2x while the screenshot inside is doubled by whole pixels.
+   is laid out at CSS pixels and shot at --force-device-scale-factor=2 (or the sheet's own `scale`),
+   so the handwriting and the arrows are drawn at 2x while the screenshot inside is doubled by whole
+   pixels.
 
    After running this, run tools/build-images.py to rebuild the .webps the page actually serves. */
 
@@ -27,18 +28,21 @@ const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
    checked against each other by the render below, because a mismatch is otherwise invisible until
    the sheet is on the page with the wrong aspect ratio.
 
-   The guide sheet is 1760 wide because it is built round a 1066px screenshot with a column of
-   handwriting either side. The settings sheets are 1220, which renders 2440 - shown inside the
-   page's 1120px content column that is 0.92x the design pixels, so they are legible in place rather
-   than only when opened full size. */
+   The guide sheet is 2000 wide because it is built round a full-size 1920px screenshot with the
+   callouts in bands above and below it, and it renders at scale 1: the screenshot is already sharp
+   at its native size, and 2x would only double a multi-megabyte PNG. The settings sheets are 1220,
+   which renders 2440 - shown inside the page's 1120px content column that is 0.92x the design
+   pixels, so they are legible in place rather than only when opened full size.
+
+   `scale` is optional and defaults to 2. */
 const SHEETS = [
-  { name: "guide",     source: "guide.html",              target: "SwMacroFlow_Handwritten_Guide.png",      width: 1760, height: 1240 },
+  { name: "guide",     source: "guide.html",              target: "SwMacroFlow_Handwritten_Guide.png",      width: 2000, height: 2040, scale: 1 },
   { name: "general",   source: "settings-general.html",   target: "SwMacroFlow_Setting_General_Guide.png",  width: 1220, height: 1050 },
   { name: "copilot",   source: "settings-copilot.html",   target: "SwMacroFlow_Setting_Copilot_Guide.png",  width: 1220, height: 1090 },
   { name: "scheduled", source: "settings-scheduled.html", target: "SwMacroFlow_Setting_Scheduled_Guide.png", width: 1220, height: 985 },
 ];
 
-const SCALE = 2;
+const DEFAULT_SCALE = 2;
 
 /* Playwright keeps its browsers in a versioned folder, so the version is found rather than named.
 
@@ -93,6 +97,10 @@ function pngSize(path) {
   return { width: header.readUInt32BE(0), height: header.readUInt32BE(4) };
 }
 
+function scaleOf(sheet) {
+  return sheet.scale || DEFAULT_SCALE;
+}
+
 function render(browser, sheet) {
   const source = join(ROOT, "tools", sheet.source);
   const target = join(ROOT, "assets", sheet.target);
@@ -108,7 +116,7 @@ function render(browser, sheet) {
       "--disable-gpu",
       "--hide-scrollbars",
       "--force-color-profile=srgb",
-      "--force-device-scale-factor=" + SCALE,
+      "--force-device-scale-factor=" + scaleOf(sheet),
       `--window-size=${sheet.width},${sheet.height}`,
       // The page loads the screenshot and the Caveat woff2 from assets/ over file://, which Chromium
       // treats as cross-origin without this.
@@ -130,7 +138,7 @@ function render(browser, sheet) {
   }
 
   const size = pngSize(target);
-  const expected = { width: sheet.width * SCALE, height: sheet.height * SCALE };
+  const expected = { width: sheet.width * scaleOf(sheet), height: sheet.height * scaleOf(sheet) };
   if (size.width !== expected.width || size.height !== expected.height) {
     throw new Error(
       `${sheet.name}: rendered ${size.width}x${size.height}, expected ${expected.width}x${expected.height}. `

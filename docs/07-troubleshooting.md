@@ -1,4 +1,4 @@
-# Troubleshooting
+﻿# Troubleshooting
 
 Symptom first. Each heading is what you actually see.
 
@@ -78,6 +78,24 @@ Const Quantity As String  = "@Quantity"   ' right
 SwMacroFlow needs a `Sub` that takes no arguments, preferably named `main`. A macro whose only
 procedures take arguments, or that contains only `Function`s, has nothing that can be called.
 
+## "… could not be prepared to run"
+
+Before the first file opens, SwMacroFlow makes a temporary copy of each macro with your inputs
+filled in and its dialogs captured. When that copy can't be made, the whole batch stops. **No file
+was opened.** Running the macro without the copy is not safe: every `@Name` input would hold the
+literal text `@Name`, so a dry-run input would be ignored and the macro would change files.
+
+The message says why:
+
+- **no module declares Sub main() in a form SwMacroFlow can read** - put the declaration on one
+  line, `Sub main()`, with nothing after it except an optional `'` comment. A declaration split
+  over several lines with `_` isn't recognised.
+- **the file holds no VBA project** - the file is not a macro SwMacroFlow can read. Open it in the
+  VBA editor to check.
+- **the macro file was not found** - the `.swp` was moved or deleted after it was added.
+- **anything else** - the temporary copy couldn't be written under `%TEMP%\SwMacroFlow`, for
+  example because the disk is full or antivirus is holding the file. The log has the details.
+
 ## "This file isn't a readable VBA macro"
 
 The file is not a valid `.swp`, or its VBA project is corrupt. Open it in the VBA editor to confirm.
@@ -99,6 +117,17 @@ The reason is written next to the button:
 | Choose a file that exists for every file input in *macro*. | A file input points at a path that is not there (and does not contain `{Property}` tokens). |
 
 A folder path that does not exist yet does **not** block Run. See *Adding inputs*.
+
+## "Scheduled batch … is running. Try again when it finishes."
+
+A scheduled batch is running in its own SwMacroFlow window, and only one batch runs at a time. Two at
+once would put two SOLIDWORKS on the same files, and any file both batches touch would open read-only
+in one of them, so its saves would fail. Nothing was started - no SOLIDWORKS was launched and no file
+was opened. The line under the header shows the batch and when it started, and clears when it
+finishes; press **Run Batch** again then.
+
+The same thing works the other way round. A scheduled batch that fires while your batch is running
+waits for yours to finish, for up to 4 hours.
 
 ## "Fix every property placeholder in …"
 
@@ -187,11 +216,40 @@ Two differences, both expected:
 `{Property}` tokens in input values only expand during a batch (per open document). In the VBA
 editor you are running the unpatched macro with whatever literal is in the Const.
 
+## "The workflow could not be saved."
+
+The chain and its values could not be written to disk. The saved workflows live in
+`%LOCALAPPDATA%\SwMacroFlow\workflows.xml`, with one file per chain in the `workflows` folder beside
+it. Check that folder exists and is writable - a locked-down profile or a full disk are the usual
+reasons. Nothing about the chain in the panel is lost; only the save failed.
+
+## Workflow applied "without ..., no longer on disk"
+
+A workflow stores where each macro is, not a copy of it. If a `.swp` has been moved, renamed or
+deleted since the workflow was saved, the rest of the chain still applies and the missing step is
+dropped:
+
+> Workflow *name* was applied without *macro*, which is ticked in the saved chain but no longer on
+> disk. This chain will not do what the workflow did. Dismiss this to run it anyway.
+
+Put the macro back where it was, or add the replacement to the chain by hand and save the workflow
+again. A workflow built only from macros in `%LOCALAPPDATA%\SwMacroFlow\macros` does not have this
+problem - that is the warning you get when you save a chain that points outside the library.
+
+## The Copilot will not change anything
+
+Check the mode. **Ask** and **Plan** are not offered the tools that change things at all, so it will
+describe what it would do rather than do it. Switch to **Manual** and ask again.
+
+If it is in an acting mode and a run is still refused, the refusal is the app's, not the mode's -
+nothing ticked, or a batch already running. The reasons are the same as *Run is greyed out* above,
+and no mode overrides them.
+
 ## Where the logs are
 
 The log panel shows the last 500 lines. The full log is written to a file, one per day, named
-`logger_<date>.log`. The folder is shown at the bottom of the log panel - normally a `logs` folder
-beside SwMacroFlow, falling back to `%LOCALAPPDATA%\SwMacroFlow\logs` if that is not writable.
+`logger_<date>.log`. The folder is shown at the bottom of the log panel, and is normally
+`%LOCALAPPDATA%\SwMacroFlow\logs` - beside your macro library, not inside the install folder.
 Thirty days are kept.
 
 ## Leftover files in %TEMP%

@@ -6,7 +6,7 @@
 
 SwMacroFlow drives an installed, licensed x64 SOLIDWORKS session from outside. Nothing is registered
 or installed inside SOLIDWORKS itself, and it needs no administrator rights. It is free with every
-feature included: macro chaining, batch runs across folders, parallel batches across two to four
+feature included: macro chaining, batch runs across folders, parallel batches across two to eight
 SOLIDWORKS instances, a bundled macro library, an AI Copilot side panel (bring your own API key,
 with image, PDF, Word and text attachments), and Windows Task Scheduler integration. There is no
 trial, no licence, no account, and nothing to buy.
@@ -15,13 +15,14 @@ trial, no licence, no account, and nothing to buy.
 
 - [Home](https://swmacroflow.in/): what SwMacroFlow does, how a batch runs, and the download.
 - [Documentation](https://swmacroflow.in/docs.html): every guide, from a first batch to the macro authoring contract.
-- [Guides](https://swmacroflow.in/guides.html): how-to and comparison articles on batch processing SOLIDWORKS files.
+- [Guides](https://swmacroflow.in/guides.html): how-to articles on batch processing SOLIDWORKS files.
 - [Macro library](https://swmacroflow.in/macros.html): free SOLIDWORKS .swp macros to download.
 
 ## Documentation
 
 - [SwMacroFlow](https://swmacroflow.in/docs/overview/): SwMacroFlow runs one or more SOLIDWORKS macros across many parts, assemblies and drawings without anyone sitting in front of the screen. It opens each file once, runs every macro you ticked against...
 - [Using the app](https://swmacroflow.in/docs/using-the-app/): A walk through the window, panel by panel, in the order they appear on screen.
+- [Using the Copilot](https://swmacroflow.in/docs/copilot/): The Copilot is a chat panel that answers questions about SwMacroFlow and SOLIDWORKS VBA, and - if you let it - writes and edits macros in your library, builds the chain, changes the scope and starts...
 - [Writing a macro](https://swmacroflow.in/docs/writing-a-macro/): Any SOLIDWORKS VBA macro with an argument-less Sub main works. There is no SwMacroFlow-specific code to add, no library to reference, and no result object to fill in. A macro written for SwMacroFlow...
 - [Adding inputs](https://swmacroflow.in/docs/adding-inputs/): An input is a value the user fills in before the run. You declare it in the macro; SwMacroFlow builds the control, validates what is typed, and substitutes the value into your code before it runs.
 - [Reporting a result](https://swmacroflow.in/docs/reporting-results/): Use MsgBox. During a batch no dialog opens - SwMacroFlow defines its own MsgBox inside the throwaway copy it runs, so each call becomes that file's row in the results list instead.
@@ -32,7 +33,7 @@ trial, no licence, no account, and nothing to buy.
 
 - [How to run a SOLIDWORKS macro on multiple files](https://swmacroflow.in/guides/run-macro-on-multiple-files/): You have a macro that works. It does exactly what you want to the document that is open. Now you have a folder with four hundred files in it, and running the macro four hundred times by hand is not a...
 - [Do you need a SOLIDWORKS add-in?](https://swmacroflow.in/guides/do-you-need-a-solidworks-add-in/): People searching for a SOLIDWORKS add-in usually are not looking for an add-in. They are looking for a way to make SOLIDWORKS do something repetitive without doing it by hand, and "add-in" is the...
-- [SOLIDWORKS Task Scheduler alternatives](https://swmacroflow.in/guides/task-scheduler-alternatives/): If you have gone looking for a way to batch process SOLIDWORKS files and found that Task Scheduler will not do what you need, you are in a well-worn groove. The threads asking this question go back...
+- [Batch processing beyond SOLIDWORKS Task Scheduler](https://swmacroflow.in/guides/task-scheduler-alternatives/): If you have gone looking for a way to batch process SOLIDWORKS files and found that Task Scheduler will not do what you need, you are in a well-worn groove. The question has been asked on forums for...
 
 ## Macros
 

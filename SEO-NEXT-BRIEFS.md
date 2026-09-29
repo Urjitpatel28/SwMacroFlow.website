@@ -1,5 +1,10 @@
 # Next guides to write
 
+**Owner decision, 29 September 2026: no competitor comparisons.** Brief 2 (SwMacroFlow vs
+Batch+) is dropped, and brief 1 must not become a vendor roundup - write it about approaches
+(Task Scheduler, a looping macro, a batch runner), not other companies' products. No comparison
+tables, no `"kind": "comparison"`, no `mentions[]` of competitors.
+
 Briefs for the `/guides/` pages that are not written yet. The machinery exists, so shipping one is
 now: write `guides/<slug>.md`, add an entry to `guides/manifest.json`, add title and description to
 the `guides` key in `tools/seo-meta.json`, run `node tools/build-site.mjs`, commit.

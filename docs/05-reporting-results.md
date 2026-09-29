@@ -10,6 +10,10 @@ If Not model.ForceRebuild3(False) Then
 End If
 
 MsgBox "Exported " & n & " configs"       ' green row
+
+If skipped > 0 Then
+    MsgBox skipped & " configs skipped", vbExclamation   ' amber row - partial success
+End If
 ```
 
 Your macro needs no SwMacroFlow-specific code, and it still shows real dialogs when you run it
@@ -21,7 +25,8 @@ yourself in the VBA editor. The macro is identical either way.
 |---|---|---|
 | `MsgBox "text"` | Green - a status note | `vbOK` |
 | `MsgBox "text", vbCritical` | **Red - the file failed** | `vbOK` |
-| `MsgBox "text", vbExclamation` / `vbInformation` / `vbQuestion` | Green - status | `vbOK` |
+| `MsgBox "text", vbExclamation` | **Amber - finished, but not entirely** | `vbOK` |
+| `MsgBox "text", vbInformation` / `vbQuestion` | Green - status | `vbOK` |
 | `MsgBox "text", vbYesNo` | Amber - prompt auto-answered | `vbNo` |
 | `MsgBox "text", vbOKCancel` | Amber | `vbCancel` |
 | `MsgBox "text", vbYesNoCancel` | Amber | `vbCancel` |
@@ -32,8 +37,10 @@ yourself in the VBA editor. The macro is identical either way.
 | Missing `{Property}` / no document to resolve it | Red, named error from the host | - |
 | Nothing at all | Green | - |
 
-`vbCritical` is the marker for failure. Other icons - `vbExclamation`, `vbInformation`,
-`vbQuestion` - are status notes and leave the row green.
+`vbCritical` marks a failure and `vbExclamation` marks a partial success - the run finished, but
+not everything worked. Reach for `vbExclamation` whenever the honest answer is "3 of 5 sheets":
+without it that file is indistinguishable from a clean one. `vbInformation` and `vbQuestion` are
+status notes and leave the row green.
 
 **A crash no longer passes silently.** An unhandled VBA error is caught, reported as
 `Error 91: Object variable or With block variable not set` or similar, and the batch moves on to the

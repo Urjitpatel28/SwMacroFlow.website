@@ -109,8 +109,8 @@ The Run button names the macro at fault, because its inputs may not be the ones 
 
 A `String`, `FilePath`, or `FolderPath` value may mix literal text with `{PropertyName}` tokens -
 for example `{PartNumber}_{Revision}.pdf`. Type them in the Inputs panel; they are highlighted
-magenta as you type. Braces are reserved for this syntax in those three types - there is no escape
-in v1.
+magenta as you type. Braces are reserved for this syntax in those three types - there is no way to
+escape a literal brace.
 
 Integer, Bool, and Option inputs stay literal. They never resolve property tokens.
 

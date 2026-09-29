@@ -67,7 +67,8 @@
         "AI Copilot side panel (bring your own API key)",
         "Attach images, PDFs, Word and text files to AI Copilot",
         "Windows Task Scheduler integration",
-        "Parallel batches across two to four SOLIDWORKS instances"
+        "Parallel batches across two to eight SOLIDWORKS instances",
+        "Save a macro chain and its inputs as a named workflow and apply it again later"
       ],
       "downloadUrl": "https://swmacroflow.in/#download",
       "installUrl": "https://swmacroflow.in/#download",
@@ -173,7 +174,7 @@
           "name": "Can it run more than one SOLIDWORKS at once?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. Turn on parallel batches in Settings and SwMacroFlow runs the batch across two to four SOLIDWORKS instances, handing each one the next file as it comes free rather than splitting the list up front. It only applies when SwMacroFlow starts SOLIDWORKS itself — connecting to a session you already had open always uses just that one. Each instance takes its own licence seat and its own memory, so on large assemblies two or three is usually as far as a workstation gains."
+            "text": "Yes. Turn on parallel batches in Settings and SwMacroFlow runs the batch across two to eight SOLIDWORKS instances, handing each one the next file as it comes free rather than splitting the list up front. It only applies when SwMacroFlow starts SOLIDWORKS itself — connecting to a session you already had open always uses just that one. Each instance takes its own licence seat and its own memory, so on large assemblies two or three is usually as far as a workstation gains."
           }
         },
         {
@@ -290,7 +291,7 @@
     height: auto;
   }
 
-  /* The guide sheet is 3520px wide intrinsically, so it needs the same treatment as the hero
+  /* The guide sheet is 2000px wide intrinsically, so it needs the same treatment as the hero
      screenshot or it lays the page out at its own size. It is paper rather than UI, so it gets no
      dark panel behind it - just a frame and the shadow. */
   .guide-sheet {
@@ -1163,7 +1164,7 @@
       <figure class="hero-shot">
         <picture>
           <source srcset="assets/SwMacroFlow.webp" type="image/webp">
-          <img src="assets/SwMacroFlow.png" width="1066" height="713" fetchpriority="high" decoding="async" alt="SwMacroFlow desktop application showing macro chain controls, file selection, and AI Copilot panel">
+          <img src="assets/SwMacroFlow.png" width="1920" height="1032" fetchpriority="high" decoding="async" alt="SwMacroFlow desktop application showing macro chain controls, file selection, and AI Copilot panel">
         </picture>
       </figure>
     </div>    
@@ -1231,7 +1232,7 @@
       <a href="assets/SwMacroFlow_Handwritten_Guide.png" target="_blank" rel="noopener">
         <picture>
           <source srcset="assets/SwMacroFlow_Handwritten_Guide.webp" type="image/webp">
-          <img src="assets/SwMacroFlow_Handwritten_Guide.png" width="3520" height="2480" loading="lazy" decoding="async" alt="Annotated SwMacroFlow window. Seven numbered handwritten callouts label each area, each colour matched to an outline drawn around the panel it describes: 1 add or create a macro, 2 select files or folders to process, 3 configure inputs for the selected macro, 4 choose and connect your SOLIDWORKS instance, 5 the AI Copilot panel, 6 run the batch, 7 progress and status, plus a note on the header buttons and a tips box.">
+          <img src="assets/SwMacroFlow_Handwritten_Guide.png" width="2000" height="2040" loading="lazy" decoding="async" alt="Annotated SwMacroFlow window. Handwritten callouts above and below the screenshot label each area, each colour matched to an outline drawn around the panel it describes: 1 add or create a macro, a new note on saving the macro chain as a workflow and applying it again, 2 select files or folders to process, 3 configure inputs for the selected macro, 4 choose and connect your SOLIDWORKS instance, 5 the AI Copilot panel, 6 run or schedule the batch, 7 progress and results, plus a note on the header buttons and a tips box.">
         </picture>
       </a>
       <figcaption>Click the sheet to open it full size.</figcaption>
@@ -1262,7 +1263,7 @@
         <a href="assets/SwMacroFlow_Setting_General_Guide.png" target="_blank" rel="noopener">
           <picture>
             <source srcset="assets/SwMacroFlow_Setting_General_Guide.webp" type="image/webp">
-            <img src="assets/SwMacroFlow_Setting_General_Guide.png" width="2440" height="2100" loading="lazy" decoding="async" alt="Annotated SwMacroFlow Settings dialog, General tab. Handwritten callouts label the four tabs behind the gear button, the light and dark theme toggle which is remembered between sessions, the automatic restart box which relaunches SOLIDWORKS every N files and only for instances SwMacroFlow started, the run-batches-in-parallel toggle which shares files across several instances from one queue, and the instances box which accepts 2 to 4 and takes effect on the next connect.">
+            <img src="assets/SwMacroFlow_Setting_General_Guide.png" width="2440" height="2100" loading="lazy" decoding="async" alt="Annotated SwMacroFlow Settings dialog, General tab. Handwritten callouts label the five tabs behind the gear button, the light and dark theme toggle which is remembered between sessions, the automatic restart box which relaunches SOLIDWORKS every N files and only for instances SwMacroFlow started, the run-batches-in-parallel toggle which shares files across several instances from one queue, and the instances box which accepts 2 to 8 and takes effect on the next connect.">
           </picture>
         </a>
         <figcaption>Settings &rarr; General &mdash; theme, automatic restart, and running several SOLIDWORKS at once.</figcaption>
@@ -1336,12 +1337,17 @@
       <article class="capability">
         <small>07</small>
         <h3>Parallel batches</h3>
-        <p>Spread one batch across two to four SOLIDWORKS instances that share the file list, each taking the next file as it comes free. Opening a document is the slow part of a batch and SOLIDWORKS does it one at a time, so a second instance puts a machine that was otherwise idle to work. Off by default; turn it on in Settings.</p>
+        <p>Spread one batch across two to eight SOLIDWORKS instances that share the file list, each taking the next file as it comes free. Opening a document is the slow part of a batch and SOLIDWORKS does it one at a time, so a second instance puts a machine that was otherwise idle to work. Off by default; turn it on in Settings.</p>
       </article>
       <article class="capability">
         <small>08</small>
         <h3>Attach files to Copilot</h3>
         <p>Give Copilot something to look at: a screenshot, a PDF drawing, a Word document, or a text, CSV, or JSON file. Paste an image straight into the chat, or pick a file.</p>
+      </article>
+      <article class="capability">
+        <small>09</small>
+        <h3>Saved workflows</h3>
+        <p>Save a macro chain and the values typed into it under a name, then apply it again next week instead of rebuilding it. The files are chosen fresh each time, so one workflow serves any folder. Rename or delete them in Settings.</p>
       </article>
     </div>
   </section>
@@ -1526,8 +1532,9 @@
         <li>Chain and batch-run your macros across whole folders</li>
         <li>Bundled macro library, alongside your own VBA</li>
         <li>AI Copilot, with your own API key</li>
-        <li>Parallel batches across two to four SOLIDWORKS instances</li>
+        <li>Parallel batches across two to eight SOLIDWORKS instances</li>
         <li>Task Scheduler batches</li>
+        <li>Saved workflows: reuse a macro chain and its inputs</li>
         <li>Works with any installed SOLIDWORKS</li>
         <li>Per-user install, no administrator rights needed</li>
       </ul>
@@ -1576,7 +1583,7 @@
       </details>
       <details>
         <summary>Can it run more than one SOLIDWORKS at once?</summary>
-        <p>Yes. Turn on parallel batches in Settings and SwMacroFlow runs the batch across two to four SOLIDWORKS instances, handing each one the next file as it comes free rather than splitting the list up front. It only applies when SwMacroFlow starts SOLIDWORKS itself &mdash; connecting to a session you already had open always uses just that one. Each instance takes its own licence seat and its own memory, so on large assemblies two or three is usually as far as a workstation gains.</p>
+        <p>Yes. Turn on parallel batches in Settings and SwMacroFlow runs the batch across two to eight SOLIDWORKS instances, handing each one the next file as it comes free rather than splitting the list up front. It only applies when SwMacroFlow starts SOLIDWORKS itself &mdash; connecting to a session you already had open always uses just that one. Each instance takes its own licence seat and its own memory, so on large assemblies two or three is usually as far as a workstation gains.</p>
       </details>
       <details>
         <summary>Can I install it on more than one computer?</summary>
@@ -1606,8 +1613,8 @@
         <h3><a href="guides.html">Guides</a></h3>
         <p>
           How to <a href="guides/run-macro-on-multiple-files/">run a macro on multiple files</a>,
-          the <a href="guides/task-scheduler-alternatives/">alternatives to SOLIDWORKS Task
-          Scheduler</a>, and whether you
+          what to do <a href="guides/task-scheduler-alternatives/">when SOLIDWORKS Task Scheduler
+          is not enough</a>, and whether you
           <a href="guides/do-you-need-a-solidworks-add-in/">need an add-in at all</a>.
         </p>
       </li>
